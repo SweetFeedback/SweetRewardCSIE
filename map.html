@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <style type="text/css">
+            html { height: 100% }
+            body { height: 100%; margin: 0; padding: 0 }
+            #map_canvas { height: 100% }
+        </style>
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA3ieESIwbYV6OZC14fivVKoOSYvApTlh0&sensor=true">
+        </script>
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <script type="text/javascript">
+            function initialize() {
+                $.getJSON("./php/mobile/getTripOfUser.php?token=5c1660554760cc76eee461ab79e57eb2", function(data){
+
+                        var mapOptions = {
+                            center: new google.maps.LatLng(37, -122),
+                            zoom: 14,
+                            mapTypeId: google.maps.MapTypeId.ROADMAP
+                        };
+
+                        var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+
+                        for(var i=0; i < data.length;i++){
+                            var trip_id = data[i][0];
+                            $.getJSON("./php/mobile/getUserTransportationData.php?token=5c1660554760cc76eee461ab79e57eb2&trip_id=" + trip_id, function(data){
+                                var marker_array = [];
+                                var label = data[0]['label'];
+
+                                for(var i=0; i < data.length; i++){
+                                    marker_array.push(new google.maps.LatLng(data[i]['latitude'], data[i]['longitude']));
+                                }
+                                var color = "#FF0000";
+                                alert(label);
+                                if (label == "driving car"){
+                                    color = "#00FF00";
+                                }
+                                else if(label == "train"){
+                                    color = "#0000FF";
+                                }
+                                else if(label == "walking"){
+                                    color = "#FFFF00";
+                                }
+                                var flight = new google.maps.Polyline({
+                                    path:  marker_array,
+                                    strokeColor: color,
+                                    strokeOpacity: 1.0,
+                                    strokeWeight: 2
+                                });
+                                flight.setMap(map);
+                            });
+
+                        }
+                });
+                
+            }
+        </script>
+    </head>
+    <body onload="initialize()">
+        <div id="map_canvas" style="width:100%; height:100%"></div>
+    </body>
+</html>
