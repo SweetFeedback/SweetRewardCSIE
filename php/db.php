@@ -23,12 +23,8 @@ class DB{
         }
         return self::$instance;
     }
-    public function __construct()
+    public function __construct($hostname, $dbname, $user, $password)
     {
-        $hostname = Config::read('db.host');
-        $dbname = Config::read('db.basename');
-        $user = Config::read('db.user');
-        $password = Config::read('db.password');
         $dsn = 'mysql:host='.$hostname.';dbname='.$dbname;
         try{
             $this->dbh = new PDO($dsn, $user, $password);
