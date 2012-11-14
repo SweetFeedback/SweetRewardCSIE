@@ -141,16 +141,14 @@
           }
         });
 
-
         $.getJSON("data/ans1.json", function(json) {
           ans = json;
           $("#score").text(correct_count + " / "+ ans.length);
         });
 
-
         $.getJSON("config.json", function(json){
           serverURL = json['server'];
-          $('#brand').attr("href", serverURL+"new_UI/");
+          $('#brand').attr("href", serverURL);
 
           /* read content json file*/
           $.getJSON("data/data1.json", function(json) {

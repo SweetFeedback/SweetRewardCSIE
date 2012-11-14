@@ -1,5 +1,7 @@
 body {
   background-color: #f1f1f1;
+  background-image: url('./img/others/retina_dust.png');
+  background-repeat:repeat repeat;
   font-size: 16px;     
   padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
 }
@@ -11,9 +13,10 @@ h3 {
   margin-top: -3px;
   margin-right: 7px;
 }
-.building{
+#map{
   float: left;  /* parent should use overflow to prevent broken */
-  padding: 50px 0 0 30px;
+  padding: 20px 0 0 30px;
+  /*border: 1px #00ff00 solid;*/
 }
 
 
@@ -26,6 +29,7 @@ h3 {
   height: 100%;
   margin: 7px;
   padding: 5px;
+  /*border: 1px #ff0000 solid;*/
 
 }
 #right{
@@ -127,20 +131,20 @@ img#sun:hover {
 
 #mrc_1 {
     position: absolute;
-    top: 550px;
+    top: 450px;
     left: 370px;
 }
 
 #mrc_2 {
     position: absolute;
     top: 500px;
-    left: 500px;
+    left: 620px;
 }
 
 #mrc_3 {
     position: absolute;
-    top: 335px;
-    left: 455px;
+    top: 280px;
+    left: 520px;
 }
 
 #mrc_4 {
@@ -155,18 +159,10 @@ img#sun:hover {
     left: 550px;
 }
 
-#building_1 {
-    position: absolute;
-    width: 480px;
-    top: 200px;
-    left: 120px;
-}
-
-#building_2 {
-    position: absolute;
-    width: 125px;
-    top: 270px;
-    right: 40%;
+#map_2f {
+    width: 550px;
+/*    top: 200px;
+    left: 120px;*/
 }
 
 #win_1{
@@ -228,13 +224,20 @@ div.offline {
 
 #info img{
     width: 30px;
-    margin-left: 20px;
+    /*margin-left: 20px;*/
 }
 #info {
-    position: absolute;
-    top:510px; 
-    right: 40%;
+    float: left;
+    width: 170px;
+    margin-left: 20px;
+    margin-top: 20px;
     font-size: 14px;
+    /*border: 1px solid #ff0000;*/
+}
+
+#info li{
+    list-style-type: none;
+    margin: 10px;
 }
 
 #feedbackHistory {
@@ -316,3 +319,6 @@ div.offline {
   font-size: 13px;
   margin-left: 5px;
 }
+
+
+
