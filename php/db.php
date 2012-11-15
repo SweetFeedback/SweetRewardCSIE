@@ -318,7 +318,11 @@ class DB{
     }
 
     public function insertFixReportByCategory($title, $coor_x, $coor_y, $user_id, $category){
-        $query = "insert into $this->problem_tableName values( NULL, $category, '$title', '$title', $coor_x, $coor_y, $user_id, 1, NOW(), NULL, $user_id);";
+        $query = "insert into $this->problem_tableName values( NULL, $category, 0, '$title', '$title', $coor_x, $coor_y, $user_id, 1, NOW(), NULL, $user_id);";
+        $result = $this->dbh->query($query);
+    }
+    public function insertFixReportByCategoryAndRoom($title, $coor_x, $coor_y, $user_id, $category, $room_id){
+        $query = "insert into $this->problem_tableName values( NULL, $category, $room_id, '$title', '$title', $coor_x, $coor_y, $user_id, 1, NOW(), NULL, $user_id);";
         $result = $this->dbh->query($query);
     }
     ### insert 3-sensor

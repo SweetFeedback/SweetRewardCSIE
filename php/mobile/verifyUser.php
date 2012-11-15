@@ -24,7 +24,7 @@ if(isset($_SESSION['is_logged_in']) && ($_SESSION['is_logged_in'] == 1)){
     if( isset($_GET["account"]) && isset($_GET["password"])){
         $username = $_GET["account"];
         $password = $_GET["password"];
-        $db = new DB();
+        $db = DB::getInstance(Config::read('db.host'), Config::read('db.basename'), Config::read('db.user'), Config::read('db.password'));
         $result = $db->verifyUser($username, $password);
 
         if($result!=null){
