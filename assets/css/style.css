@@ -404,7 +404,6 @@ div.offline {
   width: 105px;
   height:69px;
   display: block;
-  /*background: rgba(234,0,55, 0.3);*/
 
   margin-top:110px;
   margin-left:397px;
@@ -417,7 +416,6 @@ div.offline {
   width: 105px;
   height:71px;
   display: block;
-  /*background: rgba(234,0,55, 0.7);*/
 
   margin-top:179px;
   margin-left:397px;
@@ -431,7 +429,6 @@ div.offline {
   width: 106px;
   height: 67px;
   display: block;
-  /*background: rgba(234,0,55, 0.2);*/
 
   margin-top: 277px;
   margin-left: 395px;
@@ -445,7 +442,6 @@ div.offline {
   width: 84px;
   height: 64px;
   display: block;
-  /*background: rgba(234,0,55, 0.5);*/
 
   margin-top: 344px;
   margin-left: 417px;
@@ -461,7 +457,6 @@ div.offline {
   width: 51px;
   height: 64px;
   display: block;
-  /*background: rgba(234,0,55, 0.3);*/
 
   margin-top: 147px;
   margin-left: 528px;
@@ -475,9 +470,24 @@ div.offline {
   width: 51px;
   height: 32px;
   display: block;
-  /*background: rgba(234,0,55, 0.1);*/
 
   margin-top: 276px;
   margin-left: 528px;
 }
 
+#problem_select{
+  
+  display: inline-block;
+  width: 200px;
+}
+
+#location_select{
+  
+  display: inline-block;
+  width: 200px;
+}
+
+#problemInputForm{
+  display: block;
+  
+}
