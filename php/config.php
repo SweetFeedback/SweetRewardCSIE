@@ -20,7 +20,10 @@ Config::write('db.user', 'root');
 Config::write('db.password', '29418401');
 
 Config::write('db.host.gardenia', 'gardenia.csie.ntu.edu.tw');
-Config::write('db.basename.gardenia', 'sweetfeedback');
-Config::write('db.user.gardenia', 'catlikethief');
+Config::write('db.user.gardenia', 'sweetfeedback');
 Config::write('db.password.gardenia', 'agent#336');
+
+Config::write('db.basename.sweetfeedback', 'sweetfeedback');
+Config::write('db.basename.smartpower', 'smartpower2');
+Config::write('db.basename.maple', 'maple');
 ?>
