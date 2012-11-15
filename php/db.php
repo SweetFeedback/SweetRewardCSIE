@@ -16,10 +16,10 @@ class DB{
     public $problem_tableName = "problems";
 
     private static $instance;
-    public static function getInstance(){
+    public static function getInstance($hostname, $dbname, $user, $password){
         if(!isset(self::$instance)){
             $object = __CLASS__;
-            self::$instance = new $object;
+            self::$instance = new $object($hostname, $dbname, $user, $password);
         }
         return self::$instance;
     }
@@ -93,7 +93,6 @@ class DB{
         $result = $this->dbh->query($query);
         if($result->rowCount() > 0){
             $rows = $result->fetchAll();
-            //print_r($rows);
             return $rows;
         }
         return null;
