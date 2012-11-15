@@ -222,6 +222,15 @@ class DB{
         }
         return null;
     }
+    public function getRoomExistReport($room_id){
+        $query = "select id, title, room, coordinate_x, coordinate_y, created_by, created_at from $this->problem_tableName where status = 1 and room = $room_id";
+        $result = $this->dbh->query($query);
+        if($result->rowCount() > 0){
+            $rows = $result->fetchAll();
+            return $rows;
+        }
+        return null;
+    }
     ### fix report updating database
     public function updateFixReport($user_id, $report_id){
         $query = "update $this->problem_tableName set status=0, updated_by=$user_id, updated_at=NOW() where id=$report_id";
