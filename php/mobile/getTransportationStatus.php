@@ -1,7 +1,7 @@
 <?php 
 require_once("../db.php");
 if(isset($_GET["token"])){
-	$db = new DB();
+    $db = DB::getInstance(Config::read('db.host'), Config::read('db.basename'), Config::read('db.user'), Config::read('db.password'));
 	$token = $_GET["token"];
 	$user_id = $db->getUserIdByToken($token);
 

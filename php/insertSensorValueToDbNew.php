@@ -6,7 +6,7 @@ $coming_ip = $_SERVER['REMOTE_ADDR'];
 if(isset($_GET["d_id"])){
 
     $device_id = $_GET["d_id"];
-    $db_help = new DB();
+    $db_help = DB::getInstance(Config::read('db.host'), Config::read('db.basename'), Config::read('db.user'), Config::read('db.password'));
 
     login($db_help, $device_id, $coming_ip);
     $row = $db_help->getNewestDataOf($device_id);

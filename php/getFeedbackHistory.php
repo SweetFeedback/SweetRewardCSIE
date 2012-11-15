@@ -6,7 +6,7 @@ if(isset($_GET['amount'])){
     $amount = $_GET['amount'];
 }
 
-$db = new DB();
+$db = DB::getInstance(Config::read('db.host'), Config::read('db.basename'), Config::read('db.user'), Config::read('db.password'));
 if(isset($_GET['user_id'])){
     $user_id = $_GET['user_id'];
     $result = $db->getRecentFeedbackBy($user_id, $amount);

@@ -2,7 +2,7 @@
 require_once("db.php");
 require_once("onlineUser.php");
 
-$db = new DB();
+$db = DB::getInstance(Config::read('db.host'), Config::read('db.basename'), Config::read('db.user'), Config::read('db.password'));
 refreshOnlineStatus($db);
 $result['num_online_device'] = $db->getNumberOfOnlineDevice();
 echo json_encode($result);
