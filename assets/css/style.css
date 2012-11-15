@@ -161,43 +161,80 @@ img#sun:hover {
 
 #map_2f {
     width: 550px;
+    z-index: -1;
 /*    top: 200px;
     left: 120px;*/
 }
 
+
 #win_1{
     position: absolute;
-    width: 86px;
-    top: 359px;
-    left: 279px;
+    width: 64px;
+    height: 8px;
+    display: block;
+    background: rgba(212,0,85, 0.5);
+    margin-top: 12px;
+    margin-left: 465px;
 }
 
 #win_2{
     position: absolute;
-    width: 91px;
-    top: 338px;
-    left: 333px;
+    width: 23px;
+    height: 8px;
+    display: block;
+    background: rgba(212,0,85, 0.5);
+    margin-top: 12px;
+    margin-left: 84px;
 }
 
 #win_3{
     position: absolute;
-    width: 79px;
-    top: 322px;
-    left: 393px;
+    width: 22px;
+    height: 8px;
+    display: block;
+    background: rgba(212,0,85, 0.5);
+    margin-top: 408px;
+    margin-left: 84px;
 }
 
 #win_4{
     position: absolute;
-    width: 68px;
-    top: 304px;
-    left: 440px;
+    width: 28px;
+    height: 8px;
+    display: block;
+    background: rgba(212,0,85, 0.5);
+    margin-top: 408px;
+    margin-left: 500px;
 }
 
 #win_5{
     position: absolute;
-    width: 68px;
-    top: 286px;
-    left: 477px;
+    width: 8px;
+    height: 35px;
+    display: block;
+    background: rgba(212,0,85, 0.5);
+    margin-top: 130px;
+    margin-left: 390px;
+}
+
+#win_6{
+    position: absolute;
+    width: 8px;
+    height: 35px;
+    display: block;
+    background: rgba(212,0,85, 0.5);
+    margin-top: 162px;
+    margin-left: 580px;
+}
+
+#win_7{
+    position: absolute;
+    width: 8px;
+    height: 20px;
+    display: block;
+    background: rgba(212,0,85, 0.5);
+    margin-top: 282px;
+    margin-left: 580px;
 }
 
 #ceil_1{
@@ -320,5 +357,74 @@ div.offline {
   margin-left: 5px;
 }
 
+.tint {
+  position: relative;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  -webkit-box-shadow: rgba(0,0,0,.2) 3px 5px 5px;
+  -moz-box-shadow: rgba(0,0,0,.2) 3px 5px 5px;
+  box-shadow: rgba(0,0,0,.2) 3px 5px 5px;
+}
 
+.tint:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,255,255, 0.5);
+  -moz-transition: all .3s linear;
+  -webkit-transition: all .3s linear;
+  -ms-transition: all .3s linear;
+  -o-transition: all .3s linear;
+  transition: all .3s linear;
+}
+  
+.tint:hover:before {
+  background: rgba(0,0,255, 0.5);
+  
+}
+.t2:before {
+  background: none;
+}
+
+.t2:hover:before {
+  background: rgba(0,0,255, 0.5);
+}
+
+#r336_r338 {
+  position: relative;
+  cursor: pointer;
+  border: 1px #ff0000 solid;
+  top:100px;
+  left:300px;
+  width: 60px;
+  height:80px;
+  display: block;
+  background: rgba(0,0,255, 0.5);
+}
+
+#r306_r308 {
+
+}
+
+#r302_r304 {
+
+}
+
+#r310 {
+
+}
+
+#r324{
+
+}
+
+#r318 {
+
+}
 

@@ -22,6 +22,7 @@
         <!-- Le fav and touch icons -->
         <link rel="shortcut icon" href="assets/ico/favicon.png">
 
+
     </head>
 
     <body>
@@ -113,12 +114,22 @@
                         </div>                                                                
                         <div id="left">
                             <div id="map"><img id="map_2f" src="img/csie/csie_map.png"/></div>
-<!--                            <img id="win_1" class="win" src="img/building/win1.png"/>
-                            <img id="win_2" class="win" src="img/building/win2.png"/>
-                            <img id="win_3" class="win" src="img/building/win3.png"/>
-                            <img id="win_4" class="win" src="img/building/win4.png"/>
-                            <img id="win_5" class="win" src="img/building/win5.png"/>-->
-
+                            
+                            <!--<img id="win_1" class="win" src="img/csie/csie_win1.png"/>
+                            <img id="win_2" class="win" src="img/csie/csie_win2.png"/>
+                            <img id="win_3" class="win" src="img/csie/csie_win3.png"/>
+                            <img id="win_4" class="win" src="img/csie/csie_win4.png"/>
+                            <img id="win_5" class="win" src="img/csie/csie_win5.png"/>
+                            <img id="win_6" class="win" src="img/csie/csie_win6.png"/>
+                            <img id="win_7" class="win" src="img/csie/csie_win7.png"/>-->
+                            <div id="win_1"></div>
+                            <div id="win_2"></div>
+                            <div id="win_3"></div>
+                            <div id="win_4"></div>
+                            <div id="win_5"></div>
+                            <div id="win_6"></div>
+                            <div id="win_7"></div>
+                            <!--<figure class=""><div id="r336_r338"/></figure>-->
                             
                             <div id="info" >
                                 <li><img src="img/others/char-cold.png"/> : Cold </li>
@@ -272,6 +283,34 @@
 
 
         <script language="javascript">
+            //open & close win
+                function win_open(w_id, degree) {
+        
+                    $("#win_"+w_id).css({ WebkitTransform: 'rotate(' + degree + 'deg)'});  
+                    $("#win_"+w_id).css({ '-moz-transform': 'rotate(' + degree + 'deg)'});                      
+                    setTimeout(function() {
+                        ++degree; 
+                        if(degree>=30){
+                            degree = 0;
+                        }else{
+                            win_open(w_id, degree);                
+                        }
+            
+                    },5);
+                }
+                function win_close(w_id, degree) {
+        
+                    $("#win_"+w_id).css({ WebkitTransform: 'rotate(' + degree + 'deg)'});  
+                    $("#win_"+w_id).css({ '-moz-transform': 'rotate(' + degree + 'deg)'});                      
+                    setTimeout(function() {
+                        --degree; 
+                        if(degree<=0){
+                            degree = 0;
+                        }else{
+                            win_close(w_id, degree);                
+                        }
+                    },5);
+                }
 
             function getUserPreference(){
                 /* get profile preference */
@@ -357,10 +396,12 @@
                             // window_state
                             if(parseInt(item['window_state']) == 1){
                                 //$('#testTxt').text(d_id+"_yyy "+item['window_state']);
-                                $('#win_'+d_id).css("visibility", "visible");
+                                //$('#win_'+d_id).css("visibility", "visible");
+                               
                             }else{
                                 //$('#testTxt').text(d_id+"_nn "+ item['window_state']);
-                                $('#win_'+d_id).css("visibility", "hidden");
+                                //$('#win_'+d_id).css("visibility", "hidden");
+                                
                             }
 
                             
@@ -668,13 +709,19 @@
                     }
                 });
             }
+            
             $(function(){
+                //var degree = 0, timer;
+
+                //window
+                win_open(1, 0);
+                win_close(4, 0);
 
                 $('#user_preference').hide();
 
                 /* hide headphone */
                 $('.machine').addClass('offline');
-                $('.win').css("visibility", "hidden");
+                //$('.win').css("visibility", "hidden");
 
                 /* hide setting */
                 $('#setting').hide();
@@ -803,6 +850,9 @@
                     });
                 });
 
+
+
+
                 /* read exist problems */
                 readProblemList();
 
@@ -811,30 +861,22 @@
                     cursor: 'move', 
                     containment: 'document'}
                 );*/
-                $("#app2").click(function(){
-                    //google.maps.event.trigger(window.map, 'resize');
-                    if(window.cur_user == 0 || window.cur_token == 0 || window.cur_uid == 0){
-                        alert("this page require you to login !!");
-                        document.location.reload(true);
-                    }
-                    else{
-                        initMap(window.cur_token);
-                    }
-                });
+                
 
                 /* update machine status every 2 sec */
                 setInterval(function(){
                     updateMachineStatus();
+                    
                 }, 1000);
 
                 setInterval(function(){
                     readProblemList();
                 }, 10000);
-
+                
 
                 /* load quiz */
-                $("#apps-3").load('quiz.html');
-
+                //$("#apps-3").load('quiz.html');
+                
 
 
 
