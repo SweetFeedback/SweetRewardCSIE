@@ -14,6 +14,7 @@ class DB{
     public $transportation_tableName = "transportation_log";
     public $transportationStatus_tableName = "transportation_status";
     public $problem_tableName = "problems";
+    public $rooms_tableName = "Rooms";
 
     private static $instance;
     public static function getInstance($hostname, $dbname, $user, $password){
@@ -65,6 +66,15 @@ class DB{
         $query = "select * from $this->onlineDevice_tableName";
         $result = $this->dbh->query($query);
         if($result->rowCount() > 0 ){
+            return $result->fetchAll();
+        }
+        return null;
+    }
+    ### get the list of all differenct room_id from rooms
+    public function getAllRoom(){
+        $query = "select * from $this->rooms_tableName where 1";
+        $result = $this->dbh->query($query);
+        if($result->rowCount() > 0){
             return $result->fetchAll();
         }
         return null;
@@ -204,7 +214,7 @@ class DB{
 
     ### get all report that not solved
     public function getExistReport(){
-        $query = "select id, title, coordinate_x, coordinate_y, created_by, created_at from $this->problem_tableName where status = 1";
+        $query = "select id, title, room, coordinate_x, coordinate_y, created_by, created_at from $this->problem_tableName where status = 1";
         $result = $this->dbh->query($query);
         if($result->rowCount() > 0){
             $rows = $result->fetchAll();
