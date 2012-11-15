@@ -16,6 +16,22 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `Rooms`
+--
+
+DROP TABLE IF EXISTS `Rooms`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Rooms` (
+  `room_id` int(11) NOT NULL AUTO_INCREMENT,
+  `room_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `coordinate_x` double NOT NULL,
+  `coordinate_y` double NOT NULL,
+  PRIMARY KEY (`room_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `basic_sensor_log`
 --
 
@@ -111,6 +127,7 @@ DROP TABLE IF EXISTS `problems`;
 CREATE TABLE `problems` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `category` int(11) NOT NULL DEFAULT '0',
+  `room` int(11) NOT NULL DEFAULT '0',
   `title` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `coordinate_x` int(11) DEFAULT NULL,
@@ -214,4 +231,4 @@ CREATE TABLE `window_state_log_ext` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-11-13 20:19:23
+-- Dump completed on 2012-11-15 14:31:00
