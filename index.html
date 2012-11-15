@@ -111,7 +111,8 @@
                             <span id="light_preference"></span>, 
                             <span id="temp_preference"></span>, 
                             <span id="sound_preference"></span>
-                        </div>                                                                
+                        </div>          
+                        <!--<div id="testTxt">cc</div> -->                                                    
                         <div id="left">
                             <!-- map -->
                             <div id="map"><img id="map_2f" src="img/csie/csie_map.png"/></div>
@@ -185,7 +186,32 @@
                                             </li>
                                         </ul>
                                     </div>
-
+                                    <div class="btn-group">
+                                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                                            <span id="dropdown_title" >Choose Location..</span>
+                                            <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="#" id="1">R336/R338</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" id="2">R306/R308</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" id="3">R302/R304</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" id="4">R310</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" id="4">R324</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" id="4">R318</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                     <form>
                                         <fieldset class='textbox'>
                                             <textarea id="problemInput" style="margin-top: 8px; width: 90%; height:180px;">problem.... </textarea>
@@ -353,8 +379,8 @@
                         $('#mrc_1').addClass('offline');
                         $('#mrc_2').addClass('offline');
                         $('#mrc_3').addClass('offline');
-                        $('#mrc_4').addClass('offline');
-                        $('#mrc_5').addClass('offline');
+                        //$('#mrc_4').addClass('offline');
+                        //$('#mrc_5').addClass('offline');
 
 
                         $.each(data['data'], function(i, item) {
@@ -399,35 +425,24 @@
                             if(parseInt(item['window_state']) == 1){
                                 //$('#testTxt').text(d_id+"_yyy "+item['window_state']);
                                 //$('#win_'+d_id).css("visibility", "visible");
+                                
+                                //window
+                                //win_open(d_id, 0);
+                                if(!$('#win_'+d_id).hasClass("open")){
+                                    win_open(d_id, 0);
+                                    $('#win_'+d_id).addClass("open");
+                                }
                                
                             }else{
                                 //$('#testTxt').text(d_id+"_nn "+ item['window_state']);
                                 //$('#win_'+d_id).css("visibility", "hidden");
-                                
-                            }
-
-                            
-
-                            // transportation
-                            if((item['trans'] == undefined) || (item['trans'] == null)) {
-                                
-                                $('#mrc_'+d_id+' img.transportation').attr('src','');
-
-                            }else{
-                                var trans_type = item['trans']['trans_type'];
-                                if(trans_type == "WALKING"){
-                                    $('#mrc_'+d_id+' img.transportation').attr('src','img/transportation/walk.png');
-                                }else if(trans_type == "BIKING"){
-                                    $('#mrc_'+d_id+' img.transportation').attr('src','img/transportation/bicycle.png');
-                                }else if(trans_type == "DRIVING"){
-                                    $('#mrc_'+d_id+' img.transportation').attr('src','img/transportation/car.png');
-                                }else if(trans_type == "TRAIN"){
-                                    $('#mrc_'+d_id+' img.transportation').attr('src','img/transportation/vta.png');
-                                }else{
-                                    $('#mrc_'+d_id+' img.transportation').attr('src','');
+                                win_close(d_id, 0); 
+                                if($('#win_'+d_id).hasClass("open")){
+                                    win_close(d_id, 0);
+                                    $('#win_'+d_id).removeClass("open");
                                 }
-                                
                             }
+
                             
                             //show machine
                             //$('#mrc_'+d_id).show();
@@ -608,6 +623,13 @@
                         }
                     });
             }
+
+            function readLocationData(){
+
+            }
+
+
+
             function readProblemList(){
                 $('.manual-toggle').toggle();
                 /* clear problem list */
@@ -715,14 +737,13 @@
             $(function(){
                 //var degree = 0, timer;
 
-                //window
-                win_open(1, 0);
-                win_close(4, 0);
+                
+                
 
                 $('#user_preference').hide();
 
                 /* hide headphone */
-                $('.machine').addClass('offline');
+                //$('.machine').addClass('offline');
                 //$('.win').css("visibility", "hidden");
 
                 /* hide setting */
