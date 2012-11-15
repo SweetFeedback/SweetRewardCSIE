@@ -8,7 +8,7 @@ if(isset($_GET["user_id"]) && isset($_GET["coordinate_x"]) && isset($_GET["coord
     $coordinate_x = $_GET["coordinate_x"];
     $coordinate_y = $_GET["coordinate_y"];
     $title = mysql_escape_string($_GET["title"]);
-    $db_help = new DB();
+    $db_help = DB::getInstance(Config::read('db.host'), Config::read('db.basename'), Config::read('db.user'), Config::read('db.password'));
     if(isset($_GET["category"])){
         $category = $_GET["category"];
         $db_help->insertFixReportByCategory($title, $coordinate_x, $coordinate_y, $user_id, $category);

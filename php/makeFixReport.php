@@ -5,7 +5,7 @@ require_once("feedback_type.php");
 $coming_up = $_SERVER['REMOTE_ADDR'];
 
 if (isset($_GET["report_id"]) && isset($_GET["user_id"])) {
-    $db_help = new DB();
+    $db_help = DB::getInstance(Config::read('db.host'), Config::read('db.basename'), Config::read('db.user'), Config::read('db.password'));
     $report_id = $_GET["report_id"];
     $user_id = $_GET["user_id"];
     $ret = array();
