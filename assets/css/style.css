@@ -162,17 +162,18 @@ img#sun:hover {
 #map_2f {
     width: 550px;
     z-index: -1;
-/*    top: 200px;
-    left: 120px;*/
-}
 
+}
+.win{
+    background: rgba(0,0,200, 0.5);
+}
 
 #win_1{
     position: absolute;
     width: 64px;
     height: 8px;
     display: block;
-    background: rgba(212,0,85, 0.5);
+    
     margin-top: 12px;
     margin-left: 465px;
 }
@@ -182,7 +183,7 @@ img#sun:hover {
     width: 23px;
     height: 8px;
     display: block;
-    background: rgba(212,0,85, 0.5);
+    
     margin-top: 12px;
     margin-left: 84px;
 }
@@ -192,7 +193,7 @@ img#sun:hover {
     width: 22px;
     height: 8px;
     display: block;
-    background: rgba(212,0,85, 0.5);
+    
     margin-top: 408px;
     margin-left: 84px;
 }
@@ -202,7 +203,7 @@ img#sun:hover {
     width: 28px;
     height: 8px;
     display: block;
-    background: rgba(212,0,85, 0.5);
+    
     margin-top: 408px;
     margin-left: 500px;
 }
@@ -212,7 +213,7 @@ img#sun:hover {
     width: 8px;
     height: 35px;
     display: block;
-    background: rgba(212,0,85, 0.5);
+    
     margin-top: 130px;
     margin-left: 390px;
 }
@@ -222,7 +223,7 @@ img#sun:hover {
     width: 8px;
     height: 35px;
     display: block;
-    background: rgba(212,0,85, 0.5);
+    
     margin-top: 162px;
     margin-left: 580px;
 }
@@ -232,7 +233,7 @@ img#sun:hover {
     width: 8px;
     height: 20px;
     display: block;
-    background: rgba(212,0,85, 0.5);
+    
     margin-top: 282px;
     margin-left: 580px;
 }
@@ -397,34 +398,78 @@ div.offline {
 }
 
 #r336_r338 {
-  position: relative;
+  position: absolute;
   cursor: pointer;
-  border: 1px #ff0000 solid;
-  top:100px;
-  left:300px;
-  width: 60px;
-  height:80px;
+  width: 105px;
+  height:69px;
   display: block;
-  background: rgba(0,0,255, 0.5);
+  background: rgba(234,0,55, 0.3);
+
+  margin-top:110px;
+  margin-left:397px;
 }
 
 #r306_r308 {
+  position: absolute;
+  cursor: pointer;
+  width: 105px;
+  height:71px;
+  display: block;
+  background: rgba(234,0,55, 0.7);
 
+  margin-top:179px;
+  margin-left:397px;
 }
 
 #r302_r304 {
+  position: absolute;
+  cursor: pointer;
+  
+  width: 106px;
+  height: 67px;
+  display: block;
+  background: rgba(234,0,55, 0.2);
 
+  margin-top: 277px;
+  margin-left: 395px;
 }
 
 #r310 {
+  position: absolute;
+  cursor: pointer;
+  
+  width: 84px;
+  height: 64px;
+  display: block;
+  background: rgba(234,0,55, 0.5);
 
+  margin-top: 344px;
+  margin-left: 417px;
 }
 
 #r324{
+  position: absolute;
+  cursor: pointer;
+  
+  width: 51px;
+  height: 64px;
+  display: block;
+  background: rgba(234,0,55, 0.3);
 
+  margin-top: 147px;
+  margin-left: 528px;
 }
 
 #r318 {
+  position: absolute;
+  cursor: pointer;
+  
+  width: 51px;
+  height: 32px;
+  display: block;
+  background: rgba(234,0,55, 0.1);
 
+  margin-top: 276px;
+  margin-left: 528px;
 }
 
