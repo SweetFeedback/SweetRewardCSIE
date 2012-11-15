@@ -27,7 +27,7 @@ if(isset($_GET['application_id']) && isset($_GET['type'])){
     else{
         $description = "this is feedback from ".$app_id;
     }
-    $db = new DB();
+    $db = DB::getInstance(Config::read('db.host'), Config::read('db.basename'), Config::read('db.user'), Config::read('db.password'));
     if(isset($_GET['user_id'])){
         $user_id = $_GET['user_id'];
         $db->insertFeedbackStatusByUserId($user_id, $app_id, $type, $description);
