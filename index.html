@@ -127,12 +127,12 @@
                             <div id="win_7" class="win"></div>
 
                             <!-- rooms -->
-                            <div id="r336_r338"></div>
-                            <div id="r306_r308"></div>
-                            <div id="r302_r304"></div>
-                            <div id="r310"></div>
-                            <div id="r324"></div>
-                            <div id="r318"></div>
+                            <div id="room_1"></div> <!--r336_r338 -->
+                            <div id="room_2"></div> <!--r306_r308 -->
+                            <div id="room_3"></div> <!--r302_r304 -->
+                            <div id="room_4"></div> <!--r310 -->
+                            <div id="room_5"></div> <!--r324 -->
+                            <div id="room_6"></div> <!--r318 -->
 
                             <div id="info" >
                                 <li><img src="img/others/char-cold.png"/> : Cold </li>
@@ -166,10 +166,11 @@
                                     <h3>Report a Problem!</h3>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="btn-group">
+                                    <div id="problem_select" class="btn-group">
                                         <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                                            <span id="dropdown_title" >Any Problem?</span>
+                                            <span id="problem_title">Any Problem?</span>
                                             <span class="caret"></span>
+                                            <input type="hidden" id="problem_id" />
                                         </a>
                                         <ul class="dropdown-menu">
                                             <li>
@@ -186,33 +187,35 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="btn-group">
+                                    <div id="location_select" class="btn-group">
                                         <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                                            <span id="dropdown_title" >Choose Location..</span>
+                                            <span id="location_title">Choose Location..</span>
                                             <span class="caret"></span>
+                                            <input type="hidden" id="location_id" />
                                         </a>
                                         <ul class="dropdown-menu">
                                             <li>
-                                                <a href="#" id="1">R336/R338</a>
+                                                <a href="#" id="1" class="room">R336/R338</a>
                                             </li>
                                             <li>
-                                                <a href="#" id="2">R306/R308</a>
+                                                <a href="#" id="2" class="room">R306/R308</a>
                                             </li>
                                             <li>
-                                                <a href="#" id="3">R302/R304</a>
+                                                <a href="#" id="3" class="room">R302/R304</a>
                                             </li>
                                             <li>
-                                                <a href="#" id="4">R310</a>
+                                                <a href="#" id="4" class="room">R310</a>
                                             </li>
                                             <li>
-                                                <a href="#" id="4">R324</a>
+                                                <a href="#" id="5" class="room">R324</a>
                                             </li>
                                             <li>
-                                                <a href="#" id="4">R318</a>
+                                                <a href="#" id="6" class="room">R318</a>
                                             </li>
                                         </ul>
                                     </div>
-                                    <form>
+                                    
+                                    <form id="problemInputForm">
                                         <fieldset class='textbox'>
                                             <textarea id="problemInput" style="margin-top: 8px; width: 90%; height:180px;">problem.... </textarea>
                                         </fieldset>
@@ -381,6 +384,8 @@
                         $('#mrc_3').addClass('offline');
                         //$('#mrc_4').addClass('offline');
                         //$('#mrc_5').addClass('offline');
+
+                        
 
 
                         $.each(data['data'], function(i, item) {
@@ -630,6 +635,7 @@
 
 
 
+
             function readProblemList(){
                 $('.manual-toggle').toggle();
                 /* clear problem list */
@@ -678,6 +684,7 @@
                 });
 
 
+                var problemMap = {};
 
                 /* get existing report */
                 $.ajax({
@@ -698,7 +705,17 @@
                             problemDiv.append('<div class="modal-footer"><a href="#" class="btn fixIssue" id="problem_'+item.id+'"">Fixed it</a><a href="#" class="btn" data-dismiss="modal" >Close</a></div>');
                             problemDiv.appendTo('#problemDetail');
 
+                            if(item.room in problemMap) problemMap[item.room]++;
+                            else    problemMap[item.room] = 1;
+                            
                         });
+                        
+                        $.each(problemMap, function(i, item){
+                            if(i != 0){
+                                $('#room_'+i).css({"background": "rgba(234,0,55,"+item/15.0+")"});
+                            }
+                        });
+
 
                         /* fix an existing report */
                         $('.fixIssue').click(function(){
@@ -744,6 +761,7 @@
 
                 /* hide headphone */
                 //$('.machine').addClass('offline');
+                $('.win').removeClass('open');
                 //$('.win').css("visibility", "hidden");
 
                 /* hide setting */
@@ -837,29 +855,46 @@
                         }
                     });
                 });
+
+
+                //
                 window.category = 0;
                 $('#hot').click(function(){
                     window.category = 1;
-                    $('#dropdown_title').text($('#hot').text());
+                    $('#problem_title').text($('#hot').text());
                 });
                 $('#cold').click(function(){
                     window.category = 2;
-                    $('#dropdown_title').text($('#cold').text());
+                    $('#problem_title').text($('#cold').text());
                 });
                 $('#noise').click(function(){
-                    $('#dropdown_title').text($('#noise').text());
+                    $('#problem_title').text($('#noise').text());
                     window.category = 3;
                 });
                 $('#other').click(function(){
-                    $('#dropdown_title').text($('#other').text());
+                    $('#problem_title').text($('#other').text());
                     window.category = 0;
                 });
+
+
+                /*$('#problem_select .dropdown-menu li a').on('click', function(){
+                    $('#problem_title').text($(this).text());
+                });*/
+
+                //location
+                $('#location_select .dropdown-menu li a').on('click', function(){
+                    $('#location_title').text($(this).text());
+                    $('#location_id').val(this.id);
+                    
+                });
+
                 /* make a new report */
                 $('#reportSubmit').click(function(){
                     $.ajax({
                         type: "GET",
                         url: "./php/makeNewReport.php",
-                        data: { "user_id": window.cur_uid, "coordinate_x": "1", "coordinate_y": "1", "title": $('#problemInput').val(), "category": window.category},
+                        data: { "user_id": window.cur_uid, "coordinate_x": "1", "coordinate_y": "1", "title": $('#problemInput').val(), 
+                                "category": window.category, "room_id": $('#location_id').val()},
 
                         dataType: 'json',
                         success: function(data) {
