@@ -1,8 +1,10 @@
 <?php
 require_once("db.php");
 
-$db = new DB(Config::read('db.host.gardenia'), Config::read('db.basename.gardenia'), Config::read('db.user.gardenia'), Config::read('db.password.gardenia'));
-print_r($db->getExistReport());
+$db = DB::getInstance(Config::read('db.host'), Config::read('db.basename'), Config::read('db.user'), Config::read('db.password'));
+echo json_encode($db->getAllRoom());
+#$db = new DB_PHIGET(Config::read('db.host.gardenia'), Config::read('db.basename.gardenia'), Config::read('db.user.gardenia'), Config::read('db.password.gardenia'));
+#print_r($db->getExistReport());
 #$db = new DB();
 #if( isset($_GET["account"]) && isset($_GET["password"])){
 #    $username = $_GET["account"];
