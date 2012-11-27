@@ -373,23 +373,13 @@ class DB{
     // mostly for sensor scenario need conjection control
     // use device_id to insert feedback
     public function insertFeedbackStatusByDeviceId($device_id, $application_id, $type, $description){ 
-        $time = $this->getMaxTimeStamp();
-        $date = date('Y-m-d H:i:s', time());
-        $diff = strtotime($date) - strtotime($time);
-        if($diff > 2){
-            $query = "insert into $this->feedbackStatus_tableName (device_id, application_id, feedback_type, feedback_description) values ($device_id, $application_id, \"$type\", \"$description\")";
-            $result = $this->dbh->query($query);
-        }
+        $query = "insert into $this->feedbackStatus_tableName (device_id, application_id, feedback_type, feedback_description) values ($device_id, $application_id, \"$type\", \"$description\")";
+        $result = $this->dbh->query($query);
     }
     ### use user_id to insert feedback add avoid too fast insertion
     public function insertFeedbackStatusByUserId($user_id, $application_id, $type, $description){ 
-        $time = $this->getMaxTimeStamp();
-        $date = date('Y-m-d H:i:s', time());
-        $diff = strtotime($date) - strtotime($time);
-        if($diff > 2){
-            $query = "insert into $this->feedbackStatus_tableName (user_id, application_id, feedback_type, feedback_description) values ($user_id, $application_id, \"$type\", \"$description\")";
-            $result = $this->dbh->query($query);
-        }
+        $query = "insert into $this->feedbackStatus_tableName (user_id, application_id, feedback_type, feedback_description) values ($user_id, $application_id, \"$type\", \"$description\")";
+        $result = $this->dbh->query($query);
     }
     ### update feedback by device(gumball machine)
     public function updateFeedbackStatusBy($feedback_id){
