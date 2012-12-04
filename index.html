@@ -475,7 +475,7 @@
 
 
                             // sound_level
-                            if(parseFloat(item['sound_level']) >= window.sound_preference){
+                            if(parseFloat(item['sound_level']) >= window.micro_threshold){
                                 $('#mrc_'+d_id+' img.headphone').css("visibility", "visible");
                             }else{
                                 $('#mrc_'+d_id+' img.headphone').css("visibility", "hidden");
@@ -847,7 +847,7 @@
                 );*/
                 
 
-                /* update machine status every 2 sec */
+                /* update machine status every 1 sec */
                 setInterval(function(){
                     updateMachineStatus();
                     
