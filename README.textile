@@ -29,7 +29,7 @@ h2. Installation Steps.
 5. Install the database schema to your local database.
 * If you use command line, give commands
 @cd [your sweetrewardCSIE's path]/SweetRewardCSIE/@
-@mysql -u [username of your database] -p < schema.sql@
+@mysql -u [username of your database] -p [your database name] < schema.sql@
 * If you use phpmyadmin, please press the import button and choose the file *schema.sql* under *SweetRewardCSIE/* and finish installing our schema to your database.
 
 
