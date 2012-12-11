@@ -137,7 +137,7 @@ img#sun:hover {
 
 #mrc_2 {
     position: absolute;
-    top: 500px;
+    top: 540px;
     left: 620px;
 }
 
@@ -170,73 +170,186 @@ img#sun:hover {
 
 #win_1{
     position: absolute;
-    width: 64px;
-    height: 8px;
+    width: 8px;
+    height: 20px;
     display: block;
     
-    margin-top: 12px;
-    margin-left: 465px;
+    margin-top: 120px;
+    margin-left: 390px;
+    
 }
 
 #win_2{
-    position: absolute;
-    width: 23px;
-    height: 8px;
-    display: block;
-    
-    margin-top: 12px;
-    margin-left: 84px;
-}
-
-#win_3{
-    position: absolute;
-    width: 22px;
-    height: 8px;
-    display: block;
-    
-    margin-top: 408px;
-    margin-left: 84px;
-}
-
-#win_4{
-    position: absolute;
-    width: 28px;
-    height: 8px;
-    display: block;
-    
-    margin-top: 408px;
-    margin-left: 500px;
-}
-
-#win_5{
-    position: absolute;
-    width: 8px;
-    height: 35px;
-    display: block;
-    
-    margin-top: 130px;
-    margin-left: 390px;
-}
-
-#win_6{
-    position: absolute;
-    width: 8px;
-    height: 35px;
-    display: block;
-    
-    margin-top: 162px;
-    margin-left: 580px;
-}
-
-#win_7{
     position: absolute;
     width: 8px;
     height: 20px;
     display: block;
     
-    margin-top: 282px;
+    margin-top: 150px;
+    margin-left: 390px;
+}
+
+#win_3{
+    position: absolute;
+    width: 8px;
+    height: 22px;
+    display: block;
+    
+    margin-top: 155px;
     margin-left: 580px;
 }
+
+#win_4{
+    position: absolute;
+    width: 8px;
+    height: 22px;
+    display: block;
+    
+    margin-top: 182px;
+    margin-left: 580px;
+}
+
+#win_5{
+    position: absolute;
+    width: 50px;
+    height: 8px;
+    display: block;
+    
+    margin-top: 12px;
+    margin-left: 472px;
+    
+}
+
+#win_6{
+    
+    position: absolute;
+    width: 20px;
+    height: 8px;
+    display: block;
+    
+    margin-top: 12px;
+    margin-left: 437px;
+}
+
+#win_7{
+    position: absolute;
+    width: 20px;
+    height: 8px;
+    display: block;
+    
+    margin-top: 12px;
+    margin-left: 412px;
+}
+#win_8{
+    position: absolute;
+    width: 23px;
+    height: 8px;
+    display: block;
+    
+    margin-top: 105px;
+    margin-left: 370px;
+}
+#win_9{
+    position: absolute;
+    width: 23px;
+    height: 8px;
+    display: block;
+    
+    margin-top: 105px;
+    margin-left: 340px;
+}
+#win_10{
+    position: absolute;
+    width: 23px;
+    height: 8px;
+    display: block;
+    
+    margin-top: 105px;
+    margin-left: 310px;
+}
+#win_11{
+    position: absolute;
+    width: 23px;
+    height: 8px;
+    display: block;
+    
+    margin-top: 105px;
+    margin-left: 280px;
+}
+#win_12{
+    position: absolute;
+    width: 23px;
+    height: 8px;
+    display: block;
+    
+    margin-top: 105px;
+    margin-left: 250px;
+}
+#win_13{
+    position: absolute;
+    width: 23px;
+    height: 8px;
+    display: block;
+    
+    margin-top: 105px;
+    margin-left: 220px;
+}
+#win_14{
+    position: absolute;
+    width: 23px;
+    height: 8px;
+    display: block;
+    
+    margin-top: 250px;
+    margin-left: 370px;
+}
+#win_15{
+    position: absolute;
+    width: 23px;
+    height: 8px;
+    display: block;
+    
+    margin-top: 250px;
+    margin-left: 340px;
+}
+#win_16{
+    position: absolute;
+    width: 23px;
+    height: 8px;
+    display: block;
+    
+    margin-top: 250px;
+    margin-left: 310px;
+}
+#win_17{
+    position: absolute;
+    width: 23px;
+    height: 8px;
+    display: block;
+    
+    margin-top: 250px;
+    margin-left: 280px;
+}
+#win_18{
+    position: absolute;
+    width: 23px;
+    height: 8px;
+    display: block;
+    
+    margin-top: 250px;
+    margin-left: 250px;
+}
+#win_19{
+    position: absolute;
+    width: 23px;
+    height: 8px;
+    display: block;
+    
+    margin-top: 250px;
+    margin-left: 220px;
+}
+
+
 
 #ceil_1{
     position: absolute;
