@@ -21,8 +21,6 @@
 
         <!-- Le fav and touch icons -->
         <link rel="shortcut icon" href="assets/ico/favicon.png">
-
-
     </head>
 
     <body>
@@ -94,15 +92,6 @@
                     <li class="active">
                     <a href="#apps-1" data-toggle="tab" id="app1">CSIE Building</a>
                     </li>
-                    <!--<li>
-                    <a href="#apps-2" data-toggle="tab" id="app2">Transportation</a>
-                    </li>
-                    <li>
-                    <a href="#apps-3" data-toggle="tab" id="app3">Questionaire</a>
-                    </li>
-                    <li>
-                    <a href="./collaboration" id="app4">Experiment</a>
-                    </li>-->
                 </ul>
 
                 <div class="tab-content">
@@ -127,12 +116,83 @@
                             <div id="win_7" class="win"></div>
 
                             <!-- rooms -->
-                            <div id="room_1"></div> <!--r336_r338 -->
-                            <div id="room_2"></div> <!--r306_r308 -->
-                            <div id="room_3"></div> <!--r302_r304 -->
-                            <div id="room_4"></div> <!--r310 -->
-                            <div id="room_5"></div> <!--r324 -->
-                            <div id="room_6"></div> <!--r318 -->
+                            <div id="room_1" data-toggle="modal" href="#room_1_detail"></div> <!--r336_r338 -->
+                            <div id="room_1_detail" class="modal hide fade">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h3>R336/R338</h3>
+                                </div>
+                                <div class="modal-body">
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                                </div>
+                            </div>
+                            <div id="room_2" data-toggle="modal" href="#room_2_detail"></div> <!--r306_r308 -->
+                            <div id="room_2_detail" class="modal hide fade">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h3>R306/R308</h3>
+                                </div>
+                                <div class="modal-body">
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                                </div>
+                            </div>
+                            <div id="room_3" data-toggle="modal" href="#room_3_detail"></div> <!--r302_r304 -->
+                            <div id="room_3_detail" class="modal hide fade">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h3>R302/R304</h3>
+                                </div>
+                                <div class="modal-body">
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                                </div>
+                            </div>
+                            <div id="room_4" data-toggle="modal" href="#room_4_detail"></div> <!--r310 -->
+                            <div id="room_4_detail" class="modal hide fade">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h3>R310</h3>
+                                </div>
+                                <div class="modal-body">
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                                </div>
+                            </div>
+                            <div id="room_5" data-toggle="modal" href="#room_5_detail"></div> <!--r324 -->
+                            <div id="room_5_detail" class="modal hide fade">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h3>R324</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <div>Motion(People)</div>
+                                    <div>Sound</div>
+                                    <div>Humidity</div>
+                                    <div>Temperature</div>
+                                    <div>Light</div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                                </div>
+                            </div> 
+                            <div id="room_6" data-toggle="modal" href="#room_6_detail"></div> <!--r318 -->
+                            <div id="room_6_detail" class="modal hide fade">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h3>R318</h3>
+                                </div>
+                                <div class="modal-body">
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                                </div>
+                            </div>
 
                             <div id="info" >
                                 <li><img src="img/others/char-cold.png"/> : Cold </li>
@@ -385,9 +445,6 @@
                         //$('#mrc_4').addClass('offline');
                         //$('#mrc_5').addClass('offline');
 
-                        
-
-
                         $.each(data['data'], function(i, item) {
                             var d_id = item['device_id'];
 
@@ -418,7 +475,7 @@
 
 
                             // sound_level
-                            if(parseFloat(item['sound_level']) >= window.sound_preference){
+                            if(parseFloat(item['sound_level']) >= window.micro_threshold){
                                 $('#mrc_'+d_id+' img.headphone').css("visibility", "visible");
                             }else{
                                 $('#mrc_'+d_id+' img.headphone').css("visibility", "hidden");
@@ -462,139 +519,12 @@
 
                 
             }
-            function TotalDistance(data){
-                ret = 0;
-                for(var i=0; i < data.length-1; i++){
-                    var glatlng_first = new google.maps.LatLng(data[i]['latitude'], data[i]['longitude']);
-                    var glatlng_second = new google.maps.LatLng(data[i+1]['latitude'], data[i+1]['longitude']);
-                    //var dis = glatlng_first.distanceFrom(glatlng_second, 3959).toFixed(1);
-                    var dis = google.maps.geometry.spherical.computeDistanceBetween(glatlng_first, glatlng_second);
-                    ret = ret + dis;
-                    console.log(ret);
-                }
-                return ret;
-            }
-            function TotalTime(data){
-                if(data.length != 0){
-                    var start_time = new Date(data[0]['time']);
-                    var end_time = new Date(data[data.length - 1]['time']);
-                    var ret = end_time - start_time
-                    return milliSecondToMinutes(ret);
-                }
-            }
+
             function milliSecondToMinutes(ret){
                 var one_minutes = 1000*60;
                 return Math.ceil(ret / one_minutes);
             }
-            function initMap(token) {
-                var mapOptions = {
-                    center: new google.maps.LatLng(37, -122),
-                    zoom: 12,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                };
-                if(window.map != null){
-                    return;
-                }
-                window.map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-                window.alldata = new Array();
-                $.getJSON("./php/mobile/getTripOfUser.php?token=" + token, function(data){
-                    for(var i=0; i < data.length;i++){
-                        var trip_id = data[i][0];
-                        $.getJSON("./php/mobile/getUserTransportationData.php?token=" + token + "&trip_id=" + trip_id, function(data){
-                            var tripFrame = $('<li class="items"></li>');
-                            var tripDiv = $('<a class="trip" id="trip_'+data[0]['trip_id']+'"></a>');
 
-                            tripDiv.text('trip ' + data[0]['trip_id']);
-                            tripDiv.appendTo(tripFrame);
-                            tripFrame.appendTo('#tripArea');
-                            //tripDiv.appendTo('#tripArea');
-                            window.alldata[data[0]['trip_id']] = data;
-                            var tripDes = $('<div id="des_'+data[0]['trip_id']+'"></div>');
-                            tripDes.text('Total Trip time:' + TotalTime(data));
-                            $('#trip_des').append(tripDes);
-                            tripDes.hide();
-                            
-                            tripDiv.click(function(){
-                                $('#trip_des div').hide();
-                                var split = this.id.split('_');
-                                $('#des_' + split[1]).show();
-                                refreshMap(split[1]);
-                                $('#trans_title').text("Your Transportation Track(trip_id=" + split[1] + ")");
-                                $.getJSON("./php/mobile/getTransportationSummary.php?token="+ token + "&trip_id=" + split[1], function(data){
-                                    console.log(data);
-                                });
-
-                            });
-                            var marker_array = [];
-                            var label = data[0]['label'];
-                            for(var i=0; i < data.length; i++){
-                                marker_array.push(new google.maps.LatLng(data[i]['latitude'], data[i]['longitude']));
-                                if( i == data.length - 1){
-                                    window.map.panTo(new google.maps.LatLng(data[data.length-1]['latitude'], data[data.length-1]['longitude']));
-                                }
-                            }
-
-                            var color = "#FF0000";
-                            //alert(label);
-                            if (label == "driving car"){
-                                color = "#00FF00";
-                            }
-                            else if(label == "train"){
-                                color = "#0000FF";
-                            }
-                            else if(label == "walking"){
-                                color = "#FFFF00";
-                            }
-                            var flight = new google.maps.Polyline({
-                                path:  marker_array,
-                                strokeColor: color,
-                                strokeOpacity: 1.0,
-                                strokeWeight: 2
-                            });
-                            flight.setMap(window.map);
-                        });
-                    }
-                });
-                google.maps.event.trigger(window.map, 'resize');
-            }
-            function refreshMap(trip_id)
-            {
-                get_data = window.alldata[trip_id];
-                total_distance = TotalDistance(get_data);
-                if(total_distance / 1000 > 30){
-                    zoom = 8;
-                }
-                else if(total_distance/1000 >= 20 && total_distance/1000 < 30){
-                    zoom = 10;
-                }
-                else if(total_distance/1000 >= 10 && total_distance/1000 < 20){
-                    zoom = 12;
-                }
-                else if(total_distance/1000 < 10){
-                    zoom = 14;
-                }
-                var myLatlng = new google.maps.LatLng(get_data[0]['latitude'],get_data[0]['longitude']);
-                var myOptions = {
-                    zoom: zoom,
-                    center: myLatlng,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                };
-                window.map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-                var marker_array = [];
-                var color = "#FF0000";
-                for(var i=0; i < get_data.length; i++){
-                    marker_array.push(new google.maps.LatLng(get_data[i]['latitude'], get_data[i]['longitude']));
-                }
-                console.log('total point number :' + get_data.length);
-                console.log('total distance:' + total_distance/1000 + 'km' + ' ' + get_data[0]['label']);
-                var flight = new google.maps.Polyline({
-                    path:  marker_array,
-                    strokeColor: color,
-                    strokeOpacity: 1.0,
-                    strokeWeight: 2
-                });
-                flight.setMap(window.map);
-            }
             function checkLogin(){
                 $.ajax({
                         type: "GET",
@@ -755,8 +685,6 @@
                 //var degree = 0, timer;
 
                 
-                
-
                 $('#user_preference').hide();
 
                 /* hide headphone */
@@ -909,8 +837,6 @@
                 });
 
 
-
-
                 /* read exist problems */
                 readProblemList();
 
@@ -921,7 +847,7 @@
                 );*/
                 
 
-                /* update machine status every 2 sec */
+                /* update machine status every 1 sec */
                 setInterval(function(){
                     updateMachineStatus();
                     
@@ -930,12 +856,6 @@
                 setInterval(function(){
                     readProblemList();
                 }, 10000);
-                
-
-                /* load quiz */
-                //$("#apps-3").load('quiz.html');
-                
-
 
 
             });
