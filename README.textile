@@ -21,9 +21,11 @@ h2. Installation Steps.
 
 2. Move the directory *SweetRewardCSIE/* to your webpage directory. It depends on your apache server's settings. e.g. *"XAMPP/www/" for XAMPP User*, or *"htdocs/"*, or *"Sites/"*
 3. Rename the file *SweetRewardCSIE/php/config.php.template* to *config.php*
+@cp SweetRewardCSIE/php/config.php.template SweetRewardCSIE/php/config.php@
 * Modify the database information. 
 
 4. Rename the file *SweetRewardCSIE/collaboration/config.json.template* to *config.json*
+@cp SweetRewardCSIE/collaboration/config.json.template SweetRewardCSIE/collaboration/config.json@
 * Modify the url of your localhost server.(Can reference to the existing one)
 
 5. Install the database schema to your local database.
