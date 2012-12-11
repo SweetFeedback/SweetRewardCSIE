@@ -623,6 +623,70 @@ class DB{
         $trip_id = $this->getMaxTripId($user_id);
         return $this->getTransportationData($user_id, $trip_id);
     }
+    public $extendedWindow_tableName = "extended_window_log";
+    /* extended window */ 
+    public function getNewestExtendedWindowState($window_id){
+        $query = "select * from $this->extendedWindow_tableName where window_id=$window_id order by timestamp limit 1";
+        $result = $this->dbh->query($query);
+        if($result->rowCount()>0){
+            $rows = $result->fetchAll();
+        }
+        return $rows;
+    }
+    public function getAllNewestExtendedWindowState(){
+        $windows = $this->getAllWindowsInformation();
+        $result = array();
+        foreach($windows as $win){
+            $data = $this->getNewestExtendedWindowState($win['window_id']);
+            $result[$win['window_id']] = $data[0];
+        }
+        return $result;
+    }
+    public function insertExtendedWindowState($location_id, $window_id, $window_state){
+        $query = "insert into $this->extendedWindow_tableName values(NULL, $location_id, $window_id, $state,NOW());" ;
+        $result = $this->dbh->query($query); 
+    }
+    public function insertExtendedWindowState2($window_id, $window_state){
+        $location_id = -1;
+        $this->insertExtendedWindowState($location_id, $window_id, $window_state);
+    }
+
+    /* windows */
+    public $windows_tableName = "Windows";
+    public function getWindowInformation($window_id){
+        $query = "select * from $this->windows_tableName where window_id = \"$window_id\"";
+        $result = $this->dbh->query($query);
+        if($result->rowCount()>0){
+            $rows = $result->fetchAll();
+        }
+        return $rows;
+    }
+    public function getAllWindowsInformation(){
+        $query = "select * from $this->windows_tableName where 1";
+        $result = $this->dbh->query($query);
+        if($result->rowCount()>0){
+            $rows = $result->fetchAll();
+        }
+        return $rows;
+    }
+    /* locations */
+    public $locations_tableName = "Locations";
+    public function getLocationInformation($location_id){
+        $query = "select * from $this->locations_tableName where location_id=\"$location_id\"";
+        $result = $this->dbh->query($query);
+        if($result->rowCount()>0){
+            $rows = $result->fetchAll();
+        }
+        return $rows;
+    }
+    public function getAllLocationInformation(){
+        $query = "select * from $this->locations_tableName";
+        $result = $this->dbh->query($query);
+        if($result->rowCount()>0){
+            $rows = $result->fetchAll();
+        }
+        return $rows;
+    }
 }
 
 ?>
