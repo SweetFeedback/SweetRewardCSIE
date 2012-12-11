@@ -5,7 +5,7 @@ h2. API Usage.
 h2. *getLocations.php*
 * Example 
 
-@[your path]/SweetRewardCSIE/php/getLocations.php?location_id=x@
+@[host url]/SweetRewardCSIE/php/getLocations.php?location_id=x@
 * Funtion
 ** Return all the locations data that database contains.
 * Parameters (GET Method):
@@ -15,7 +15,7 @@ h2. *getLocations.php*
 h2. *getWindows.php*
 * Example
 
-@[your path]/SweetRewardCSIE/php/getWindows.php?window_id=x@
+@[host url]/SweetRewardCSIE/php/getWindows.php?window_id=x@
 * Funtion
 ** Return all the windows data that database contains.
 * Parameters (GET Method):
@@ -25,7 +25,7 @@ h2. *getWindows.php*
 h2. *insertExtendedWindowState.php*
 * Example
 
-@[your path]/SweetRewardCSIE/php/insertExtendedWindowState.php?location_id=x&window_id=x&state=x@
+@[host url]/SweetRewardCSIE/php/insertExtendedWindowState.php?location_id=x&window_id=x&state=x@
 * Function
 ** Insert the window state data to database.
 * Parameters (GET Method):
