@@ -1,1 +1,20 @@
-@ git pull @ 
+h2. API Usage.
+
+*Make sure to update the newest database schema(SweetRewardCSIE/schema.sql)
+
+h3. *getLocations.php*
+
+* Return all the locations data that database contains by default.
+* If you add a GET parameter "location_id", the detailed information of specific location will be returned.
+
+h3. *getWindows.php*
+
+* Return all the windows data that database contains by default.
+* If you add a GET parameter "window_id", the detailed information of specific window will be returned.
+
+h3. *insertExtendedWindowState.php*
+
+* Insert the window state data to database.
+* You can use only GET parameters "window_id" & "state", or three GET parameters "location_id", "window_id", "state".
+
+
