@@ -2,19 +2,35 @@ h2. API Usage.
 
 * Make sure to update the newest database schema (see the "page":https://github.com/louisccc/SweetRewardCSIE if you don't know how)
 
-h3. *getLocations.php*
+h2. *getLocations.php*
+* Example 
 
-* Return all the locations data that database contains by default.
-* If you add a GET parameter "location_id", the detailed information of specific location will be returned.
+@[your path]/SweetRewardCSIE/php/getLocations.php?location_id=x@
+* Funtion
+** Return all the locations data that database contains.
+* Parameters (GET Method):
+** *location_id* (optional) 
+*** Will return all location information if you don't specify the location_id
 
-h3. *getWindows.php*
+h2. *getWindows.php*
+* Example
 
-* Return all the windows data that database contains by default.
-* If you add a GET parameter "window_id", the detailed information of specific window will be returned.
+@[your path]/SweetRewardCSIE/php/getWindows.php?window_id=x@
+* Funtion
+** Return all the windows data that database contains.
+* Parameters (GET Method):
+** *window_id* (optional) 
+*** Will return all window information if you don't specify the window_id
 
-h3. *insertExtendedWindowState.php*
+h2. *insertExtendedWindowState.php*
+* Example
 
-* Insert the window state data to database.
-* You can use only GET parameters "window_id" & "state", or three GET parameters "location_id", "window_id", "state".
+@[your path]/SweetRewardCSIE/php/insertExtendedWindowState.php?location_id=x&window_id=x&state=x@
+* Function
+** Insert the window state data to database.
+* Parameters (GET Method):
+** *location_id* (optional)
+** *window_id*  
+** *state*
 
 
