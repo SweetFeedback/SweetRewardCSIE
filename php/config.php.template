@@ -1,0 +1,29 @@
+<?php
+
+class Config{
+	static $confArray;
+
+	public static function read($name)
+	{
+		return self::$confArray[$name];
+	}
+
+	public static function write($name, $value)
+	{
+		self::$confArray[$name] = $value;
+	}
+}
+
+Config::write('db.host', 'localhost');
+Config::write('db.basename', 'sweetfeedback');
+Config::write('db.user', 'root');
+Config::write('db.password', 'xxxx');
+
+Config::write('db.host.gardenia', 'gardenia.csie.ntu.edu.tw');
+Config::write('db.user.gardenia', 'sweetfeedback');
+Config::write('db.password.gardenia', 'xxxx');
+
+Config::write('db.basename.sweetfeedback', 'sweetfeedback');
+Config::write('db.basename.smartpower', 'smartpower2');
+Config::write('db.basename.maple', 'maple');
+?>
