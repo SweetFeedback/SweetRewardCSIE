@@ -16,19 +16,37 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `Rooms`
+-- Table structure for table `Locations`
 --
 
-DROP TABLE IF EXISTS `Rooms`;
+DROP TABLE IF EXISTS `Locations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Rooms` (
-  `room_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `Locations` (
+  `location_id` int(11) NOT NULL AUTO_INCREMENT,
   `room_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `coordinate_x` double NOT NULL,
   `coordinate_y` double NOT NULL,
-  PRIMARY KEY (`room_id`)
+  `floor_level` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`location_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `Windows`
+--
+
+DROP TABLE IF EXISTS `Windows`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Windows` (
+  `window_id` int(11) NOT NULL AUTO_INCREMENT,
+  `window_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `coordinate_x` double NOT NULL,
+  `coordinate_y` double NOT NULL,
+  `floor_level` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`window_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,6 +82,23 @@ CREATE TABLE `device_online` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `extended_window_log`
+--
+
+DROP TABLE IF EXISTS `extended_window_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `extended_window_log` (
+  `ext_win_log_id` int(11) NOT NULL AUTO_INCREMENT,
+  `location_id` int(11) NOT NULL,
+  `window_id` int(11) NOT NULL,
+  `state` int(11) NOT NULL DEFAULT '-1',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ext_win_log_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `feedback_repository`
 --
 
@@ -80,7 +115,7 @@ CREATE TABLE `feedback_repository` (
   `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `if_get` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`feedback_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=280 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=281 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,7 +173,7 @@ CREATE TABLE `problems` (
   `updated_at` datetime DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=58 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=60 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -231,4 +266,4 @@ CREATE TABLE `window_state_log_ext` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-11-15 14:31:00
+-- Dump completed on 2012-12-12  1:59:54
