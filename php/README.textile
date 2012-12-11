@@ -1,6 +1,6 @@
 h2. API Usage.
 
-* Make sure to update the newest database schema(see the "page":https://github.com/louisccc/SweetRewardCSIE about how to update/install database schema)
+* Make sure to update the newest database schema (see the "page":https://github.com/louisccc/SweetRewardCSIE if you don't know how)
 
 h3. *getLocations.php*
 
