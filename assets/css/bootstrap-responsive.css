@@ -58,6 +58,19 @@
 }
 
 @media (max-width: 767px) {
+  
+  #left {
+    width: 100%;
+  }
+  #map_2f {
+    width: 347px;
+    z-index: -1;
+
+}
+  #right {
+    display: none;
+  }
+
   .visible-phone {
     display: inherit !important;
   }
@@ -70,9 +83,284 @@
   .visible-desktop {
     display: none !important;
   }
+
+
+  /* window */
+  #win_1{
+    position: absolute;
+    width: 5px;
+    height: 15px;
+    display: block;
+    
+    margin-top: 85px;
+    margin-left: 228px;
+  }
+
+  #win_2{
+    position: absolute;
+
+    width: 5px;
+    height: 15px;
+    display: block;
+    
+    margin-top: 106px;
+    margin-left: 228px;
+  }
+
+  #win_3{
+    position: absolute;
+    width: 5px;
+    height: 15px;
+    display: block;
+    
+    margin-top: 104px;
+    margin-left: 347px;
+  }
+
+  #win_4{
+    position: absolute;
+    width: 5px;
+    height: 15px;
+    display: block;
+    
+    margin-top: 123px;
+    margin-left: 347px;
+  }
+
+  #win_5{
+    position: absolute;
+    width: 30px;
+    height: 5px;
+    display: block;
+    
+    margin-top: 15px;
+    margin-left: 282px;  
+  }
+
+  #win_6{
+    position: absolute;
+    width: 15px;
+    height: 5px;
+    display: block;
+    
+    margin-top: 15px;
+    margin-left: 260px;
+  }
+
+  #win_7{
+    position: absolute;
+    width: 13px;
+    height: 5px;
+    display: block;
+    
+    margin-top: 15px;
+    margin-left: 240px;
+  }
+
+  #win_8{
+    position: absolute;
+    width: 13px;
+    height: 5px;
+    display: block;
+    
+    margin-top: 77px;
+    margin-left: 220px;
+  }
+  #win_9{
+    position: absolute;
+    width: 13px;
+    height: 5px;
+    display: block;
+    
+    margin-top: 77px;
+    margin-left: 200px;
+  }
+  #win_10{
+    position: absolute;
+    width: 13px;
+    height: 5px;
+    display: block;
+    
+    margin-top: 77px;
+    margin-left: 180px;
+  }
+  #win_11{
+    position: absolute;
+    width: 13px;
+    height: 5px;
+    display: block;
+    
+    margin-top: 77px;
+    margin-left: 160px;
+  }
+  #win_12{
+    position: absolute;
+    width: 13px;
+    height: 5px;
+    display: block;
+    
+    margin-top: 77px;
+    margin-left: 140px;
+  }
+  #win_13{
+    position: absolute;
+    width: 13px;
+    height: 5px;
+    display: block;
+    
+    margin-top: 77px;
+    margin-left: 120px;
+  }
+  #win_14{
+    position: absolute;
+    width: 13px;
+    height: 5px;
+    display: block;
+    
+    margin-top: 165px;
+    margin-left: 220px;
+  }
+  #win_15{
+    position: absolute;
+    width: 13px;
+    height: 5px;
+    display: block;
+    
+    margin-top: 165px;
+    margin-left: 200px;
+  }
+  #win_16{
+    position: absolute;
+    width: 13px;
+    height: 5px;
+    display: block;
+    
+    margin-top: 165px;
+    margin-left: 180px;
+  }
+  #win_17{
+    position: absolute;
+    width: 13px;
+    height: 5px;
+    display: block;
+    
+    margin-top: 165px;
+    margin-left: 160px;
+  }
+  #win_18{
+    position: absolute;
+    width: 13px;
+    height: 5px;
+    display: block;
+    
+    margin-top: 165px;
+    margin-left: 140px;
+  }
+  #win_19{
+    position: absolute;
+    width: 13px;
+    height: 5px;
+    display: block;
+    
+    margin-top: 165px;
+    margin-left: 120px;
+  }
+
+  /* room */
+  /*r336_r338*/
+  #room_1 {
+    position: absolute;
+    cursor: pointer;
+    width: 65px;
+    height:43px;
+    display: block;
+
+    margin-top:77px;
+    margin-left:232px;
+  }
+
+  /*r306_r308*/ 
+  #room_2 {
+    position: absolute;
+    cursor: pointer;
+    width: 65px;
+    height:45px;
+    display: block;
+
+    margin-top:120px;
+    margin-left:232px;
+  }
+
+  /*r302_r304*/
+  #room_3 {
+    position: absolute;
+    cursor: pointer;
+  
+    width: 67px;
+    height: 42px;
+    display: block;
+
+    margin-top: 182px;
+    margin-left: 230px;
+  }
+
+  /*r310*/
+  #room_4 {
+    position: absolute;
+    cursor: pointer;
+  
+    width: 53px;
+    height: 41px;
+    display: block;
+
+    margin-top: 224px;
+    margin-left: 244px;
+  }
+
+  /*r324*/
+  #room_5 {
+    position: absolute;
+    cursor: pointer;
+  
+    width: 32px;
+    height: 40px;
+    display: block;
+
+    margin-top: 100px;
+    margin-left: 315px;
+  }
+
+  /*r318*/
+  #room_6 {
+    position: absolute;
+    cursor: pointer;
+  
+    width: 32px;
+    height: 21px;
+    display: block;
+
+    margin-top: 181px;
+    margin-left: 315px;
+  }
+
+  #mrc_1 {
+    margin-top: 50px;
+    margin-left: 58px;
+  }
+
+  #mrc_2 {
+    margin-top: 50px;
+    margin-left: 250px;
+  }
+
+  #mrc_3 {
+    margin-top: 190px;
+    margin-left: 190px;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 979px) {
+  
   .visible-tablet {
     display: inherit !important;
   }
@@ -88,6 +376,10 @@
 }
 
 @media (max-width: 480px) {
+  #left {
+
+  }
+  
   .nav-collapse {
     -webkit-transform: translate3d(0, 0, 0);
   }
@@ -140,6 +432,7 @@
     padding-right: 20px;
     padding-left: 20px;
   }
+  
   .navbar-fixed-top,
   .navbar-fixed-bottom {
     margin-right: -20px;
@@ -199,6 +492,9 @@
 }
 
 @media (min-width: 768px) and (max-width: 979px) {
+  #left{
+    width: 90%;
+  }
   .row {
     margin-left: -20px;
     *zoom: 1;
@@ -220,6 +516,7 @@
   .navbar-fixed-bottom .container {
     /*width: 724px;*/
   }
+
   .span12 {
     width: 724px;
   }
