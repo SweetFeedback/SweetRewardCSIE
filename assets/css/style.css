@@ -508,9 +508,9 @@ div.offline {
 .t2:hover:before {
   background: rgba(0,0,255, 0.5);
 }
-/*.room{
+.room{
   background: rgba(0,120,255, 0.5);
-}*/
+}
 /*r336_r338*/
 #room_1 {
   position: absolute;
