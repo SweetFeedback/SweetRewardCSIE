@@ -45,7 +45,7 @@ h2. *getSmartPowerData.php*
 h2. *userActionTrigger.php*
 * Example 
 
-@[host url]/SweetRewardCSIE/php/userActionTrigger.php
+@[host url]/SweetRewardCSIE/php/userActionTrigger.php?window_id=x&token=xdafsdfsafsafsafd
 * Function 
 ** Tell server that a user has done something to the specific window (if a user correctly does something on window, a positive feedback will be inserted to server)
 * Parameters (GET Method) 
