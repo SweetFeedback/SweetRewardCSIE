@@ -29,6 +29,9 @@ if(isset($_GET['window_id']) && isset($_GET['token']) ){
             $ret['error'] = "1";
         }
     }
+    else{
+        $ret['no_data'] = "1";
+    }
     echo json_encode($ret);
 }
 
