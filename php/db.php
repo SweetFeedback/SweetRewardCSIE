@@ -637,9 +637,13 @@ class DB{
     public function getAllNewestExtendedWindowState(){
         $windows = $this->getAllWindowsInformation();
         $result = array();
-        foreach($windows as $win){
-            $data = $this->getNewestExtendedWindowState($win['window_id']);
-            $result[$win['window_id']] = $data[0];
+        if($windows != null){
+            foreach($windows as $win){
+                $data = $this->getNewestExtendedWindowState($win['window_id']);
+                if($data != null){
+                    $result[$win['window_id']] = $data[0];
+                }
+            }
         }
         return $result;
     }
@@ -679,8 +683,9 @@ class DB{
         $result = $this->dbh->query($query);
         if($result->rowCount()>0){
             $rows = $result->fetchAll();
+            return $rows;
         }
-        return $rows;
+        return null;
     }
     /* locations */
     public $locations_tableName = "Locations";
