@@ -60,7 +60,7 @@
 @media (max-width: 767px) {
   
   #left {
-    width:90%;
+    width:95%;
   } 
   #map_2f {
     width: 347px;
@@ -377,7 +377,7 @@
 
 @media (max-width: 480px) {
   #left {
-    width:90%;
+    width:95%;
   } 
   #right {
     display: none;
@@ -495,7 +495,7 @@
 
 @media (min-width: 768px) and (max-width: 979px) {
   #left{
-    width: 90%;
+    width: 95%;
   }
   .row {
     margin-left: -20px;
