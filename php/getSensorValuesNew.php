@@ -4,7 +4,7 @@ require_once("onlineUser.php");
 $db = DB::getInstance(Config::read('db.host'), Config::read('db.basename'), Config::read('db.user'), Config::read('db.password'));
 refreshOnlineStatus($db);
 refreshOnlineUserStatus($db);
-$allDevice = $db->getAllDevice();
+$allDevice = $db->getOnlineDeviceList();
 $result['data'] = Array();
 
 if($allDevice != null){
