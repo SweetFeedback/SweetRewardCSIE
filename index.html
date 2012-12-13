@@ -459,22 +459,21 @@
                                 var w_state = item['state'];
 
                                 // window_state
-                                if(parseInt(w_state) >= 0){
-
-                                    if(!$('#win_'+w_id).hasClass("open")){
-                                        win_open(w_id, 0);
-                                        $('#win_'+w_id).addClass("open");
-                                    }
-                               
-                                }else{
-                                    win_close(w_id, 0); 
+                                if(parseInt(w_state) == 0){ //close
+                                    
                                     if($('#win_'+w_id).hasClass("open")){
                                         win_close(w_id, 0);
                                         $('#win_'+w_id).removeClass("open");
                                     }
+                                }else{
+                                    if(!$('#win_'+w_id).hasClass("open")){
+                                        win_open(w_id, 0);
+                                        $('#win_'+w_id).addClass("open");
+                                    }
+                                    
                                 }
                             }else{
-                                win_close(w_id, 0); 
+                                
                                 if($('#win_'+w_id).hasClass("open")){
                                     win_close(w_id, 0);
                                     $('#win_'+w_id).removeClass("open");
