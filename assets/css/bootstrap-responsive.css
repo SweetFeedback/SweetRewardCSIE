@@ -63,7 +63,7 @@
     width:95%;
   } 
   #map_2f {
-    width: 330px;
+    width: 300px;
     z-index: -1;
 
 }
@@ -92,8 +92,8 @@
     height: 15px;
     display: block;
     
-    margin-top: 77px;
-    margin-left: 215px;
+    margin-top: 73px;
+    margin-left: 195px;
   }
 
   #win_2{
@@ -103,8 +103,8 @@
     height: 15px;
     display: block;
     
-    margin-top: 96px;
-    margin-left: 215px;
+    margin-top: 90px;
+    margin-left: 195px;
   }
 
   #win_3{
@@ -113,8 +113,8 @@
     height: 15px;
     display: block;
     
-    margin-top: 100px;
-    margin-left: 330px;
+    margin-top: 90px;
+    margin-left: 300px;
   }
 
   #win_4{
@@ -123,28 +123,28 @@
     height: 15px;
     display: block;
     
-    margin-top: 117px;
-    margin-left: 330px;
+    margin-top: 108px;
+    margin-left: 300px;
   }
 
   #win_5{
     position: absolute;
-    width: 30px;
+    width: 25px;
     height: 5px;
     display: block;
     
     margin-top: 15px;
-    margin-left: 265px;  
+    margin-left: 242px;  
   }
 
   #win_6{
     position: absolute;
-    width: 15px;
+    width: 13px;
     height: 5px;
     display: block;
     
     margin-top: 15px;
-    margin-left: 245px;
+    margin-left: 222px;
   }
 
   #win_7{
@@ -154,7 +154,7 @@
     display: block;
     
     margin-top: 15px;
-    margin-left: 230px;
+    margin-left: 208px;
   }
 
   #win_8{
@@ -164,7 +164,7 @@
     display: block;
     
     margin-top: 70px;
-    margin-left: 195px;
+    margin-left: 185px;
   }
   #win_9{
     position: absolute;
@@ -173,7 +173,7 @@
     display: block;
     
     margin-top: 70px;
-    margin-left: 180px;
+    margin-left: 170px;
   }
   #win_10{
     position: absolute;
@@ -182,7 +182,7 @@
     display: block;
     
     margin-top: 70px;
-    margin-left: 165px;
+    margin-left: 155px;
   }
   #win_11{
     position: absolute;
@@ -191,7 +191,7 @@
     display: block;
     
     margin-top: 70px;
-    margin-left: 150px;
+    margin-left: 140px;
   }
   #win_12{
     position: absolute;
@@ -200,7 +200,7 @@
     display: block;
     
     margin-top: 70px;
-    margin-left: 135px;
+    margin-left: 125px;
   }
   #win_13{
     position: absolute;
@@ -209,7 +209,7 @@
     display: block;
     
     margin-top: 70px;
-    margin-left: 120px;
+    margin-left: 110px;
   }
   #win_14{
     position: absolute;
@@ -217,8 +217,8 @@
     height: 5px;
     display: block;
     
-    margin-top: 158px;
-    margin-left: 195px;
+    margin-top: 145px;
+    margin-left: 185px;
   }
   #win_15{
     position: absolute;
@@ -226,8 +226,8 @@
     height: 5px;
     display: block;
     
-    margin-top: 158px;
-    margin-left: 180px;
+    margin-top: 145px;
+    margin-left: 170px;
   }
   #win_16{
     position: absolute;
@@ -235,8 +235,8 @@
     height: 5px;
     display: block;
     
-    margin-top: 158px;
-    margin-left: 165px;
+    margin-top: 145px;
+    margin-left: 155px;
   }
   #win_17{
     position: absolute;
@@ -244,8 +244,8 @@
     height: 5px;
     display: block;
     
-    margin-top: 158px;
-    margin-left: 150px;
+    margin-top: 145px;
+    margin-left: 140px;
   }
   #win_18{
     position: absolute;
@@ -253,8 +253,8 @@
     height: 5px;
     display: block;
     
-    margin-top: 158px;
-    margin-left: 135px;
+    margin-top: 145px;
+    margin-left: 125px;
   }
   #win_19{
     position: absolute;
@@ -262,8 +262,8 @@
     height: 5px;
     display: block;
     
-    margin-top: 158px;
-    margin-left: 120px;
+    margin-top: 145px;
+    margin-left: 110px;
   }
 
   /* room */
@@ -271,24 +271,24 @@
   #room_1 {
     position: absolute;
     cursor: pointer;
-    width: 63px;
-    height:40px;
+    width: 57px;
+    height:37px;
     display: block;
 
-    margin-top:75px;
-    margin-left:220px;
+    margin-top:70px;
+    margin-left:200px;
   }
 
   /*r306_r308*/ 
   #room_2 {
     position: absolute;
     cursor: pointer;
-    width: 63px;
-    height:43px;
+    width: 57px;
+    height:38px;
     display: block;
 
-    margin-top:115px;
-    margin-left:220px;
+    margin-top:107px;
+    margin-left:200px;
   }
 
   /*r302_r304*/
@@ -296,12 +296,12 @@
     position: absolute;
     cursor: pointer;
   
-    width: 63px;
-    height: 40px;
+    width: 58px;
+    height: 37px;
     display: block;
 
-    margin-top: 174px;
-    margin-left: 219px;
+    margin-top: 160px;
+    margin-left: 199px;
   }
 
   /*r310*/
@@ -309,12 +309,12 @@
     position: absolute;
     cursor: pointer;
   
-    width: 50px;
-    height: 39px;
+    width: 45px;
+    height: 35px;
     display: block;
 
-    margin-top: 214px;
-    margin-left: 232px;
+    margin-top: 197px;
+    margin-left: 212px;
   }
 
   /*r324*/
@@ -322,12 +322,12 @@
     position: absolute;
     cursor: pointer;
   
-    width: 31px;
-    height: 39px;
+    width: 28px;
+    height: 34px;
     display: block;
 
-    margin-top: 96px;
-    margin-left: 299px;
+    margin-top: 90px;
+    margin-left: 272px;
   }
 
   /*r318*/
@@ -335,12 +335,12 @@
     position: absolute;
     cursor: pointer;
   
-    width: 30px;
-    height: 20px;
+    width: 28px;
+    height: 18px;
     display: block;
 
-    margin-top: 173px;
-    margin-left: 299px;
+    margin-top: 160px;
+    margin-left: 272px;
   }
 
   #mrc_1 {
