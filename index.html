@@ -443,8 +443,47 @@
                     error: function(XMLHttpRequest, textStatus, errorThrown) {}
                 });
             }
+
+            function updateWindowStatus(){
+                /* get extended windows state*/
+                $.ajax({
+                    type: "GET",
+                    url: "./php/getExtendedWindowState.php",
+
+                    dataType: 'json',
+                    success: function(data) {
+                        
+
+                        $.each(data, function(i, item) {
+                            var w_id = item['window_id'];
+                            var w_state = item['state'];
+
+                            // window_state
+                            if(parseInt(w_state) >= 1){
+
+                                if(!$('#win_'+w_id).hasClass("open")){
+                                    win_open(w_id, 0);
+                                    $('#win_'+w_id).addClass("open");
+                                }
+                               
+                            }else{
+                                win_close(w_id, 0); 
+                                if($('#win_'+w_id).hasClass("open")){
+                                    win_close(w_id, 0);
+                                    $('#win_'+w_id).removeClass("open");
+                                }
+                            }
+
+                        });
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        //alert("get sensor Error");
+                    }
+                });    
+            }
+
+
             function updateMachineStatus(){
-                
                 
                 /* get sensor value*/
                 $.ajax({
@@ -499,30 +538,22 @@
                             
 
                             // window_state
-                            if(parseInt(item['window_state']) == 1){
-                                //$('#testTxt').text(d_id+"_yyy "+item['window_state']);
-                                //$('#win_'+d_id).css("visibility", "visible");
-                                
-                                //window
-                                //win_open(d_id, 0);
+                            /*if(parseInt(item['window_state']) == 1){
                                 if(!$('#win_'+d_id).hasClass("open")){
                                     win_open(d_id, 0);
                                     $('#win_'+d_id).addClass("open");
                                 }
                                
                             }else{
-                                //$('#testTxt').text(d_id+"_nn "+ item['window_state']);
-                                //$('#win_'+d_id).css("visibility", "hidden");
                                 win_close(d_id, 0); 
                                 if($('#win_'+d_id).hasClass("open")){
                                     win_close(d_id, 0);
                                     $('#win_'+d_id).removeClass("open");
                                 }
-                            }
+                            }*/
 
                             
                             //show machine
-                            //$('#mrc_'+d_id).show();
                             $('#mrc_'+d_id).removeClass("offline");
 
                         });
@@ -867,7 +898,7 @@
                 /* update machine status every 1 sec */
                 setInterval(function(){
                     updateMachineStatus();
-                    
+                    updateWindowStatus();
                 }, 1000);
 
                 setInterval(function(){
