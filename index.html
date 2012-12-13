@@ -448,24 +448,31 @@
                 /* get extended windows state*/
                 $.ajax({
                     type: "GET",
-                    url: "./php/getExtendedWindowState.php",
+                    url: "http://disa.csie.org/~blt/sweetreward/php/getExtendedWindowState.php",
 
                     dataType: 'json',
                     success: function(data) {
                         
-
                         $.each(data, function(i, item) {
-                            var w_id = item['window_id'];
-                            var w_state = item['state'];
+                            if(item){
+                                var w_id = item['window_id'];
+                                var w_state = item['state'];
 
-                            // window_state
-                            if(parseInt(w_state) >= 1){
+                                // window_state
+                                if(parseInt(w_state) >= 1){
 
-                                if(!$('#win_'+w_id).hasClass("open")){
-                                    win_open(w_id, 0);
-                                    $('#win_'+w_id).addClass("open");
-                                }
+                                    if(!$('#win_'+w_id).hasClass("open")){
+                                        win_open(w_id, 0);
+                                        $('#win_'+w_id).addClass("open");
+                                    }
                                
+                                }else{
+                                    win_close(w_id, 0); 
+                                    if($('#win_'+w_id).hasClass("open")){
+                                        win_close(w_id, 0);
+                                        $('#win_'+w_id).removeClass("open");
+                                    }
+                                }
                             }else{
                                 win_close(w_id, 0); 
                                 if($('#win_'+w_id).hasClass("open")){
@@ -473,6 +480,7 @@
                                     $('#win_'+w_id).removeClass("open");
                                 }
                             }
+                            
 
                         });
                     },
