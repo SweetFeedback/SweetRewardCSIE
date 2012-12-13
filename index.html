@@ -448,7 +448,7 @@
                 /* get extended windows state*/
                 $.ajax({
                     type: "GET",
-                    url: "http://disa.csie.org/~blt/sweetreward/php/getExtendedWindowState.php",
+                    url: "./php/getExtendedWindowState.php",
 
                     dataType: 'json',
                     success: function(data) {
@@ -459,7 +459,7 @@
                                 var w_state = item['state'];
 
                                 // window_state
-                                if(parseInt(w_state) >= 1){
+                                if(parseInt(w_state) >= 0){
 
                                     if(!$('#win_'+w_id).hasClass("open")){
                                         win_open(w_id, 0);
