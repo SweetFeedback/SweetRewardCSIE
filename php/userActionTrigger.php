@@ -20,7 +20,7 @@ if(isset($_GET['window_id']) && isset($_GET['token']) ){
                 if($state == 0){
                     $db->insertFeedbackStatusByDeviceId(1, 11, "positive", "close the window");
                 }
-                else($state == 1){
+                else if($state == 1){
                     $db->insertFeedbackStatusByDeviceId(1, 11, "positive", "open the window");
                 }
             }
