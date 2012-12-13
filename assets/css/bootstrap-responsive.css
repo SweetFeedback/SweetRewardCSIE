@@ -63,7 +63,7 @@
     width:95%;
   } 
   #map_2f {
-    width: 300px;
+    width: 260px;
     z-index: -1;
 
 }
@@ -88,182 +88,183 @@
   /* window */
   #win_1{
     position: absolute;
-    width: 5px;
-    height: 15px;
+    width: 4px;
+    height: 13px;
     display: block;
     
-    margin-top: 73px;
-    margin-left: 195px;
+    margin-top: 45px;
+    margin-left: 170px;
+
   }
 
   #win_2{
     position: absolute;
 
-    width: 5px;
-    height: 15px;
+    width: 4px;
+    height: 13px;
     display: block;
     
-    margin-top: 90px;
-    margin-left: 195px;
+    margin-top: 62px;
+    margin-left: 170px;
   }
 
   #win_3{
     position: absolute;
-    width: 5px;
-    height: 15px;
+    width: 4px;
+    height: 13px;
     display: block;
     
-    margin-top: 90px;
-    margin-left: 300px;
+    margin-top: 60px;
+    margin-left: 260px;
   }
 
   #win_4{
     position: absolute;
-    width: 5px;
-    height: 15px;
+    width: 4px;
+    height: 13px;
     display: block;
     
-    margin-top: 108px;
-    margin-left: 300px;
+    margin-top: 78px;
+    margin-left: 260px;
   }
 
   #win_5{
     position: absolute;
     width: 25px;
-    height: 5px;
+    height: 4px;
     display: block;
     
-    margin-top: 15px;
-    margin-left: 242px;  
+    margin-top: -3px;
+    margin-left: 208px;  
   }
 
   #win_6{
     position: absolute;
-    width: 13px;
-    height: 5px;
+    width: 11px;
+    height: 4px;
     display: block;
     
-    margin-top: 15px;
-    margin-left: 222px;
+    margin-top: -3px;
+    margin-left: 193px;
   }
 
   #win_7{
     position: absolute;
-    width: 13px;
-    height: 5px;
+    width: 11px;
+    height: 4px;
     display: block;
     
-    margin-top: 15px;
-    margin-left: 208px;
+    margin-top: -3px;
+    margin-left: 180px;
   }
 
   #win_8{
     position: absolute;
-    width: 13px;
-    height: 5px;
+    width: 11px;
+    height: 4px;
     display: block;
     
-    margin-top: 70px;
-    margin-left: 185px;
+    margin-top: 40px;
+    margin-left: 160px;
   }
   #win_9{
     position: absolute;
-    width: 13px;
-    height: 5px;
+    width: 11px;
+    height: 4px;
     display: block;
     
-    margin-top: 70px;
-    margin-left: 170px;
+    margin-top: 40px;
+    margin-left: 147px;
   }
   #win_10{
     position: absolute;
-    width: 13px;
-    height: 5px;
+    width: 11px;
+    height: 4px;
     display: block;
     
-    margin-top: 70px;
-    margin-left: 155px;
+    margin-top: 40px;
+    margin-left: 134px;
   }
   #win_11{
     position: absolute;
-    width: 13px;
-    height: 5px;
+    width: 11px;
+    height: 4px;
     display: block;
     
-    margin-top: 70px;
-    margin-left: 140px;
+    margin-top: 40px;
+    margin-left: 121px;
   }
   #win_12{
     position: absolute;
-    width: 13px;
-    height: 5px;
+    width: 11px;
+    height: 4px;
     display: block;
     
-    margin-top: 70px;
-    margin-left: 125px;
+    margin-top: 40px;
+    margin-left: 108px;
   }
   #win_13{
     position: absolute;
-    width: 13px;
-    height: 5px;
+    width: 11px;
+    height: 4px;
     display: block;
     
-    margin-top: 70px;
-    margin-left: 110px;
+    margin-top: 40px;
+    margin-left: 95px;
   }
   #win_14{
     position: absolute;
-    width: 13px;
-    height: 5px;
+    width: 11px;
+    height: 4px;
     display: block;
     
-    margin-top: 145px;
-    margin-left: 185px;
+    margin-top: 109px;
+    margin-left: 160px;
   }
   #win_15{
     position: absolute;
-    width: 13px;
-    height: 5px;
+    width: 11px;
+    height: 4px;
     display: block;
     
-    margin-top: 145px;
-    margin-left: 170px;
+    margin-top: 109px;
+    margin-left: 147px;
   }
   #win_16{
     position: absolute;
-    width: 13px;
-    height: 5px;
+    width: 11px;
+    height: 4px;
     display: block;
     
-    margin-top: 145px;
-    margin-left: 155px;
+    margin-top: 109px;
+    margin-left: 134px;
   }
   #win_17{
     position: absolute;
-    width: 13px;
-    height: 5px;
+    width: 11px;
+    height: 4px;
     display: block;
     
-    margin-top: 145px;
-    margin-left: 140px;
+    margin-top: 109px;
+    margin-left: 121px;
   }
   #win_18{
     position: absolute;
-    width: 13px;
-    height: 5px;
+    width: 11px;
+    height: 4px;
     display: block;
     
-    margin-top: 145px;
-    margin-left: 125px;
+    margin-top: 109px;
+    margin-left: 108px;
   }
   #win_19{
     position: absolute;
-    width: 13px;
-    height: 5px;
+    width: 11px;
+    height: 4px;
     display: block;
     
-    margin-top: 145px;
-    margin-left: 110px;
+    margin-top: 109px;
+    margin-left: 95px;
   }
 
   /* room */
@@ -271,24 +272,26 @@
   #room_1 {
     position: absolute;
     cursor: pointer;
-    width: 57px;
-    height:37px;
+    width: 49px;
+    height:31px;
     display: block;
 
-    margin-top:70px;
-    margin-left:200px;
+    margin-top:44px;
+    margin-left:174px;
+    
   }
 
   /*r306_r308*/ 
   #room_2 {
     position: absolute;
     cursor: pointer;
-    width: 57px;
-    height:38px;
+    width: 49px;
+    height:33px;
     display: block;
 
-    margin-top:107px;
-    margin-left:200px;
+    margin-top:75px;
+    margin-left:174px;
+    
   }
 
   /*r302_r304*/
@@ -296,12 +299,13 @@
     position: absolute;
     cursor: pointer;
   
-    width: 58px;
-    height: 37px;
+    width: 49px;
+    height: 31px;
     display: block;
 
-    margin-top: 160px;
-    margin-left: 199px;
+    margin-top: 122px;
+    margin-left: 173px;
+    
   }
 
   /*r310*/
@@ -309,12 +313,13 @@
     position: absolute;
     cursor: pointer;
   
-    width: 45px;
-    height: 35px;
+    width: 39px;
+    height: 30px;
     display: block;
 
-    margin-top: 197px;
-    margin-left: 212px;
+    margin-top: 152px;
+    margin-left: 183px;
+    
   }
 
   /*r324*/
@@ -322,12 +327,13 @@
     position: absolute;
     cursor: pointer;
   
-    width: 28px;
-    height: 34px;
+    width: 25px;
+    height: 31px;
     display: block;
 
-    margin-top: 90px;
-    margin-left: 272px;
+    margin-top: 60px;
+    margin-left: 235px;
+    
   }
 
   /*r318*/
@@ -335,27 +341,31 @@
     position: absolute;
     cursor: pointer;
   
-    width: 28px;
-    height: 18px;
+    width: 25px;
+    height: 16px;
     display: block;
 
-    margin-top: 160px;
-    margin-left: 272px;
+    margin-top: 120px;
+    margin-left: 235px;
+    
   }
 
   #mrc_1 {
-    margin-top: 50px;
-    margin-left: 58px;
+    margin-top: 20px;
+    margin-left: 35px;
+    
   }
 
   #mrc_2 {
-    margin-top: 50px;
-    margin-left: 250px;
+    margin-top: 20px;
+    margin-left: 180px;
+    
   }
 
   #mrc_3 {
-    margin-top: 190px;
-    margin-left: 190px;
+    margin-top: 140px;
+    margin-left: 120px;
+    
   }
 }
 
