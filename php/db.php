@@ -29,7 +29,7 @@ class DB{
         $dsn = 'mysql:host='.$hostname.';dbname='.$dbname;
         try{
             $this->dbh = new PDO($dsn, $user, $password);
-            date_default_timezone_set('America/Los_Angeles');
+            date_default_timezone_set("Asia/Taipei");
         }
         catch(PDOException $e){
         } 
@@ -626,12 +626,13 @@ class DB{
     public $extendedWindow_tableName = "extended_window_log";
     /* extended window */ 
     public function getNewestExtendedWindowState($window_id){
-        $query = "select * from $this->extendedWindow_tableName where window_id=$window_id order by timestamp limit 1";
+        $query = "select * from $this->extendedWindow_tableName where window_id=$window_id order by timestamp desc limit 1";
         $result = $this->dbh->query($query);
         if($result->rowCount()>0){
             $rows = $result->fetchAll();
+            return $rows;
         }
-        return $rows;
+        return null;
     }
     public function getAllNewestExtendedWindowState(){
         $windows = $this->getAllWindowsInformation();
@@ -642,8 +643,20 @@ class DB{
         }
         return $result;
     }
+    public function getPeriodExtendedWindowState($state){
+        $date = date("Y-m-d H:i:s");
+
+        $a = strtotime($date) - 30;
+        $date_before = date("Y-m-d H:i:s", $a);
+        $query = "select * from $this->extendedWindow_tableName where state=\"$state\" and timestamp > \"$date_before\" and timestamp <= \"$date\"";
+        $result = $this->dbh->query($query);
+        if($result->rowCount() > 0){
+            return ($result->fetchAll());
+        }
+        return null;
+    }
     public function insertExtendedWindowState($location_id, $window_id, $window_state){
-        $query = "insert into $this->extendedWindow_tableName values(NULL, $location_id, $window_id, $state,NOW());" ;
+        $query = "insert into $this->extendedWindow_tableName values(NULL, \"$location_id\", \"$window_id\", \"$window_state\",NOW());" ;
         $result = $this->dbh->query($query); 
     }
     public function insertExtendedWindowState2($window_id, $window_state){
