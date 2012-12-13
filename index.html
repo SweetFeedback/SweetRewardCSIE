@@ -453,26 +453,33 @@
                     dataType: 'json',
                     success: function(data) {
                         
-
                         $.each(data, function(i, item) {
-                            var w_id = item['window_id'];
-                            var w_state = item['state'];
+                            if(item){
+                                var w_id = item['window_id'];
+                                var w_state = item['state'];
 
-                            // window_state
-                            if(parseInt(w_state) >= 1){
-
-                                if(!$('#win_'+w_id).hasClass("open")){
-                                    win_open(w_id, 0);
-                                    $('#win_'+w_id).addClass("open");
+                                // window_state
+                                if(parseInt(w_state) == 0){ //close
+                                    
+                                    if($('#win_'+w_id).hasClass("open")){
+                                        win_close(w_id, 0);
+                                        $('#win_'+w_id).removeClass("open");
+                                    }
+                                }else{
+                                    if(!$('#win_'+w_id).hasClass("open")){
+                                        win_open(w_id, 0);
+                                        $('#win_'+w_id).addClass("open");
+                                    }
+                                    
                                 }
-                               
                             }else{
-                                win_close(w_id, 0); 
+                                
                                 if($('#win_'+w_id).hasClass("open")){
                                     win_close(w_id, 0);
                                     $('#win_'+w_id).removeClass("open");
                                 }
                             }
+                            
 
                         });
                     },
