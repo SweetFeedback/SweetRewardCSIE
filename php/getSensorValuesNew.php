@@ -9,7 +9,7 @@ $result['data'] = Array();
 
 if($allDevice != null){
     foreach($allDevice as $row){
-        $device_id = $row['device_id'];
+        $device_id = $row['session'];
         $newest_data = $db->getNewestDataOf($device_id);
         $log_id = $newest_data[0]['log_id'];
 
