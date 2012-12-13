@@ -377,15 +377,16 @@ div.offline {
 }
 #info {
     float: left;
-    width: 170px;
-    margin-left: 20px;
+    width: 90%;
+    /*margin-left: 20px;*/
     margin-top: 20px;
     font-size: 14px;
-    /*border: 1px solid #ff0000;*/
+    
 }
 
 #info li{
     list-style-type: none;
+    display: inline;
     margin: 10px;
 }
 

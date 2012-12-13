@@ -60,8 +60,8 @@
 @media (max-width: 767px) {
   
   #left {
-    width: 100%;
-  }
+    width:90%;
+  } 
   #map_2f {
     width: 347px;
     z-index: -1;
@@ -377,9 +377,11 @@
 
 @media (max-width: 480px) {
   #left {
-
-  }
-  
+    width:90%;
+  } 
+  #right {
+    display: none;
+  }  
   .nav-collapse {
     -webkit-transform: translate3d(0, 0, 0);
   }
