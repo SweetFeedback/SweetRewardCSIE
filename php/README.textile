@@ -33,4 +33,11 @@ h2. *insertExtendedWindowState.php*
 ** *window_id*  
 ** *state*
 
+h2. *getSmartPowerData.php*
+* Example 
 
+@[host url]/SweetRewardCSIE/php/getSmartPowerData.php@
+* Function 
+** Return all the newest data from R324's data.
+* Parameters (GET Method)
+** None
