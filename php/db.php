@@ -138,7 +138,7 @@ class DB{
         return null;
     }
     public function getFeedbackRanking(){
-        $query = "select user_id, count(*) as count from $this->feedbackStatus_tableName where 1 group by `user_id`";
+        $query = "select user_id, count(*) as count from $this->feedbackStatus_tableName where 1 group by `user_id` order by count DESC";
         $result = $this->dbh->query($query);
         if( $result->rowCount() > 0){
             $rows = $result->fetchAll();
@@ -233,7 +233,7 @@ class DB{
         return null;
     }
     public function getRankedRoomExistReport(){
-        $query = "select room, count(*) as count from $this->problem_tableName where 1 group by `room`";
+        $query = "select room, count(*) as count from $this->problem_tableName where 1 group by `room` order by count DESC";
         $result = $this->dbh->query($query);
         if( $result->rowCount() > 0){
             $rows = $result->fetchAll();
@@ -243,7 +243,7 @@ class DB{
         
     }
     public function getRankSolveProblemUser(){
-        $query = "select updated_by, count(*) as count from $this->problem_tableName where 1 group by `updated_by`";
+        $query = "select updated_by, count(*) as count from $this->problem_tableName where 1 group by `updated_by` order by count DESC";
         $result = $this->dbh->query($query);
         if( $result->rowCount() > 0){
             $rows = $result->fetchAll();
