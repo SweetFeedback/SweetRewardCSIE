@@ -232,6 +232,16 @@ class DB{
         }
         return null;
     }
+    public function getRankedRoomExistReport(){
+        $query = "select room, count(*) as count from $this->problem_tableName where 1 group by `room`";
+        $result = $this->dbh->query($query);
+        if( $result->rowCount() > 0){
+            $rows = $result->fetchAll();
+            return $rows;
+        }
+        return null;
+        
+    }
     ### fix report updating database
     public function updateFixReport($user_id, $report_id){
         $query = "update $this->problem_tableName set status=0, updated_by=$user_id, updated_at=NOW() where id=$report_id";
