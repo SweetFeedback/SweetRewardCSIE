@@ -19,6 +19,9 @@ h3 {
   
 }
 
+.win_err{
+  background: rgba(255,0,0, 1.0) !important;
+}
 
       
 #left{

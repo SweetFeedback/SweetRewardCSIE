@@ -457,6 +457,7 @@
                             if(item){
                                 var w_id = item['window_id'];
                                 var w_state = item['state'];
+                                var w_status = item['status'];
 
                                 // window_state
                                 if(parseInt(w_state) == 0){ //close
@@ -470,7 +471,16 @@
                                         win_open(w_id, 0);
                                         $('#win_'+w_id).addClass("open");
                                     }
-                                    
+                                }
+
+                                if(parseInt(w_status) == 0){ //bad, warning
+                                    if(!$('#win_'+w_id).hasClass("win_err")){
+                                        $('#win_'+w_id).addClass("win_err");
+                                    }
+                                }else{
+                                    if($('#win_'+w_id).hasClass("win_err")){
+                                        $('#win_'+w_id).removeClass("win_err");
+                                    }
                                 }
                             }else{
                                 
