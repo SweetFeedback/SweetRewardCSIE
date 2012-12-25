@@ -242,6 +242,16 @@ class DB{
         return null;
         
     }
+    public function getRankedRoomUnSolveExistReport(){
+        $query = "select room, count(*) as count from $this->problem_tableName where status=1 group by `room` order by count DESC";
+        $result = $this->dbh->query($query);
+        if( $result->rowCount() > 0){
+            $rows = $result->fetchAll();
+            return $rows;
+        }
+        return null;
+    }
+
     public function getRankSolveProblemUser(){
         $query = "select updated_by, count(*) as count from $this->problem_tableName where 1 group by `updated_by` order by count DESC";
         $result = $this->dbh->query($query);
