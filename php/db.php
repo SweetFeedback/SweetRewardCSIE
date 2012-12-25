@@ -1,5 +1,6 @@
 <?php 
 require_once("config.php");
+require_once("policyAgent.php");
 class DB{
     public $dbh;
 
@@ -627,12 +628,24 @@ class DB{
     /* extended window */ 
     public function getNewestExtendedWindowState($window_id){
         $query = "select * from $this->extendedWindow_tableName where window_id=$window_id order by timestamp desc limit 1";
+        $policyAgent = new PolicyAgent();
         $result = $this->dbh->query($query);
+        $ret = array();
         if($result->rowCount()>0){
             $rows = $result->fetchAll();
-            return $rows;
+            foreach( $rows as $row){
+                if($policyAgent->judgeWindowStatus($row['state'])){
+                    array_push($row, 1);
+                    $row["status"] = 1;
+                }
+                else{
+                    array_push($row, 0);
+                    $row["status"] = 0;
+                }
+                array_push($ret, $row);
+            }
         }
-        return null;
+        return $ret;
     }
     public function getAllNewestExtendedWindowState(){
         $windows = $this->getAllWindowsInformation();
