@@ -232,8 +232,8 @@ class DB{
         }
         return null;
     }
-    public function getRankedRoomExistReport(){
-        $query = "select room, count(*) as count from $this->problem_tableName where 1 group by `room` order by count DESC";
+    public function getRankedRoomSolveExistReport(){
+        $query = "select room, count(*) as count from $this->problem_tableName where status=0 group by `room` order by count DESC";
         $result = $this->dbh->query($query);
         if( $result->rowCount() > 0){
             $rows = $result->fetchAll();
