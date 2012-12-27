@@ -7,7 +7,9 @@ $result = $db->getRankedRoomUnSolveExistReport();
 $ret = array();
 if($result != null){
     foreach( $result as $row){
-        $information = $db->getLocationInformation(1);
+        //print_r($row);
+        $information = $db->getLocationInformation($row['room']);
+        //$information = $db->getLocationInformation(1);
         if( $information != null){
             $row['room_name'] = $information[0]['room_name'];
             $row['coordinate_x'] = $information[0]['coordinate_x'];
