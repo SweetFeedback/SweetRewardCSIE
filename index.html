@@ -626,9 +626,6 @@
 
             }
 
-
-
-
             function readProblemList(){
                 $('.manual-toggle').toggle();
                 /* clear problem list */
@@ -738,9 +735,6 @@
                                     //alert("fix report Error");
                                 }
                             });
-                            
-
-
                         });
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -748,17 +742,104 @@
                     }
                 });
             }
+
+            function readFeedbackHistory(){
+                $('.manual-toggle').toggle();
+
+                $('#feedbackList').remove();
+
+                var hisList = $('<div></div>').attr('id','feedbackList');
+                $('<ul></ul>').addClass('items').appendTo(hisList);
+                
+                $('#feedbackHistory').append(hisList);
+
+                /* get feedback history */
+                $.ajax({
+                    type: "GET",
+                    url: "./php/getFeedbackHistory.php",
+                    dataType: 'json',
+                    success: function(data) {
+                        
+                        $.each(data, function(i, item) {
+                            var historyList = $('<li><a href="#" class="tooltip-test" title="'+item.feedback_description+'">'+item.feedback_type+' ('+item.created_time+')</a></li>');
+
+                            if(item.feedback_type == "positive"){
+                                historyList.addClass('positive');
+                            }else if(item.feedback_type == "negative"){
+                                historyList.addClass('negative');
+                            }else if(item.feedback_type == "sound"){
+                                historyList.addClass('sound');
+                            }
+
+                            $('#feedbackList .items').append(historyList);
+                        });
+
+                        $('.tooltip-test').tooltip();
+                        
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        //alert("get exist Error");               
+                    }
+                });
+            }
             
+            function readRoomRank(){
+                $('.manual-toggle').toggle();
+
+                /* clear problem list */
+                $('#problemList').remove();
+                $('#problemDetail').remove();
+                
+
+                var proList = $('<div></div>').attr('id','problemList');
+                $('<ul></ul>').addClass('items').appendTo(proList);
+                var proDetail = $('<div></div>').attr('id', 'problemDetail');
+                
+                                
+                $('#problemArea').append(proList);
+                $('#problemArea').append(proDetail);
+
+                $.ajax({
+                    type: "GET",
+                    url: "./php/getUnsolveProblemRoomRank.php",
+                    
+                    dataType: 'json',
+                    success: function(data) {
+                        $.each(data, function(i, item) {
+                            $('#problemList .items').append('<li><a class="manual-toggle" data-toggle="modal" href="#problem_'+item.room+'">'+item.room_name+': '+item.count+'</a></li>');
+
+                            var problemDiv = $("<div></div>").attr('id','problem_'+item.room).addClass('modal hide fade');
+                            var problemBody = $('<div></div>').addClass('modal-body').appendTo(problemDiv);
+
+                            problemBody.append('<button type="button" class="close" data-dismiss="modal">&times;</button>');
+                            problemBody.append("<h3>Problem: "+item.room_name+"</h3>");
+                            problemDiv.append('<div class="modal-footer"><a href="#" class="btn" data-dismiss="modal" >Close</a></div>');
+                            problemDiv.appendTo('#problemDetail');
+
+
+                            //update color in map
+                            $('#room_'+item.room).css({"background": "rgba(234,0,55,"+item.count/15.0+")"});
+                        });
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    }
+                });
+            }
+
+            function updateLeaderBoard(){
+                readRoomRank();
+                readFeedbackHistory();
+            }
+
             $(function(){
                 //var degree = 0, timer;
-
-                
+                updateLeaderBoard();
                 $('#user_preference').hide();
 
                 /* hide headphone */
                 //$('.machine').addClass('offline');
                 $('.win').removeClass('open');
-                //$('.win').css("visibility", "hidden");
+                
 
                 /* hide setting */
                 $('#setting').hide();
@@ -895,7 +976,8 @@
                         dataType: 'json',
                         success: function(data) {
                             $('#problemInput').val("");
-                            readProblemList(); /* update problem list */
+                            //readProblemList(); /* update problem list */
+                            readRoomRank();
                             $.post("./php/insertFeedback.php?application_id=10&type=positive"); /* make new report and get feedback */
                         },
                         error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -906,7 +988,7 @@
 
 
                 /* read exist problems */
-                readProblemList();
+                //readProblemList();
 
                 /* make machine icon draggable */
                 /*$(".machine").draggable({
@@ -922,7 +1004,8 @@
                 }, 1000);
 
                 setInterval(function(){
-                    readProblemList();
+                    //readProblemList();
+                    updateLeaderBoard();
                 }, 10000);
 
 
