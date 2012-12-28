@@ -815,7 +815,25 @@
                     }
                 });
             }
-            
+
+            /*
+                1. >9
+                2. >6
+                3. >3
+                4. >0
+                5. 0    
+            */
+            function getEmotion(problem_count){
+                var level = 3;
+                var emotion = 1;
+                if(problem_count > level*3) emotion = 5;
+                else if(problem_count > level*2) emotion = 4;
+                else if(problem_count > level*1) emotion = 3;
+                else if(problem_count > level*0) emotion = 2;
+                else emotion = 1;
+
+                return emotion;
+            }
 
             function readRoomRank(){
                 $('.manual-toggle').toggle();
@@ -840,7 +858,7 @@
                     dataType: 'json',
                     success: function(data) {
                         $.each(data, function(i, item) {
-                            $('#problemList .items').append('<li><a class="manual-toggle" data-toggle="modal" href="#room_problem_'+item.room+'">'+item.room_name+': '+item.count+'</a></li>');
+                            $('#problemList .items').append('<li><a class="manual-toggle" data-toggle="modal" href="#room_problem_'+item.room+'">'+item.room_name+': '+item.count+'</a> <img src="img/emotion/emotion'+getEmotion(item.count)+'.png" width="22px"/></li>');
 
                             
                             var problemDiv = $("<div></div>").attr('id','room_problem_'+item.room).addClass('modal hide fade');
