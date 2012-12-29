@@ -45,7 +45,7 @@ h2. *getSmartPowerData.php*
 h2. *userActionTrigger.php*
 * Example 
 
-@[host url]/SweetRewardCSIE/php/userActionTrigger.php?window_id=x&token=xdafsdfsafsafsafd
+@[host url]/SweetRewardCSIE/php/userActionTrigger.php?window_id=x&token=xdafsdfsafsafsafd@
 * Function 
 ** Tell server that a user has done something to the specific window (if a user correctly does something on window, a positive feedback will be inserted to server)
 ** An user can tell server directly what he did (by setting the parameter *action*)
@@ -53,4 +53,33 @@ h2. *userActionTrigger.php*
 ** *window_id* the window that a user does something on
 ** *token* the token of specific user. 
 ** *action* (Optional) 
+
+h2. *getSolveProblemRoomRank.php*
+* Example
+
+@[host url]/SweetRewardCSIE/php/getSolveProblemRoomRank.php@
+* Function 
+** Return the ranked list of room in terms of the problem solved in that room.
+* Parameters (GET Method) 
+** None 
+
+h2. *getSolveProblemUserRank.php*
+* Example
+
+@[host url]/SweetRewardCSIE/php/getSolveProblemUserRank.php@
+* Function 
+** Return the ranked list of user in terms of the problem solved by that user.
+* Parameters (GET Method) 
+** None 
+
+h2. *getUnsolveProblemRoomRank.php*
+* Example
+
+@[host url]/SweetRewardCSIE/php/getUnsolveProblemRoomRank.php@
+* Function 
+** Return the ranked list of room in terms of the problem unsolved in that room.
+* Parameters (GET Method) 
+** None 
+
+
 
