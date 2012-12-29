@@ -1,8 +1,10 @@
-h2. API Usage.
+h2. *Sweetfeedback API*
+* Before using Sweetfeedback API
+** Make sure to update the newest database schema (see the "page":https://github.com/louisccc/SweetRewardCSIE if you don't know how), or you might encounter some troubles with the inconsistent database schema .
 
-* Make sure to update the newest database schema (see the "page":https://github.com/louisccc/SweetRewardCSIE if you don't know how)
+h2. *How to use API*
 
-h2. *getLocations.php*
+h3. *getLocations.php*
 * Example 
 
 @[host url]/SweetRewardCSIE/php/getLocations.php?location_id=x@
@@ -12,7 +14,7 @@ h2. *getLocations.php*
 ** *location_id* (optional) 
 *** Will return all location information if you don't specify the location_id
 
-h2. *getWindows.php*
+h3. *getWindows.php*
 * Example
 
 @[host url]/SweetRewardCSIE/php/getWindows.php?window_id=x@
@@ -22,7 +24,7 @@ h2. *getWindows.php*
 ** *window_id* (optional) 
 *** Will return all window information if you don't specify the window_id
 
-h2. *insertExtendedWindowState.php*
+h3. *insertExtendedWindowState.php*
 * Example
 
 @[host url]/SweetRewardCSIE/php/insertExtendedWindowState.php?location_id=x&window_id=x&state=x@
@@ -33,7 +35,7 @@ h2. *insertExtendedWindowState.php*
 ** *window_id*  
 ** *state*
 
-h2. *getSmartPowerData.php*
+h3. *getSmartPowerData.php*
 * Example 
 
 @[host url]/SweetRewardCSIE/php/getSmartPowerData.php@
@@ -42,13 +44,49 @@ h2. *getSmartPowerData.php*
 * Parameters (GET Method)
 ** None
 
-h2. *userActionTrigger.php*
+
+h2. *Mobile application*
+
+h3. *userActionTrigger.php*
 * Example 
 
-@[host url]/SweetRewardCSIE/php/userActionTrigger.php?window_id=x&token=xdafsdfsafsafsafd
+@[host url]/SweetRewardCSIE/php/userActionTrigger.php?window_id=x&token=xdafsdfsafsafsafd@
 * Function 
 ** Tell server that a user has done something to the specific window (if a user correctly does something on window, a positive feedback will be inserted to server)
+** An user can tell server directly what he did (by setting the parameter *action*)
 * Parameters (GET Method) 
 ** *window_id* the window that a user does something on
 ** *token* the token of specific user. 
+** *action* (Optional) 
+
+h2. *Ranking List*
+
+h3. *getSolveProblemRoomRank.php*
+* Example
+
+@[host url]/SweetRewardCSIE/php/getSolveProblemRoomRank.php@
+* Function 
+** Return the ranked list of room in terms of the problem solved in that room.
+* Parameters (GET Method) 
+** None 
+
+h3. *getSolveProblemUserRank.php*
+* Example
+
+@[host url]/SweetRewardCSIE/php/getSolveProblemUserRank.php@
+* Function 
+** Return the ranked list of user in terms of the problem solved by that user.
+* Parameters (GET Method) 
+** None 
+
+h3. *getUnsolveProblemRoomRank.php*
+* Example
+
+@[host url]/SweetRewardCSIE/php/getUnsolveProblemRoomRank.php@
+* Function 
+** Return the ranked list of room in terms of the problem unsolved in that room.
+* Parameters (GET Method) 
+** None 
+
+
 
