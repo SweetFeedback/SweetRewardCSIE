@@ -508,6 +508,7 @@
   #left{
     width: 95%;
   }
+  
   .row {
     margin-left: -20px;
     *zoom: 1;
@@ -745,6 +746,7 @@
 }
 
 @media (min-width: 1200px) {
+
   .row {
     margin-left: -30px;
     *zoom: 1;
@@ -993,6 +995,7 @@
   body {
     padding-top: 0;
   }
+
   .navbar-fixed-top,
   .navbar-fixed-bottom {
     position: static;
@@ -1122,4 +1125,6 @@
     height: auto !important;
     overflow: visible !important;
   }
+
+
 }
