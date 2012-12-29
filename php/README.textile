@@ -2,7 +2,7 @@ h2. *Sweetfeedback API*
 * Before using Sweetfeedback API
 ** Make sure to update the newest database schema (see the "page":https://github.com/louisccc/SweetRewardCSIE if you don't know how), or you might encounter some troubles with the inconsistent database schema .
 
-h2. *How to use API*
+h2. *How to use Sweetfeedback API*
 
 h3. *getLocations.php*
 * Example 
