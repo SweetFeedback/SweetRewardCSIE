@@ -8,8 +8,39 @@ if(isset($_GET['window_id']) && isset($_GET['token']) ){
     $agent = new PolicyAgent();
     $window_id = $_GET['window_id'];
     $token = $_GET['token'];
-
     $ret = array();
+    if( isset($_GET['action']) ){
+        $action = $_GET['action'];
+        if($agent->judgeWindowStatus($action)){
+            if($state == 0){
+
+                if($window_id == 8 || $window_id == 9 || $window_id == 10){
+                    $db->insertFeedbackStatusByDeviceId(1, 11, "positive", "close the window at right time");
+                }
+                else if($window_id == 11 || $window_id == 12 || $window_id == 13){
+                    $db->insertFeedbackStatusByDeviceId(2, 11, "positive", "close the window at right time");
+                }
+                else if($window_id == 1 || $window_id == 2){
+                    $db->insertFeedbackStatusByDeviceId(3, 11, "positive", "close the window at right time");
+                }
+            }
+            else if($state == 1){
+                if($window_id == 8 || $window_id == 9 || $window_id == 10){
+                    $db->insertFeedbackStatusByDeviceId(1, 11, "positive", "open the window at right time");
+                }
+                else if($window_id == 11 || $window_id == 12 || $window_id == 13){
+                    $db->insertFeedbackStatusByDeviceId(2, 11, "positive", "open the window at right time");
+                }
+                else if($window_id == 1 || $window_id == 2){
+                    $db->insertFeedbackStatusByDeviceId(3, 11, "positive", "open the window at right time");
+                }
+                #$db->insertFeedbackStatusByDeviceId(1, 11, "positive", "open the window");
+            }
+        }
+        else{
+            $ret['error'] = 1;
+        }
+    }
     $result = $db->getNewestExtendedWindowState($window_id);
     if($result != null){
         $state = $result[0]['state'];
