@@ -1,8 +1,10 @@
-h2. API Usage.
+h2. *Sweetfeedback API*
+* Before using Sweetfeedback API
+** Make sure to update the newest database schema (see the "page":https://github.com/louisccc/SweetRewardCSIE if you don't know how), or you might encounter some troubles with the inconsistent database schema .
 
-* Make sure to update the newest database schema (see the "page":https://github.com/louisccc/SweetRewardCSIE if you don't know how)
+h2. *How to use API*
 
-h2. *getLocations.php*
+h3. *getLocations.php*
 * Example 
 
 @[host url]/SweetRewardCSIE/php/getLocations.php?location_id=x@
@@ -12,7 +14,7 @@ h2. *getLocations.php*
 ** *location_id* (optional) 
 *** Will return all location information if you don't specify the location_id
 
-h2. *getWindows.php*
+h3. *getWindows.php*
 * Example
 
 @[host url]/SweetRewardCSIE/php/getWindows.php?window_id=x@
@@ -22,7 +24,7 @@ h2. *getWindows.php*
 ** *window_id* (optional) 
 *** Will return all window information if you don't specify the window_id
 
-h2. *insertExtendedWindowState.php*
+h3. *insertExtendedWindowState.php*
 * Example
 
 @[host url]/SweetRewardCSIE/php/insertExtendedWindowState.php?location_id=x&window_id=x&state=x@
@@ -33,7 +35,7 @@ h2. *insertExtendedWindowState.php*
 ** *window_id*  
 ** *state*
 
-h2. *getSmartPowerData.php*
+h3. *getSmartPowerData.php*
 * Example 
 
 @[host url]/SweetRewardCSIE/php/getSmartPowerData.php@
@@ -42,7 +44,10 @@ h2. *getSmartPowerData.php*
 * Parameters (GET Method)
 ** None
 
-h2. *userActionTrigger.php*
+
+h2. *Mobile application*
+
+h3. *userActionTrigger.php*
 * Example 
 
 @[host url]/SweetRewardCSIE/php/userActionTrigger.php?window_id=x&token=xdafsdfsafsafsafd@
@@ -54,7 +59,9 @@ h2. *userActionTrigger.php*
 ** *token* the token of specific user. 
 ** *action* (Optional) 
 
-h2. *getSolveProblemRoomRank.php*
+h2. *Ranking List*
+
+h3. *getSolveProblemRoomRank.php*
 * Example
 
 @[host url]/SweetRewardCSIE/php/getSolveProblemRoomRank.php@
@@ -63,7 +70,7 @@ h2. *getSolveProblemRoomRank.php*
 * Parameters (GET Method) 
 ** None 
 
-h2. *getSolveProblemUserRank.php*
+h3. *getSolveProblemUserRank.php*
 * Example
 
 @[host url]/SweetRewardCSIE/php/getSolveProblemUserRank.php@
@@ -72,7 +79,7 @@ h2. *getSolveProblemUserRank.php*
 * Parameters (GET Method) 
 ** None 
 
-h2. *getUnsolveProblemRoomRank.php*
+h3. *getUnsolveProblemRoomRank.php*
 * Example
 
 @[host url]/SweetRewardCSIE/php/getUnsolveProblemRoomRank.php@
