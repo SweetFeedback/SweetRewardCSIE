@@ -250,7 +250,7 @@
                             <a data-toggle="modal" href="#report" class="btn btn-primary" style="margin-bottom: 5px;">Report a Problem!</a>
                             <div class="bs-docs-example">
                                 <ul id="myTab" class="nav nav-tabs" style="margin: 0px; padding: 0px;">
-                                    <li class="active"><a href="#feedbackHistory" data-toggle="tab">Feedbacks</a></li>
+                                    <li class="active"><a href="#feedbackHistory" data-toggle="tab">User Rank</a></li>
                                     <li><a href="#problemArea" data-toggle="tab">Room Status</a></li>
                                 </ul>
 
@@ -774,6 +774,44 @@
                 });
             }
 
+
+            function readUserRank(){
+                var userRank;
+                var hisList;
+                $('.manual-toggle').toggle();
+
+                $('#feedbackList').remove();
+
+                hisList = $('<div></div>').attr('id','feedbackList');
+                $('<ul></ul>').addClass('items').appendTo(hisList);
+                
+                $('#feedbackHistory').append(hisList);
+
+                /* get user rank */
+                $.ajax({
+                    type: "GET",
+                    url: "./php/getSolveProblemUserRank.php",
+                    dataType: 'json',
+                    success: function(data) {
+                        
+                        $.each(data, function(i, item) {
+                            if(parseInt(item.count) > 1)
+                                userRank = $('<li>User '+ item.updated_by +' solve '+item.count+' problems!</li>');
+                            else
+                                userRank = $('<li>User '+ item.updated_by +' solve '+item.count+' problem!</li>');    
+                            
+                            $('#feedbackList .items').append(userRank);
+                        });
+
+                        $('.tooltip-test').tooltip();
+                        
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        //alert("get exist Error");               
+                    }
+                });                
+            }
+
             function readFeedbackHistory(){
                 $('.manual-toggle').toggle();
 
@@ -904,7 +942,8 @@
 
             function updateLeaderBoard(){
                 readRoomRank();
-                readFeedbackHistory();
+                readUserRank();
+                //readFeedbackHistory();
             }
 
             $(function(){
