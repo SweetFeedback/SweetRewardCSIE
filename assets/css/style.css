@@ -611,6 +611,60 @@ div.offline {
   margin-left: 498px;
 }
 
+
+/*r346*/
+#room_7 {
+  position: absolute;
+  cursor: pointer;
+  
+  width: 62px;
+  height: 65px;
+  display: block;
+
+  margin-top: 0px;
+  margin-left: 198px;
+}
+
+
+/*r344*/
+#room_8 {
+  position: absolute;
+  cursor: pointer;
+  
+  width: 57px;
+  height: 65px;
+  display: block;
+
+  margin-top: 0px;
+  margin-left: 261px;
+}
+
+/*r342*/
+#room_9 {
+  position: absolute;
+  cursor: pointer;
+  
+  width: 59px;
+  height: 65px;
+  display: block;
+
+  margin-top: 0px;
+  margin-left: 318px;
+}
+
+/*r340*/
+#room_10 {
+  position: absolute;
+  cursor: pointer;
+  
+  width: 58px;
+  height: 65px;
+  display: block;
+
+  margin-top: 0px;
+  margin-left: 377px;
+}
+
 #problem_select{
   
   display: inline-block;
