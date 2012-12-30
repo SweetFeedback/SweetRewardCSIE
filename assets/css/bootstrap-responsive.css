@@ -214,57 +214,75 @@
   }
   #win_14{
     position: absolute;
-    width: 11px;
+    width: 9px;
     height: 4px;
     display: block;
     
     margin-top: 109px;
-    margin-left: 160px;
+    margin-left: 166px;
   }
   #win_15{
     position: absolute;
-    width: 11px;
+    width: 9px;
     height: 4px;
     display: block;
     
     margin-top: 109px;
-    margin-left: 147px;
+    margin-left: 155px;
   }
   #win_16{
     position: absolute;
-    width: 11px;
+    width: 9px;
     height: 4px;
     display: block;
     
     margin-top: 109px;
-    margin-left: 134px;
+    margin-left: 144px;
   }
   #win_17{
     position: absolute;
-    width: 11px;
+    width: 9px;
     height: 4px;
     display: block;
     
     margin-top: 109px;
-    margin-left: 121px;
+    margin-left: 133px;
   }
   #win_18{
     position: absolute;
-    width: 11px;
+    width: 9px;
     height: 4px;
     display: block;
     
     margin-top: 109px;
-    margin-left: 108px;
+    margin-left: 122px;
   }
   #win_19{
     position: absolute;
-    width: 11px;
+    width: 9px;
     height: 4px;
     display: block;
     
     margin-top: 109px;
-    margin-left: 95px;
+    margin-left: 111px;
+  }
+  #win_20{
+    position: absolute;
+    width: 9px;
+    height: 4px;
+    display: block;
+    
+    margin-top: 109px;
+    margin-left: 100px;
+  }
+  #win_21{
+    position: absolute;
+    width: 9px;
+    height: 4px;
+    display: block;
+    
+    margin-top: 109px;
+    margin-left: 89px;
   }
 
   /* room */
@@ -347,6 +365,75 @@
 
     margin-top: 120px;
     margin-left: 235px;
+    
+  }
+
+  /*r318*/
+  #room_6 {
+    position: absolute;
+    cursor: pointer;
+  
+    width: 25px;
+    height: 16px;
+    display: block;
+
+    margin-top: 120px;
+    margin-left: 235px;
+    
+  }
+
+  /*r346*/
+  #room_7 {
+    position: absolute;
+    cursor: pointer;
+  
+    width: 29px;
+    height: 31px;
+    display: block;
+
+    margin-top: 0px;
+    margin-left: 94px;
+    
+  }
+
+  /*r344*/
+  #room_8 {
+    position: absolute;
+    cursor: pointer;
+  
+    width: 28px;
+    height: 31px;
+    display: block;
+
+    margin-top: 0px;
+    margin-left: 123px;
+    
+  }
+
+  /*r342*/
+  #room_9 {
+    position: absolute;
+    cursor: pointer;
+  
+    width: 27px;
+    height: 31px;
+    display: block;
+
+    margin-top: 0px;
+    margin-left: 151px;
+  }
+
+  /*r340*/
+  #room_10 {
+    position: absolute;
+    cursor: pointer;
+  
+    width: 28px;
+    height: 31px;
+    display: block;
+
+    margin-top: 0px;
+    margin-left: 178px;
     
   }
 
