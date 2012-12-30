@@ -929,7 +929,7 @@
                             if(data.hasOwnProperty('success') && data['success'] == 1){
                                 $.post("./php/insertFeedback.php?application_id=10&type=positive"); // fix a report and get feedback //
                                 readRoomRank();
-                                
+                                readUserRank();
                             }
 
                         },
