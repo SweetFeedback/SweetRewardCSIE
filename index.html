@@ -795,11 +795,13 @@
                     success: function(data) {
                         
                         $.each(data, function(i, item) {
+
                             if(parseInt(item.count) > 1)
                                 userRank = $('<li>User '+ item.updated_by +' solve '+item.count+' problems!</li>');
                             else
                                 userRank = $('<li>User '+ item.updated_by +' solve '+item.count+' problem!</li>');    
                             
+                            if(i == 0) userRank.append('<img src="img/badge/award.png"/>');
                             $('#feedbackList .items').append(userRank);
                         });
 
