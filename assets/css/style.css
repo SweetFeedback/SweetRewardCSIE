@@ -298,59 +298,77 @@ img#sun:hover {
 }
 #win_14{
     position: absolute;
-    width: 23px;
+    width: 18px;
     height: 6px;
     display: block;
     
     margin-top: 225px;
-    margin-left: 340px;
+    margin-left: 348px;
 }
 #win_15{
     position: absolute;
-    width: 23px;
+    width: 18px;
     height: 6px;
     display: block;
     
     margin-top: 225px;
-    margin-left: 310px;
+    margin-left: 326px;
 }
 #win_16{
     position: absolute;
-    width: 23px;
+    width: 18px;
     height: 6px;
     display: block;
     
     margin-top: 225px;
-    margin-left: 280px;
+    margin-left: 304px;
 }
 #win_17{
     position: absolute;
-    width: 23px;
+    width: 18px;
     height: 6px;
     display: block;
     
     margin-top: 225px;
-    margin-left: 250px;
+    margin-left: 282px;
 }
 #win_18{
     position: absolute;
-    width: 23px;
+    width: 18px;
     height: 6px;
     display: block;
     
     margin-top: 225px;
-    margin-left: 220px;
+    margin-left: 260px;
 }
 #win_19{
     position: absolute;
-    width: 23px;
+    width: 18px;
     height: 6px;
     display: block;
     
     margin-top: 225px;
-    margin-left: 190px;
+    margin-left: 238px;
 }
 
+#win_20{
+    position: absolute;
+    width: 18px;
+    height: 6px;
+    display: block;
+    
+    margin-top: 225px;
+    margin-left: 216px;
+}
+#win_21{
+    position: absolute;
+    width: 18px;
+    height: 6px;
+    display: block;
+    
+    margin-top: 225px;
+    margin-left: 194px;
+}
 
 
 #ceil_1{

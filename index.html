@@ -109,11 +109,11 @@
                             </div>
                             <div id="win_1" class="win"></div>
                             <div id="win_2" class="win"></div>
-                            <div id="win_3" class="win"></div>
+                            <!--<div id="win_3" class="win"></div>
                             <div id="win_4" class="win"></div>
                             <div id="win_5" class="win"></div>
                             <div id="win_6" class="win"></div>
-                            <div id="win_7" class="win"></div>
+                            <div id="win_7" class="win"></div>-->
                             <div id="win_8" class="win"></div>
                             <div id="win_9" class="win"></div>
                             <div id="win_10" class="win"></div>
@@ -126,7 +126,8 @@
                             <div id="win_17" class="win"></div>
                             <div id="win_18" class="win"></div>
                             <div id="win_19" class="win"></div>
-
+                            <div id="win_20" class="win"></div>
+                            <div id="win_21" class="win"></div>
                             <!-- rooms -->
                             <div id="room_1" data-toggle="modal" href="#room_1_detail" class="room"></div> <!--r336_r338 -->
                             <div id="room_1_detail" class="modal hide fade">
@@ -587,36 +588,36 @@
 
             function checkLogin(){
                 $.ajax({
-                        type: "GET",
-                        url: "./php/mobile/verifyUser.php",
-                        dataType: 'json',
-                        success: function(data) {
+                    type: "GET",
+                    url: "./php/mobile/verifyUser.php",
+                    dataType: 'json',
+                    success: function(data) {
                             
-                            if(data["is_logged_in"]==1){
+                        if(data["is_logged_in"]==1){
 
-                                window.cur_user = data["account"];
-                                window.cur_token = data["token"];
-                                window.cur_uid = data["user_id"]; 
-                                $('#current_user').text("Hi, "+data["account"]+"! ");
-                                $('#current_user').append('<b class="caret"></b>');
+                            window.cur_user = data["account"];
+                            window.cur_token = data["token"];
+                            window.cur_uid = data["user_id"]; 
+                            $('#current_user').text("Hi, "+data["account"]+"! ");
+                            $('#current_user').append('<b class="caret"></b>');
                     
-                                $('#login').hide();
-                                $('#setting').show();
+                            $('#login').hide();
+                            $('#setting').show();
 
 
-                                getUserPreference();
+                            getUserPreference();
 
-                            }
-                            else{
-                                $('#login').show();
-                                $('#setting').hide();
-
-                            }
-                        },
-                        error: function(XMLHttpRequest, textStatus, errorThrown) {
-                            //alert("Error");    
                         }
-                    });
+                        else{
+                            $('#login').show();
+                            $('#setting').hide();
+
+                        }
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            //alert("Error");    
+                    }
+                });
             }
 
             function readLocationData(){
