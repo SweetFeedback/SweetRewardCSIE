@@ -12,7 +12,7 @@ if( isset($_GET["account"]) && isset($_GET["password"])){
     }
     else{
         $result = json_encode($db->verifyUser($username, $password));
-        $result['existed'] = 1;
+        #$result['existed'] = 1;
     }
     echo json_encode($result);
 }
