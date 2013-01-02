@@ -8,11 +8,11 @@ if( isset($_GET["account"]) && isset($_GET["password"])){
     $db = DB::getInstance(Config::read('db.host'), Config::read('db.basename'), Config::read('db.user'), Config::read('db.password'));
     $result = array();
     if($db->insertNewUser($username, $password)!=null){
-        $result = json_encode($db->verifyUser($username, $password));
+        $result = $db->verifyUser($username, $password);
     }
     else{
-        $result = json_encode($db->verifyUser($username, $password));
-        #$result['existed'] = 1;
+        $result = $db->verifyUser($username, $password);
+        $result['existed'] = 1;
     }
     echo json_encode($result);
 }
