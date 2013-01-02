@@ -257,6 +257,10 @@ class DB{
         $result = $this->dbh->query($query);
         if( $result->rowCount() > 0){
             $rows = $result->fetchAll();
+            foreach($rows as $row){
+                print ($row['updated_by']);
+                $name = $this->getUser
+            }
             return $rows;
         }
         return null;
@@ -439,7 +443,7 @@ class DB{
             return $token;
         }
         else{
-            echo "existed";
+            return null;
         }
     }
     public function verifyUser($account, $password){
@@ -498,6 +502,9 @@ class DB{
             return $result[0]['user_id'];
         }
         return null;
+    }
+    public function getUserById($user_id){
+    
     }
     ### utilities
     public function getMaxTimeStamp(){
