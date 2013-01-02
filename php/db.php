@@ -259,7 +259,7 @@ class DB{
             $rows = $result->fetchAll();
             foreach($rows as $row){
                 print ($row['updated_by']);
-                $name = $this->getUser
+                #$name = $this->getUser
             }
             return $rows;
         }
