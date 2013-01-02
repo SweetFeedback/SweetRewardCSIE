@@ -15,28 +15,34 @@ if(isset($_GET['window_id']) && isset($_GET['token']) ){
             if($state == 0){
                 if($window_id == 8 || $window_id == 9 || $window_id == 10){
                     $db->insertFeedbackStatusByDeviceId(1, 11, "positive", "close the window at right time");
+                    $ret['get_feedback'] = 1;
                 }
                 else if($window_id == 11 || $window_id == 12 || $window_id == 13){
                     $db->insertFeedbackStatusByDeviceId(2, 11, "positive", "close the window at right time");
+                    $ret['get_feedback'] = 1;
                 }
                 else if($window_id == 1 || $window_id == 2){
                     $db->insertFeedbackStatusByDeviceId(3, 11, "positive", "close the window at right time");
+                    $ret['get_feedback'] = 1;
                 }
             }
             else if($state == 1){
                 if($window_id == 8 || $window_id == 9 || $window_id == 10){
                     $db->insertFeedbackStatusByDeviceId(1, 11, "positive", "open the window at right time");
+                    $ret['get_feedback'] = 1;
                 }
                 else if($window_id == 11 || $window_id == 12 || $window_id == 13){
                     $db->insertFeedbackStatusByDeviceId(2, 11, "positive", "open the window at right time");
+                    $ret['get_feedback'] = 1;
                 }
                 else if($window_id == 1 || $window_id == 2){
                     $db->insertFeedbackStatusByDeviceId(3, 11, "positive", "open the window at right time");
+                    $ret['get_feedback'] = 1;
                 }
             }
         }
         else{
-            $ret['error'] = 1;
+            $ret['status'] = 1;
         }
     }
     else{
@@ -50,34 +56,43 @@ if(isset($_GET['window_id']) && isset($_GET['token']) ){
                     if($state == 0){
                         if($window_id == 8 || $window_id == 9 || $window_id == 10){
                             $db->insertFeedbackStatusByDeviceId(1, 11, "positive", "close the window at right time");
+                            $ret['get_feedback'] = 1;
                         }
                         else if($window_id == 11 || $window_id == 12 || $window_id == 13){
                             $db->insertFeedbackStatusByDeviceId(2, 11, "positive", "close the window at right time");
+                            $ret['get_feedback'] = 1;
                         }
                         else if($window_id == 1 || $window_id == 2){
                             $db->insertFeedbackStatusByDeviceId(3, 11, "positive", "close the window at right time");
+                            $ret['get_feedback'] = 1;
                         }
                     }
                     else if($state == 1){
                         if($window_id == 8 || $window_id == 9 || $window_id == 10){
                             $db->insertFeedbackStatusByDeviceId(1, 11, "positive", "open the window at right time");
+                            $ret['get_feedback'] = 1;
                         }
                         else if($window_id == 11 || $window_id == 12 || $window_id == 13){
                             $db->insertFeedbackStatusByDeviceId(2, 11, "positive", "open the window at right time");
+                            $ret['get_feedback'] = 1;
                         }
                         else if($window_id == 1 || $window_id == 2){
                             $db->insertFeedbackStatusByDeviceId(3, 11, "positive", "open the window at right time");
+                            $ret['get_feedback'] = 1;
                         }
                     }
                 }
             }
             else if(!$agent->judgeWindowStatus($state)){
-                $ret['error'] = "1";
+                $ret['status'] = "1";
             }
         }
         else{
-            $ret['no_data'] = "1";
+            $ret['status'] = "2";
         }
+    }
+    if( array_key_exists('error', $ret) && array_key_exists('no_data', $ret)){
+        $ret['status'] = 0;
     }
     echo json_encode($ret);
 }
