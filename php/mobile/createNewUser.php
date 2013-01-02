@@ -11,6 +11,7 @@ if( isset($_GET["account"]) && isset($_GET["password"])){
         $result = json_encode($db->verifyUser($username, $password));
     }
     else{
+        $result = json_encode($db->verifyUser($username, $password));
         $result['existed'] = 1;
     }
     echo json_encode($result);
