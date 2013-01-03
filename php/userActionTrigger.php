@@ -51,8 +51,8 @@ if(isset($_GET['window_id']) && isset($_GET['token']) ){
             $state = $result[0]['state'];
             if($agent->judgeWindowStatus($state)){
                 #print "the state is correct now";
-                $ret = $db->getPeriodExtendedWindowState(1 - $state);
-                if($ret != null){
+                $return_status = $db->getPeriodExtendedWindowState(1 - $state);
+                if($return_status != null){
                     if($state == 0){
                         if($window_id == 8 || $window_id == 9 || $window_id == 10){
                             $db->insertFeedbackStatusByDeviceId(1, 11, "positive", "close the window at right time");
