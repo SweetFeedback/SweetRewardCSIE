@@ -258,7 +258,7 @@ class DB{
         if( $result->rowCount() > 0){
             $rows = $result->fetchAll();
             foreach($rows as $row){
-                print ($row['updated_by']);
+                //print ($row['updated_by']);
                 #$name = $this->getUser
             }
             return $rows;
