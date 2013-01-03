@@ -84,11 +84,11 @@ if(isset($_GET['window_id']) && isset($_GET['token']) ){
                 }
             }
             else if(!$agent->judgeWindowStatus($state)){
-                $ret['status'] = "1";
+                $ret['status'] = 1;
             }
         }
         else{
-            $ret['status'] = "2";
+            $ret['status'] = 2;
         }
     }
     if( $ret['status'] != 1 && $ret['status'] != 2){
