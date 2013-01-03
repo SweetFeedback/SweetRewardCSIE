@@ -50,7 +50,7 @@ if(isset($_GET['window_id']) && isset($_GET['token']) ){
         if($result != null){
             $state = $result[0]['state'];
             if($agent->judgeWindowStatus($state)){
-                #print "the state is correct now";
+                //print "the state is correct now";
                 $return_status = $db->getPeriodExtendedWindowState(1 - $state);
                 if($return_status != null){
                     if($state == 0){
@@ -82,6 +82,9 @@ if(isset($_GET['window_id']) && isset($_GET['token']) ){
                         //}
                     }
                 }
+                else{
+                    $ret['status'] = 3;
+                }
             }
             else if(!$agent->judgeWindowStatus($state)){
                 $ret['status'] = 1;
@@ -91,7 +94,7 @@ if(isset($_GET['window_id']) && isset($_GET['token']) ){
             $ret['status'] = 2;
         }
     }
-    if( $ret['status'] != 1 && $ret['status'] != 2){
+    if( $ret['status'] != 1 && $ret['status'] != 2 && $ret['status'] != 3){
         $ret['status'] = 0;
     }
     echo json_encode($ret);
