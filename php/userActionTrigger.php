@@ -91,7 +91,7 @@ if(isset($_GET['window_id']) && isset($_GET['token']) ){
             $ret['status'] = "2";
         }
     }
-    if( array_key_exists('error', $ret) && array_key_exists('no_data', $ret)){
+    if( !array_key_exists('error', $ret) && !array_key_exists('no_data', $ret)){
         $ret['status'] = 0;
     }
     echo json_encode($ret);
