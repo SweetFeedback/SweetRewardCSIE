@@ -2,6 +2,10 @@
 require_once("db.php");
 require_once("policyAgent.php");
 
+# status 0 -> success
+# status 1 -> status not correct
+# status 2 -> no data error 
+# status 3 -> no feedback 
 if(isset($_GET['window_id']) && isset($_GET['token']) ){
 
     $db = DB::getInstance(Config::read('db.host'), Config::read('db.basename'), Config::read('db.user'), Config::read('db.password'));
@@ -13,32 +17,24 @@ if(isset($_GET['window_id']) && isset($_GET['token']) ){
         $action = $_GET['action'];
         if($agent->judgeWindowStatus($action)){
             if($state == 0){
-                //if($window_id == 8 || $window_id == 9 || $window_id == 10){
-                    $db->insertFeedbackStatusByDeviceId(1, 11, "positive", "close the window at right time");
-                    $ret['get_feedback'] = 1;
-                //}
-                //else if($window_id == 11 || $window_id == 12 || $window_id == 13){
-                //    $db->insertFeedbackStatusByDeviceId(2, 11, "positive", "close the window at right time");
-                //    $ret['get_feedback'] = 1;
-                //}
-                //else if($window_id == 1 || $window_id == 2){
-                //    $db->insertFeedbackStatusByDeviceId(3, 11, "positive", "close the window at right time");
-                //    $ret['get_feedback'] = 1;
-                //}
+                if( ($window_id >= 8 && $window_id <= 13) || ($window_id == 1 || $window_id == 2)){
+                    $db->insertFeedbackStatusByDeviceId(1, 11, "positive", "close the window $window_id at right time");
+                    $ret['get_feedback'] = $window_id;
+                }
+                else if ( $window_id >= 14 && $window_id <= 21 ){
+                    $db->insertFeedbackStatusByDeviceId(3, 11, "positive", "close the window $window_id at right time");
+                    $ret['get_feedback'] = $window_id;
+                }
             }
             else if($state == 1){
-                //if($window_id == 8 || $window_id == 9 || $window_id == 10){
-                    //$db->insertFeedbackStatusByDeviceId(1, 11, "positive", "open the window at right time");
-                    //$ret['get_feedback'] = 1;
-                //}
-                //else if($window_id == 11 || $window_id == 12 || $window_id == 13){
-                    //$db->insertFeedbackStatusByDeviceId(2, 11, "positive", "open the window at right time");
-                    //$ret['get_feedback'] = 1;
-                //}
-                //else if($window_id == 1 || $window_id == 2){
-                    $db->insertFeedbackStatusByDeviceId(3, 11, "positive", "open the window at right time");
-                    $ret['get_feedback'] = 1;
-                //}
+                if( ($window_id >= 8 && $window_id <= 13) || ($window_id == 1 || $window_id == 2)){
+                    $db->insertFeedbackStatusByDeviceId(1, 11, "positive", "open the window $window_id at right time");
+                    $ret['get_feedback'] = $window_id;
+                }
+                else if ( $window_id >= 14 && $window_id <= 21 ){
+                    $db->insertFeedbackStatusByDeviceId(3, 11, "positive", "open the window $window_id at right time");
+                    $ret['get_feedback'] = $window_id;
+                }
             }
         }
         else{
@@ -54,32 +50,24 @@ if(isset($_GET['window_id']) && isset($_GET['token']) ){
                 $return_status = $db->getPeriodExtendedWindowState(1 - $state);
                 if($return_status != null){
                     if($state == 0){
-                        //if($window_id == 8 || $window_id == 9 || $window_id == 10){
-                            $db->insertFeedbackStatusByDeviceId(1, 11, "positive", "close the window at right time");
-                            $ret['get_feedback'] = 1;
-                        //}
-                        //else if($window_id == 11 || $window_id == 12 || $window_id == 13){
-                        //    $db->insertFeedbackStatusByDeviceId(2, 11, "positive", "close the window at right time");
-                        //    $ret['get_feedback'] = 1;
-                        //}
-                        //else if($window_id == 1 || $window_id == 2){
-                        //    $db->insertFeedbackStatusByDeviceId(3, 11, "positive", "close the window at right time");
-                        //    $ret['get_feedback'] = 1;
-                        //}
+                        if( ($window_id >= 8 && $window_id <= 13) || ($window_id == 1 || $window_id == 2)){
+                            $db->insertFeedbackStatusByDeviceId(1, 11, "positive", "close the window $window_id at right time");
+                            $ret['get_feedback'] = $window_id;
+                        }
+                        else if ( $window_id >= 14 && $window_id <= 21 ){
+                            $db->insertFeedbackStatusByDeviceId(3, 11, "positive", "close the window $window_id at right time");
+                            $ret['get_feedback'] = $window_id;
+                        }
                     }
                     else if($state == 1){
-                        //if($window_id == 8 || $window_id == 9 || $window_id == 10){
-                            $db->insertFeedbackStatusByDeviceId(1, 11, "positive", "open the window at right time");
-                            $ret['get_feedback'] = 1;
-                        //}
-                        //else if($window_id == 11 || $window_id == 12 || $window_id == 13){
-                        //    $db->insertFeedbackStatusByDeviceId(2, 11, "positive", "open the window at right time");
-                        //    $ret['get_feedback'] = 1;
-                        //}
-                        //else if($window_id == 1 || $window_id == 2){
-                        //    $db->insertFeedbackStatusByDeviceId(3, 11, "positive", "open the window at right time");
-                        //    $ret['get_feedback'] = 1;
-                        //}
+                        if( ($window_id >= 8 && $window_id <= 13) || ($window_id == 1 || $window_id == 2)){
+                            $db->insertFeedbackStatusByDeviceId(1, 11, "positive", "open the window $window_id at right time");
+                            $ret['get_feedback'] = $window_id;
+                        }
+                        else if ( $window_id >= 14 && $window_id <= 21 ){
+                            $db->insertFeedbackStatusByDeviceId(3, 11, "positive", "open the window $window_id at right time");
+                            $ret['get_feedback'] = $window_id;
+                        }
                     }
                 }
                 else{
