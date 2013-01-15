@@ -1,7 +1,10 @@
 <?php 
 require_once("db.php");
 require_once("policyAgent.php");
-
+define("SUCCESS", 0);
+define("WRONG_STATE", 1);
+define("NO_DATA", 2);
+define("NO_FEEDBACK", 3);
 # status 0 -> success
 # status 1 -> status not correct
 # status 2 -> no data error 
@@ -38,7 +41,7 @@ if(isset($_GET['window_id']) && isset($_GET['token']) ){
             }
         }
         else{
-            $ret['status'] = 1;
+            $ret['status'] = WRONG_STATE;
         }
     }
     else{
@@ -71,19 +74,19 @@ if(isset($_GET['window_id']) && isset($_GET['token']) ){
                     }
                 }
                 else{
-                    $ret['status'] = 3;
+                    $ret['status'] = NO_FEEDBACK;
                 }
             }
             else if(!$agent->judgeWindowStatus($state)){
-                $ret['status'] = 1;
+                $ret['status'] = WRONG_STATE;
             }
         }
         else{
-            $ret['status'] = 2;
+            $ret['status'] = NO_DATA;
         }
     }
-    if( $ret['status'] != 1 && $ret['status'] != 2 && $ret['status'] != 3){
-        $ret['status'] = 0;
+    if( !isset($ret['status'])){
+        $ret['status'] = SUCCESS;
     }
     echo json_encode($ret);
 }
