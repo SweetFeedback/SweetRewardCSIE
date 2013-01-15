@@ -716,12 +716,12 @@ class DB{
         }
         return $result;
     }
-    public function getPeriodExtendedWindowState($state){
+    public function getPeriodExtendedWindowState($state, $window_id){
         $date = date("Y-m-d H:i:s");
 
         $a = strtotime($date) - 30;
         $date_before = date("Y-m-d H:i:s", $a);
-        $query = "select * from $this->extendedWindow_tableName where state=\"$state\" and timestamp > \"$date_before\" and timestamp <= \"$date\"";
+        $query = "select * from $this->extendedWindow_tableName where state=\"$state\" and timestamp > \"$date_before\" and timestamp <= \"$date\" and window_id=$window_id";
         $result = $this->dbh->query($query);
         if($result->rowCount() > 0){
             return ($result->fetchAll());
