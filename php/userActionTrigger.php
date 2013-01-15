@@ -49,8 +49,8 @@ if(isset($_GET['window_id']) && isset($_GET['token']) ){
         if($result != null){
             $state = $result[0]['state'];
             if($agent->judgeWindowStatus($state)){
-                print "the state is correct now";
-                $return_status = $db->getPeriodExtendedWindowState(1 - $state, $window_id);
+                #print "the state is correct now";
+                $return_status = $db->getPeriodExtendedWindowState($state, $window_id);
                 if($return_status != null){
                     if($state == 0){
                         if( ($window_id >= 8 && $window_id <= 13) || ($window_id == 1 || $window_id == 2)){
