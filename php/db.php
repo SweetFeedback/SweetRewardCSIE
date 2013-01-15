@@ -255,13 +255,26 @@ class DB{
     public function getRankSolveProblemUser(){
         $query = "select updated_by, count(*) as count from $this->problem_tableName where status=0 group by `updated_by` order by count DESC";
         $result = $this->dbh->query($query);
+        $ret = array();
         if( $result->rowCount() > 0){
             $rows = $result->fetchAll();
             foreach($rows as $row){
-                //print ($row['updated_by']);
-                #$name = $this->getUser
+                $name = $this->getUserById($row['updated_by']);
+
+                if( $name != null){
+                    $name[0]['count'] = $row['count'];
+                    array_push($ret, $name[0]); 
+                }
+                else{
+                    $public_user = array(
+                        'user_id' => '0',
+                        'account' => 'public user',
+                        'count' => $row['count'],
+                    );
+                    array_push($ret, $public_user);
+                }
             }
-            return $rows;
+            return $ret;
         }
         return null;
     }
@@ -504,7 +517,13 @@ class DB{
         return null;
     }
     public function getUserById($user_id){
-    
+        $query = "select * from $this->members_tableName where user_id=$user_id";
+        $result = $this->dbh->query($query);
+        if($result->rowCount()>0){
+            $rows = $result->fetchAll();
+            return $rows;
+        }
+        return null;
     }
     ### utilities
     public function getMaxTimeStamp(){
