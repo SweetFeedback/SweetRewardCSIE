@@ -30,6 +30,7 @@ class DB{
         $dsn = 'mysql:host='.$hostname.';dbname='.$dbname;
         try{
             $this->dbh = new PDO($dsn, $user, $password);
+            $this->dbh->query("SET NAME utf8");
             date_default_timezone_set("Asia/Taipei");
         }
         catch(PDOException $e){
