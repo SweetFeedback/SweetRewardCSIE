@@ -722,6 +722,7 @@ class DB{
         $a = strtotime($date) - 30;
         $date_before = date("Y-m-d H:i:s", $a);
         $query = "select * from $this->extendedWindow_tableName where state=\"$state\" and timestamp > \"$date_before\" and timestamp <= \"$date\" and window_id=$window_id";
+        echo $query;
         $result = $this->dbh->query($query);
         if($result->rowCount() > 0){
             return ($result->fetchAll());
