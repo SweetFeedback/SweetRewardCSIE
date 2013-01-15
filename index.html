@@ -795,9 +795,9 @@
                         $.each(data, function(i, item) {
 
                             if(parseInt(item.count) > 1)
-                                userRank = $('<li>User '+ item.updated_by +' solve '+item.count+' problems!</li>');
+                            userRank = $('<li> ' + item.account +' solve <span style="color:red;">'+item.count+' </span>problems!</li>');
                             else
-                                userRank = $('<li>User '+ item.updated_by +' solve '+item.count+' problem!</li>');    
+                            userRank = $('<li> '+ item.account +' solve <span style="color:red;">'+item.count+' </span>problem!</li>');    
                             
                             if(i == 0) userRank.append('<img src="img/badge/award.png"/>');
                             $('#feedbackList .items').append(userRank);
