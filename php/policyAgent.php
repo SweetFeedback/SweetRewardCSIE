@@ -8,7 +8,7 @@ class PolicyAgent{
         $date = new DateTime();
         #echo $date->getTimeStamp();
         $hour = date('H', $date->getTimeStamp());
-        if( $hour >= 8 && $hour <= 20) {
+        if( $hour >= 8 && $hour <= 19) {
             // day time 
             if( $window_status == 1 ){
                 return false;
