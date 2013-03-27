@@ -1,4 +1,6 @@
-h1. Gumball Machine
+h1. SweetReward
+
+A subproject under SweetFeedback in CSIE, NTU.
 
 By Louis Yu, Janet Huang, and many awesome contributors!
 
