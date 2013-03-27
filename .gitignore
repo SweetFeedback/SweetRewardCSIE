@@ -1,0 +1,9 @@
+mobile/android/bin/*
+mobile/android/gen/*
+mobile/android/.settings/*
+mobile/android/.classpath
+mobile/android/proguard-project.txt
+mobile/android/project.properties
+
+mobile/iOS/.DS_Store
+mobile/iOS/SweetRewardCSIETests/*
