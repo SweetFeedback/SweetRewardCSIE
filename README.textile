@@ -4,11 +4,11 @@ By Louis Yu, Janet Huang, and many awesome contributors!
 
 h2. There are four main components under this project.
 
-1. server
+1. Server: Store sensor data, problems and judge the reward. Also provide web UI for end-user.
 
-2. clinet
+2. Machine: Use gumball machine to collect sensor data and to deliver candies by Arduino.
 
-3. machine
+3. Client: Act as a gateway between Server and Machine. Receive sensor data from the machine and insert to the server, and send server's commands to the machine.
 
-4. mobile
+4. Mobile: To l for end-user mobile phone in both iOS and Android.
 
