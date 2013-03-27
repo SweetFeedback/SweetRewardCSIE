@@ -1,37 +1,16 @@
-h1. Gumball Machine Server-Side
+h1. SweetReward
+
+A subproject under SweetFeedback in CSIE, NTU.
 
 By Louis Yu, Janet Huang, and many awesome contributors!
 
-h2. Packages You need
+h2. There are four main components under this project.
 
-You need to install an apache http-server on your local machine in order to run our server-side code. Two ways to install these packages:
+1. Server: Store sensor data, problems and judge the reward. Also provide web UI for end-user.
 
-1. Install the "XAMPP":http://www.apachefriends.org/en/xampp.html package. (for Windows/Linux/MacOS) (Recommended)  
-* How to launch the XAMPP service.
+2. Machine: Use gumball machine to collect sensor data and to deliver candies by Arduino.
 
-2. Install the *Apache Server* + *MySQL* + *PHP* seperately. (for Linux/MacOS) 
+3. Client: Act as a gateway between Server and Machine. Receive sensor data from the machine and insert to the server, and send server's commands to the machine.
 
-h2. Installation Steps.
-
-1. Download the code from SweetRewardCSIE, you have two ways to download the project directory.
-* Option 1. Pull the code if you know how to use "git":http://git-scm.com/downloads
-@git clone https://github.com/louisccc/SweetRewardCSIE.git@
-* Option 2. Download "*master.zip*":https://github.com/louisccc/SweetRewardCSIE/archive/master.zip directly
-
-
-2. Move the directory *SweetRewardCSIE/* to your webpage directory. It depends on your apache server's settings. e.g. *"XAMPP/www/" for XAMPP User*, or *"htdocs/"*, or *"Sites/"*
-3. Rename the file *SweetRewardCSIE/php/config.php.template* to *config.php*
-@cp SweetRewardCSIE/php/config.php.template SweetRewardCSIE/php/config.php@
-* Modify the database information. 
-
-4. Rename the file *SweetRewardCSIE/collaboration/config.json.template* to *config.json*
-@cp SweetRewardCSIE/collaboration/config.json.template SweetRewardCSIE/collaboration/config.json@
-* Modify the url of your localhost server.(Can reference to the existing one)
-
-5. Install the database schema to your local database.
-* If you use command line, give commands
-@cd [your sweetrewardCSIE's path]/SweetRewardCSIE/@
-@mysql -u [username of your database] -p [your database name] < schema.sql@
-* If you use phpmyadmin, please press the import button and choose the file *schema.sql* under *SweetRewardCSIE/* and finish installing our schema to your database.
-
+4. Mobile: The interface for end-user's mobile phone in both iOS and Android platforms.
 
