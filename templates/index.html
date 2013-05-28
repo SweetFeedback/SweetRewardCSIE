@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>SweetFeedback in CSIE building</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <!-- Le styles -->
+        <link href="/static/css/bootstrap.css" rel="stylesheet">
+        <link href="/static/css/style.css" rel="stylesheet">
+
+        <!--<link href="assets/css/docs.css" rel="stylesheet">-->
+        <link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
+
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <!-- Le fav and touch icons -->
+        <link rel="shortcut icon" href="/static/ico/favicon.png">
+    </head>
+
+    <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="./index.html"><img src="/static/img/logo.png" width="24px" id="logo"/>SweetFeedback</a>
+                    <div class="nav-collapse">
+                        <ul class="nav">
+                            <li class="active"><a href="#">Home</a></li>
+                            <li><a href="#about">About</a></li>
+                        </ul>
+                        <ul class="nav pull-right">
+                            <li class="dropdown" id="login">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#login">Login<b class="caret"></b></a>
+
+                            <div class="dropdown-menu">
+                                <form>
+                                    <fieldset class='textbox' style="padding:10px">
+                                        <input id="account" style="margin-top: 8px" type="text" placeholder="Account" name="account"/>
+                                        <input id="password" style="margin-top: 8px" type="password" placeholder="Passsword" name="password"/>
+                                        <a class="btn btn-primary" id="loginBt">Log In</a>
+                                        <a data-toggle="modal" href="#reg" class="btn btn-primary" id="registerBt" >Register</a>
+                                    </fieldset>
+                                </form>
+                            </div>
+                            </li>
+
+                            <li id="setting" class="dropdown">
+                            <a href="#" id="current_user" role="button" class="dropdown-toggle" data-toggle="dropdown"></a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
+                                <li><a tabindex="-1" href="./settings.html">Settings</a></li>
+                                <li class="divider"></li>
+                                <li><a tabindex="-1" href="#" id="logoutBt">Log Out</a></li>
+                            </ul>
+                            </li>
+
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            
+            <div id="reg" class="modal hide fade">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3>Register a new account!</h3>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <input id="reg_account" style="margin-top: 8px" type="text" placeholder="Enter your Account here" name="reg_account"/><br>
+                        <input id="reg_password" style="margin-top: 8px" type="password" placeholder="Enter your Passsword here" name="reg_password"/>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-primary" id="registerSubmit" data-dismiss="modal">Register</a>
+                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                </div>
+            </div>
+            <div class="tabable">
+                <ul class="nav nav-pills spliter">
+                    <li class="active">
+                    <a href="#apps-1" data-toggle="tab" id="app1">3F Map</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="apps-1">
+                        <div id="user_preference">User Preference: 
+                            <span id="light_preference"></span>, 
+                            <span id="temp_preference"></span>, 
+                            <span id="sound_preference"></span>
+                        </div>          
+                        <!--<div id="testTxt">cc</div> -->                                                    
+                        <div id="left">
+                            <!-- map -->
+                            <div id="map">
+                                <img id="map_2f" src="/static/img/csie/csie_map.png"/>
+                            </div>
+                            <div id="win_1" class="win"></div>
+                            <div id="win_2" class="win"></div>
+                            <!--<div id="win_3" class="win"></div>
+                            <div id="win_4" class="win"></div>
+                            <div id="win_5" class="win"></div>
+                            <div id="win_6" class="win"></div>
+                            <div id="win_7" class="win"></div>-->
+                            <div id="win_8" class="win"></div>
+                            <div id="win_9" class="win"></div>
+                            <div id="win_10" class="win"></div>
+                            <div id="win_11" class="win"></div>
+                            <div id="win_12" class="win"></div>
+                            <div id="win_13" class="win"></div>
+                            <div id="win_14" class="win"></div>
+                            <div id="win_15" class="win"></div>
+                            <div id="win_16" class="win"></div>
+                            <div id="win_17" class="win"></div>
+                            <div id="win_18" class="win"></div>
+                            <div id="win_19" class="win"></div>
+                            <div id="win_20" class="win"></div>
+                            <div id="win_21" class="win"></div>
+                            <!-- rooms -->
+                            <div id="room_1" data-toggle="modal" href="#room_1_detail" class="room"></div> <!--r336_r338 -->
+                            <!--<div id="room_1_detail" class="modal hide fade">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h3>R336/R338</h3>
+                                </div>
+                                <div class="modal-body">
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                                </div>
+                            </div>-->
+                            <div id="room_2" data-toggle="modal" href="#room_2_detail" class="room"></div> <!--r306_r308 -->
+                            <!--<div id="room_2_detail" class="modal hide fade">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h3>R306/R308</h3>
+                                </div>
+                                <div class="modal-body">
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                                </div>
+                            </div>-->
+                            <div id="room_3" data-toggle="modal" href="#room_3_detail" class="room"></div> <!--r302_r304 -->
+                            <!--<div id="room_3_detail" class="modal hide fade">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h3>R302/R304</h3>
+                                </div>
+                                <div class="modal-body">
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                                </div>
+                            </div>-->
+                            <div id="room_4" data-toggle="modal" href="#room_4_detail" class="room"></div> <!--r310 -->
+                            <!--<div id="room_4_detail" class="modal hide fade">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h3>R310</h3>
+                                </div>
+                                <div class="modal-body">
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                                </div>
+                            </div>-->
+                            <div id="room_5" data-toggle="modal" href="#room_5_detail" class="room"></div> <!--r324 -->
+                            <!--<div id="room_5_detail" class="modal hide fade">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h3>R324</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <div>Motion(People)</div>
+                                    <div>Sound</div>
+                                    <div>Humidity</div>
+                                    <div>Temperature</div>
+                                    <div>Light</div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                                </div>
+                            </div>-->
+                            <div id="room_6" data-toggle="modal" href="#room_6_detail" class="room"></div> <!--r318 -->
+                            <!--<div id="room_6_detail" class="modal hide fade">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h3>R318</h3>
+                                </div>
+                                <div class="modal-body">
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                                </div>
+                            </div>-->
+
+                            <div id="room_7" data-toggle="modal" href="#room_7_detail" class="room"></div> <!--r346 -->
+                            <div id="room_8" data-toggle="modal" href="#room_8_detail" class="room"></div> <!--r344 -->
+                            <div id="room_9" data-toggle="modal" href="#room_9_detail" class="room"></div> <!--r342 -->
+                            <div id="room_10" data-toggle="modal" href="#room_10_detail" class="room"></div> <!--r340 -->
+
+
+                            <div id="info" >
+                                <li><img src="/static/img/others/char-cold.png"/> : Cold </li>
+                                <li><img class="sweat" src="/static/img/others/char-sweat.png"/> : Hot </li>
+                                <li><img src="/static/img/others/char-headphone.png"/> : Noisy </li>
+                                <li><img src="/static/img/others/char-sunglass.png"/> : Bright </li>
+                            </div>
+                            <div class="machine" id="mrc_1">
+                            <img class="mrc" src="/static/img/mrc/mrc.png" width="50px"/>
+                            <img class="cold" src="/static/img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
+                            <img class="sunglass" src="/static/img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
+                            <img class="headphone" src="/static/img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="sweat" src="/static/img/others/char-sweat.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="transportation" src="/static/img/transportation/empty.png" width="30px" style="margin-top: -120px; margin-left: -10px;"/>
+                        <div class="mrc_num" >1</div>
+                            
+                        </div>
+                        
+                        
+                        <div class="machine" id="mrc_2">
+                            <img class="mrc" src="/static/img/mrc/mrc.png" width="50px"/>
+                            <img class="cold" src="/static/img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
+                            <img class="sunglass" src="/static/img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
+                            <img class="headphone" src="/static/img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="sweat" src="/static/img/others/char-sweat.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="transportation" src="/static/img/transportation/empty.png" width="30px" style="margin-top: -120px; margin-left: -10px;"/>
+                            <div class="mrc_num" >2</div>
+                        </div>
+
+                        <div class="machine" id="mrc_3">
+                            <img class="mrc" src="/static/img/mrc/mrc.png" width="50px"/>
+                            <img class="cold" src="/static/img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
+                            <img class="sunglass" src="/static/img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
+                            <img class="headphone" src="/static/img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="sweat" src="/static/img/others/char-sweat.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="transportation" src="/static/img/transportation/empty.png" width="30px" style="margin-top: -120px; margin-left: -10px;"/>
+                            <div class="mrc_num" >3</div>
+                        </div>
+
+                        </div>
+                        <div id="right">
+                            <a data-toggle="modal" href="#report" class="btn btn-primary" style="margin-bottom: 5px;">Report a Problem!</a>
+                            <div class="bs-docs-example">
+                                <ul id="myTab" class="nav nav-tabs" style="margin: 0px; padding: 0px;">
+                                    <li class="active"><a href="#feedbackHistory" data-toggle="tab">User Rank</a></li>
+                                    <li><a href="#problemArea" data-toggle="tab">Room Status</a></li>
+                                </ul>
+
+                                <div id="myTabContent" class="tab-content" style="backgkround-color: #ffffff; margin: 0px; padding: 0px;">
+                                    <div class="tab-pane fade in active tabStyle" id="feedbackHistory">
+                                    </div>
+
+                                    <div class="tab-pane fade tabStyle" id="problemArea">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="report" class="modal hide fade">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h3>Report a Problem!</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <div id="problem_select" class="btn-group">
+                                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                                            <span id="problem_title">Any Problem?</span>
+                                            <span class="caret"></span>
+                                            <input type="hidden" id="problem_id" />
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="#" id="hot">Hot Problem</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" id="cold">Cold Problem</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" id="noise">Noisy Problem</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" id="other">Other Problem</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div id="location_select" class="btn-group">
+                                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                                            <span id="location_title">Choose Location..</span>
+                                            <span class="caret"></span>
+                                            <input type="hidden" id="location_id" />
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#" id="1" >R336/R338</a></li>
+                                            <li><a href="#" id="2" >R306/R308</a></li>
+                                            <li><a href="#" id="3" >R302/R304</a></li>
+                                            <li><a href="#" id="4" >R310</a></li>
+                                            <li><a href="#" id="5" >R324</a></li>
+                                            <li><a href="#" id="6" >R318</a></li>
+                                            <li><a href="#" id="7" >R346</a></li>
+                                            <li><a href="#" id="8" >R344</a></li>
+                                            <li><a href="#" id="9" >R342</a></li>
+                                            <li><a href="#" id="10" >R340</a></li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <form id="problemInputForm">
+                                        <fieldset class='textbox'>
+                                            <textarea id="problemInput" style="margin-top: 8px; width: 90%; height:180px;">problem.... </textarea>
+                                        </fieldset>
+
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <a class="btn btn-primary" id="reportSubmit" data-dismiss="modal">Submit</a>
+                                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                                </div>
+                            </div>
+                            
+                        </div>
+
+                        
+
+                        <!--<div class="machine" id="mrc_4">
+                            <img class="mrc" src="img/mrc/mrc.png" width="50px"/>
+                            <img class="cold" src="img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
+                            <img class="sunglass" src="img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
+                            <img class="headphone" src="img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="sweat" src="img/others/char-sweat.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="transportation" src="img/transportation/empty.png" width="30px" style="margin-top: -120px; margin-left: -10px;"/>
+                            <div class="mrc_num" >4</div>
+                        </div>
+
+                        <div class="machine" id="mrc_5">
+                            <img class="mrc" src="img/mrc/mrc.png" width="50px"/>
+                            <img class="cold" src="img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
+                            <img class="sunglass" src="img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
+                            <img class="headphone" src="img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="sweat" src="img/others/char-sweat.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="transportation" src="img/transportation/empty.png" width="30px" style="margin-top: -120px; margin-left: -10px;"/>
+                            <div class="mrc_num" >5</div>
+                        </div>-->
+                        <br/>
+                        
+
+                    </div>
+                </div>
+            </div>
+            
+           
+
+        </div> <!-- /container -->
+
+        <!-- Le javascript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="/static/js/jquery.js"></script>
+        <script src="/static/js/bootstrap-transition.js"></script>
+        <script src="/static/js/bootstrap-alert.js"></script>
+        <script src="/static/js/bootstrap-modal.js"></script>
+        <script src="/static/js/bootstrap-dropdown.js"></script>
+        <script src="/static/js/bootstrap-scrollspy.js"></script>
+        <script src="/static/js/bootstrap-tab.js"></script>
+        <script src="/static/js/bootstrap-tooltip.js"></script>
+        <script src="/static/js/bootstrap-popover.js"></script>
+        <script src="/static/js/bootstrap-button.js"></script>
+        <script src="/static/js/bootstrap-collapse.js"></script>
+        <script src="/static/js/bootstrap-carousel.js"></script>
+        <script src="/static/js/bootstrap-typeahead.js"></script>
+        <!--<script src="assets/js/jquery.cookie.js"></script>-->
+
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA3ieESIwbYV6OZC14fivVKoOSYvApTlh0&sensor=true&libraries=geometry"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
+
+
+
+        <script src="/static/js/sweetfeedback.js" language="javascript"></script>
+    </body>
+</html>

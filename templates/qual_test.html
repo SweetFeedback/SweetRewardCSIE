@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Welcome to DMatch qualification test</title>   
+    <link rel="stylesheet" type="text/css" href="/static/css/louis.css" />
+    <link rel="stylesheet" href="http://sexybuttons.googlecode.com/svn/trunk/sexybuttons.css" type="text/css" />                                   
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
+    <script type="text/JavaScript" src="/static/js/louis.js"></script>
+    <script>
+      $(function(){
+        init();
+        set_buttons();
+      });
+    </script>
+    <style>
+      #logo {
+          position: relative;
+          margin: 0 auto;
+          width: 60px;
+          height: 60px;
+          background: url(/static/img/01-magnify.png) no-repeat;
+      }
+    </style>
+  </head>
+  <body>
+   
+    <header>
+      <div class="container">
+        <h1 class="logo">Welcome to DMatch Task Training and Qualification Test</h1>
+      </div>
+    </header> 
+    
+
+    <section id="wrapper">
+      <div class="container">
+        <p><span id="instruction_word">you might need to read the following instruction throughfully in order to do our task.</span></p>
+        <p><span id="instruction_figures">
+          <!--div align="center" id = "logo"></div!-->
+        </span></p>
+        <p> 
+          <image id="image"></image>
+        </p>
+        <p>
+          <button class="sexybutton sexysimple sexylarge sexyred" id="previous">Previous</button>
+          <button class="sexybutton sexysimple sexylarge sexyred" id="move">Next</button>
+        </p>
+        <p>
+          <button class="sexybutton sexysimple sexylarge sexyred" id="replay">Replay</button>
+        </p>
+      </div>
+    </section>
+    
+  </body>
+</html>
