@@ -1,7 +1,6 @@
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import Table, Column, Integer, String, Date, Float, TIMESTAMP
-from database import Base
 import config
 
 app = Flask(__name__)
@@ -9,16 +8,16 @@ app.config['SQLALCHEMY_DATABASE_URI'] = config.DB_URI
 db = SQLAlchemy(app)
 
 
-class Member(Base):
+class Member(db.Model):
 	__tablename__ = "members"
 
-	user_id = Column("user_id", Integer, primary_key=True)
-	account = Column("account", String(65) )
-	password = Column("password", String(65))
-	token = Column("token", String(65))
-	temp = Column("temperature_threshold", Float)
-	light = Column("light_threshold", Float)
-	micro = Column("micro_threshold", Float)
+	user_id = db.Column("user_id", Integer, primary_key=True)
+	account = db.Column("account", String(65) )
+	password = db.Column("password", String(65))
+	token = db.Column("token", String(65))
+	temp = db.Column("temperature_threshold", Float)
+	light = db.Column("light_threshold", Float)
+	micro = db.Column("micro_threshold", Float)
 
 	@property
 	def serialize(self):
@@ -34,21 +33,21 @@ class Member(Base):
 	def __repr__(self):
 		return '<sweetfeedback member user_id:%d account:%r threshold:%8.1f %8.1f %8.1f' % (self.user_id, self.account, self.temp, self.light, self.micro)
 
-class Problem(Base):
+class Problem(db.Model):
 	__tablename__ = "problems"
 
-	problem_id = Column("id", Integer, primary_key=True)
-	category_id = Column("category", Integer)
-	room_id = Column("room", Integer)
-	title = Column("title", String(255))
-	description = Column("description", String(255))
-	coor_x = Column("coordinate_x", Integer)	
-	coor_y = Column("coordinate_y", Integer)
-	created_by_id = Column("created_by", Integer)
-	status = Column("status", Integer)
-	created_at = Column("created_at", TIMESTAMP)
-	updated_at = Column("updated_at", TIMESTAMP)
-	updated_by = Column("updated_by", Integer)
+	problem_id = db.Column("id", Integer, primary_key=True)
+	category_id = db.Column("category", Integer)
+	room_id = db.Column("room", Integer)
+	title = db.Column("title", String(255))
+	description = db.Column("description", String(255))
+	coor_x = db.Column("coordinate_x", Integer)	
+	coor_y = db.Column("coordinate_y", Integer)
+	created_by_id = db.Column("created_by", Integer)
+	status = db.Column("status", Integer)
+	created_at = db.Column("created_at", TIMESTAMP)
+	updated_at = db.Column("updated_at", TIMESTAMP)
+	updated_by = db.Column("updated_by", Integer)
 
 	@property
 	def serialize(self):
@@ -70,24 +69,24 @@ class Problem(Base):
 		return "problem"
 
 
-class Online(Base):
+class Online(db.Model):
 	__tablename__ = "user_online"
 
-	user_id = Column("user_id", Integer, primary_key=True)
-	time = Column("time", Integer)
-	ipaddr = Column("ipaddr", String(50))
+	user_id = db.Column("user_id", Integer, primary_key=True)
+	time = db.Column("time", Integer)
+	ipaddr = db.Column("ipaddr", String(50))
 
 	def __repr__(self):
 		return 'online'
 
-class Window(Base):
+class Window(db.Model):
 	__tablename__ = "extended_window_log2"
 
-	log_id = Column("ext_win_log_id", Integer, primary_key=True)
-	location_id = Column("location_id", Integer)
-	window_id = Column("window_id", Integer)
-	state = Column("state", Integer)
-	timestamp = Column("timestamp", TIMESTAMP)
+	log_id = db.Column("ext_win_log_id", Integer, primary_key=True)
+	location_id = db.Column("location_id", Integer)
+	window_id = db.Column("window_id", Integer)
+	state = db.Column("state", Integer)
+	timestamp = db.Column("timestamp", TIMESTAMP)
 	
 	def __init__(self, location_id=None, window_id=None, state=None):
 		self.location_id = location_id
@@ -105,15 +104,15 @@ class Window(Base):
 		}
 	def __repr__(self):
 		return '<extended window sensor data location:%d window:%d state:%d>' % (self.location_id, self.window_id, self.state)
-class WindowIndex(Base):
+class WindowIndex(db.Model):
 	__tablename__ = "extended_window_log_index"
 
-	index_id = Column("log_id", Integer, primary_key=True)
-	log_id = Column("ext_win_log_id", Integer)
-	location_id = Column("location_id", Integer)
-	window_id = Column("window_id", Integer)
-	state = Column("state", Integer)
-	timestamp = Column("timestamp", TIMESTAMP)
+	index_id = db.Column("log_id", Integer, primary_key=True)
+	log_id = db.Column("ext_win_log_id", Integer)
+	location_id = db.Column("location_id", Integer)
+	window_id = db.Column("window_id", Integer)
+	state = db.Column("state", Integer)
+	timestamp = db.Column("timestamp", TIMESTAMP)
 
 	def __init__ (self, log_id, location_id, window_id, state, timestamp):
 		self.log_id = log_id
