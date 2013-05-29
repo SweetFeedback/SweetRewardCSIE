@@ -1,5 +1,6 @@
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
+from datetime import datetime
 from sqlalchemy import Table, Column, Integer, String, Date, Float, TIMESTAMP
 import config
 
@@ -48,6 +49,17 @@ class Problem(db.Model):
 	created_at = db.Column("created_at", TIMESTAMP)
 	updated_at = db.Column("updated_at", TIMESTAMP)
 	updated_by = db.Column("updated_by", Integer)
+
+	def __init__(self, category_id=None, room_id=None, title=None, description=None, coordinate_x=None, coordinate_y=None, created_by=None):
+		self.category_id = category_id
+		self.room_id = room_id
+		self.title = title
+		self.description = description
+		self.coor_x = coordinate_x
+		self.coor_y = coordinate_y
+		self.created_by_id = created_by
+		self.status = 0
+		self.created_at = datetime.utcnow()
 
 	@property
 	def serialize(self):
