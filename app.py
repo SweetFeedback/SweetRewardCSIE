@@ -7,7 +7,8 @@ from sqlalchemy import Table, Column, Integer, String, Date, Float, TIMESTAMP, d
 from model import app, db
 from api import api
 from views import views
-import config
+import config, os
+
 
 
 app = Flask(__name__)
@@ -17,4 +18,6 @@ app.register_blueprint(views)
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    #app.run(debug=True)
+    port = int(os.environ.get('PORT', 1234))
+    app.run(host='0.0.0.0', port=port, debug=True)
