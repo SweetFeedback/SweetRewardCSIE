@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, json
+from flask import Flask, Blueprint, render_template, request, jsonify, json
 from celery import Celery 
 from tasks import add
 
@@ -7,46 +7,29 @@ from sqlalchemy import Table, Column, Integer, String, Date, Float, TIMESTAMP, d
 from model import app, db
 import config
 
-@app.route("/hello")
-def hello():
-        return "Hello World!"
+#blueprint
+api = Blueprint('api', __name__)
 
-@app.route("/beauty")
-def beauty():
-	return render_template("index.html")
-
-@app.route("/")
-def home():
-	return render_template("home.html")
-
-### worker part ###
-@app.route("/test")
-def yo(x=16, y=16):
-	x = int(request.args.get("x", x))
-	y = int(request.args.get("y", y))
-	res = add.apply_async((x, y))
-	return res.task_id
-
-@app.route("/test/result/<task_id>")
-def show_result(task_id):
-    retval = add.AsyncResult(task_id).get(timeout=5.0)
-    return repr(retval)
-###
-
-@app.route("/reports")
+@api.route("/reports")
 def show_reports():
 	from model import Problem
 	problems = Problem.query.all()
 	return jsonify(data=[i.serialize for i in problems])
 
-@app.route("/members")
+@api.route("/reports/insert", methods=['GET', 'POST'])
+def insert_report():
+	from model import Problem 
+	title = request.args.get("title", "")
+	content = request.args.get("content", "")
+
+@api.route("/members")
 def list_members():
 	from model import Member
 	members = Member.query.all()
 	return jsonify(data=[i.serialize for i in members])
 
 # going to insert window_log data 
-@app.route("/window_log/insert", methods=['GET', 'POST'])
+@api.route("/window_log/insert", methods=['GET', 'POST'])
 def insert_window_log():
 	from model import Window, WindowIndex
 	location_id = request.args.get("location_id", -1)
@@ -74,7 +57,7 @@ def insert_window_log():
 	print location_id, window_id, state
 	return ""
 # show all the data from extended windows data
-@app.route("/window_log")
+@api.route("/window_log")
 def get_all_extended_window_data():
 	from model import Window
 	window_log = Window.query.filter(Window.window_id == 1).order_by(desc(Window.timestamp)).all();
@@ -84,11 +67,8 @@ def get_all_extended_window_data():
 	#print window_log
 	#return " " + str(window_log.log_id) + " " +  str(window_log.state) + " " +str(window_log.timestamp)
 	return jsonify(data=[i.serialize for i in window_log])
-@app.route("/window_index")
+@api.route("/window_index")
 def get_window_data_index():
 	from model import WindowIndex
 	window_indexs = WindowIndex.query.all()
 	return jsonify(data=[i.serialize for i in window_indexs])
-
-if __name__ == "__main__":
-    app.run(debug=True)
