@@ -1,6 +1,6 @@
 dbhost = 'localhost'
-dbuser = 'root'
-dbpass = '29418401'
+dbuser = 'user'
+dbpass = 'password'
 dbname = 'sweetfeedback'
 
 DB_URI = 'mysql://' + dbuser + ':' + dbpass + '@' + dbhost + '/' + dbname
