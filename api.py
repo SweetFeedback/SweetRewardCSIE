@@ -4,7 +4,7 @@ from tasks import add
 
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import Table, Column, Integer, String, Date, Float, TIMESTAMP, desc
-from model import app, db, Problem
+from model import app, db, Problem, Feedback
 import config
 
 #blueprint
@@ -110,3 +110,9 @@ def get_window_data_index():
 	from model import WindowIndex
 	window_indexs = WindowIndex.query.all()
 	return jsonify(data=[i.serialize for i in window_indexs])
+
+
+@api.route("/feedbacks")
+def get_all_feedback_record():
+	feedbacks = Feedback.query.all()
+	return jsonify(data=[i.serialize for i in feedbacks])

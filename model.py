@@ -1,7 +1,7 @@
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from datetime import datetime
-from sqlalchemy import Table, Column, Integer, String, Date, Float, TIMESTAMP
+from sqlalchemy import Table, Column, Integer, String, Date, Float, TIMESTAMP, BOOLEAN
 import config
 
 app = Flask(__name__)
@@ -146,5 +146,38 @@ class WindowIndex(db.Model):
 	def __repr__(self):
 		return 'window index'
 
+class Feedback(db.Model):
+	__tablename__ = "feedback_repository"
+	feedback_id = db.Column("feedback_id", Integer, primary_key=True)
+	device_id = db.Column("device_id", Integer)
+	application_id = db.Column("application_id", Integer)
+	user_id = db.Column("user_id", Integer)
+	feedback_type = db.Column("feedback_type", String(50))
+	feedback_description = db.Column("feedback_description", String(200))
+	created_time = db.Column("created_time", TIMESTAMP)
+	if_get = db.Column("if_get", BOOLEAN)
 
+	def __init__ (self, device_id, application_id, user_id, feedback_type, feedback_description):
+		self.device_id = device_id
+		self.application_id = application_id
+		self.user_id = user_id
+		self.feedback_type = feedback_type
+		self.feedback_description = feedback_description
+		self.created_time = datetime.utcnow()
+		self.if_get = False
+
+	@property
+	def serialize(self):
+		return {
+			'feedback_id' : self.feedback_id,
+			'device_id' : self.device_id,
+			'application_id' : self.application_id,
+			'user_id' : self.user_id,
+			'feedback_type': self.feedback_type,
+			'feedback_description': self.feedback_description,
+			'created_time' : str(self.created_time),
+			'if_get' : self.if_get
+		}
+	def __repr__(self):
+		return "feedback record"
 
