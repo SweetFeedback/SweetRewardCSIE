@@ -92,7 +92,7 @@ class Online(db.Model):
 		return 'online'
 
 class Window(db.Model):
-	__tablename__ = "extended_window_log2"
+	__tablename__ = "extended_window_log"
 
 	log_id = db.Column("ext_win_log_id", Integer, primary_key=True)
 	location_id = db.Column("location_id", Integer)
