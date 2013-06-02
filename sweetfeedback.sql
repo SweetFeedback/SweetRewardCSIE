@@ -82,13 +82,13 @@ CREATE TABLE `device_online` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `extended_window_log2`
+-- Table structure for table `extended_window_log`
 --
 
-DROP TABLE IF EXISTS `extended_window_log2`;
+DROP TABLE IF EXISTS `extended_window_log`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `extended_window_log2` (
+CREATE TABLE `extended_window_log` (
   `ext_win_log_id` int(11) NOT NULL AUTO_INCREMENT,
   `location_id` int(11) NOT NULL,
   `window_id` int(11) NOT NULL,
@@ -191,7 +191,7 @@ CREATE TABLE `problems` (
   `updated_at` datetime DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=61 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=67 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -300,4 +300,4 @@ CREATE TABLE `window_state_log_ext` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-05-29  0:41:17
+-- Dump completed on 2013-06-02 16:22:45
