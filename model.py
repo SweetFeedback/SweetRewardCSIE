@@ -181,3 +181,34 @@ class Feedback(db.Model):
 	def __repr__(self):
 		return "feedback record"
 
+class NotificationResponse(db.Model):
+	__tablename__ = "notification_response"
+
+	id = db.Column("id", Integer, primary_key=True)
+	task_id = db.Column("task_id", Integer)
+	user_id = db.Column("user_id", Integer)
+	ok = db.Column("ok", BOOLEAN)
+	annoy_level = db.Column("annoy_level", Integer)
+	timestamp = db.Column("timestamp", TIMESTAMP)
+
+	def __init__ (self, task_id, user_id, ok, annoy_level):
+		self.task_id = task_id
+		self.user_id = user_id
+		self.ok = ok
+		self.annoy_level = annoy_level
+
+	@property
+	def serialize(self):
+		return {
+			'id' : self.id,
+			'task_id' : self.task_id,
+			'user_id' : self.user_id,
+			'ok' : self.ok,
+			'annoy_level': self.annoy_level,
+			'timestamp': self.timestamp
+		}
+	def __repr__(self):
+		return "Notification Response"
+
+
+

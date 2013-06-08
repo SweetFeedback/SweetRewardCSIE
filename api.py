@@ -116,3 +116,20 @@ def get_window_data_index():
 def get_all_feedback_record():
 	feedbacks = Feedback.query.all()
 	return jsonify(data=[i.serialize for i in feedbacks])
+
+
+@api.route("/notification_response", methods=['GET'])
+def insert_notification_response():
+	taskid = request.args.get("task_id", -1)
+	user_id = request.args.get("user_id", -1)
+	ok = request.args.get("ok", -1)
+	annoy = request.args.get("annoy", -1)
+
+	notification_response = NotificationResponse(task_id, user_id, ok, annoy_level)
+	db.session.add(notification_response)
+	db.session.commit()
+
+	return ""
+
+
+
