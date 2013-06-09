@@ -210,5 +210,26 @@ class NotificationResponse(db.Model):
 	def __repr__(self):
 		return "Notification Response"
 
+class NotificationClick(db.Model):
+	__tablename__ = "notification_click"
 
+	id = db.Column("id", Integer, primary_key=True)
+	task_id = db.Column("task_id", Integer)
+	user_id = db.Column("user_id", Integer)
+	timestamp = db.Column("timestamp", TIMESTAMP)
+
+	def __init__ (self, task_id, user_id):
+		self.task_id = task_id
+		self.user_id = user_id
+
+	@property
+	def serialize(self):
+		return {
+			'id' : self.id,
+			'task_id' : self.task_id,
+			'user_id' : self.user_id,
+			'timestamp': self.timestamp
+		}
+	def __repr__(self):
+		return "Notification Click"
 

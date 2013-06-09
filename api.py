@@ -133,5 +133,17 @@ def insert_notification_response():
 
 	return ""
 
+@api.route("/notification_click", methods=['GET'])
+def insert_notification_click():
+	from model import NotificationClick
+
+	task_id = request.args.get("task_id", -1)
+	user_id = request.args.get("user_id", -1)
+
+	notification_click = NotificationClick(task_id, user_id)
+	db.session.add(notification_click)
+	db.session.commit()
+
+	return ""
 
 
