@@ -153,7 +153,7 @@ def insert_gcm_id():
 	reg_id = request.args.get("reg_id", -1)
 	user_id = request.args.get("user_id", -1)
 
-	gcm_id = GcmID(task_id, user_id)
+	gcm_id = GcmID(reg_id, user_id)
 	db.session.add(gcm_id)
 	db.session.commit()
 
