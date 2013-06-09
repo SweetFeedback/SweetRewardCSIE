@@ -233,3 +233,25 @@ class NotificationClick(db.Model):
 	def __repr__(self):
 		return "Notification Click"
 
+class GcmID(db.Model):
+	__tablename__ = "gcm_id"
+
+	id = db.Column("id", Integer, primary_key=True)
+	gcm_id = db.Column("gcm_id", Integer)
+	user_id = db.Column("user_id", Integer)
+	timestamp = db.Column("timestamp", TIMESTAMP)
+
+	def __init__ (self, gcm_id, user_id):
+		self.gcm_id = gcm_id
+		self.user_id = user_id
+
+	@property
+	def serialize(self):
+		return {
+			'id' : self.id,
+			'gcm_id' : self.gcm_id,
+			'user_id' : self.user_id,
+			'timestamp': self.timestamp
+		}
+	def __repr__(self):
+		return "RegisterGCMID"
