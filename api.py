@@ -159,10 +159,8 @@ def insert_gcm_id():
 		db.session.commit()
 	else:
 		indexs = db.session.query(GcmID).filter_by(gcm_id=gcm_id).first()
-		print indexs
 		if indexs != None:
 			indexs.user_id = gcm.user_id
-			print indexs.user_id
 			db.session.commit()
 
 	return ""
