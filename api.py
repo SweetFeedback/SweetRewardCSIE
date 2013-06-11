@@ -154,7 +154,15 @@ def insert_gcm_id():
 	user_id = request.args.get("user_id", -1)
 
 	gcm = GcmID(gcm_id, user_id)
-	db.session.add(gcm)
-	db.session.commit()
+	if user_id == -1:
+		db.session.add(gcm)
+		db.session.commit()
+	else:
+		indexs = db.session.query(GcmID).filter_by(gcm_id=gcm_id).first()
+		print indexs
+		if indexs != None:
+			indexs.user_id = gcm.user_id
+			print indexs.user_id
+			db.session.commit()
 
 	return ""
