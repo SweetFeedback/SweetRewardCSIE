@@ -185,14 +185,14 @@ class NotificationResponse(db.Model):
 	__tablename__ = "notification_response"
 
 	id = db.Column("id", Integer, primary_key=True)
-	task_id = db.Column("task_id", Integer)
+	problem_id = db.Column("problem_id", Integer)
 	gcm_id = db.Column("gcm_id", Integer)
 	ok = db.Column("ok", BOOLEAN)
 	annoy_level = db.Column("annoy_level", Integer)
 	timestamp = db.Column("timestamp", TIMESTAMP)
 
-	def __init__ (self, task_id, gcm_id, ok, annoy_level):
-		self.task_id = task_id
+	def __init__ (self, problem_id, gcm_id, ok, annoy_level):
+		self.problem_id = problem_id
 		self.gcm_id = gcm_id
 		self.ok = ok
 		self.annoy_level = annoy_level
@@ -201,7 +201,7 @@ class NotificationResponse(db.Model):
 	def serialize(self):
 		return {
 			'id' : self.id,
-			'task_id' : self.task_id,
+			'problem_id' : self.problem_id,
 			'gcm_id' : self.gcm_id,
 			'ok' : self.ok,
 			'annoy_level': self.annoy_level,
@@ -214,19 +214,19 @@ class NotificationClick(db.Model):
 	__tablename__ = "notification_click"
 
 	id = db.Column("id", Integer, primary_key=True)
-	task_id = db.Column("task_id", Integer)
+	problem_id = db.Column("problem_id", Integer)
 	gcm_id = db.Column("gcm_id", Integer)
 	timestamp = db.Column("timestamp", TIMESTAMP)
 
-	def __init__ (self, task_id, gcm_id):
-		self.task_id = task_id
+	def __init__ (self, problem_id, gcm_id):
+		self.problem_id = problem_id
 		self.gcm_id = gcm_id
 
 	@property
 	def serialize(self):
 		return {
 			'id' : self.id,
-			'task_id' : self.task_id,
+			'problem_id' : self.problem_id,
 			'gcm_id' : self.gcm_id,
 			'timestamp': self.timestamp
 		}

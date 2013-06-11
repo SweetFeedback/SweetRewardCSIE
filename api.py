@@ -122,12 +122,12 @@ def get_all_feedback_record():
 def insert_notification_response():
 	from model import NotificationResponse
 
-	task_id = request.args.get("task_id", -1)
+	problem_id = request.args.get("problem_id", -1)
 	gcm_id = request.args.get("gcm_id", -1)
 	ok = request.args.get("ok", False)
 	annoy_level = request.args.get("annoy_level", -1)
 
-	notification_response = NotificationResponse(task_id, gcm_id, ok, annoy_level)
+	notification_response = NotificationResponse(problem_id, gcm_id, ok, annoy_level)
 	db.session.add(notification_response)
 	db.session.commit()
 
@@ -137,10 +137,10 @@ def insert_notification_response():
 def insert_notification_click():
 	from model import NotificationClick
 
-	task_id = request.args.get("task_id", -1)
+	problem_id = request.args.get("problem_id", -1)
 	gcm_id = request.args.get("gcm_id", -1)
 
-	notification_click = NotificationClick(task_id, gcm_id)
+	notification_click = NotificationClick(problem_id, gcm_id)
 	db.session.add(notification_click)
 	db.session.commit()
 
