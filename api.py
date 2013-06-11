@@ -150,11 +150,11 @@ def insert_notification_click():
 def insert_gcm_id():
 	from model import GcmID
 
-	reg_id = request.args.get("reg_id", -1)
+	gcm_id = request.args.get("gcm_id", -1)
 	user_id = request.args.get("user_id", -1)
 
-	gcm_id = GcmID(task_id, user_id)
-	db.session.add(gcm_id)
+	gcm = GcmID(gcm_id, user_id)
+	db.session.add(gcm)
 	db.session.commit()
 
 	return ""
