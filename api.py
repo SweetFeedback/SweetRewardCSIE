@@ -178,8 +178,8 @@ def update_response_notification():
 	from model import Notification
 
 	id = request.args.get("id", -1)
-	action = request.args.action("action", -1)
-	annoy_level = request.args.action("annoy_level", -1)
+	action = request.args.get("action", -1)
+	annoy_level = request.args.get("annoy_level", -1)
 
 	indexs = db.session.query(Notification).filter_by(id=id).first()
 	if indexs != None:
