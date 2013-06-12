@@ -146,6 +146,35 @@ def insert_notification_click():
 
 	return ""
 
+@api.route("/notification", methods=['GET'])
+def insert_notification():
+	from model import Notification
+
+	problem_id = request.args.get("problem_id", -1)
+	gcm_id = request.args.get("gcm_id", -1)
+
+	notification = Notification(problem_id, gcm_id)
+	db.session.add(notification)
+	db.session.commit()
+
+	return ""
+
+@api.route("/open_notification", methods=['GET'])
+def update_notification():
+	from model import Notification
+
+	id = request.args.get("id", -1)
+
+	indexs = db.session.query(Notification).filter_by(id=id).first()
+	if indexs != None:
+		indexs.open_timestamp = now()
+		db.session.commit()
+
+	return ""
+
+
+
+
 @api.route("/register_gcm_id", methods=['GET'])
 def insert_gcm_id():
 	from model import GcmID

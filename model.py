@@ -181,6 +181,39 @@ class Feedback(db.Model):
 	def __repr__(self):
 		return "feedback record"
 
+class Notification(db.Model):
+	__tablename__ = "notification"
+
+	id = db.Column("id", Integer, primary_key=True)
+	problem_id = db.Column("problem_id", Integer)
+	gcm_id = db.Column("gcm_id", TEXT)
+	action = db.Column("action", Integer)
+	annoy_level = db.Column("annoy_level", Integer)
+	open_timestamp = db.Column("open_timestamp", Integer)
+	response_timestamp = db.Column("response_timestamp", Integer)
+	generate_timestamp = db.Column("generate_timestamp", TIMESTAMP)
+
+	def __init__ (self, problem_id, gcm_id):
+		self.problem_id = problem_id
+		self.gcm_id = gcm_id
+
+
+	@property
+	def serialize(self):
+		return {
+			'id': self.id,
+			'problem_id': self.problem_id,
+			'gcm_id': self.gcm_id,
+			'action': self.action,
+			'annoy_level': self.annoy_level,
+			'open_timestamp': self.open_timestamp,
+			'response_timestamp': self.response_timestamp,
+			'generate_timestamp': self.generate_timestamp
+		}
+	def __repr__(self):
+		return "Notification"
+
+
 class NotificationResponse(db.Model):
 	__tablename__ = "notification_response"
 
