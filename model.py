@@ -186,7 +186,7 @@ class Notification(db.Model):
 
 	id = db.Column("id", Integer, primary_key=True)
 	problem_id = db.Column("problem_id", Integer)
-	gcm_id = db.Column("gcm_id", TEXT)
+	gcm_id = db.Column("gcm_id", Text)
 	action = db.Column("action", Integer)
 	annoy_level = db.Column("annoy_level", Integer)
 	open_timestamp = db.Column("open_timestamp", Integer)
