@@ -4,6 +4,7 @@ from tasks import add
 
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import Table, Column, Integer, String, Date, Float, TIMESTAMP, desc
+from sqlalchemy.sql import func
 from model import app, db, Problem, Feedback
 import config
 
@@ -167,7 +168,7 @@ def update_notification():
 
 	indexs = db.session.query(Notification).filter_by(id=id).first()
 	if indexs != None:
-		indexs.open_timestamp = now()
+		indexs.open_timestamp = func.now()
 		db.session.commit()
 
 	return ""
