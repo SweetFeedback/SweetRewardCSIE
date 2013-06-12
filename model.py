@@ -213,60 +213,6 @@ class Notification(db.Model):
 	def __repr__(self):
 		return "Notification"
 
-
-class NotificationResponse(db.Model):
-	__tablename__ = "notification_response"
-
-	id = db.Column("id", Integer, primary_key=True)
-	ok = db.Column("ok", BOOLEAN)
-	notification_id = db.Column("notification_id", Integer)
-	annoy_level = db.Column("annoy_level", Integer)
-	timestamp = db.Column("timestamp", TIMESTAMP)
-
-	def __init__ (self, notification_id, ok, annoy_level):
-		self.ok = ok
-		self.annoy_level = annoy_level
-		self.notification_id = notification_id
-		
-
-	@property
-	def serialize(self):
-		return {
-			'id' : self.id,
-			'notification_id': notification_id,
-			'ok' : self.ok,
-			'annoy_level': self.annoy_level,
-			'timestamp': self.timestamp
-		}
-	def __repr__(self):
-		return "Notification Response"
-
-class NotificationClick(db.Model):
-	__tablename__ = "notification_click"
-
-	id = db.Column("id", Integer, primary_key=True)
-	problem_id = db.Column("problem_id", Integer)
-	gcm_id = db.Column("gcm_id", Integer)
-	timestamp = db.Column("timestamp", TIMESTAMP)
-	notification_id = db.Column("notification_id", Integer)
-
-	def __init__ (self, problem_id, gcm_id, notification_id):
-		self.problem_id = problem_id
-		self.gcm_id = gcm_id
-		self.notification_id = notification_id
-
-	@property
-	def serialize(self):
-		return {
-			'id' : self.id,
-			'notification_id': self.notification_id,
-			'problem_id' : self.problem_id,
-			'gcm_id' : self.gcm_id,
-			'timestamp': self.timestamp
-		}
-	def __repr__(self):
-		return "Notification Click"
-
 class GcmID(db.Model):
 	__tablename__ = "gcm_id"
 

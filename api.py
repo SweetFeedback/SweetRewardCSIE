@@ -118,35 +118,6 @@ def get_all_feedback_record():
 	feedbacks = Feedback.query.all()
 	return jsonify(data=[i.serialize for i in feedbacks])
 
-
-@api.route("/notification_response", methods=['GET'])
-def insert_notification_response():
-	from model import NotificationResponse
-
-	ok = request.args.get("ok", False)
-	annoy_level = request.args.get("annoy_level", -1)
-	notification_id = request.args.get("notification_id", -1)
-
-	notification_response = NotificationResponse(notification_id, ok, annoy_level)
-	db.session.add(notification_response)
-	db.session.commit()
-
-	return ""
-
-@api.route("/notification_click", methods=['GET'])
-def insert_notification_click():
-	from model import NotificationClick
-
-	problem_id = request.args.get("problem_id", -1)
-	gcm_id = request.args.get("gcm_id", -1)
-	notification_id = request.args.get("notification_id", -1)
-
-	notification_click = NotificationClick(problem_id, gcm_id, notification_id)
-	db.session.add(notification_click)
-	db.session.commit()
-
-	return ""
-
 @api.route("/notification", methods=['GET'])
 def insert_notification():
 	from model import Notification
