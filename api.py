@@ -129,7 +129,7 @@ def insert_notification():
 	db.session.add(notification)
 	db.session.commit()
 
-	return ""
+	return jsonify(data=[notification.id])
 
 @api.route("/open_notification", methods=['GET'])
 def update_open_notification():
