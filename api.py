@@ -161,7 +161,7 @@ def insert_notification():
 	return ""
 
 @api.route("/open_notification", methods=['GET'])
-def update_notification():
+def update_open_notification():
 	from model import Notification
 
 	id = request.args.get("id", -1)
@@ -173,6 +173,23 @@ def update_notification():
 
 	return ""
 
+@api.route("/response_notification", methods=['GET'])
+def update_response_notification():
+	from model import Notification
+
+	id = request.args.get("id", -1)
+	action = request.args.action("action", -1)
+	annoy_level = request.args.action("annoy_level", -1)
+
+	indexs = db.session.query(Notification).filter_by(id=id).first()
+	if indexs != None:
+		indexs.action = action
+		indexs.annoy_level = annoy_level
+		indexs.response_timestamp = func.now()
+
+		db.session.commit()
+
+	return ""
 
 
 
