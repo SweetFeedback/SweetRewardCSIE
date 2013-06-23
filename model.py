@@ -58,7 +58,7 @@ class Problem(db.Model):
 		self.coor_x = coordinate_x
 		self.coor_y = coordinate_y
 		self.created_by_id = created_by
-		self.status = 1
+		self.status = 0
 		self.created_at = datetime.utcnow()
 
 	@property

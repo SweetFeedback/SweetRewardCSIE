@@ -18,12 +18,12 @@ def show_reports():
 
 @api.route("/reports/solved")
 def show_reports_unsolved():
-	problems = Problem.query.filter(Problem.status == 0).all()
+	problems = Problem.query.filter(Problem.status == 1).all()
 	return jsonify(data=[i.serialize for i in problems])
 
 @api.route("/reports/unsolved")
 def show_reports_unsolved():
-	problems = Problem.query.filter(Problem.status == 1).all()
+	problems = Problem.query.filter(Problem.status == 0).all()
 	return jsonify(data=[i.serialize for i in problems])
 
 @api.route("/reports/location/<room_id>")
