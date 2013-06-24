@@ -5,7 +5,7 @@ from tasks import add
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import Table, Column, Integer, String, Date, Float, TIMESTAMP, desc
 from sqlalchemy.sql import func
-from model import app, db, Problem, Feedback
+from model import app, db, Problem, Feedback, WifiSignal
 import config
 
 #blueprint
