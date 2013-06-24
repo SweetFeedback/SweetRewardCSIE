@@ -182,3 +182,15 @@ def insert_gcm_id():
 			db.session.commit()
 
 	return ""
+
+@api.route("/upload_wifi_signal", methods=['GET'])
+def insert_wifi_signal():
+
+	location = request.args.get("location", -1)
+	signal = request.args.get("signal", "")
+
+	wifi_signal = WifiSignal(location, signal)
+	db.session.add(wifi_signal)
+	db.session.commit()
+
+	return jsonify(data=[wifi_signal.serialize], success=1)

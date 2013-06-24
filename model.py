@@ -235,3 +235,27 @@ class GcmID(db.Model):
 		}
 	def __repr__(self):
 		return "RegisterGCMID"
+
+class WifiSignal(db.Model):
+	__tablename__ == "wifi_signal"
+
+	id = db.Column("id", Integer, primary_key=True)
+	location = db.Column("location", Integer)
+	signal = db.Column("signal", Text)
+	timestamp = db.Column("timestamp", TIMESTAMP)
+
+	def __init__(self, location, signal):
+		self.location = location
+		self.signal = signal
+
+	@property
+	def serialize(self):
+		return {
+			'id': self.id,
+			'location': self.location,
+			'signal': self.signal,
+			'timestamp': self.timestamp
+		}
+	def __repr__(self):
+		return "WifiSignal"
+
