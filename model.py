@@ -237,7 +237,7 @@ class GcmID(db.Model):
 		return "RegisterGCMID"
 
 class WifiSignal(db.Model):
-	__tablename__ == "wifi_signal"
+	__tablename__ = "wifi_signal"
 
 	id = db.Column("id", Integer, primary_key=True)
 	location = db.Column("location", Integer)
