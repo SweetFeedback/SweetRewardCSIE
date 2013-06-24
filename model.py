@@ -247,6 +247,7 @@ class WifiSignal(db.Model):
 	def __init__(self, location, signal):
 		self.location = location
 		self.signal = signal
+		self.timestamp = datetime.utcnow()
 
 	@property
 	def serialize(self):
