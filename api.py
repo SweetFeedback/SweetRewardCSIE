@@ -187,9 +187,9 @@ def insert_gcm_id():
 def insert_wifi_signal():
 
 	location = request.args.get("location", -1)
-	signal = request.args.get("signal", "")
+	signal_level = request.args.get("signal_level", "")
 
-	wifi_signal = WifiSignal(location, signal)
+	wifi_signal = WifiSignal(location, signal_level)
 	db.session.add(wifi_signal)
 	db.session.commit()
 

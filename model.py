@@ -241,20 +241,19 @@ class WifiSignal(db.Model):
 
 	id = db.Column("id", Integer, primary_key=True)
 	location = db.Column("location", Integer)
-	signal = db.Column("signal", Text)
+	signal_level = db.Column("signal_level", Text)
 	timestamp = db.Column("timestamp", TIMESTAMP)
 
-	def __init__(self, location, signal):
+	def __init__(self, location, signal_level):
 		self.location = location
-		self.signal = signal
-		self.timestamp = datetime.utcnow()
+		self.signal_level = signal_level
 
 	@property
 	def serialize(self):
 		return {
 			'id': self.id,
 			'location': self.location,
-			'signal': self.signal,
+			'signal_level': self.signal_level,
 			'timestamp': self.timestamp
 		}
 	def __repr__(self):
