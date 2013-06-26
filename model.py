@@ -254,8 +254,30 @@ class WifiSignal(db.Model):
 			'id': self.id,
 			'location': self.location,
 			'signal_level': self.signal_level,
-			'timestamp': self.timestamp
+			'timestamp': str(self.timestamp)
 		}
 	def __repr__(self):
 		return "WifiSignal"
+
+class Location(db.Model):
+	__tablename__ = "Locations"
+
+	id = db.Column("location_id", Integer, primary_key=True)
+	name = db.Column("room_name", String(50))
+	floor_level = db.Column("floor_level", Integer)
+
+	def __init__(self, name, floor_level):
+		self.name = name
+		self.floor_level = floor_level
+
+	@property
+	def serialize(self):
+		return {
+			'id': self.id,
+			'name': self.name,
+			'floor_level': self.floor_level
+		}
+	def __repr__(self):
+		return "Location"
+
 

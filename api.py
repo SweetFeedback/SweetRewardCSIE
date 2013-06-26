@@ -5,7 +5,7 @@ from tasks import add
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import Table, Column, Integer, String, Date, Float, TIMESTAMP, desc
 from sqlalchemy.sql import func
-from model import app, db, Problem, Feedback, WifiSignal
+from model import app, db, Problem, Feedback
 import config
 
 #blueprint
@@ -185,6 +185,7 @@ def insert_gcm_id():
 
 @api.route("/upload_wifi_signal", methods=['GET'])
 def insert_wifi_signal():
+	from model import WifiSignal
 
 	location = request.args.get("location", -1)
 	signal_level = request.args.get("signal_level", "")
@@ -194,3 +195,11 @@ def insert_wifi_signal():
 	db.session.commit()
 
 	return jsonify(data=[wifi_signal.serialize], success=1)
+
+@api.route("/locations", methods=['GET'])
+def get_locations():
+	from model import Location
+
+	locations = Location.query.all()
+	return jsonify(data=[i.serialize for i in locations], success=1)
+
