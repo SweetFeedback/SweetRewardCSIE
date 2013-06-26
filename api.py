@@ -17,7 +17,7 @@ def show_reports():
 	return jsonify(data=[i.serialize for i in problems])
 
 @api.route("/reports/solved")
-def show_reports_unsolved():
+def show_reports_solved():
 	problems = Problem.query.filter(Problem.status == 1).all()
 	return jsonify(data=[i.serialize for i in problems])
 
