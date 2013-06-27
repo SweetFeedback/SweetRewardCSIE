@@ -203,3 +203,85 @@ def get_locations():
 	locations = Location.query.all()
 	return jsonify(data=[i.serialize for i in locations], success=1)
 
+@api.route("/predict_location", methods=['GET'])
+def predict_location():
+	import os
+	
+	def parse_signal(s):
+		import re
+
+		pattern = re.compile('\{.*?\}')
+		signals = pattern.findall(s)
+
+		res = {}
+		for signal in signals:
+			s = signal.replace('{', '')
+			s = signal.replace('}', '')
+			bssid = str(s.split(',')[1].strip().split('=')[1])
+			level = str(s.split(',')[2].strip().split('=')[1])
+			
+			res[bssid] = level
+
+		return res
+
+	def predict(d):
+		pass
+
+	def read_features():
+		f = open('wifi/feature.txt', 'r')
+		contents = f.readlines()
+		f.close()
+		features = []
+		for content in contents:
+			features.append(content.strip().split(' ')[1])
+
+		return features
+
+	gcm_id = str(request.args.get("gcm_id", -1))
+	signal = request.args.get("signal_level", -1)
+	signal_map = parse_signal(signal)
+
+	features = read_features()
+
+	s = '0 '
+	for i in xrange(len(features)):
+		feature = features[i]
+
+		s += str(i+1) + ':'
+		if feature in signal_map.keys():
+			s += signal_map[feature]
+		else:
+			s += str(0)
+		s += ' '
+
+	inputfilename = 'wifi/' + gcm_id + '.txt'
+	f = open(inputfilename, 'w')
+	f.write(s)
+	f.close()
+
+	outfilename = 'wifi/' + gcm_id + '_out.txt'
+	command = './wifi/libsvm-3.17/svm-predict ' + inputfilename + ' ./wifi/libsvm-3.17/tools/trainning.txt.model ' + outfilename
+	s = command
+	os.system('command')
+
+	f = open(outfilename, 'r')
+	s = f.readline()
+	f.close()
+
+	return s
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
