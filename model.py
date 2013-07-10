@@ -23,7 +23,7 @@ class Member(db.Model):
 	facebook_id = db.Column("facebook_id", Text)
 	gcm_id = db.Column("gcm_id", Text)
 
-	def __self__(self, account=None, password=None, token=None, temp=0, light=0, micro=0, facebook_id=None, gcm_id=None):
+	def __init__(self, account=None, password=None, token=None, temp=0, light=0, micro=0, facebook_id=None, gcm_id=None):
 		self.account = account
 		self.password = password
 		self.temp = temp
