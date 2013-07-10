@@ -3,6 +3,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from datetime import datetime
 from sqlalchemy import Table, Column, Text, Integer, String, Date, Float, TIMESTAMP, BOOLEAN
 import config
+import md5
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = config.DB_URI
@@ -19,6 +20,25 @@ class Member(db.Model):
 	temp = db.Column("temperature_threshold", Float)
 	light = db.Column("light_threshold", Float)
 	micro = db.Column("micro_threshold", Float)
+	facebook_id = db.Column("facebook_id", Text)
+	gcm_id = db.Column("gcm_id", Text)
+
+	def __self__(self, account=None, password=None, token=None, temp=0, light=0, micro=0, facebook_id=None, gcm_id=None):
+		self.account = account
+		self.password = password
+		self.temp = temp
+		self.light = light
+		self.micro = micro
+		self.facebook_id = facebook_id
+		self.gcm_id = gcm_id
+		self.token = token
+		if account != None:
+			self.token = md5.new(account).hexdigest()
+		elif gcm_id != None:
+			self.token = md5.new(gcm_id).hexdigest()
+		elif facebook_id != None:
+			self.token = md5.new(facebook_id).hexdigest()
+
 
 	@property
 	def serialize(self):
@@ -212,29 +232,6 @@ class Notification(db.Model):
 		}
 	def __repr__(self):
 		return "Notification"
-
-class GcmID(db.Model):
-	__tablename__ = "gcm_id"
-
-	id = db.Column("id", Integer, primary_key=True)
-	gcm_id = db.Column("gcm_id", Integer)
-	user_id = db.Column("user_id", Integer)
-	timestamp = db.Column("timestamp", TIMESTAMP)
-
-	def __init__ (self, gcm_id, user_id):
-		self.gcm_id = gcm_id
-		self.user_id = user_id
-
-	@property
-	def serialize(self):
-		return {
-			'id' : self.id,
-			'gcm_id' : self.gcm_id,
-			'user_id' : self.user_id,
-			'timestamp': self.timestamp
-		}
-	def __repr__(self):
-		return "RegisterGCMID"
 
 class WifiSignal(db.Model):
 	__tablename__ = "wifi_signal"

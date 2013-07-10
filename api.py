@@ -166,22 +166,20 @@ def update_response_notification():
 
 @api.route("/register_gcm_id", methods=['GET'])
 def insert_gcm_id():
-	from model import GcmID
+	from model import Member
 
 	gcm_id = request.args.get("gcm_id", -1)
-	user_id = request.args.get("user_id", -1)
+	index = db.session.query(Member).filter_by(gcm_id=gcm_id).first()
 
-	gcm = GcmID(gcm_id, user_id)
-	if user_id == -1:
-		db.session.add(gcm)
-		db.session.commit()
+	if index != None:
+		token = index.token
 	else:
-		indexs = db.session.query(GcmID).filter_by(gcm_id=gcm_id).first()
-		if indexs != None:
-			indexs.user_id = gcm.user_id
-			db.session.commit()
+		member = Member(gcm_id=gcm_id)
+		db.session.add(member)
+		db.session.commit()
+		token = member.token
 
-	return ""
+	return jsonify(token=token)
 
 @api.route("/upload_wifi_signal", methods=['GET'])
 def insert_wifi_signal():
