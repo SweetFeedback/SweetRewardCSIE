@@ -24,7 +24,9 @@ def nasa_23():
 @views.route("/")
 def home():
 	return render_template("home.html")
-
+@views.route("/questionaire")
+def question():
+	return render_template("quiz.html")
 ### worker part ###
 @views.route("/test")
 def yo(x=16, y=16):

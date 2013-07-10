@@ -5,7 +5,7 @@ from tasks import add
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import Table, Column, Integer, String, Date, Float, TIMESTAMP, desc
 from sqlalchemy.sql import func
-from model import app, db, Problem, Feedback, Member, Window
+from model import app, db, Problem, Feedback, Member, Window, Location
 import config
 
 from datetime import datetime 
@@ -13,58 +13,6 @@ import pytz
 #blueprint
 api = Blueprint('api', __name__)
 
-
-### function related to problems and reports 
-@api.route("/reports")
-def show_reports():
-	problems = Problem.query.all()
-	return jsonify(data=[i.serialize for i in problems])
-
-@api.route("/reports/solved")
-def show_reports_solved():
-	## give solved problem 
-	problems = Problem.query.filter(Problem.status == 1).all()
-	return jsonify(data=[i.serialize for i in problems])
-
-@api.route("/reports/unsolved")
-def show_reports_unsolved():
-	## give unsolved problem 
-	problems = Problem.query.filter(Problem.status == 0).all()
-	return jsonify(data=[i.serialize for i in problems])
-
-@api.route("/reports/locations/<room_id>")
-def show_reports_room(room_id):
-	## filter by room_id 
-	problems = Problem.query.filter(Problem.room_id == room_id).all()
-	return jsonify(data=[i.serialize for i in problems])
-
-@api.route("/reports/insert", methods=['GET', 'POST'])
-def insert_report():
-	title = request.args.get("title", "")
-	content = request.args.get("content", "")
-	coor_x = request.args.get("coor_x", 0)
-	coor_y = request.args.get("coor_y", 0)
-	user_id = request.args.get("user_id", 0)
-	category = request.args.get("category", 0)
-	room_id = request.args.get("room_id", 0)
-	report = Problem(category, room_id, title, content, coor_x, coor_y, user_id)
-	db.session.add(report)
-	db.session.commit()
-
-	return jsonify(data=[report.serialize], success=1)
-
-@api.route("/reports/update/<report_id>", methods=['GET', 'POST'])
-def update_report(report_id):	
-	user_id = request.args.get("user_id", 0)
-	target_problem = Problem.query.filter_by(problem_id = report_id).first()
-	if target_problem is not None:
-		target_problem.status = 1
-		target_problem.updated_by = user_id
-		db.session.commit()
-		return_result = jsonify(data=[target_problem.serialize])
-	else:
-		return_result = jsonify(error=["can't find this problem from database"])
-	return return_result
 ### function related to members 
 @api.route("/members")
 def list_members():
@@ -136,11 +84,24 @@ def insert_feedback(device_id, app_id, user_id, feedback_type, feedback_desc):
 	db.session.commit()
 	return jsonify(data=feedback.serialize)
 
+
 @api.route("/get_feedback", methods=['GET'])
 def feedback():
 	device_id = request.args.get("device_id", "-1")
-	feedbacks = Feedback.query.filter_by(device_id=device_id)
+	feedbacks = Feedback.query.filter_by(device_id=device_id).filter_by(if_get=False)
 	return jsonify(data=[i.serialize for i in feedbacks])
+@api.route("/get_feedback_by_user", methods=['GET'])
+def get_feedback_by_user():
+	user_id = request.args.get("user_id", -1)
+	feedbacks = Feedback.query.filter_by(user_id=user_id).filter_by(if_get=False)
+@api.route("/update_feedback", methods=['GET'])
+def update_feedback():
+	feedback_id = request.args.get("feedback_id", -1)
+	feedback = db.session.query(Feedback).filter_by(feedback_id=feedback_id).first()
+	if feedback is not None:
+		feedback.if_get = True
+		db.session.commit()
+	return jsonify(data=[feedback.serialize])
 
 @api.route("/notification", methods=['GET'])
 def insert_notification():
@@ -217,8 +178,6 @@ def insert_wifi_signal():
 
 @api.route("/locations", methods=['GET'])
 def get_locations():
-	from model import Location
-
 	locations = Location.query.all()
 	return jsonify(data=[i.serialize for i in locations], success=1)
 
@@ -237,6 +196,7 @@ def window_action():
 			if action == 0:
 				## good 
 				insert_feedback(device_id, application_id, user_id, feedback_type, feedback_description)
+				return jsonify(getcandy=["close window"])
 			elif action == 1: 
 				## bad
 				print ""
@@ -246,6 +206,7 @@ def window_action():
 				print ""
 			elif action == 1: 
 				insert_feedback(device_id, application_id, user_id, feedback_type, feedback_description)
+				return jsonify(getcandy=["open window"])
 				## good 
 				
 		### check if the action is good 

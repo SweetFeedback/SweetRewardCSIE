@@ -7,12 +7,14 @@ from sqlalchemy import Table, Column, Integer, String, Date, Float, TIMESTAMP, d
 from model import app, db
 from api import api
 from views import views
+from reports import reports
 import config, os
 
 
 
 app = Flask(__name__)
 #app.config.from_object(settings)
+app.register_blueprint(reports)
 app.register_blueprint(api)
 app.register_blueprint(views)
 
