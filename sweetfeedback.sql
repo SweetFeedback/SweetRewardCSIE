@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 09, 2013 at 05:36 PM
+-- Generation Time: Jul 09, 2013 at 06:05 PM
 -- Server version: 5.6.10
 -- PHP Version: 5.3.15
 
@@ -126,13 +126,6 @@ CREATE TABLE IF NOT EXISTS `Locations` (
   PRIMARY KEY (`location_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
---
--- Dumping data for table `Locations`
---
-
-INSERT INTO `Locations` (`location_id`, `room_name`, `coordinate_x`, `coordinate_y`, `floor_level`) VALUES
-(2, '336', 1, 1, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -152,15 +145,6 @@ CREATE TABLE IF NOT EXISTS `members` (
   PRIMARY KEY (`user_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=18 ;
 
---
--- Dumping data for table `members`
---
-
-INSERT INTO `members` (`user_id`, `account`, `password`, `token`, `temperature_threshold`, `light_threshold`, `micro_threshold`, `facebook_id`, `gcm_id`) VALUES
-(17, NULL, NULL, '5b89aa815b6fccb4349543291b7fd0d7', 0, 0, 0, NULL, '1233455'),
-(15, NULL, NULL, '202cb962ac59075b964b07152d234b70', 0, 0, 0, NULL, '123'),
-(16, NULL, NULL, '1b2de2499e5f93e00a5a90e79a9da4b1', 0, 0, 0, NULL, '1231231231');
-
 -- --------------------------------------------------------
 
 --
@@ -178,13 +162,6 @@ CREATE TABLE IF NOT EXISTS `notification` (
   `generate_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=39 ;
-
---
--- Dumping data for table `notification`
---
-
-INSERT INTO `notification` (`id`, `problem_id`, `gcm_id`, `action`, `annoy_level`, `open_timestamp`, `response_timestamp`, `generate_timestamp`) VALUES
-(38, 5, '33', NULL, NULL, NULL, NULL, '2013-06-26 03:53:49');
 
 -- --------------------------------------------------------
 
@@ -305,15 +282,6 @@ CREATE TABLE IF NOT EXISTS `wifi_signal` (
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
-
---
--- Dumping data for table `wifi_signal`
---
-
-INSERT INTO `wifi_signal` (`id`, `location`, `signal_level`, `timestamp`) VALUES
-(1, 1, '{"00:25:c4:7c:a4:98":-51,"00:25:c4:3c:a4:98":-52,"c4:10:8a:94:64:18":-65,"74:ea:3a:a4:fd:3e":-70,"00:24:6c:2d:17:d0":-66,"00:25:c4:3c:91:28":-87,"00:26:5a:c3:f6:ff":-74,"00:24:6c:2d:17:d2":-71,"00:24:6c:2d:17:d1":-65,"00:24:6c:26:89:f1":-78,"00:0d:0b:ef:50:3f":-75,"00:24:6c:26:89:f2":-80,"c0:c5:20:11:a5:b8":-65,"00:0d:0b:4f:6a:fa":-80,"00:22:2d:4d:52:64":-87,"00:25:c4:7c:9c:38":-75,"00:25:c4:bc:91:28":-85,"00:25:c4:bc:a4:98":-52,"58:93:96:29:4d:78":-85,"c4:10:8a:14:64:18":-65,"f8:d1:11:39:27:02":-87,"c0:c5:20:91:a5:b8":-66,"10:bf:48:e7:2a:a8":-74,"00:25:c4:bc:9c:f8":-73,"c4:10:8a:54:64:18":-65,"00:25:c4:7c:9c:f8":-73,"00:18:e7:eb:81:b8":-85,"00:25:c4:bc:9c:38":-76,"d4:9a:20:54:9e:56":-49,"00:25:c4:3c:9c:38":-68,"00:25:c4:7c:a4:f8":-86,"ac:67:06:9c:02:88":-89,"00:25:c4:3c:9c:f8":-73,"c0:c5:20:51:a5:b8":-64,"00:24:a5:da:9e:15":-62,"58:93:96:27:35:28":-86}', '2013-06-26 04:05:51'),
-(2, 1, '{"00:25:c4:7c:a4:98":-49,"00:25:c4:3c:a4:98":-50,"c4:10:8a:94:64:18":-67,"74:ea:3a:a4:fd:3e":-68,"00:24:6c:2d:17:d0":-71,"00:25:c4:3c:91:28":-76,"00:26:5a:c3:f6:ff":-70,"00:24:6c:2d:17:d2":-72,"00:24:6c:2d:17:d1":-69,"00:0d:0b:ef:50:3f":-75,"00:24:6c:26:89:f2":-83,"c0:c5:20:11:a5:b8":-67,"ac:67:06:dd:97:78":-86,"58:93:96:69:4d:78":-84,"00:0d:0b:4f:6a:fa":-79,"00:25:c4:7c:9c:38":-52,"00:25:c4:bc:91:28":-75,"00:25:c4:bc:a4:98":-50,"58:93:96:29:4d:78":-81,"c4:10:8a:14:64:18":-66,"c0:c5:20:91:a5:b8":-64,"10:bf:48:e7:2a:a8":-70,"00:25:c4:bc:9c:f8":-72,"c4:10:8a:54:64:18":-64,"00:25:c4:7c:9c:f8":-72,"00:18:e7:eb:81:b8":-87,"20:cf:30:b7:c0:de":-79,"00:25:c4:3c:91:78":-86,"c4:10:8a:54:64:b8":-89,"00:25:c4:bc:9c:38":-52,"d4:9a:20:54:9e:56":-52,"00:25:c4:3c:9c:38":-53,"00:25:c4:3c:9c:f8":-73,"c0:c5:20:51:a5:b8":-63,"58:93:96:67:35:28":-85,"00:24:a5:da:9e:15":-60}', '2013-06-26 04:23:52'),
-(3, 1, '{"00:25:c4:7c:a4:98":-49,"00:25:c4:3c:a4:98":-50,"c4:10:8a:94:64:18":-67,"74:ea:3a:a4:fd:3e":-68,"00:24:6c:2d:17:d0":-71,"00:25:c4:3c:91:28":-76,"00:26:5a:c3:f6:ff":-70,"00:24:6c:2d:17:d2":-72,"00:24:6c:2d:17:d1":-69,"00:0d:0b:ef:50:3f":-75,"00:24:6c:26:89:f2":-83,"c0:c5:20:11:a5:b8":-67,"ac:67:06:dd:97:78":-86,"58:93:96:69:4d:78":-84,"00:0d:0b:4f:6a:fa":-79,"00:25:c4:7c:9c:38":-52,"00:25:c4:bc:91:28":-75,"00:25:c4:bc:a4:98":-50,"58:93:96:29:4d:78":-81,"c4:10:8a:14:64:18":-66,"c0:c5:20:91:a5:b8":-64,"10:bf:48:e7:2a:a8":-70,"00:25:c4:bc:9c:f8":-72,"c4:10:8a:54:64:18":-64,"00:25:c4:7c:9c:f8":-72,"00:18:e7:eb:81:b8":-87,"20:cf:30:b7:c0:de":-79,"00:25:c4:3c:91:78":-86,"c4:10:8a:54:64:b8":-89,"00:25:c4:bc:9c:38":-52,"d4:9a:20:54:9e:56":-52,"00:25:c4:3c:9c:38":-53,"00:25:c4:3c:9c:f8":-73,"c0:c5:20:51:a5:b8":-63,"58:93:96:67:35:28":-85,"00:24:a5:da:9e:15":-60}', '2013-06-26 04:35:50');
 
 -- --------------------------------------------------------
 
