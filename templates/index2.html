@@ -9,7 +9,7 @@
 
         <!-- Le styles -->
         <link href="/static/css/bootstrap.css" rel="stylesheet">
-        <link href="/static/css/style.css" rel="stylesheet">
+        <link href="/static/css/style2.css" rel="stylesheet">
 
         <!--<link href="assets/css/docs.css" rel="stylesheet">-->
         <link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
@@ -88,12 +88,6 @@
                 </div>
             </div>
             <div class="tabable">
-                <ul class="nav nav-pills spliter">
-                    <li class="active">
-                    <a href="#apps-1" data-toggle="tab" id="app1">3F Map</a>
-                    </li>
-                </ul>
-
                 <div class="tab-content">
                     <div class="tab-pane active" id="apps-1">
                         <div id="user_preference">User Preference: 
@@ -102,10 +96,9 @@
                             <span id="sound_preference"></span>
                         </div>          
                         <!--<div id="testTxt">cc</div> -->                                                    
-                        <div id="left">
                             <!-- map -->
                             <div id="map">
-                                <img id="map_2f" src="/static/img/csie/csie_map.png"/>
+                                <img id="map_2f" src="/static/img/floor1.png"/>
                             </div>
                             <div id="win_1" class="win"></div>
                             <div id="win_2" class="win"></div>
@@ -213,7 +206,7 @@
                             <div id="room_10" data-toggle="modal" href="#room_10_detail" class="room"></div> <!--r340 -->
 
 
-                            <div id="info" >
+                            <div id="info">
                                 <li><img src="/static/img/others/char-cold.png"/> : Cold </li>
                                 <li><img class="sweat" src="/static/img/others/char-sweat.png"/> : Hot </li>
                                 <li><img src="/static/img/others/char-headphone.png"/> : Noisy </li>
@@ -250,96 +243,10 @@
                             <img class="transportation" src="/static/img/transportation/empty.png" width="30px" style="margin-top: -120px; margin-left: -10px;"/>
                             <div class="mrc_num" >3</div>
                         </div>
-
-                        </div>
-                        <div id="right">
-                            <a data-toggle="modal" href="#report" class="btn btn-primary" style="margin-bottom: 5px;">Report a Problem!</a>
-                            <div class="bs-docs-example">
-                                <ul id="myTab" class="nav nav-tabs" style="margin: 0px; padding: 0px;">
-                                    <li class="active"><a href="#feedbackHistory" data-toggle="tab">User Rank</a></li>
-                                    <li><a href="#problemArea" data-toggle="tab">Room Status</a></li>
-                                </ul>
-
-                                <div id="myTabContent" class="tab-content" style="backgkround-color: #ffffff; margin: 0px; padding: 0px;">
-                                    <div class="tab-pane fade in active tabStyle" id="feedbackHistory">
-                                    </div>
-
-                                    <div class="tab-pane fade tabStyle" id="problemArea">
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="report" class="modal hide fade">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h3>Report a Problem!</h3>
-                                </div>
-                                <div class="modal-body">
-                                    <div id="problem_select" class="btn-group">
-                                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                                            <span id="problem_title">Any Problem?</span>
-                                            <span class="caret"></span>
-                                            <input type="hidden" id="problem_id" />
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a href="#" id="hot">Hot Problem</a>
-                                            </li>
-                                            <li>
-                                                <a href="#" id="cold">Cold Problem</a>
-                                            </li>
-                                            <li>
-                                                <a href="#" id="noise">Noisy Problem</a>
-                                            </li>
-                                            <li>
-                                                <a href="#" id="other">Other Problem</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div id="location_select" class="btn-group">
-                                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                                            <span id="location_title">Choose Location..</span>
-                                            <span class="caret"></span>
-                                            <input type="hidden" id="location_id" />
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="#" id="1" >R336/R338</a></li>
-                                            <li><a href="#" id="2" >R306/R308</a></li>
-                                            <li><a href="#" id="3" >R302/R304</a></li>
-                                            <li><a href="#" id="4" >R310</a></li>
-                                            <li><a href="#" id="5" >R324</a></li>
-                                            <li><a href="#" id="6" >R318</a></li>
-                                            <li><a href="#" id="7" >R346</a></li>
-                                            <li><a href="#" id="8" >R344</a></li>
-                                            <li><a href="#" id="9" >R342</a></li>
-                                            <li><a href="#" id="10" >R340</a></li>
-                                        </ul>
-                                    </div>
-                                    
-                                    <form id="problemInputForm">
-                                        <fieldset class='textbox'>
-                                            <textarea id="problemInput" style="margin-top: 8px; width: 90%; height:180px;">problem.... </textarea>
-                                        </fieldset>
-
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <a class="btn btn-primary" id="reportSubmit" data-dismiss="modal">Submit</a>
-                                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
-                                </div>
-                            </div>
-                            
-                        </div>
-                        <br/>
-                        
-
+                   <br/>
                     </div>
                 </div>
             </div>
-            
-           
-
         </div> <!-- /container -->
 
         <!-- Le javascript

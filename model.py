@@ -261,18 +261,24 @@ class Location(db.Model):
 
 	id = db.Column("location_id", Integer, primary_key=True)
 	name = db.Column("room_name", String(50))
+	coordinate_x = db.Column("coordinate_x", Integer)
+	coordinate_y = db.Column("coordinate_y", Integer)
 	floor_level = db.Column("floor_level", Integer)
 
-	def __init__(self, name, floor_level):
+	def __init__(self, name, x, y, floor_level):
 		self.name = name
 		self.floor_level = floor_level
+		self.coordinate_x = x
+		self.coordinate_y = y
 
 	@property
 	def serialize(self):
 		return {
 			'id': self.id,
 			'name': self.name,
-			'floor_level': self.floor_level
+			'floor_level': self.floor_level,
+			'coordinate_x': self.coordinate_x,
+			'coordinate_y': self.coordinate_y
 		}
 	def __repr__(self):
 		return "Location"

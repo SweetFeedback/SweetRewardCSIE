@@ -240,13 +240,13 @@ function readRoomProblem(room_id, room_name, room_problem_count){
     /* get existing report */
     $.ajax({
         type: "GET",
-        url: "./php/getExistReports.php",
+        url: "./reports/unsolved",
         data: { "room_id": room_id },
         dataType: 'json',
         success: function(data) {
 
-            $.each(data, function(i, item) {
-                problemBody.append("<h3>Problem "+ (i+1) +": "+item.title+" ("+item.id+")</h3>");
+            $.each(data['data'], function(i, item) {
+                problemBody.append("<h3>Problem "+ (i+1) +": "+item.title+" ("+item.room_id+")</h3>");
                 problemBody.append('<span style="margin-left: 5px;">Create at '+item.created_at+'</span>');
                 problemBody.append('<br/><a href="#" class="btn fixIssue" id="fix_problem_'+item.id+'" data-dismiss="modal"">Fixed</a><hr/>');
 
@@ -289,7 +289,7 @@ function readProblemList(){
         dataType: 'json',
         success: function(data) {
             
-            $.each(data, function(i, item) {
+            $.each(data['data'], function(i, item) {
                 var historyList = $('<li><a href="#" class="tooltip-test" title="'+item.feedback_description+'">'+item.feedback_type+' ('+item.created_time+')</a></li>');
 
                 if(item.feedback_type == "positive"){
@@ -317,11 +317,11 @@ function readProblemList(){
     /* get existing report */
     $.ajax({
         type: "GET",
-        url: "./php/getExistReports.php",
+        url: "./reports",
         dataType: 'json',
         success: function(data) {
 
-            $.each(data, function(i, item) {
+            $.each(data['data'], function(i, item) {
                 $('#problemList .items').append('<li><a class="manual-toggle" data-toggle="modal" href="#problem_'+item.id+'">'+item.title+'</a></li>');
 
                 var problemDiv = $("<div></div>").attr('id','problem_'+item.id).addClass('modal hide fade');
@@ -498,19 +498,17 @@ function readRoomRank(){
 
     $.ajax({
         type: "GET",
-        url: "./php/getUnsolveProblemRoomRank.php",
+        url: "./reports/unsolved",
         
         dataType: 'json',
         success: function(data) {
-            $.each(data, function(i, item) {
+            $.each(data['data'], function(i, item) {
                 $('#problemList .items').append('<li><a class="manual-toggle" data-toggle="modal" href="#room_problem_'+item.room+'">'+item.room_name+': '+item.count+'</a> <img src="/static/img/emotion/emotion'+getEmotion(item.count)+'.png" width="22px"/></li>');
 
-                
                 var problemDiv = $("<div></div>").attr('id','room_problem_'+item.room).addClass('modal hide fade');
                 problemDiv.appendTo('#problemDetail');
 
                 readRoomProblem(item.room, item.room_name, item.count);
-
                 //update color in map
                 $('#room_'+item.room).css({"background": "rgba(234,0,55,"+item.count/15.0+")"});
             });
@@ -695,9 +693,9 @@ $(function(){
     $('#reportSubmit').click(function(){
         $.ajax({
             type: "GET",
-            url: "./php/makeNewReport.php",
-            data: { "user_id": window.cur_uid, "coordinate_x": "1", "coordinate_y": "1", "title": $('#problemInput').val(), 
-                    "category": window.category, "room_id": $('#location_id').val()},
+            url: "./reports/insert",
+            data: { "user_id": window.cur_uid, "coor_x": "1", "coor_y": "1", "title": $('#problemInput').val(), 
+                    "category": window.category, "room_id": $('#location_id').val(), "content":$('#problemInput').val(), "user_id":0},
 
             dataType: 'json',
             success: function(data) {

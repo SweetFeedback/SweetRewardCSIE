@@ -17,6 +17,9 @@ def hello():
 @views.route("/beauty")
 def beauty():
 	return render_template("index.html")
+@views.route("/nasa")
+def nasa_23():
+	return render_template("index2.html")
 
 @views.route("/")
 def home():
