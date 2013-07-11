@@ -5,7 +5,7 @@ from tasks import add
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import Table, Column, Integer, String, Date, Float, TIMESTAMP, desc
 from sqlalchemy.sql import func
-from model import app, db, Problem, Feedback, Member, Window, Location
+from model import app, db, Problem, Feedback, Member, Window, Location, WindowIndex
 import config
 
 from datetime import datetime 
@@ -18,6 +18,46 @@ api = Blueprint('api', __name__)
 def list_members():
 	members = Member.query.all()
 	return jsonify(data=[i.serialize for i in members])
+@api.route("/members/user_id")
+def get_user(): 
+	token = request.args.get("token", "")
+	facebook_id = request.args.get("facebook_id", "")
+	account = request.args.get("account", "")
+	gcm_id = request.args.get("gcm_id", "")
+	if token is not "": 
+		user_id = get_id_from_token(token)
+	elif facebook_id is not "":
+		user_id = get_id_from_fb(facebook_id)
+	elif account is not "": 
+		user_id = get_id_from_account(account)
+	elif gcm_id is not "":
+		user_id = get_id_from_gcm_id(gcm_id)
+	return jsonify(user_id=user_id)
+
+def get_id_from_token(token):
+	if token is not None:
+		user = db.session.query(Member).filter_by(token=token).first()
+		if user is not None:
+			return user.user_id
+	return 0
+def get_id_from_fb(facebook_id):
+	if facebook_id is not None:
+		user = db.session.query(Member).filter_by(facebook_id=facebook_id).first()
+		if user is not None:
+			return user.user_id
+	return 0
+def get_id_from_account(account):
+	if account is not None:
+		user = db.session.query(Member).filter_by(account=account).first()
+		if user is not None:
+			return user.user_id
+	return 0
+def get_id_from_gcm_id(gcm_id):
+	if gcm_id is not None: 
+		user = db.session.query(Member).filter_by(gcm_id=gcm_id).first() 
+		if user is not None: 
+			return user.user_id
+	return 0 
 
 # going to insert window_log data 
 @api.route("/window_log/insert", methods=['GET', 'POST'])
@@ -84,7 +124,6 @@ def insert_feedback(device_id, app_id, user_id, feedback_type, feedback_desc):
 	db.session.commit()
 	return jsonify(data=feedback.serialize)
 
-
 @api.route("/get_feedback", methods=['GET'])
 def feedback():
 	device_id = request.args.get("device_id", "-1")
@@ -92,8 +131,10 @@ def feedback():
 	return jsonify(data=[i.serialize for i in feedbacks])
 @api.route("/get_feedback_by_user", methods=['GET'])
 def get_feedback_by_user():
-	user_id = request.args.get("user_id", -1)
+	token = request.args.get("token", -1)
+	user_id = get_id_from_token(token)
 	feedbacks = Feedback.query.filter_by(user_id=user_id).filter_by(if_get=False)
+	return jsonify(data=[i.serialize for i in feedbacks])
 @api.route("/update_feedback", methods=['GET'])
 def update_feedback():
 	feedback_id = request.args.get("feedback_id", -1)
@@ -157,6 +198,7 @@ def insert_gcm_id():
 		token = index.token
 	else:
 		member = Member(gcm_id=gcm_id)
+		print jsonify(data=[member.serialize])
 		db.session.add(member)
 		db.session.commit()
 		token = member.token
@@ -179,7 +221,7 @@ def insert_wifi_signal():
 @api.route("/locations", methods=['GET'])
 def get_locations():
 	locations = Location.query.all()
-	return jsonify(data=[i.serialize for i in locations], success=1)
+	return jsonify(data=[i.serialize for i in locations])
 
 @api.route("/window_action", methods=['GET'])
 def window_action(): 
@@ -188,25 +230,27 @@ def window_action():
 	window_id = request.args.get("window_id", 0)
 	action = request.args.get("action", -1)
 
-	if token != -1 and window_id != 0 and action != -1:
+	user_id = get_id_from_token(token)
+	if user_id != 0 and window_id != 0 and action != -1:
 		### query user id 
-		mdatetime = datetime.now(pytz.timezone('US/Pacific')).hour
-
+		hour = datetime.now(pytz.timezone('US/Pacific')).hour
+		print hour
 		if hour > 9 and hour < 20:
+			action = int(action)
 			if action == 0:
-				## good 
-				insert_feedback(device_id, application_id, user_id, feedback_type, feedback_description)
-				return jsonify(getcandy=["close window"])
+				insert_feedback(0, 1, user_id, "positive", "get candy for closing window")
+				return jsonify(status=1, reason=["close window for candies"], device_id=0, user_id=1, application_id=1)
 			elif action == 1: 
-				## bad
-				print ""
+				return jsonify(status=0, reason=["no candy for opening window"]) 
+			else:
+				return jsonify(status=2, reason=["the action can't not be understanded"])
 		elif hour <= 9 and hour>= 20:
+			action = int(action)
 			if action == 0: 
-				## bad
-				print ""
+				return jsonify(status=0, reason=["no candy for closing window"])
 			elif action == 1: 
-				insert_feedback(device_id, application_id, user_id, feedback_type, feedback_description)
-				return jsonify(getcandy=["open window"])
+				insert_feedback(0, 1, user_id, "positive", "get candy for opening window")
+				return jsonify(status=1, reason=["open window for candies"], device_id=0, user_id=1, application_id=1)
 				## good 
-				
-		### check if the action is good 
+			else:
+				return jsonify(status=2, reason=["the action can't not be understanded"])

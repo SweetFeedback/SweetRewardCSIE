@@ -48,7 +48,9 @@ class Member(db.Model):
 			'token' : self.token,
 			'temp_threshold' : self.temp,
 			'light_threshold' : self.light,
-			'micro_threshold' : self.micro
+			'micro_threshold' : self.micro,
+			'facebook_id' : self.facebook_id,
+			'gcm_id' : self.gcm_id
 		}	
 
 	def __repr__(self):
