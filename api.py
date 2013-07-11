@@ -13,52 +13,6 @@ import pytz
 #blueprint
 api = Blueprint('api', __name__)
 
-### function related to members 
-@api.route("/members")
-def list_members():
-	members = Member.query.all()
-	return jsonify(data=[i.serialize for i in members])
-@api.route("/members/user_id")
-def get_user(): 
-	token = request.args.get("token", "")
-	facebook_id = request.args.get("facebook_id", "")
-	account = request.args.get("account", "")
-	gcm_id = request.args.get("gcm_id", "")
-	if token is not "": 
-		user_id = get_id_from_token(token)
-	elif facebook_id is not "":
-		user_id = get_id_from_fb(facebook_id)
-	elif account is not "": 
-		user_id = get_id_from_account(account)
-	elif gcm_id is not "":
-		user_id = get_id_from_gcm_id(gcm_id)
-	return jsonify(user_id=user_id)
-
-def get_id_from_token(token):
-	if token is not None:
-		user = db.session.query(Member).filter_by(token=token).first()
-		if user is not None:
-			return user.user_id
-	return 0
-def get_id_from_fb(facebook_id):
-	if facebook_id is not None:
-		user = db.session.query(Member).filter_by(facebook_id=facebook_id).first()
-		if user is not None:
-			return user.user_id
-	return 0
-def get_id_from_account(account):
-	if account is not None:
-		user = db.session.query(Member).filter_by(account=account).first()
-		if user is not None:
-			return user.user_id
-	return 0
-def get_id_from_gcm_id(gcm_id):
-	if gcm_id is not None: 
-		user = db.session.query(Member).filter_by(gcm_id=gcm_id).first() 
-		if user is not None: 
-			return user.user_id
-	return 0 
-
 # going to insert window_log data 
 @api.route("/window_log/insert", methods=['GET', 'POST'])
 def insert_window_log():
