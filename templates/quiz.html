@@ -1,6 +1,6 @@
 <html>
     <haed>
-        <link href="assets/css/style_quiz.css" rel="stylesheet">
+        <link href="/static/css/style_quiz.css" rel="stylesheet">
     </head>
     <body>
         <h2>CMUSV Questionaire</h2>
@@ -109,8 +109,8 @@
             <div id="score">Your score is...<div id="score_num"></div><div id="comment"></div></div>
         </div>
 
-        <script src="assets/js/jquery.js"></script>
-        <script src="assets/js/jquery-ui.min.js"></script>
+        <script src="/static/js/jquery.js"></script>
+        <script src="/static/js/jquery-ui.min.js"></script>
         <script>
             $(function(){
                 var correct_answers = ["b","c","b","c","a","d","b","a","d"];
@@ -119,7 +119,7 @@
                 var count = 0;
                 var standard = 80;
                 var comment = new Array("", "", "OK...","Good!","Great!", "Excellent!!");
-
+                var question_done = 0;
                 $("#threshold").text(standard);
                 $(".caption").hide(); 
                 $(".tf").click(function() {
@@ -141,7 +141,7 @@
                             } else {
 
                             //not correct, blue
-                            $.post("./php/insertFeedback.php?application_id=9&type=negative");
+                            $.get("./feedback_insert?device_id=100&application_id=9&feedback_type=negative&feedback_description=wrong answer");
 
                             $(this).animate({backgroundColor:"#FF8F8F"}, 1000);
                             count++;
@@ -152,11 +152,12 @@
 
                         answered[q_num] = 1;
                         score = (100*correct/correct_answers.length);
-                        if(score >= standard){
-                            $.post("./php/insertFeedback.php?application_id=9&type=positive");
+                        if(score >= standard && question_done == correct_answers.length-1){
+                            $.get("./feedback_insert?device_id=100&application_id=9&feedback_type=positive&feedback_description=well done in questionaire");
                         }
                         $('#score_num').html(score.toFixed(1) + "%");
                         $('#comment').html(comment[Math.floor(correct/correct_answers.length*5)]);
+                        question_done++;
                     }
                 });
             });

@@ -285,4 +285,23 @@ class Location(db.Model):
 	def __repr__(self):
 		return "Location"
 
+class DeviceOnline(db.Model):
+	__tablename__ = "device_online"
 
+	device_id = db.Column("session", Integer, primary_key=True)
+	time = db.Column("time",TIMESTAMP)
+	ipaddress = db.Column("ipaddress", String(50))
+
+	def __init__(self, device_id, time, ipaddress):
+		self.device_id = device_id
+		self.time = time 
+		self.ipaddress = ipaddress
+	@property
+	def serialize(self):
+		return { 
+			'device_id': self.device_id,
+			'time': str(self.time),
+			'ipaddress': self.ipaddress
+		}
+	def __repr__(self):
+		return "Online machine " + str(self.device_id) + " from " + str(self.time)

@@ -5,13 +5,35 @@ from tasks import add
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import Table, Column, Integer, String, Date, Float, TIMESTAMP, desc
 from sqlalchemy.sql import func
-from model import app, db, Problem, Feedback, Member, Window, Location, WindowIndex
+from model import app, db, Problem, Feedback, Member, Window, Location, WindowIndex, DeviceOnline
 import config
-
+from members import *
 from datetime import datetime 
 import pytz
 #blueprint
 api = Blueprint('api', __name__)
+@api.route("/test", methods=['GET'])
+def test(): 
+
+	status = device_login_or_update(get_device_id_from_ip(request.remote_addr), request.remote_addr)
+	return jsonify(address=status.serialize)
+def device_login_or_update(device_id, address):
+	device_status = db.session.query(DeviceOnline).filter_by(device_id=device_id).first()
+	if device_status is not None:
+		print device_status.serialize
+	else:
+		timestamp = datetime.utcnow()
+		device_status = DeviceOnline(device_id, timestamp, address)
+		db.session.add(device_status)
+		db.session.commit()
+	return device_status
+
+def get_device_id_from_ip(address):
+	device_id = 0
+	device_status = db.session.query(DeviceOnline).filter_by(address=address).first()
+	if device_status is not None: 
+		device_id = device_status.device_id
+	return device_id
 
 # going to insert window_log data 
 @api.route("/window_log/insert", methods=['GET', 'POST'])
@@ -38,19 +60,19 @@ def insert_window_log():
 		indexs.state = window_log.state
 		indexs.timestamp = window_log.timestamp
 		db.session.commit()
-		print "update records"
+		#print "update records"
 	
-	print location_id, window_id, state
+	#print location_id, window_id, state
 	return jsonify(data=[window_log.serialize])
 
-@api.route("/window_log")
-def get_all_extended_window_data():
-	window_log = Window.query.filter(Window.window_id == 1).order_by(desc(Window.timestamp))
+@api.route("/window_log/<window_id>")
+def get_all_extended_window_data(window_id):
+	window_log = Window.query.filter(Window.window_id == window_id).order_by(desc(Window.timestamp))
 	return jsonify(data=[i.serialize for i in window_log])
 # show all the data from extended windows data
-@api.route("/window_log/<page>")
-def get_extended_window_data(page):
-	window_log = Window.query.filter(Window.window_id == 1).order_by(desc(Window.timestamp)).limit(30*int(page));
+@api.route("/window_log/<window_id>/<page>")
+def get_extended_window_data(window_id, page):
+	window_log = Window.query.filter(Window.window_id == window_id).order_by(desc(Window.timestamp)).limit(30*int(page));
 	return jsonify(data=[i.serialize for i in window_log])
 @api.route("/window_index")
 def get_all_window_data_index():
