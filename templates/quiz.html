@@ -4,106 +4,125 @@
     </head>
     <body>
         <h2>CMUSV Questionaire</h2>
-        <p>Hi, please fill up the quesionnaire and you will get feedback if your score is high than <span id="threshold"></span>.</p>
+        <p>Do the quesionnaire and you will get candies(if score higher than <span id="threshold"></span>).</p>
         <table class="question">
-            <tr id="q1"><td class="quiz"><h4>1. In 2012, what anniversary did Carnegie Mellon Silicon Valley celebrate?</h4><br/>
-                    a.    5th anniversary<br/>
-                    b.    10th anniversary<br/>
-                    c.    15th anniversary<br/>
-                    d.    20th anniversary<br/>
-                    <div style="color:green" id="cap_1" class="caption">CMUSV is 10 years old!</div></td>
-                <td class="tf" val="a">a</td>
-                <td class="tf" val="b">b</td>
-                <td class="tf" val="c">c</td>
-                <td class="tf" val="d">d</td></tr>
+            <tr id="q1">
+                <td class="quiz" colspan="4">
+                    <h4>1. In 2012, what anniversary did Carnegie Mellon Silicon Valley celebrate?</h4>
+                    <div style="color:green" id="cap_1" class="caption">CMUSV is 10 years old!</div>
+                </td>
+                <tr>
+                    <td class="tf" question="0" val="a">5th anniversary</td>
+                    <td class="tf" question="0" val="b">10th anniversary</td>
+                    <td class="tf" question="0" val="c">15th anniversary</td>
+                    <td class="tf" question="0" val="d">20th anniversary</td>
+                </tr>
+            </tr>
+            
 
-            <tr id="q2"><td class="quiz"><h4>2. Who is the Director of the Silicon Valley campus?</h4><br/>
-                    a.    Jared Cohon<br/>
-                    b.    Mark Kamlet<br/>
-                    c.    Martin Griss<br/>
-                    d.    Jim Morris<br/>
-                    <div style="color:green" id="cap_2" class="caption">Our director is Martin Griss. You get to meet him!</div></td>
-                <td class="tf" val="a">a</td>
-                <td class="tf" val="b">b</td>
-                <td class="tf" val="c">c</td>
-                <td class="tf" val="d">d</td></tr>
+            <tr id="q2">
+                <td class="quiz" colspan="4">
+                    <h4>2. Who is the Director of the Silicon Valley campus?</h4>
+                    <div style="color:green" id="cap_2" class="caption">Our director is Martin Griss. You get to meet him!</div>
+                </td>
+                <tr>
+                    <td class="tf" question="1" val="a">Jared Cohon</td>
+                    <td class="tf" question="1" val="b">Mark Kamlet</td>
+                    <td class="tf" question="1" val="c">Martin Griss</td>
+                    <td class="tf" question="1" val="d">Jim Morris</td>
+                </tr>
+            </tr>
 
-            <tr id="q3"><td class="quiz"><h4>3. What is the unique Carnegie Mellon Silicon Valley teaching style?</h4><br/>
-                    a.    Lecture-based <br/>
-                    b.    Learn-by-doing<br/>
-                    c.    Remote classes<br/>
-                    d.    Textbook-based<br/>
-                    <div style="color:green" id="cap_3" class="caption">Learning by doing makes you perfect!</div></td>
-                <td class="tf" val="a">a</td>
-                <td class="tf" val="b">b</td>
-                <td class="tf" val="c">c</td>
-                <td class="tf" val="d">d</td></tr>
+            <tr id="q3">
+                <td class="quiz" colspan="4">
+                    <h4>3. What is the unique Carnegie Mellon Silicon Valley teaching style?</h4>
+                    <div style="color:green" id="cap_3" class="caption">Learning by doing makes you perfect!</div>
+                </td>
+                <tr>
+                    <td class="tf" question="2" val="a">Lecture-based </td>
+                    <td class="tf" question="2" val="b">Learn-by-doing </td>
+                    <td class="tf" question="2" val="c">Remote classes </td>
+                    <td class="tf" question="2" val="d">Textbook-based </td>
+                </tr>
+            </tr>
 
-            <tr id="q4"><td class="quiz"><h4>4. What is the Carnegie Mellon University motto?</h4><br/>
-                    a.    "Knowledge is liberty." <br/>
-                    b.    "Reach within, shape the future."<br/>
-                    c.    "My heart is in the work."<br/>
-                    d.    "Think. Grow. Change."<br/>
-                    <div style="color:green" id="cap_4" class="caption">"My heart is in the work."</div></td>
-                <td class="tf" val="a">a</td>
-                <td class="tf" val="b">b</td>
-                <td class="tf" val="c">c</td>
-                <td class="tf" val="d">d</td></tr>
+            <tr id="q4">
+                <td class="quiz" colspan="4">
+                    <h4>4. What is the Carnegie Mellon University motto?</h4>
+                    <div style="color:green" id="cap_4" class="caption">"My heart is in the work."</div>
+                </td>
+                <tr>
+                    <td class="tf" question="3"val="a">"Knowledge is liberty." </td>
+                    <td class="tf" question="3"val="b">"Reach within, shape the future." </td>
+                    <td class="tf" question="3"val="c">"My heart is in the work." </td>
+                    <td class="tf" question="3"val="d">"Think. Grow. Change." </td>
+                </tr>
+            </tr>
 
-            <tr id="q5"><td class="quiz"><h4>5. The CyLab Mobility Research Center was established to explore developments in </h4><br/>
-                    a.    Mobile computing and networks<br/>
-                    b.    Space travel <br/>
-                    c.    Startups<br/>
-                    d.    Public Transportation<br/>
-                    <div style="color:green" id="cap_5" class="caption">Mobile computing and networks</div></td>
-                <td class="tf" val="a">a</td>
-                <td class="tf" val="b">b</td>
-                <td class="tf" val="c">c</td>
-                <td class="tf" val="d">d</td></tr>
+            <tr id="q5">
+                <td class="quiz" colspan="4">
+                    <h4>5. The CyLab Mobility Research Center was established to explore developments in </h4>
+                    <div style="color:green" id="cap_5" class="caption">Mobile computing and networks</div>
+                </td>
+                <tr> 
+                    <td class="tf" question="4" val="a">Mobile computing and networks</td>
+                    <td class="tf" question="4" val="b">Space travel</td>
+                    <td class="tf" question="4" val="c">Startups</td>
+                    <td class="tf" question="4" val="d">Public Transportation</td>
+                </tr>
+            </tr>
 
-            <tr id="q6"><td class="quiz"><h4>6. Carnegie Mellon Silicon Valley shares its campus with</h4><br/>
-                    a.    Google<br/>
-                    b.    Microsoft<br/>
-                    c.    U.S. Army<br/>
-                    d.    NASA<br/>
-                    <div style="color:green" id="cap_6" class="caption">National Aeronautics and Space Administration</div></td>
-                <td class="tf" val="a">a</td>
-                <td class="tf" val="b">b</td>
-                <td class="tf" val="c">c</td>
-                <td class="tf" val="d">d</td></tr>
+            <tr id="q6">
+                <td class="quiz" colspan="4">
+                    <h4>6. Carnegie Mellon Silicon Valley shares its campus with</h4>
+                    <div style="color:green" id="cap_6" class="caption">National Aeronautics and Space Administration</div>
+                </td>
+                <tr>
+                    <td class="tf" question="5" val="a">Google</td>
+                    <td class="tf" question="5" val="b">Microsoft</td>
+                    <td class="tf" question="5" val="c">U.S. Army</td>
+                    <td class="tf" question="5" val="d">NASA</td>
+                </tr>
+            </tr>
 
-            <tr id="q7"><td class="quiz"><h4>7. What is the Carnegie Mellon University mascot?</h4><br/>
-                    a.    Avalanche the Golden Bear<br/>
-                    b.    Scotty the Scottie Dog<br/>
-                    c.    Swoop the Red Hawk<br/>
-                    d.    Thunder the Wolf<br/>
-                    <div style="color:green" id="cap_7" class="caption">He is cute,isn't he?</div></td>
-                <td class="tf" val="a">a</td>
-                <td class="tf" val="b">b</td>
-                <td class="tf" val="c">c</td>
-                <td class="tf" val="d">d</td></tr>
+            <tr id="q7">
+                <td class="quiz" colspan="4">
+                    <h4>7. What is the Carnegie Mellon University mascot?</h4>
+                    <div style="color:green" id="cap_7" class="caption">He is cute,isn't he?</div>
+                </td>
+                <tr>
+                    <td class="tf" question="6" val="a">Avalanche the Golden Bear</td>
+                    <td class="tf" question="6" val="b">Scotty the Scottie Dog</td>
+                    <td class="tf" question="6" val="c">Swoop the Red Hawk</td>
+                    <td class="tf" question="6" val="d">Thunder the Wolf</td>
+                </tr>
+            </tr>
 
-            <tr id="q8"><td class="quiz"><h4>8. How many students are currently enrolled at Carnegie Mellon Silicon Valley?</h4><br/>
-                    a.    ~180<br/>
-                    b.    ~250<br/>
-                    c.    ~320<br/>
-                    d.    ~380<br/>
-                    <div style="color:green" id="cap_8" class="caption">Roughly 180</div></td>
-                <td class="tf" val="a">a</td>
-                <td class="tf" val="b">b</td>
-                <td class="tf" val="c">c</td>
-                <td class="tf" val="d">d</td></tr>
+            <tr id="q8">
+                <td class="quiz" colspan="4">
+                    <h4>8. How many students are currently enrolled at Carnegie Mellon Silicon Valley?</h4>
+                    <div style="color:green" id="cap_8" class="caption">Roughly 180</div>
+                </td>
+                <tr>
+                    <td class="tf" question="7" val="a">~180</td>
+                    <td class="tf" question="7" val="b">~250</td>
+                    <td class="tf" question="7" val="c">~320</td>
+                    <td class="tf" question="7" val="d">~380</td>
+                </tr>
+            </tr>
 
-            <tr id="q9"><td class="quiz"><h4>9. Which degree programs at CMUSV can also be taken part-time?</h4><br/>
-                    a.    MS Software Engineering<br/>
-                    b.    MS Software Management<br/>
-                    c.    Ph.D. in Electrical and Computer Engineering<br/>
-                    d.    a & b<br/>
-                    <div style="color:green" id="cap_9" class="caption">MS Software Enginnering and MS software Management</div></td>
-                <td class="tf" val="a">a</td>
-                <td class="tf" val="b">b</td>
-                <td class="tf" val="c">c</td>
-                <td class="tf" val="d">d</td></tr>
+            <tr id="q9">
+                <td class="quiz" colspan="4">
+                    <h4>9. Which degree programs at CMUSV can also be taken part-time?</h4>
+                    <div style="color:green" id="cap_9" class="caption">MS Software Enginnering and MS software Management</div>
+                </td>
+                <tr>
+                    <td class="tf" question="8" val="a">MS Software Engineering</td>
+                    <td class="tf" question="8" val="b">MS Software Management</td>
+                    <td class="tf" question="8" val="c">Ph.D. in Electrical and Computer Engineering</td>
+                    <td class="tf" question="8" val="d">a & b</td>
+                </tr>
+            </tr>
             </table>
         <div id="result">
             <div id="score">Your score is...<div id="score_num"></div><div id="comment"></div></div>
@@ -125,8 +144,8 @@
                 $(".tf").click(function() {
 
                     // get question number, 0 ~ 4
-                    q_num = ($("tr").index($(this).parent()));
-
+                    //q_num = ($("tr").index($(this).parent().parent()));
+                    q_num = parseInt($(this).attr("question"));
                     // if not answered yet
                     if (answered[q_num] == 0) {
 
@@ -139,13 +158,10 @@
                             $(this).animate({backgroundColor:"#CCFFCC"}, 1000);
                             correct++;
                             count++;
-
                         } 
                         else {
-
                             //not correct, blue
                             $.get("./feedback_insert?device_id=100&application_id=9&feedback_type=saying&feedback_description=wrong answer");
-
                             $(this).animate({backgroundColor:"#FF8F8F"}, 1000);
                             count++;
                         }
