@@ -133,15 +133,18 @@
                         // get answer
                         ans = $(this).attr("val");
 
-                        // if correct, red
                         if (ans == correct_answers[q_num]) {
+                            // if correct, red
+                            $.get("./feedback_insert?device_id=100&application_id=9&feedback_type=saying&feedback_description=right answer");
                             $(this).animate({backgroundColor:"#CCFFCC"}, 1000);
                             correct++;
                             count++;
-                            } else {
+
+                        } 
+                        else {
 
                             //not correct, blue
-                            $.get("./feedback_insert?device_id=100&application_id=9&feedback_type=negative&feedback_description=wrong answer");
+                            $.get("./feedback_insert?device_id=100&application_id=9&feedback_type=saying&feedback_description=wrong answer");
 
                             $(this).animate({backgroundColor:"#FF8F8F"}, 1000);
                             count++;
