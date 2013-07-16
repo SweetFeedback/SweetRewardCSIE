@@ -22,6 +22,7 @@ class Member(db.Model):
 	micro = db.Column("micro_threshold", Float)
 	facebook_id = db.Column("facebook_id", Text)
 	gcm_id = db.Column("gcm_id", Text)
+	bluetooth_id = db.Column("bluetooth_id", Text)
 
 	def __init__(self, account=None, password=None, token=None, temp=0, light=0, micro=0, facebook_id=None, gcm_id=None):
 		self.account = account
@@ -31,6 +32,7 @@ class Member(db.Model):
 		self.micro = micro
 		self.facebook_id = facebook_id
 		self.gcm_id = gcm_id
+		self.bluetooth_id = bluetooth_id
 		self.token = token
 		if account != None:
 			self.token = md5.new(account).hexdigest()
@@ -38,7 +40,8 @@ class Member(db.Model):
 			self.token = md5.new(gcm_id).hexdigest()
 		elif facebook_id != None:
 			self.token = md5.new(facebook_id).hexdigest()
-
+		elif bluetooth_id != None:
+			self.token = md5.new(bluetooth_id).hexdigest()
 
 	@property
 	def serialize(self):
@@ -50,7 +53,8 @@ class Member(db.Model):
 			'light_threshold' : self.light,
 			'micro_threshold' : self.micro,
 			'facebook_id' : self.facebook_id,
-			'gcm_id' : self.gcm_id
+			'gcm_id' : self.gcm_id,
+			'bluetooth_id' : self.bluetooth_id
 		}	
 
 	def __repr__(self):
@@ -81,7 +85,7 @@ class Problem(db.Model):
 		self.coor_y = coordinate_y
 		self.created_by_id = created_by
 		self.status = 0
-		self.created_at = datetime.utcnow()
+		self.created_at = datetime.now()
 
 	@property
 	def serialize(self):

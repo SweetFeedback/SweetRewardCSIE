@@ -23,6 +23,7 @@ def get_user():
 	facebook_id = request.args.get("facebook_id", "")
 	account = request.args.get("account", "")
 	gcm_id = request.args.get("gcm_id", "")
+	bluetooth_id = request.args.get("bluetooth_id", "")
 	if token is not "": 
 		user_id = get_id_from_token(token)
 	elif facebook_id is not "":
@@ -31,6 +32,8 @@ def get_user():
 		user_id = get_id_from_account(account)
 	elif gcm_id is not "":
 		user_id = get_id_from_gcm_id(gcm_id)
+	elif bluetooth_id is not "":
+		user_id = get_id_from_bluetooth_id(bluetooth_id)
 	return jsonify(user_id=user_id)
 
 def get_id_from_token(token):
@@ -54,6 +57,12 @@ def get_id_from_account(account):
 def get_id_from_gcm_id(gcm_id):
 	if gcm_id is not None: 
 		user = db.session.query(Member).filter_by(gcm_id=gcm_id).first() 
+		if user is not None: 
+			return user.user_id
+	return 0 
+def get_id_from_bluetooth_id(bluetooth_id):
+	if bluetooth_id is not None: 
+		user = db.session.query(Member).filter_by(bluetooth_id=bluetooth_id).first() 
 		if user is not None: 
 			return user.user_id
 	return 0 
