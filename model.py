@@ -185,7 +185,7 @@ class Feedback(db.Model):
 		self.user_id = user_id
 		self.feedback_type = feedback_type
 		self.feedback_description = feedback_description
-		self.created_time = datetime.utcnow()
+		self.created_time = datetime.now()
 		self.if_get = False
 
 	@property
@@ -305,3 +305,58 @@ class DeviceOnline(db.Model):
 		}
 	def __repr__(self):
 		return "Online machine " + str(self.device_id) + " from " + str(self.time)
+class GumballSensor(db.Model):
+	__tablename__ = "basic_sensor_log"
+	log_id = db.Column("log_id", Integer, primary_key=True)
+	device_id = db.Column("device_id", Integer)
+	light = db.Column("light_level", Float) 
+	temperature = db.Column("temperature", Float)
+	sound = db.Column("sound_level", Float)
+	time = db.Column("created_time", TIMESTAMP)
+
+	def __init__(self, device_id, light, temp, sound):
+		self.device_id = device_id
+		self.light = light
+		self.temperature = temp
+		self.sound = sound
+	@property
+	def serialize(self):
+		return { 
+			'log_id' : self.log_id,
+			'device_id' : self.device_id,
+			'light_level' : self.light,
+			'temperature' : self.temperature,
+			'sound_level' : self.sound,
+			'created_at' : str(self.time)
+		}
+	def __repr__(self):
+		return "Sensor log " + str(self.log_id) + " "  + str(self.device_id) + "(" + str(light) + "," + str(temperature) + "," + str(sound) + ")"
+class GumballSensorIndex(db.Model):
+	__tablename__ = "basic_sensor_log_index"
+	log_id = db.Column("log_id", Integer, primary_key=True)
+	sensor_log_id = db.Column("sensor_log_id", Integer)
+	device_id = db.Column("device_id", Integer)
+	light = db.Column("light_level", Float) 
+	temperature = db.Column("temperature", Float)
+	sound = db.Column("sound_level", Float)
+	time = db.Column("created_time", TIMESTAMP)
+
+	def __init__(self, sensor_log_id, device_id, light, temp, sound):
+		self.sensor_log_id = sensor_log_id
+		self.device_id = device_id
+		self.light = light
+		self.temperature = temp
+		self.sound = sound
+	@property
+	def serialize(self):
+		return { 
+			'log_id' : self.log_id,
+			'sensor_log_id' : self.sensor_log_id,
+			'device_id' : self.device_id,
+			'light_level' : self.light,
+			'temperature' : self.temperature,
+			'sound_level' : self.sound,
+			'created_at' : str(self.time)
+		}
+	def __repr__(self):
+		return "Sensor log index" + str(self.log_id) + " " + str(self.sensor_log_id) + " " + str(self.device_id) + "(" + str(self.light) + "," + str(self.temperature) + "," + str(self.sound) + ")"
