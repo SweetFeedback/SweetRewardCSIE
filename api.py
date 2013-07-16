@@ -12,6 +12,13 @@ from datetime import datetime
 import pytz
 #blueprint
 api = Blueprint('api', __name__)
+@api.route("/sensor_log_index", methods=['GET'])
+def get_sensor_log():
+	device_id = request.args.get("device_id", -1)
+	sensor_log_index = None
+	if device_id != -1:
+		sensor_log_index = db.session.query(GumballSensorIndex).filter_by(device_id=device_id).first()
+	return jsonify(data=sensor_log_index.serialize)
 @api.route("/sensor_log/insert", methods=['GET'])
 def sensor_insert():
 	light_sensor = request.args.get("light_level", -1)
@@ -43,6 +50,7 @@ def sensor_insert():
 		db.session.commit()
 	
 	return jsonify(data=[sensor_log.serialize])
+
 @api.route("/test", methods=['GET'])
 def test(): 
 	status = device_login_or_update(get_device_id_from_ip(request.remote_addr), request.remote_addr)
@@ -146,13 +154,13 @@ def feedback_insert():
 	feedback_description = request.args.get("feedback_description", "")	
 	if device_id == -1:
 		device_id = get_device_id_from_ip(request.remote_addr)
-	return insert_feedback(device_id, application_id, user_id, feedback_type, feedback_description)
+	return jsonify(data=insert_feedback(device_id, application_id, user_id, feedback_type, feedback_description).serialize)
 	
 def insert_feedback(device_id, app_id, user_id, feedback_type, feedback_desc):
 	feedback = Feedback(device_id, app_id, user_id, feedback_type, feedback_desc)
 	db.session.add(feedback)
 	db.session.commit()
-	return jsonify(data=feedback.serialize)
+	return feedback
 
 @api.route("/get_feedback", methods=['GET'])
 def feedback():
@@ -279,8 +287,8 @@ def window_action():
 		if hour > 9 and hour < 20:
 			action = int(action)
 			if action == 0:
-				insert_feedback(100, 1, user_id, "positive", "get candy for closing window")
-				return jsonify(status=1, reason=["close window for candies"], device_id=0, user_id=1, application_id=1, feedback_id=1)
+				feedback = insert_feedback(-1, 1, user_id, "positive", "get candy for closing window")
+				return jsonify(status=1, reason=["close window for candies"], device_id=-1, user_id=user_id, application_id=feedback.application_id, feedback_id=feedback.feedback_id)
 			elif action == 1: 
 				return jsonify(status=0, reason=["no candy for opening window"]) 
 			else:
@@ -291,7 +299,7 @@ def window_action():
 				return jsonify(status=0, reason=["no candy for closing window"])
 			elif action == 1: 
 				insert_feedback(100, 1, user_id, "positive", "get candy for opening window")
-				return jsonify(status=1, reason=["open window for candies"], device_id=0, user_id=1, application_id=1, feedback_id=1)
+				return jsonify(status=1, reason=["open window for candies"], device_id=-1, user_id=user_id, application_id=feedback.application_id, feedback_id=feedback.feedback_id)
 				## good 
 			else:
 				return jsonify(status=2, reason=["the action can't not be understanded"])
