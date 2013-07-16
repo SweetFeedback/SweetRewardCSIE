@@ -154,14 +154,14 @@
 
                         if (ans == correct_answers[q_num]) {
                             // if correct, red
-                            $.get("./feedback_insert?device_id=100&application_id=9&feedback_type=saying&feedback_description=right answer");
+                            $.get("./feedback_insert?application_id=9&feedback_type=saying&feedback_description=right answer");
                             $(this).animate({backgroundColor:"#CCFFCC"}, 1000);
                             correct++;
                             count++;
                         } 
                         else {
                             //not correct, blue
-                            $.get("./feedback_insert?device_id=100&application_id=9&feedback_type=saying&feedback_description=wrong answer");
+                            $.get("./feedback_insert?application_id=9&feedback_type=saying&feedback_description=wrong answer");
                             $(this).animate({backgroundColor:"#FF8F8F"}, 1000);
                             count++;
                         }
@@ -172,7 +172,7 @@
                         answered[q_num] = 1;
                         score = (100*correct/correct_answers.length);
                         if(score >= standard && question_done == correct_answers.length-1){
-                            $.get("./feedback_insert?device_id=100&application_id=9&feedback_type=positive&feedback_description=well done in questionaire");
+                            $.get("./feedback_insert?application_id=9&feedback_type=positive&feedback_description=well done in questionaire");
                         }
                         $('#score_num').html(score.toFixed(1) + "%");
                         $('#comment').html(comment[Math.floor(correct/correct_answers.length*5)]);
