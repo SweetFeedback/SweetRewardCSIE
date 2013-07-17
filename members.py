@@ -19,6 +19,7 @@ def list_members():
 	return jsonify(data=[i.serialize for i in members])
 @members.route("/members/user_id")
 def get_user(): 
+	user_id = 0
 	token = request.args.get("token", "")
 	facebook_id = request.args.get("facebook_id", "")
 	account = request.args.get("account", "")
