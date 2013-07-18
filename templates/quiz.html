@@ -139,10 +139,21 @@
                 var standard = 80;
                 var comment = new Array("", "", "OK...","Good!","Great!", "Excellent!!");
                 var question_done = 0;
+                
+                var count_down = 300;
+                var counter = setInterval(timer, 1000);
+                function timer(){
+                    count_down = count_down - 1;
+                    if (count_down <= 0){
+                        clearInterval(counter);
+                        location.reload();
+                        return;
+                    }
+                }
                 $("#threshold").text(standard);
                 $(".caption").hide(); 
                 $(".tf").click(function() {
-
+                    count_down = 300;
                     // get question number, 0 ~ 4
                     //q_num = ($("tr").index($(this).parent().parent()));
                     q_num = parseInt($(this).attr("question"));
