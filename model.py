@@ -16,6 +16,7 @@ class Member(db.Model):
 	user_id = db.Column("user_id", Integer, primary_key=True)
 	account = db.Column("account", String(65) )
 	password = db.Column("password", String(65))
+	nickname = db.Column("nickname", String(50))
 	token = db.Column("token", String(65))
 	temp = db.Column("temperature_threshold", Float)
 	light = db.Column("light_threshold", Float)
@@ -24,9 +25,10 @@ class Member(db.Model):
 	gcm_id = db.Column("gcm_id", Text)
 	bluetooth_id = db.Column("bluetooth_id", Text)
 
-	def __init__(self, account=None, password=None, token=None, temp=0, light=0, micro=0, facebook_id=None, gcm_id=None, bluetooth_id=None):
+	def __init__(self, account=None, password=None, nickname=None, token=None, temp=0, light=0, micro=0, facebook_id=None, gcm_id=None, bluetooth_id=None):
 		self.account = account
 		self.password = password
+		self.nickname = nickname
 		self.temp = temp
 		self.light = light
 		self.micro = micro
@@ -48,6 +50,7 @@ class Member(db.Model):
 		return {
 			'user_id' : self.user_id,
 			'account' : self.account,
+			'nickname' : self.nickname,
 			'token' : self.token,
 			'temp_threshold' : self.temp,
 			'light_threshold' : self.light,
@@ -58,7 +61,7 @@ class Member(db.Model):
 		}	
 
 	def __repr__(self):
-		return '<sweetfeedback member user_id:%d account:%r threshold:%8.1f %8.1f %8.1f' % (self.user_id, self.account, self.temp, self.light, self.micro)
+		return '<sweetfeedback member user_id:%d account:%s nickname:%sthreshold:%8.1f %8.1f %8.1f' % (self.user_id, self.account, self.nickname, self.temp, self.light, self.micro)
 
 class Problem(db.Model):
 	__tablename__ = "problems"

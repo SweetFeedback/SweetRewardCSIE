@@ -26,44 +26,44 @@ def get_user():
 	gcm_id = request.args.get("gcm_id", "")
 	bluetooth_id = request.args.get("bluetooth_id", "")
 	if token is not "": 
-		user_id = get_id_from_token(token)
+		user = get_user_from_token(token)
 	elif facebook_id is not "":
-		user_id = get_id_from_fb(facebook_id)
+		user = get_user_from_fb(facebook_id)
 	elif account is not "": 
-		user_id = get_id_from_account(account)
+		user = get_user_from_account(account)
 	elif gcm_id is not "":
-		user_id = get_id_from_gcm_id(gcm_id)
+		user = get_user_from_gcm_id(gcm_id)
 	elif bluetooth_id is not "":
-		user_id = get_id_from_bluetooth_id(bluetooth_id)
-	return jsonify(user_id=user_id)
+		user = get_user_from_bluetooth_id(bluetooth_id)
+	return jsonify(user=user.serialize)
 
-def get_id_from_token(token):
+def get_user_from_token(token):
 	if token is not None:
 		user = db.session.query(Member).filter_by(token=token).first()
 		if user is not None:
-			return user.user_id
-	return 0
-def get_id_from_fb(facebook_id):
+			return user
+	return None
+def get_user_from_fb(facebook_id):
 	if facebook_id is not None:
 		user = db.session.query(Member).filter_by(facebook_id=facebook_id).first()
 		if user is not None:
-			return user.user_id
-	return 0
-def get_id_from_account(account):
+			return user
+	return None
+def get_user_from_account(account):
 	if account is not None:
 		user = db.session.query(Member).filter_by(account=account).first()
 		if user is not None:
-			return user.user_id
-	return 0
-def get_id_from_gcm_id(gcm_id):
+			return user
+	return None
+def get_user_from_gcm_id(gcm_id):
 	if gcm_id is not None: 
 		user = db.session.query(Member).filter_by(gcm_id=gcm_id).first() 
 		if user is not None: 
-			return user.user_id
-	return 0 
-def get_id_from_bluetooth_id(bluetooth_id):
+			return user
+	return None
+def get_user_from_bluetooth_id(bluetooth_id):
 	if bluetooth_id is not None: 
 		user = db.session.query(Member).filter_by(bluetooth_id=bluetooth_id).first() 
 		if user is not None: 
-			return user.user_id
-	return 0 
+			return user
+	return None
