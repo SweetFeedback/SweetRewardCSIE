@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>SweetFeedback in NASA 23 building</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <!-- Le styles -->
+        <link href="/static/css/bootstrap.css" rel="stylesheet">
+        <link href="/static/css/style2.css" rel="stylesheet">
+
+        <!--<link href="assets/css/docs.css" rel="stylesheet">-->
+        <link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
+
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <!-- Le fav and touch icons -->
+        <link rel="shortcut icon" href="/static/ico/favicon.png">
+    </head>
+
+    <body>
+        <div class="container">
+            
+            <div id="reg" class="modal hide fade">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3>Register a new account!</h3>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <input id="reg_account" style="margin-top: 8px" type="text" placeholder="Enter your Account here" name="reg_account"/><br>
+                        <input id="reg_password" style="margin-top: 8px" type="password" placeholder="Enter your Passsword here" name="reg_password"/>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-primary" id="registerSubmit" data-dismiss="modal">Register</a>
+                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                </div>
+            </div>
+            <div class="tabable">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="apps-1">
+                        <div id="user_preference">User Preference: 
+                            <span id="light_preference"></span>, 
+                            <span id="temp_preference"></span>, 
+                            <span id="sound_preference"></span>
+                        </div>          
+                        <!--<div id="testTxt">cc</div> -->                                                    
+                            <!-- map -->
+                            <div id="map">
+                                <img id="map_2f" src="/static/img/floor1.png"/>
+                            </div>
+                            
+                            <div id="info">
+                                <li><img src="/static/img/others/char-cold.png"/> : Cold </li>
+                                <li><img class="sweat" src="/static/img/others/char-sweat.png"/> : Hot </li>
+                                <li><img src="/static/img/others/char-headphone.png"/> : Noisy </li>
+                                <li><img src="/static/img/others/char-sunglass.png"/> : Bright </li>
+                            </div>
+                            <div class="machine" id="mrc_1">
+                            <img class="mrc" src="/static/img/mrc/mrc.png" width="50px"/>
+                            <img class="cold" src="/static/img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
+                            <img class="sunglass" src="/static/img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
+                            <img class="headphone" src="/static/img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="sweat" src="/static/img/others/char-sweat.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="transportation" src="/static/img/transportation/empty.png" width="30px" style="margin-top: -120px; margin-left: -10px;"/>
+                        <div class="mrc_num" >1</div>
+                            
+                        </div>
+                        
+                        
+                        <div class="machine" id="mrc_2">
+                            <img class="mrc" src="/static/img/mrc/mrc.png" width="50px"/>
+                            <img class="cold" src="/static/img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
+                            <img class="sunglass" src="/static/img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
+                            <img class="headphone" src="/static/img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="sweat" src="/static/img/others/char-sweat.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="transportation" src="/static/img/transportation/empty.png" width="30px" style="margin-top: -120px; margin-left: -10px;"/>
+                            <div class="mrc_num" >2</div>
+                        </div>
+
+                        <div class="machine" id="mrc_3">
+                            <img class="mrc" src="/static/img/mrc/mrc.png" width="50px"/>
+                            <img class="cold" src="/static/img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
+                            <img class="sunglass" src="/static/img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
+                            <img class="headphone" src="/static/img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="sweat" src="/static/img/others/char-sweat.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="transportation" src="/static/img/transportation/empty.png" width="30px" style="margin-top: -120px; margin-left: -10px;"/>
+                            <div class="mrc_num" >3</div>
+                        </div>
+                        <div class="machine" id="mrc_4">
+                            <img class="mrc" src="/static/img/mrc/mrc.png" width="50px"/>
+                            <img class="cold" src="/static/img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
+                            <img class="sunglass" src="/static/img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
+                            <img class="headphone" src="/static/img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="sweat" src="/static/img/others/char-sweat.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="transportation" src="/static/img/transportation/empty.png" width="30px" style="margin-top: -120px; margin-left: -10px;"/>
+                            <div class="mrc_num" >4</div>
+                        </div>
+                   <br/>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- /container -->
+
+        <!-- Le javascript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="/static/js/jquery.js"></script>
+        <script src="/static/js/bootstrap-transition.js"></script>
+        <script src="/static/js/bootstrap-alert.js"></script>
+        <script src="/static/js/bootstrap-modal.js"></script>
+        <script src="/static/js/bootstrap-dropdown.js"></script>
+        <script src="/static/js/bootstrap-scrollspy.js"></script>
+        <script src="/static/js/bootstrap-tab.js"></script>
+        <script src="/static/js/bootstrap-tooltip.js"></script>
+        <script src="/static/js/bootstrap-popover.js"></script>
+        <script src="/static/js/bootstrap-button.js"></script>
+        <script src="/static/js/bootstrap-collapse.js"></script>
+        <script src="/static/js/bootstrap-carousel.js"></script>
+        <script src="/static/js/bootstrap-typeahead.js"></script>
+        <!--<script src="assets/js/jquery.cookie.js"></script>-->
+
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA3ieESIwbYV6OZC14fivVKoOSYvApTlh0&sensor=true&libraries=geometry"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
+
+
+
+        <script src="/static/js/sweetfeedback.js" language="javascript"></script>
+    </body>
+</html>

@@ -20,7 +20,9 @@ def beauty():
 @views.route("/nasa")
 def nasa_23():
 	return render_template("index2.html")
-
+@views.route("/mobile")
+def mobile_webpage():
+	return render_template("mobile.html")
 @views.route("/")
 def home():
 	return render_template("home.html")
