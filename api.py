@@ -19,6 +19,10 @@ def get_sensor_log():
 	if device_id != -1:
 		sensor_log_index = db.session.query(GumballSensorIndex).filter_by(device_id=device_id).first()
 	return jsonify(data=sensor_log_index.serialize)
+@api.route("/sensor_log_indexs")
+def get_all_sensor_log():
+	sensor_log_indexs = db.session.query(GumballSensorIndex).all()
+	return jsonify(data=[i.serialize for i in sensor_log_indexs])
 @api.route("/sensor_log/insert", methods=['GET'])
 def sensor_insert():
 	light_sensor = request.args.get("light_level", -1)

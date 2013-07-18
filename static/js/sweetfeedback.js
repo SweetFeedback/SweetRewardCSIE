@@ -113,30 +113,24 @@ function updateMachineStatus(){
     /* get sensor value*/
     $.ajax({
         type: "GET",
-        url: "./php/getSensorValuesNew.php",
+        url: "./sensor_log_indexs",
 
         dataType: 'json',
         success: function(data) {
-            
             $('#mrc_1').addClass('offline');
             $('#mrc_2').addClass('offline');
             $('#mrc_3').addClass('offline');
-            //$('#mrc_4').addClass('offline');
+            $('#mrc_4').addClass('offline');
             //$('#mrc_5').addClass('offline');
 
             $.each(data['data'], function(i, item) {
                 var d_id = item['device_id'];
-
-                
-
                 // light 
                 if(parseFloat(item['light_level']) >= window.light_threshold){
                     $('#mrc_'+d_id+' img.sunglass').css("visibility", "visible");
                 }else{
                     $('#mrc_'+d_id+' img.sunglass').css("visibility", "hidden");
                 }
-
-
                 // temperature
                 if(parseFloat(item['temperature']) >= window.temperature_threshold+2){
                     $('#mrc_'+d_id+' img.sweat').css("visibility", "visible");
@@ -150,34 +144,14 @@ function updateMachineStatus(){
                         $('#mrc_'+d_id+' img.cold').css("visibility", "hidden");
                     }
                 }
-
                 // sound_level
                 if(parseFloat(item['sound_level']) >= window.micro_threshold){
                     $('#mrc_'+d_id+' img.headphone').css("visibility", "visible");
                 }else{
                     $('#mrc_'+d_id+' img.headphone').css("visibility", "hidden");
-                }
-
-
-                // window_state
-                /*if(parseInt(item['window_state']) == 1){
-                    if(!$('#win_'+d_id).hasClass("open")){
-                        win_open(d_id, 0);
-                        $('#win_'+d_id).addClass("open");
-                    }
-                   
-                }else{
-                    win_close(d_id, 0); 
-                    if($('#win_'+d_id).hasClass("open")){
-                        win_close(d_id, 0);
-                        $('#win_'+d_id).removeClass("open");
-                    }
-                }*/
-
-                
+                }             
                 //show machine
                 $('#mrc_'+d_id).removeClass("offline");
-
             });
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
