@@ -66,7 +66,7 @@
 }
 
 
-@media (min-width : 320px) and (max-width: 797px){
+@media (min-width : 320px) and (max-width: 768px){
   #left {
     width:95%;
   } 
@@ -118,24 +118,35 @@
   .carousel-caption {
     position: static;
   }
+
+  .machine{
+    display: block;
+    width: 50px;
+    height: 50px;
+    float: left;
+    position: absolute;
+    margin-top: -100px;
+    margin-left: -100px;
+  }
+
   #mrc_1 {
     margin-top: 140px;
-    margin-left: 58px;
+    margin-left: 55px;
   }
 
   #mrc_2 {
       margin-top: 140px;
-      margin-left: 188px;
+      margin-left: 155px;
   }
 
   #mrc_3 {
       margin-top: 140px;
-      margin-left: 315px;
+      margin-left: 255px;
   }
 
   #mrc_4 {
       margin-top: 30px;
-      margin-left: 315px;
+      margin-left: 255px;
   }
 
   #mrc_5 {
