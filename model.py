@@ -367,3 +367,25 @@ class GumballSensorIndex(db.Model):
 		}
 	def __repr__(self):
 		return "Sensor log index" + str(self.log_id) + " " + str(self.sensor_log_id) + " " + str(self.device_id) + "(" + str(self.light) + "," + str(self.temperature) + "," + str(self.sound) + ")"
+
+class DeviceAround(db.Model):
+	__tablename__ = "device_around"
+
+	log_id = db.Column("log_id", Integer, primary_key=True)
+	bluetooth_id = db.Column("bluetooth_id", String(50))
+	device_name = db.Column("device_name", String(50))
+	timestamp = db.Column("timestamp", TIMESTAMP)
+
+	def __init__(self, bluetooth_id, device_name):
+		self.bluetooth_id = bluetooth_id
+		self.device_name = device_name
+	@property
+	def serialize(self):
+		return {
+			'log_id' : self.log_id,
+			'bluetooth_id' : self.bluetooth_id,
+			'device_name' : self.device_name,
+			'timestamp' : self.timestamp
+		}
+	def __repr__(self):
+		return "Device Around log " + str(self.log_id) + " :(" + str(self.bluetooth_id) + ", " + str(self.device_name) + ") at" + str(self.timestamp)
