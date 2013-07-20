@@ -5,7 +5,7 @@ from tasks import add
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import Table, Column, Integer, String, Date, Float, TIMESTAMP, desc
 from sqlalchemy.sql import func
-from model import app, db, Problem, Feedback, Member, Window, Location, WindowIndex, DeviceOnline, GumballSensor, GumballSensorIndex, DeviceAround
+from model import *
 import config
 from members import *
 from datetime import datetime 
@@ -19,10 +19,13 @@ def get_sensor_log():
 	if device_id != -1:
 		sensor_log_index = db.session.query(GumballSensorIndex).filter_by(device_id=device_id).first()
 	return jsonify(data=sensor_log_index.serialize)
+
+
 @api.route("/sensor_log_indexs")
 def get_all_sensor_log():
 	sensor_log_indexs = db.session.query(GumballSensorIndex).all()
 	return jsonify(data=[i.serialize for i in sensor_log_indexs])
+
 @api.route("/sensor_log/insert", methods=['GET'])
 def sensor_insert():
 	light_sensor = request.args.get("light_level", -1)
@@ -185,8 +188,8 @@ def retrieve_feedback():
 @api.route("/get_feedback_by_user", methods=['GET'])
 def get_feedback_by_user():
 	token = request.args.get("token", -1)
-	user_id = get_id_from_token(token)
-	feedbacks = Feedback.query.filter_by(user_id=user_id).filter_by(if_get=False)
+	user = get_user_from_token(token)
+	feedbacks = Feedback.query.filter_by(user_id=user.user_id).filter_by(if_get=False)
 	return jsonify(data=[i.serialize for i in feedbacks])
 @api.route("/update_feedback", methods=['GET'])
 def update_feedback():
@@ -283,8 +286,8 @@ def window_action():
 	window_id = request.args.get("window_id", 0)
 	action = request.args.get("action", -1)
 
-	user_id = get_id_from_token(token)
-	if user_id != 0 and window_id != 0 and action != -1:
+	user = get_user_from_token(token)
+	if user != None and window_id != 0 and action != -1:
 		### query user id 
 		hour = datetime.now(pytz.timezone('US/Pacific')).hour
 		print hour
@@ -310,13 +313,14 @@ def window_action():
 
 @api.route("/bluetooth_around", methods=['GET'])
 def bluetooth_around(): 
+	nearby_device = request.args.get("device_id", -1)
 	bluetooth_id = request.args.get("bluetooth_id", "")
 	device_name = request.args.get("device_name", "")
 	#user = get_user_from_bluetooth_id(bluetooth_id)
 	bluetooth_around_event = None
 	#if user is not None: 
-	if bluetooth_id != "" and device_name != "":
-		bluetooth_around_event = DeviceAround(bluetooth_id, device_name)
+	if bluetooth_id != "" and device_name != "" and nearby_device != -1:
+		bluetooth_around_event = DeviceAround(nearby_device, bluetooth_id, device_name)
 		db.session.add(bluetooth_around_event)
 		db.session.commit()
 	else:

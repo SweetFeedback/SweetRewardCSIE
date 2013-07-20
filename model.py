@@ -372,20 +372,23 @@ class DeviceAround(db.Model):
 	__tablename__ = "device_around"
 
 	log_id = db.Column("log_id", Integer, primary_key=True)
+	nearby_device = db.Column("nearby_device", Integer)
 	bluetooth_id = db.Column("bluetooth_id", String(50))
 	device_name = db.Column("device_name", String(50))
 	timestamp = db.Column("timestamp", TIMESTAMP)
 
-	def __init__(self, bluetooth_id, device_name):
+	def __init__(self, nearby_device, bluetooth_id, device_name):
+		self.nearby_device = nearby_device
 		self.bluetooth_id = bluetooth_id
 		self.device_name = device_name
 	@property
 	def serialize(self):
 		return {
 			'log_id' : self.log_id,
+			'nearby_device' : self.nearby_device,
 			'bluetooth_id' : self.bluetooth_id,
 			'device_name' : self.device_name,
 			'timestamp' : self.timestamp
 		}
 	def __repr__(self):
-		return "Device Around log " + str(self.log_id) + " :(" + str(self.bluetooth_id) + ", " + str(self.device_name) + ") at" + str(self.timestamp)
+		return "Device Around log " + str(self.log_id) + " :" + self.nearby_device + ", (" + str(self.bluetooth_id) + ", " + str(self.device_name) + ") at" + str(self.timestamp)
