@@ -12,20 +12,32 @@ from datetime import datetime
 import pytz
 #blueprint
 api = Blueprint('api', __name__)
-@api.route("/sensor_log_index", methods=['GET'])
-def get_sensor_log():
-	device_id = request.args.get("device_id", -1)
-	sensor_log_index = None
-	if device_id != -1:
-		sensor_log_index = db.session.query(GumballSensorIndex).filter_by(device_id=device_id).first()
-	return jsonify(data=sensor_log_index.serialize)
+@api.route("/sensor_log_index/<device_id>")
+def get_sensor_log(device_id):
+	sensor_log_index = db.session.query(GumballSensorIndex).filter_by(device_id=device_id).first()
+	if sensor_log_index is None: 
+		return jsonify(nodata="no this data")
+	else:
+		return jsonify(data=sensor_log_index.serialize)
 
-
-@api.route("/sensor_log_indexs")
+@api.route("/sensor_log_index")
 def get_all_sensor_log():
+	# last seen data 
 	sensor_log_indexs = db.session.query(GumballSensorIndex).all()
 	return jsonify(data=[i.serialize for i in sensor_log_indexs])
-
+@api.route("/sensor_log_index/online")
+def get_online_sensor_log():
+	online_devices = DeviceOnline.query.all()
+	device_numbers = []
+	sensor_log_index = [] 
+	for online_device in online_devices: 
+		d_id = int(online_device.device_id)
+		device_numbers.append(d_id)
+	sensor_log_indexs = db.session.query(GumballSensorIndex).all()
+	for log in sensor_log_indexs: 
+		if log.device_id in device_numbers:
+			sensor_log_index.append(log)
+	return jsonify(data=[i.serialize for i in sensor_log_index])
 @api.route("/sensor_log/insert", methods=['GET'])
 def sensor_insert():
 	light_sensor = request.args.get("light_level", -1)

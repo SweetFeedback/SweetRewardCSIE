@@ -14,7 +14,7 @@ class Member(db.Model):
 	__tablename__ = "members"
 
 	user_id = db.Column("user_id", Integer, primary_key=True)
-	account = db.Column("account", String(65) )
+	account = db.Column("account", String(65))
 	password = db.Column("password", String(65))
 	nickname = db.Column("nickname", String(50))
 	token = db.Column("token", String(65))
@@ -24,7 +24,6 @@ class Member(db.Model):
 	facebook_id = db.Column("facebook_id", Text)
 	gcm_id = db.Column("gcm_id", Text)
 	bluetooth_id = db.Column("bluetooth_id", Text)
-
 	def __init__(self, account=None, password=None, nickname=None, token=None, temp=0, light=0, micro=0, facebook_id=None, gcm_id=None, bluetooth_id=None):
 		self.account = account
 		self.password = password
@@ -79,7 +78,7 @@ class Problem(db.Model):
 	updated_at = db.Column("updated_at", TIMESTAMP)
 	updated_by = db.Column("updated_by", Integer)
 
-	def __init__(self, category_id=None, room_id=None, title=None, description=None, coordinate_x=None, coordinate_y=None, created_by=None):
+	def __init__(self, category_id=None, room_id=None, title=None, description=None, coordinate_x=None, coordinate_y=None):
 		self.category_id = category_id
 		self.room_id = room_id
 		self.title = title
@@ -88,7 +87,6 @@ class Problem(db.Model):
 		self.coor_y = coordinate_y
 		self.created_by_id = created_by
 		self.status = 0
-		self.created_at = datetime.now()
 
 	@property
 	def serialize(self):
