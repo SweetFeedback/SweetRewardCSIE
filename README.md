@@ -1,6 +1,6 @@
-SweetFeedback Server
+##SweetFeedback Server
 
-Installation Steps:
+###Installation Steps:
 
 1. MySQL, Python 2.7
 
@@ -39,3 +39,28 @@ It should create tables in your database.
 5. Execute app.py to start up the server.
 python app.py
 
+###Server API documentation(How to use)###
+
+####http://209.129.244.24:1234/bluetooth_around####
+
+Method: GET
+
+Parameters:
+	
+	bluetooth_id: the bluetooth mac address discovered.
+	
+	device_name: the bluetooth device name.
+	
+	device_id: the device_id that capable of bluetooth discovering.
+Return: The json of inserted data in device_around table.
+
+ex. 
+ 
+	
+####To get candies, we need following api.#### 
+####http://209.129.244.24:1234/insert_feedback
+Method: GET
+
+Parameters:
+####http://209.129.244.24:1234/insert_feedback
+	
