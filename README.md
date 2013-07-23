@@ -47,20 +47,41 @@ Method: GET
 
 Parameters:
 	
-	bluetooth_id: the bluetooth mac address discovered.
-	
-	device_name: the bluetooth device name.
-	
-	device_id: the device_id that capable of bluetooth discovering.
+	bluetooth_id: 
+		the bluetooth mac address discovered.
+	device_name: 
+		the bluetooth device name.
+	device_id: 
+		the device_id that capable of bluetooth discovering.
 Return: The json of inserted data in device_around table.
 
 ex. 
  
 	
-####To get candies, we need following api.#### 
+####To get candies, we have three steps.
+
+1. We need to start client application on client computer and know the device_id of the gumball machine. 
+2. Once your application is about to distribute feedback, use insert_feedback/ to insert the feedback. 
+3. You get candies from the machine with device_id you provided in step1.
+
 ####http://209.129.244.24:1234/insert_feedback
+This api will insert a feedback into repository in our database.
+ 
 Method: GET
 
 Parameters:
-####http://209.129.244.24:1234/insert_feedback
-	
+
+	device_id: 
+		the device id of your gumball machine.
+	application_id: 
+		the application id of your application.
+	user_id(optional): 
+		your user_id.
+	feedback_type: 
+		type of feedback(positive/negative).
+	feedback_description: 
+		the description of feedback.
+####http://209.129.244.24:1234/get_feedback 
+This api is for gumball machine to call. 
+####http://209.129.244.24:1234/update_feedback
+####http
