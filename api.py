@@ -341,3 +341,15 @@ def bluetooth_around():
 	else:
 		return jsonify(suck=True)
 	return jsonify(data=bluetooth_around_event.serialize)
+
+@api.route("/people_around", methods=['GET'])
+def people_around(): 
+	problem = Problem.query.filter(Problem.status == 0).first()
+	return jsonify(data={"problem": problem.serialize, "time_limit": 40})
+@api.route("/check_problem", methods=['GET'])
+def check_problem(): 
+	problem_id = request.args.get("problem_id", -1)
+	if problem_id != -1:
+		## go to repository to check if the problem has solved.
+		print "ya"
+	return jsonify(data=[]);
