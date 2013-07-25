@@ -69,10 +69,9 @@ Return: The json of inserted data in device_around table if succeed.
 ex. 
  	
 
-
+====
 ####http://209.129.244.24:1234/insert_feedback
 
-====
 
 This api will insert a feedback into repository in our database(209.129.244.24).
  
@@ -90,10 +89,15 @@ Parameters:
 		type of feedback(positive/negative).
 	feedback_description: 
 		the description of feedback.
+====
 ####http://209.129.244.24:1234/get_feedback 
 This api is for gumball machine to call. 
+
+====
 ####http://209.129.244.24:1234/update_feedback
 This api is for gumball machine to call.
+
+====
 ####http://209.129.244.24:1234/people_around
 This api is for gumball machine to call when people are around the gumball machine.
 
@@ -103,7 +107,7 @@ Parameters:
 	
 		people_number: 
 			the number of people around.
-
+====
 ####http://209.129.244.24:1234/check_problem
 This api is for gumball machine to call when people are around the gumball machine.
 
@@ -115,4 +119,5 @@ Parameters:
 		the problem that has been solved. 
 		
 Returns:
-	
+
+====
