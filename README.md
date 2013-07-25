@@ -1,6 +1,6 @@
-##SweetFeedback Server
+#SweetFeedback Server
 
-###Installation Steps:
+##Installation Steps:
 
 1. MySQL, Python 2.7
 
@@ -39,9 +39,20 @@ It should create tables in your database.
 5. Execute app.py to start up the server.
 python app.py
 
-###Server API documentation(How to use)###
+
+####To get candies, we have three steps.
+	1. We need to start client application on client computer and know the device_id of the gumball machine. 
+	2. Once your application is about to distribute feedback, use insert_feedback/ api to insert the feedback. 
+	3. You get candies from the machine with device_id you provided in step1.(Gumball machine will get feedback from feedback repository in database.)
+	
+##Server API documentation(How to use)###
+
+
 
 ####http://209.129.244.24:1234/bluetooth_around####
+
+====
+This api will record if there is any bluetooth device detected from client application.
 
 Method: GET
 
@@ -53,19 +64,17 @@ Parameters:
 		the bluetooth device name.
 	device_id: 
 		the device_id that capable of bluetooth discovering.
-Return: The json of inserted data in device_around table.
+Return: The json of inserted data in device_around table if succeed.
 
 ex. 
- 
-	
-####To get candies, we have three steps.
+ 	
 
-1. We need to start client application on client computer and know the device_id of the gumball machine. 
-2. Once your application is about to distribute feedback, use insert_feedback/ to insert the feedback. 
-3. You get candies from the machine with device_id you provided in step1.
 
 ####http://209.129.244.24:1234/insert_feedback
-This api will insert a feedback into repository in our database.
+
+====
+
+This api will insert a feedback into repository in our database(209.129.244.24).
  
 Method: GET
 
@@ -84,4 +93,26 @@ Parameters:
 ####http://209.129.244.24:1234/get_feedback 
 This api is for gumball machine to call. 
 ####http://209.129.244.24:1234/update_feedback
-####http
+This api is for gumball machine to call.
+####http://209.129.244.24:1234/people_around
+This api is for gumball machine to call when people are around the gumball machine.
+
+Method: GET
+
+Parameters: 
+	
+		people_number: 
+			the number of people around.
+
+####http://209.129.244.24:1234/check_problem
+This api is for gumball machine to call when people are around the gumball machine.
+
+Method: GET
+
+Parameters:
+	
+	problem_id: 
+		the problem that has been solved. 
+		
+Returns:
+	
