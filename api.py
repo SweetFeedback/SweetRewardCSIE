@@ -9,6 +9,7 @@ from model import *
 import config
 from members import *
 from datetime import datetime 
+import time
 import pytz
 #blueprint
 api = Blueprint('api', __name__)
@@ -345,6 +346,11 @@ def bluetooth_around():
 @api.route("/people_around", methods=['GET'])
 def people_around(): 
 	#problem = Problem.query.filter(Problem.status == 0).first()
+	device_id = request.args.get("device_id", -1)
+	people_count = request.args.get("people_count", -1)
+	if device_id == -1 or people_count == -1:
+		return "suck"
+
 	import json 
 	import urllib2
 	data = json.load(urllib2.urlopen('http://cmu-sensor-network.herokuapp.com/lastest_readings_from_all_devices/light/json'))
@@ -362,15 +368,45 @@ def people_around():
 	##print data
 	from random import choice
 	problem_choosed = choice(problems)
+	problem_repo_instance = None
 	if problem_choosed != None:
-		print mapping_table[problem_choosed['device_id']][2]	
+		#print mapping_table[problem_choosed['device_id']][2]	
+		problem_repo_instance = ProblemRepository("light", "light is not closing now, could you help me to close it? I will give you candies if you do", mapping_table[problem_choosed['device_id']][2], problem_choosed['device_id'], device_id)
+		db.session.add(problem_repo_instance)
+		db.session.commit()
 	else:
 		print "no problem here"
 	#return jsonify(data={"problem": problem.serialize})
-	return jsonify(problem={"location": mapping_table[problem_choosed['device_id']][2], 
-							"problem_description": "light is not closing now @@! could you help me to close it?",
-							"problem_id":123,
-							"timestamp": datetime.now()})
+	return jsonify(problem=problem_repo_instance.serialize)
+def loop_check_problem(): 
+	#this function will loop in thread 
+	start_time = time.time()
+	while 1:
+		import json 
+		import urllib2
+		print "check sensor repository..."
+		problem_repos = db.session.query(ProblemRepository).filter_by(valid=True)
+		data = json.load(urllib2.urlopen('http://cmu-sensor-network.herokuapp.com/lastest_readings_from_all_devices/light/json'))
+		
+		for p in problem_repos:
+			#print p.serialize['device_check']
+			for row in data:
+				if row['device_id'] == str(p.serialize['device_check']):
+					if row['value'] < 1023: 
+						## did close the window! 
+						print datetime.fromtimestamp(row['timestamp']/1000)
+						print p.serialize['created_at']
+						p.valid = False
+						db.session.commit()
+						delay_insert_feedback("", p.serialize['device_feedback'])
+						print "give feedback to " + str(p.serialize['device_feedback'])
+		break;
+	
+	elapsed_time = time.time() - start_time
+	print elapsed_time
+	return 
+def delay_insert_feedback(delayed_time, device_feedback):
+	insert_feedback(device_feedback, 20, -1, "positive", "did close the light at right moment!")
 
 mapping_table = {
 "10170004": ["Firefly_v3","SensorAndrew0","B23.110"],
@@ -408,5 +444,6 @@ def check_problem():
 	problem_id = request.args.get("problem_id", -1)
 	if problem_id != -1:
 		## go to repository to check if the problem has solved.
+		index = db.session.query(ProblemRepository).filter_by(valid=True).filter_by()
 		print "ya"
 	return jsonify(data=[]);

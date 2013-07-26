@@ -106,6 +106,40 @@ class Problem(db.Model):
 		}
 	def __repr__(self):
 		return "problem"
+class ProblemRepository(db.Model):
+	__tablename__ = "problem_repository"
+
+	problem_id = db.Column("problem_id", Integer, primary_key=True)
+	problem_cat = db.Column("problem_cat", String(50))
+	problem_desc = db.Column("problem_desc", String(200))
+	location = db.Column("location", String(50))
+	device_check = db.Column("device_check", Integer)
+	device_feedback = db.Column("device_feedback", Integer)
+	created_at = db.Column("created_at", TIMESTAMP)
+	valid = db.Column("valid", BOOLEAN)
+
+	def __init__(self, problem_cat, problem_desc, location, device_check, device_feedback):
+		self.problem_desc = problem_desc
+		self.problem_cat = problem_cat
+		self.location = location 
+		self.valid = 1
+		self.device_check = device_check
+		self.device_feedback = device_feedback
+
+	@property
+	def serialize(self): 
+		return {
+			'problem_id' : self.problem_id, 
+			'problem_cat' : self.problem_cat, 
+			'problem_desc' : self.problem_desc, 
+			'location' : self.location,
+			'device_check' : self.device_check,
+			'device_feedback' : self.device_feedback,
+			'created_at' : self.created_at,
+			'valid' : self.valid
+		}
+	def __repr__(self):
+		return "problem_repository"
 
 
 class Online(db.Model):
