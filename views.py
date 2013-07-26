@@ -29,6 +29,9 @@ def home():
 @views.route("/questionaire")
 def question():
 	return render_template("quiz.html")
+@views.route("/short_questionnaire")
+def short_question():
+	return render_template("short_quiz.html")
 ### worker part ###
 @views.route("/test")
 def yo(x=16, y=16):
