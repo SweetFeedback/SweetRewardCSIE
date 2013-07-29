@@ -8,9 +8,13 @@ from sqlalchemy.sql import func
 from model import *
 import config
 from members import *
-from datetime import datetime 
+from datetime import datetime, timedelta
 import time
 import pytz
+import json 
+import urllib2
+from random import choice
+
 #blueprint
 api = Blueprint('api', __name__)
 @api.route("/sensor_log_index/<device_id>")
@@ -350,34 +354,31 @@ def people_around():
 	people_count = request.args.get("people_count", -1)
 	if device_id == -1 or people_count == -1:
 		return "suck"
-
-	import json 
-	import urllib2
 	data = json.load(urllib2.urlopen('http://cmu-sensor-network.herokuapp.com/lastest_readings_from_all_devices/light/json'))
 	problems = []
+	cleaned_data = []
 	for row in data:
-		if row['device_id'] == "test" or row['device_id'] == "test-device":
-			data.remove(row)
-	for row in data: 
+		firefly_time = datetime.fromtimestamp(row['timestamp']/1000).date()
+		today_time = datetime.today().date()
+		if today_time == firefly_time and row['device_id'] != "test" and row['device_id'] != "test-device" and row['device_id'] != "0":
+			cleaned_data.append(row)
+	for row in cleaned_data: 
 		row_hour = datetime.fromtimestamp(row['timestamp']/1000).hour
+		print datetime.fromtimestamp(row['timestamp']/1000).date(), row['device_id']
 		if row['value'] > 800 and mapping_table.has_key(row['device_id']) and (row_hour >= 21 or row_hour <= 7):
-			#print row['timestamp']
-			print datetime.fromtimestamp(row['timestamp']/1000).hour
-			#print row['value']
 			problems.append(row)
-	##print data
-	from random import choice
-	problem_choosed = choice(problems)
-	problem_repo_instance = None
-	if problem_choosed != None:
-		#print mapping_table[problem_choosed['device_id']][2]	
-		problem_repo_instance = ProblemRepository("light", "light is not closing now, could you help me to close it? I will give you candies if you do", mapping_table[problem_choosed['device_id']][2], problem_choosed['device_id'], device_id)
-		db.session.add(problem_repo_instance)
-		db.session.commit()
+	if len(problems) > 0:
+		problem_choosed = choice(problems)
+		problem_repo_instance = None
+		if problem_choosed != None:
+			problem_repo_instance = ProblemRepository("light", "light is not closing now, could you help me to close it? I will give you candies if you do", mapping_table[problem_choosed['device_id']][2], problem_choosed['device_id'], device_id)
+			db.session.add(problem_repo_instance)
+			db.session.commit()
 	else:
-		print "no problem here"
+		return jsonify(problem=None)
 	#return jsonify(data={"problem": problem.serialize})
 	return jsonify(problem=problem_repo_instance.serialize)
+
 def loop_check_problem(): 
 	#this function will loop in thread 
 	start_time = time.time()
@@ -400,6 +401,8 @@ def loop_check_problem():
 						db.session.commit()
 						delay_insert_feedback("", p.serialize['device_feedback'])
 						print "give feedback to " + str(p.serialize['device_feedback'])
+
+		#if problem_repos
 		break;
 	
 	elapsed_time = time.time() - start_time
