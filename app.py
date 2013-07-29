@@ -19,5 +19,5 @@ app.register_blueprint(members)
 
 if __name__ == "__main__":
     #app.run(debug=True)
-    port = int(os.environ.get('PORT', 1234))
+    port = int(os.environ.get('PORT', 5566))
     app.run(host='0.0.0.0', port=port, debug=True)
