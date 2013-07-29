@@ -683,31 +683,15 @@ $(function(){
             }
         });
     });
-
-    
-    /* read exist problems */
-    //readProblemList();
-
-    /* make machine icon draggable */
-    /*$(".machine").draggable({
-        cursor: 'move', 
-        containment: 'document'}
-    );*/
-    
-
     /* update machine status every 1 sec */
     setInterval(function(){
         updateMachineStatus();
-        updateWindowStatus();
+        //updateWindowStatus();
     }, 1000);
 
     setInterval(function(){
-        
         $('.fixIssue').data-dismiss('modal');
         //readProblemList();
         updateLeaderBoard();
-
     }, 10000);
-
-
 });

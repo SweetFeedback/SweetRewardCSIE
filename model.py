@@ -215,10 +215,12 @@ class Feedback(db.Model):
 	user_id = db.Column("user_id", Integer)
 	feedback_type = db.Column("feedback_type", String(50))
 	feedback_description = db.Column("feedback_description", String(200))
+	can_get_time = db.Column("can_get_time", TIMESTAMP)
+	retrieve_time = db.Column("retrieve_time", TIMESTAMP)
 	created_time = db.Column("created_time", TIMESTAMP)
 	if_get = db.Column("if_get", BOOLEAN)
 
-	def __init__ (self, device_id, application_id, user_id, feedback_type, feedback_description):
+	def __init__ (self, device_id, application_id, user_id, feedback_type, feedback_description, can_get_time=None):
 		self.device_id = device_id
 		self.application_id = application_id
 		self.user_id = user_id
@@ -226,6 +228,8 @@ class Feedback(db.Model):
 		self.feedback_description = feedback_description
 		self.created_time = datetime.now()
 		self.if_get = False
+		if can_get_time is not None:
+			self.can_get_time = can_get_time
 
 	@property
 	def serialize(self):
@@ -236,6 +240,8 @@ class Feedback(db.Model):
 			'user_id' : self.user_id,
 			'feedback_type': self.feedback_type,
 			'feedback_description': self.feedback_description,
+			'can_get_time' : str(self.can_get_time),
+			'retrieve_time' : str(self.retrieve_time),
 			'created_time' : str(self.created_time),
 			'if_get' : self.if_get
 		}
