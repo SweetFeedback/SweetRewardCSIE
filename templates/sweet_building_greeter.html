@@ -35,6 +35,29 @@
         padding: 0 0 20px;
       }
     </style>
+
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/jquery-ui.min.js"></script>
+    <script>
+      $(function() {
+        check_problem();
+        //var counter = setInterval(check_problem, 1000);
+        function check_problem() {
+          alert("DO");
+          $.ajax({
+            type: "GET",
+            url: "./get_problem?device_id=1",
+            dataType: 'json',
+            success: function(data) {
+              alert(data['data']['problem_desc']);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {}
+          });
+
+        }
+
+      });
+    </script>
   </head>
 
   <body>
