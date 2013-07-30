@@ -390,6 +390,16 @@ def people_around():
 		return jsonify(problem=None)
 	#return jsonify(data={"problem": problem.serialize})
 	return jsonify(problem=problem_repo_instance.serialize)
+@api.route("/get_problem", methods=['GET'])
+def find_problem():
+	device_id = request.args.get("device_id", -1)
+	if device_id == -1: 
+		device_id = get_device_id_from_ip(request.remote_addr)
+	if device_id == -1:
+		return jsonify(error=1)
+	else: 
+		index = db.session.query(ProblemRepository).filter_by(valid=True).filter_by(device_feedback=device_id).all()
+		return jsonify(data=[i.serialize for i in index])
 
 def loop_check_problem(): 
 	#this function will loop in thread 
@@ -413,7 +423,6 @@ def loop_check_problem():
 						db.session.commit()
 						delay_insert_feedback("", p.serialize['device_feedback'])
 						print "give feedback to " + str(p.serialize['device_feedback'])
-
 		#if problem_repos
 		break;
 	
