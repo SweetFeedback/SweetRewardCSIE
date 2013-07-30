@@ -23,6 +23,9 @@ def nasa_23():
 @views.route("/mobile")
 def mobile_webpage():
 	return render_template("mobile.html")
+@views.route("/problem_map")
+def problem_map():
+	return render_template("problem_map.html")
 @views.route("/")
 def home():
 	return render_template("sweet_building_greeter.html")
