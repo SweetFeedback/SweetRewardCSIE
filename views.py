@@ -25,7 +25,7 @@ def mobile_webpage():
 	return render_template("mobile.html")
 @views.route("/")
 def home():
-	return render_template("home.html")
+	return render_template("sweet_building_greeter.html")
 @views.route("/questionaire")
 def question():
 	return render_template("quiz.html")
