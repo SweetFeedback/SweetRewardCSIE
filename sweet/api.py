@@ -338,22 +338,6 @@ def window_action():
 			else:
 				return jsonify(status=2, reason=["the action can't not be understanded"])
 
-@api.route("/bluetooth_around", methods=['GET'])
-def bluetooth_around(): 
-	nearby_device = request.args.get("device_id", -1)
-	bluetooth_id = request.args.get("bluetooth_id", "")
-	device_name = request.args.get("device_name", "")
-	#user = get_user_from_bluetooth_id(bluetooth_id)
-	bluetooth_around_event = None
-	#if user is not None: 
-	if bluetooth_id != "" and device_name != "" and nearby_device != -1:
-		bluetooth_around_event = DeviceAround(nearby_device, bluetooth_id, device_name)
-		db.session.add(bluetooth_around_event)
-		db.session.commit()
-	else:
-		return jsonify(suck=True)
-	return jsonify(data=bluetooth_around_event.serialize)
-
 @api.route("/people_around", methods=['GET'])
 def people_around(): 
 	#problem = Problem.query.filter(Problem.status == 0).first()
@@ -473,12 +457,3 @@ mapping_table = {
 "10170205": ["Firefly_v3","SensorAndrew2","B23.214B"],
 "10170105": ["Firefly_v3","SensorAndrew1","B23.228"]
 }
-
-@api.route("/check_problem", methods=['GET'])
-def check_problem(): 
-	problem_id = request.args.get("problem_id", -1)
-	if problem_id != -1:
-		## go to repository to check if the problem has solved.
-		index = db.session.query(ProblemRepository).filter_by(valid=True).filter_by()
-		print "ya"
-	return jsonify(data=[]);
