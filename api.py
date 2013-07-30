@@ -181,6 +181,7 @@ def feedback_insert():
 	feedback_description = request.args.get("feedback_description", "")	
 	can_get_time = request.args.get("can_get_time", 0)
 
+	time = None 
 	if device_id == -1:
 		device_id = get_device_id_from_ip(request.remote_addr)
 
@@ -414,9 +415,6 @@ def loop_check_problem():
 	elapsed_time = time.time() - start_time
 	print elapsed_time
 	return 
-def delay_insert_feedback(delayed_time, device_feedback):
-	insert_feedback(device_feedback, 20, -1, "positive", "did close the light at right moment!")
-
 mapping_table = {
 "10170004": ["Firefly_v3","SensorAndrew0","B23.110"],
 "10170202": ["Firefly_v3","SensorAndrew2","B23.216"],

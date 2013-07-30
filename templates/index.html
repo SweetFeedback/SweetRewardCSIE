@@ -24,69 +24,44 @@
     </head>
 
     <body>
-        <div class="navbar navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
-                    <a class="brand" href="./index.html"><img src="/static/img/logo.png" width="24px" id="logo"/>SweetFeedback</a>
-                    <div class="nav-collapse">
-                        <ul class="nav">
-                            <li class="active"><a href="#">Home</a></li>
-                            <li><a href="#about">About</a></li>
-                        </ul>
-                        <ul class="nav pull-right">
-                            <li class="dropdown" id="login">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#login">Login<b class="caret"></b></a>
-
-                            <div class="dropdown-menu">
-                                <form>
-                                    <fieldset class='textbox' style="padding:10px">
-                                        <input id="account" style="margin-top: 8px" type="text" placeholder="Account" name="account"/>
-                                        <input id="password" style="margin-top: 8px" type="password" placeholder="Passsword" name="password"/>
-                                        <a class="btn btn-primary" id="loginBt">Log In</a>
-                                        <a data-toggle="modal" href="#reg" class="btn btn-primary" id="registerBt" >Register</a>
-                                    </fieldset>
-                                </form>
-                            </div>
-                            </li>
-
-                            <li id="setting" class="dropdown">
-                            <a href="#" id="current_user" role="button" class="dropdown-toggle" data-toggle="dropdown"></a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
-                                <li><a tabindex="-1" href="./settings.html">Settings</a></li>
-                                <li class="divider"></li>
-                                <li><a tabindex="-1" href="#" id="logoutBt">Log Out</a></li>
-                            </ul>
-                            </li>
-
-                        </ul>
-                    </div><!--/.nav-collapse -->
-                </div>
-            </div>
+        <div class="navbar navbar-static-top">
+          <div class="container">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Project name</a>
+            <div class="nav-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li class="nav-header">Nav header</li>
+                    <li><a href="#">Separated link</a></li>
+                    <li><a href="#">One more separated link</a></li>
+                  </ul>
+                </li>
+              </ul>
+              <ul class="nav navbar-nav pull-right">
+                <li><a href="/examples/navbar/">Default</a></li>
+                <li class="active"><a href="/examples/navbar-static-top/">Static top</a></li>
+                <li><a href="/examples/navbar-fixed-top/">Fixed top</a></li>
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div>
         </div>
+    
+        SweetFeedback: Persuasive computing system
 
         <div class="container">
-            
-            <div id="reg" class="modal hide fade">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h3>Register a new account!</h3>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <input id="reg_account" style="margin-top: 8px" type="text" placeholder="Enter your Account here" name="reg_account"/><br>
-                        <input id="reg_password" style="margin-top: 8px" type="password" placeholder="Enter your Passsword here" name="reg_password"/>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <a class="btn btn-primary" id="registerSubmit" data-dismiss="modal">Register</a>
-                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
-                </div>
-            </div>
             <div class="tabable">
                 <ul class="nav nav-pills spliter">
                     <li class="active">
@@ -253,6 +228,7 @@
 
                         </div>
                         <div id="right">
+                            <img id="g_machine" src="/static/img/machine.png"/>
                             <a data-toggle="modal" href="#report" class="btn btn-primary" style="margin-bottom: 5px;">Report a Problem!</a>
                             <div class="bs-docs-example">
                                 <ul id="myTab" class="nav nav-tabs" style="margin: 0px; padding: 0px;">
@@ -271,6 +247,7 @@
                             </div>
 
                             <div id="report" class="modal hide fade">
+
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     <h3>Report a Problem!</h3>
