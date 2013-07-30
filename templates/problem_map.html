@@ -16,8 +16,26 @@
 
         <!-- Le fav and touch icons -->
         <link rel="shortcut icon" href="/static/ico/favicon.png">
-    </head>
+        <script>
+          $(function() {
+            check_problem();
+            //var counter = setInterval(check_problem, 1000);
+            function check_problem() {
+              $.ajax({
+                type: "GET",
+                url: "./get_problem?device_id=1",
+                dataType: 'json',
+                success: function(data) {
+                  alert(data['data'][0]['problem_desc']);
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {}
+              });
 
+            }
+
+          });
+        </script>
+    </head>
     <body>
         <div class="container">
             
