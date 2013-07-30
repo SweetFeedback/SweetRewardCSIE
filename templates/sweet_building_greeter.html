@@ -43,13 +43,12 @@
         check_problem();
         //var counter = setInterval(check_problem, 1000);
         function check_problem() {
-          alert("DO");
           $.ajax({
             type: "GET",
             url: "./get_problem?device_id=1",
             dataType: 'json',
             success: function(data) {
-              alert(data['data']['problem_desc']);
+              alert(data['data'][0]['problem_desc']);
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {}
           });
