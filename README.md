@@ -51,7 +51,6 @@ python app.py
 
 ####http://209.129.244.24:1234/bluetooth_around####
 
-====
 This api will record if there is any bluetooth device detected from client application.
 
 Method: GET
@@ -89,6 +88,8 @@ Parameters:
 		type of feedback(positive/negative).
 	feedback_description: 
 		the description of feedback.
+Return:
+
 ====
 ####http://209.129.244.24:1234/get_feedback 
 This api is for gumball machine to call. 
@@ -107,6 +108,9 @@ Parameters:
 	
 		people_number: 
 			the number of people around.
+			
+Return:
+
 ====
 ####http://209.129.244.24:1234/check_problem
 This api is for gumball machine to call when people are around the gumball machine.
@@ -118,6 +122,6 @@ Parameters:
 	problem_id: 
 		the problem that has been solved. 
 		
-Returns:
+Return:
 
 ====

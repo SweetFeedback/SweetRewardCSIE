@@ -19,7 +19,7 @@ def list_members():
 	return jsonify(data=[i.serialize for i in members])
 @members.route("/members/user_id")
 def get_user(): 
-	user_id = 0
+	user = None 
 	token = request.args.get("token", "")
 	facebook_id = request.args.get("facebook_id", "")
 	account = request.args.get("account", "")
@@ -38,31 +38,31 @@ def get_user():
 	return jsonify(user=user.serialize)
 
 def get_user_from_token(token):
-	if token is not None:
+	if token is not None and token != "":
 		user = db.session.query(Member).filter_by(token=token).first()
 		if user is not None:
 			return user
 	return None
 def get_user_from_fb(facebook_id):
-	if facebook_id is not None:
+	if facebook_id is not None and facebook_id != "":
 		user = db.session.query(Member).filter_by(facebook_id=facebook_id).first()
 		if user is not None:
 			return user
 	return None
 def get_user_from_account(account):
-	if account is not None:
+	if account is not None and account != "":
 		user = db.session.query(Member).filter_by(account=account).first()
 		if user is not None:
 			return user
 	return None
 def get_user_from_gcm_id(gcm_id):
-	if gcm_id is not None: 
+	if gcm_id is not None and gcm_id != "": 
 		user = db.session.query(Member).filter_by(gcm_id=gcm_id).first() 
 		if user is not None: 
 			return user
 	return None
 def get_user_from_bluetooth_id(bluetooth_id):
-	if bluetooth_id is not None: 
+	if bluetooth_id is not None and bluetooth_id != "": 
 		user = db.session.query(Member).filter_by(bluetooth_id=bluetooth_id).first() 
 		if user is not None: 
 			return user
