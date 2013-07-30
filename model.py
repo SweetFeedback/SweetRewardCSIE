@@ -230,6 +230,8 @@ class Feedback(db.Model):
 		self.if_get = False
 		if can_get_time is not None:
 			self.can_get_time = can_get_time
+		else:
+			self.can_get_time = datetime.now()
 
 	@property
 	def serialize(self):
