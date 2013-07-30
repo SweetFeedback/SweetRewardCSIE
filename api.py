@@ -198,7 +198,7 @@ def insert_feedback(device_id, app_id, user_id, feedback_type, feedback_desc, ca
 @api.route("/get_feedback", methods=['GET'])
 def feedback():
 	device_id = request.args.get("device_id", -1)
-	feedbacks = Feedback.query.filter_by(device_id=device_id).filter_by(if_get=False).filter(Feedback.can_get_time < datetime.now()).all()
+	feedbacks = Feedback.query.filter_by(device_id=device_id).filter_by(if_get=False).filter(Feedback.can_get_time <= datetime.now()).all()
 	return jsonify(data=[i.serialize for i in feedbacks])
 
 @api.route("/retrieve_feedback", methods=['GET'])
@@ -359,8 +359,13 @@ def people_around():
 	#problem = Problem.query.filter(Problem.status == 0).first()
 	device_id = request.args.get("device_id", -1)
 	people_count = request.args.get("people_count", -1)
-	if device_id == -1 or people_count == -1:
+	if people_count == -1:
 		return "suck"
+	if device_id == -1:
+		device_id = get_device_id_from_ip(request.remote_addr)
+	if device_id == -1: 
+		return "suck"
+
 	data = json.load(urllib2.urlopen('http://cmu-sensor-network.herokuapp.com/lastest_readings_from_all_devices/light/json'))
 	problems = []
 	cleaned_data = []
