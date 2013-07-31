@@ -82,3 +82,9 @@ def update_feedback():
 		feedback.retrieve_time = datetime.now()
 		db.session.commit()
 	return jsonify(data=[feedback.serialize])
+def get_device_id_from_ip(address):
+	device_id = -1
+	device_status = db.session.query(DeviceOnline).filter_by(ipaddress=address).first()
+	if device_status is not None: 
+		device_id = device_status.device_id
+	return device_id
