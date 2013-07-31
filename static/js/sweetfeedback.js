@@ -684,6 +684,7 @@ $(function(){
         });
     });
     /* update machine status every 1 sec */
+    /*
     setInterval(function(){
         updateMachineStatus();
         //updateWindowStatus();
@@ -694,4 +695,5 @@ $(function(){
         //readProblemList();
         updateLeaderBoard();
     }, 10000);
+    */
 });
