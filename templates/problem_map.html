@@ -29,9 +29,12 @@
                 url: "./get_problem?device_id=1",
                 dataType: 'json',
                 success: function(data) {
-                  alert(data['data'][0]['problem_desc']);
+                    $('.modal-title').html("Could you help me?");
+                    $('.modal-body').html(data['data'][0]['problem_desc']);
+                    $('#myModal').modal('show');
                 },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {}
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                }
               });
 
             }
@@ -69,23 +72,25 @@
     </head>
     <body>
         <div class="container">
-            
-            <div id="reg" class="modal hide fade">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h3>Register a new account!</h3>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <input id="reg_account" style="margin-top: 8px" type="text" placeholder="Enter your Account here" name="reg_account"/><br>
-                        <input id="reg_password" style="margin-top: 8px" type="password" placeholder="Enter your Passsword here" name="reg_password"/>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <a class="btn btn-primary" id="registerSubmit" data-dismiss="modal">Register</a>
-                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
-                </div>
-            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title"></h4>
+                        </div>
+                        <div class="modal-body">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
+
             <div class="tabable">
                 <div class="tab-content">
                     <div class="tab-pane active" id="apps-1">                                                         
