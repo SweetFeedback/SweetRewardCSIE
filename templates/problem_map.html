@@ -16,6 +16,29 @@
 
         <!-- Le fav and touch icons -->
         <link rel="shortcut icon" href="/static/ico/favicon.png">
+        <style type="text/css">
+          #footer {
+            height: 20px;
+          }
+          body {
+            height:100%;
+            background-color: #f1f1f1;
+            background-image: url('/static/img/others/retina_dust.png');
+            background-repeat:repeat repeat;
+            font-size: 16px;     
+            padding-top: 20px; /* 60px to make the container go all the way to the bottom of the topbar */
+          }
+          #wrap {
+            min-height: 100%;
+            height: auto !important;
+            height: 100%;
+            /* Negative indent footer by its height */
+            margin: 0 auto -20px;
+            /* Pad bottom by footer height */
+            padding: 0 0 20px;
+          }
+        </style>
+
 
         <script src="/static/js/jquery.js"></script>
         <script src="/static/js/jquery-ui.min.js"></script>
@@ -29,9 +52,12 @@
                 url: "./get_problem?device_id=1",
                 dataType: 'json',
                 success: function(data) {
-                  alert(data['data'][0]['problem_desc']);
+                    $('.modal-title').html("Could you help me?");
+                    $('.modal-body').html(data['data'][0]['problem_desc']);
+                    $('#myModal').modal('show');
                 },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {}
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                }
               });
 
             }
@@ -68,24 +94,47 @@
         </script>
     </head>
     <body>
+        <div id="wrap" style="margin-left:100px;margin-right:100px;">
+        <div class="navbar">
+          <div class="container">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">SweetFeedback</a>
+            <div class="nav-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="/">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+              </ul>
+              <ul class="nav navbar-nav pull-right">
+                <li><img src="/static/img/cmu-sv-logo.png"></li>
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div>
+        </div>
         <div class="container">
-            
-            <div id="reg" class="modal hide fade">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h3>Register a new account!</h3>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <input id="reg_account" style="margin-top: 8px" type="text" placeholder="Enter your Account here" name="reg_account"/><br>
-                        <input id="reg_password" style="margin-top: 8px" type="password" placeholder="Enter your Passsword here" name="reg_password"/>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <a class="btn btn-primary" id="registerSubmit" data-dismiss="modal">Register</a>
-                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
-                </div>
-            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title"></h4>
+                        </div>
+                        <div class="modal-body">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
+
             <div class="tabable">
                 <div class="tab-content">
                     <div class="tab-pane active" id="apps-1">                                                         
@@ -145,6 +194,11 @@
                 </div>
             </div>
         </div> <!-- /container -->
+        <div id="footer">
+        <div class="container" style="max-width:600px;">
+          <p class="text-muted credit" >Sweet Building Greeter is made by Louis Yu, Ken Liang, and Ted Selker</p>
+        </div>
+      </div>
 
         <!-- Le javascript
         ================================================== -->
