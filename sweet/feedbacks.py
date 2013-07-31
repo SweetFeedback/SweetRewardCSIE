@@ -18,16 +18,15 @@ from random import choice
 feedbacks = Blueprint('feedbacks', __name__)
 
 ### method related to feedback 
-@feedbacks.route("/feedbacks/<years>/<months>/<days>")
-def get_feedbacks(years, months, days):
-	print years, months, days 
-	date_get = date(int(years), int(months), int(days))
-	datetime_converted = datetime.fromordinal(date_get.toordinal())
-	date_get_plus_1 = date(int(years), int(months), int(days)+1)
-	datetime_converted_end = datetime.fromordinal(date_get_plus_1.toordinal())
-
-	feedbacks = Feedback.query.filter(Feedback.created_time < datetime_converted_end).filter(Feedback.created_time > datetime_converted).all()
+@feedbacks.route("/feedbacks/<application_id>/<years>/<months>/<days>")
+def get_feedbacks(years, months, days, application_id):
+	feedbacks = get_list_feedbacks(int(years), int(months), int(days), int(application_id))
 	return jsonify(data=[i.serialize for i in feedbacks])
+def get_list_feedbacks(y, m, d, a):
+	day_datetime = datetime.fromordinal(date(y, m, d).toordinal())
+	next_day_datetime = datetime.fromordinal(date(y, m, d+1).toordinal())
+	feedbacks = Feedback.query.filter_by(application_id=a).filter(Feedback.created_time < next_day_datetime).filter(Feedback.created_time > day_datetime).all()
+	return feedbacks
 
 @feedbacks.route("/feedback_insert", methods=['GET'])
 def feedback_insert():

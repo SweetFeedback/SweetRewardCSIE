@@ -167,65 +167,6 @@ def get_all_window_data_index():
 	window_indexs = WindowIndex.query.all()
 	return jsonify(data=[i.serialize for i in window_indexs])
 
-### method related to feedback 
-@api.route("/feedbacks")
-def get_all_feedback_record():
-	feedbacks = Feedback.query.all()
-	return jsonify(data=[i.serialize for i in feedbacks])
-@api.route("/feedback_insert", methods=['GET'])
-def feedback_insert():
-	device_id = request.args.get("device_id", -1)
-	application_id = request.args.get("application_id", -1)
-	user_id = request.args.get("user_id", -1)
-	feedback_type = request.args.get("feedback_type", -1)
-	feedback_description = request.args.get("feedback_description", "")	
-	can_get_time = request.args.get("can_get_time", 0)
-
-	time = None 
-	if device_id == -1:
-		device_id = get_device_id_from_ip(request.remote_addr)
-
-	if can_get_time != 0:
-		time = datetime.now() + timedelta(seconds=int(can_get_time))
-	return jsonify(data=insert_feedback(device_id, application_id, user_id, feedback_type, feedback_description, time).serialize)
-	
-def insert_feedback(device_id, app_id, user_id, feedback_type, feedback_desc, can_get_time=None):
-	feedback = Feedback(device_id, app_id, user_id, feedback_type, feedback_desc, can_get_time)
-	db.session.add(feedback)
-	db.session.commit()
-	return feedback
-
-@api.route("/get_feedback", methods=['GET'])
-def feedback():
-	device_id = request.args.get("device_id", -1)
-	feedbacks = Feedback.query.filter_by(device_id=device_id).filter_by(if_get=False).filter(Feedback.can_get_time <= datetime.now()).all()
-	return jsonify(data=[i.serialize for i in feedbacks])
-
-@api.route("/retrieve_feedback", methods=['GET'])
-def retrieve_feedback():
-	device_id = request.args.get("device_id", -1)
-	feedback_id = request.args.get("feedback_id", -1)
-	user_id = request.args.get("user_id", -1)
-	feedback = Feedback.query.filter_by(feedback_id=feedback_id).first()
-	if feedback is not None: 
-		feedback.device_id = device_id
-		db.session.commit()
-	return jsonify(data=[feedback.serialize])
-@api.route("/get_feedback_by_user", methods=['GET'])
-def get_feedback_by_user():
-	token = request.args.get("token", -1)
-	user = get_user_from_token(token)
-	feedbacks = Feedback.query.filter_by(user_id=user.user_id).filter_by(if_get=False).filter(Feedback.can_get_time < datetime.now())
-	return jsonify(data=[i.serialize for i in feedbacks])
-@api.route("/update_feedback", methods=['GET'])
-def update_feedback():
-	feedback_id = request.args.get("feedback_id", -1)
-	feedback = db.session.query(Feedback).filter_by(feedback_id=feedback_id).first()
-	if feedback is not None:
-		feedback.if_get = True
-		feedback.retrieve_time = datetime.now()
-		db.session.commit()
-	return jsonify(data=[feedback.serialize])
 
 @api.route("/notification", methods=['GET'])
 def insert_notification():
