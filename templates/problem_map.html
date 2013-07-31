@@ -16,6 +16,9 @@
 
         <!-- Le fav and touch icons -->
         <link rel="shortcut icon" href="/static/ico/favicon.png">
+
+        <script src="/static/js/jquery.js"></script>
+        <script src="/static/js/jquery-ui.min.js"></script>
         <script>
           $(function() {
             check_problem();
@@ -33,6 +36,34 @@
 
             }
 
+            var canvas = document.getElementById('myCanvas');
+            var context = canvas.getContext('2d');
+
+            var i = 0;
+            var radius = 10;
+            function blink() {
+                if(i % 2 == 0) {
+                    context.beginPath();
+                    context.clearRect(250 - radius - 1, 300 - radius - 1, radius * 2 + 2, radius * 2 + 2);
+                    context.closePath();
+                } else {
+                    context.beginPath();
+                    context.arc(250, 300, radius, 0, 2 * Math.PI, false);
+                    context.closePath();
+                    context.fillStyle = 'red';
+                    context.fill();
+                    context.closePath();
+                }
+                i += 1;
+            }
+
+            var imageObj = new Image();
+            imageObj.onload = function() {
+                context.drawImage(imageObj, 0, 0, 1007, 646);
+                setInterval(blink, 1000);
+            };
+            imageObj.src = '/static/img/floor1.png';
+            
           });
         </script>
     </head>
@@ -59,8 +90,13 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="apps-1">                                                         
                         <!-- map -->
+                        
                         <div id="map">
-                            <img id="map_2f" src="/static/img/floor1.png"/>
+                            <canvas id="myCanvas" width="1007" height="646">
+                            </canvas>
+
+                            <!--img id="map_2f" src="/static/img/floor1.png"/-->
+                            
                         </div>
                         
                         <div id="info">
