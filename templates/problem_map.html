@@ -62,8 +62,11 @@
 
             }
 
-            var canvas = document.getElementById('myCanvas');
-            var context = canvas.getContext('2d');
+            var canvas1 = document.getElementById('canvas1');
+            var context = canvas1.getContext('2d');
+
+            var canvas2 = document.getElementById('canvas2');
+            var context2 = canvas2.getContext('2d');
 
             var i = 0;
             var radius = 10;
@@ -83,12 +86,38 @@
                 i += 1;
             }
 
+            function blink2() {
+                if(i % 2 == 0) {
+                    context2.beginPath();
+                    context2.clearRect(250 - radius - 1, 300 - radius - 1, radius * 2 + 2, radius * 2 + 2);
+                    context2.closePath();
+                } else {
+                    context2.beginPath();
+                    context2.arc(250, 300, radius, 0, 2 * Math.PI, false);
+                    context2.closePath();
+                    context2.fillStyle = 'red';
+                    context2.fill();
+                    context2.closePath();
+                }
+                i += 1;
+            }
+
             var imageObj = new Image();
             imageObj.onload = function() {
                 context.drawImage(imageObj, 0, 0, 1007, 646);
                 setInterval(blink, 1000);
             };
             imageObj.src = '/static/img/floor1.png';
+
+
+            
+
+            var imageObj2 = new Image();
+            imageObj2.onload = function() {
+                context2.drawImage(imageObj2, 0, 0, 1007, 646);
+                setInterval(blink2, 1000);
+            };
+            imageObj2.src = '/static/img/floor2.png';
             
           });
         </script>
@@ -134,6 +163,32 @@
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
 
+            <div id="carousel-example-generic" class="carousel slide" data-interval="false">
+              <!-- Indicators -->
+              <ol class="carousel-indicators">
+                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+              </ol>
+
+              <!-- Wrapper for slides -->
+              <div class="carousel-inner">
+                <div class="item active">
+                    <canvas id="canvas1" width="1007" height="646"></canvas>
+                </div>
+                <div class="item">
+                    <canvas id="canvas2" width="1007" height="646"></canvas>
+                </div>
+              </div>
+
+              <!-- Controls -->
+              <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                <span class="icon-prev"></span>
+              </a>
+              <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                <span class="icon-next"></span>
+              </a>
+            </div>
+
 
             <div class="tabable">
                 <div class="tab-content">
@@ -141,7 +196,7 @@
                         <!-- map -->
                         
                         <div id="map">
-                            <canvas id="myCanvas" width="1007" height="646">
+                            <canvas id="canvas1" width="1007" height="646">
                             </canvas>
 
                             <!--img id="map_2f" src="/static/img/floor1.png"/-->
