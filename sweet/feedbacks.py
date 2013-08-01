@@ -28,6 +28,19 @@ def get_list_feedbacks(y, m, d, a):
 	feedbacks = Feedback.query.filter_by(application_id=a).filter(Feedback.created_time < next_day_datetime).filter(Feedback.created_time > day_datetime).all()
 	return feedbacks
 
+@feedbacks.route("/feedbacks/leaderboard/device")
+def get_feedbacks_leaderboard_device():
+	feedbacks = db.session.query(Feedback.device_id, func.count(Feedback.device_id)).group_by(Feedback.device_id).order_by(desc(func.count(Feedback.device_id))).all()
+	return jsonify(data=[{"device_id": i[0], "count": i[1]} for i in feedbacks]) 
+@feedbacks.route("/feedbacks/leaderboard/user")
+def get_feedbacks_leaderboard_user():
+	feedbacks = db.session.query(Feedback.user_id, func.count(Feedback.user_id)).filter(Feedback.user_id != -1).group_by(Feedback.user_id).order_by(desc(func.count(Feedback.user_id))).all()
+	return jsonify(data=[{"user_id": i[0], "count": i[1]} for i in feedbacks])
+@feedbacks.route("/feedbacks/leaderboard/application_id")
+def get_feedbacks_leaderboard_application():
+	feedbacks = db.session.query(Feedback.application_id, func.count(Feedback.application_id)).filter(Feedback.application_id != -1).group_by(Feedback.application_id).order_by(desc(func.count(Feedback.application_id))).all()
+	return jsonify(data=[{"application_id": i[0], "count": i[1]} for i in feedbacks])
+
 @feedbacks.route("/feedback_insert", methods=['GET'])
 def feedback_insert():
 	device_id = request.args.get("device_id", -1)
