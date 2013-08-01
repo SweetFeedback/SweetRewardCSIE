@@ -433,3 +433,29 @@ class DeviceAround(db.Model):
 		}
 	def __repr__(self):
 		return "Device Around log " + str(self.log_id) + " :" + self.nearby_device + ", (" + str(self.bluetooth_id) + ", " + str(self.device_name) + ") at" + str(self.timestamp)
+class Application(db.Model):
+	__tablename__ = "applications"
+
+	application_id = db.Column("application_id", Integer, primary_key=True)
+	name = db.Column("name", String(50))
+	description = db.Column("description", String(200))
+	owner_id = db.Column("owner_id", Integer)
+	created_at = db.Column("created_at", TIMESTAMP)
+
+	def __init__ (self, name, description, owner_id):
+		self.name = name
+		self.description = description
+		self.owner_id = owner_id
+
+	@property
+	def serialize(self):
+		return {
+			'application_id' : self.application_id,
+			'name' : self.name, 
+			'description' : self.description,
+			'owner_id' : self.owner_id,
+			'created_at' : self.created_at
+		}
+
+	def __repr__(self):
+		return "Application"
