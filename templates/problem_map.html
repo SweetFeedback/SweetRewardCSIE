@@ -43,14 +43,21 @@
     <script src="/static/js/jquery.js"></script>
     <script src="/static/js/jquery-ui.min.js"></script>
     <script>
-        var room_coordinates = {
-            'B23.116': {x: 250, y: 300}
+        var roomCoordinates = {
+            'B23.114': {x: 160, y: 300}, 
+            'B23.115': {x: 200, y: 300}, 
+            'B23.116': {x: 250, y: 300},
+            'B23.129': {x: 540, y: 340},
+            'B23,109': {x: 180, y: 530},
+            'B23,211': {x: 150, y: 400},
+            'B23,212': {x: 150, y: 550},
+            'B23,kitchen': {x: 770, y: 450}
         };
 
         $(function() {
-            check_problem();
-                //var counter = setInterval(check_problem, 1000);
-                function check_problem() {
+            checkProblem();
+                //var counter = setInterval(checkProblem, 1000);
+                function checkProblem() {
                   $.ajax({
                     type: "GET",
                     url: "./get_problem?device_id=1",
@@ -61,7 +68,7 @@
                         $('#myModal').modal('show');
 
                         var location = data['data'][0]['location'];
-                        problem_coordinate = room_coordinates[location];
+                        problemCoordinate = roomCoordinates[location];
 
                         setInterval(blink, 1000);
                     },
@@ -77,7 +84,7 @@
             var canvas2 = document.getElementById('canvas2');
             var context2 = canvas2.getContext('2d');
 
-            var i = 0;
+            var i = 1;
             var problemCoordinate;
             var radius = 10;
             function blink() {
@@ -98,9 +105,8 @@
 
             
 
-            var machine1 = {'loaded_img': 0, 'x': 520, 'y': 500};
+            var machine1 = {'loadedImgNum': 0, 'x': 520, 'y': 500};
             var sources = {
-                length: 6,
                 mrc: '/static/img/mrc/mrc.png',
                 cold: '/static/img/others/char-cold.png',
                 sunglass: '/static/img/others/char-sunglass.png',
@@ -108,13 +114,14 @@
                 sweat: '/static/img/others/char-sweat.png',
                 transportation: '/static/img/transportation/empty.png'
             };
+            var sourcesLength = 6;
 
-            function draw_machine1() {
+            function drawMachine1() {
                 for(var source in sources) {
                     machine1[source] = new Image();
                     machine1[source].onload = function() {
-                        machine1['loaded_img']++;
-                        if(machine1['loaded_img'] == sources.length) {
+                        machine1['loadedImgNum']++;
+                        if(machine1['loadedImgNum'] == sourcesLength) {
                             context.drawImage(machine1.mrc, machine1.x, machine1.y, machine1.mrc.width * 0.15, machine1.mrc.height * 0.15);
                                 /*context.drawImage(machine1.cold, 0, 0, 50, 50);
                                 context.drawImage(machine1.sunglass, 0, 0, 50, 50);
@@ -132,7 +139,7 @@
             var floor1Img = new Image();
             floor1Img.onload = function() {
                 context.drawImage(floor1Img, 0, 0, 1007, 646);
-                draw_machine1();
+                drawMachine1();
             };
             floor1Img.src = '/static/img/floor1.png';
 
