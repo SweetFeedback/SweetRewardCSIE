@@ -43,6 +43,15 @@
         <script src="/static/js/jquery.js"></script>
         <script src="/static/js/jquery-ui.min.js"></script>
         <script>
+
+            var room_coordinates = {
+                B23.116: {x: 250, y: 300}
+            };
+
+            function get_room_coordinate(location) {
+
+            }
+
           $(function() {
             check_problem();
             //var counter = setInterval(check_problem, 1000);
@@ -55,6 +64,10 @@
                     $('.modal-title').html("Could you help me?");
                     $('.modal-body').html(data['data'][0]['problem_desc']);
                     $('#myModal').modal('show');
+
+                    var location = data['data'][0]['location'];
+                    problem_coordinate = room_coordinates.location;
+
                     setInterval(blink, 1000);
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -70,17 +83,16 @@
             var context2 = canvas2.getContext('2d');
 
             var i = 0;
-            var problem_x = 250;
-            var problem_y = 300;
+            var problem_coordinate;
             var radius = 10;
             function blink() {
                 if(i % 2 == 0) {
                     context.beginPath();
-                    context.clearRect(problem_x - radius - 1, problem_y - radius - 1, radius * 2 + 2, radius * 2 + 2);
+                    context.clearRect(problem_coordinate.x - radius - 1, problem_coordinate.y - radius - 1, radius * 2 + 2, radius * 2 + 2);
                     context.closePath();
                 } else {
                     context.beginPath();
-                    context.arc(problem_x, problem_y, radius, 0, 2 * Math.PI, false);
+                    context.arc(problem_coordinate.x, problem_coordinate.y, radius, 0, 2 * Math.PI, false);
                     context.closePath();
                     context.fillStyle = 'red';
                     context.fill();
