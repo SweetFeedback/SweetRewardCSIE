@@ -17,6 +17,25 @@ from random import choice
 
 #blueprint
 api = Blueprint('api', __name__)
+
+@api.route("/application")
+def get_applications(): 
+	applications = db.session.query(Application).all()
+	return jsonify(data=[i.serialize for i in applications])
+
+@api.route("/application/register", methods=['GET'])
+def register_application():
+	app_name = request.args.get("application_name", "") 
+	app_description = request.args.get("application_description", "")
+	user_id = request.args.get("user_id", -1)
+
+	application = Application(app_name, app_description, user_id)
+	db.session.add(application)
+	db.session.commit()
+
+	return jsonify(data=[application.serialize])
+
+
 @api.route("/sensor_log_index/<device_id>")
 def get_sensor_log(device_id):
 	sensor_log_index = db.session.query(GumballSensorIndex).filter_by(device_id=device_id).first()
@@ -344,8 +363,6 @@ def loop_check_problem():
 	#this function will loop in thread 
 	start_time = time.time()
 	while 1:
-		import json 
-		import urllib2
 		print "check sensor repository..."
 		problem_repos = db.session.query(ProblemRepository).filter_by(valid=True)
 		data = json.load(urllib2.urlopen('http://cmu-sensor-network.herokuapp.com/lastest_readings_from_all_devices/light/json'))
@@ -398,3 +415,16 @@ mapping_table = {
 "10170205": ["Firefly_v3","SensorAndrew2","B23.214B"],
 "10170105": ["Firefly_v3","SensorAndrew1","B23.228"]
 }
+@api.route("/test")
+def hello_world(x=16, y=16):
+    x = int(request.args.get("x", x))
+    y = int(request.args.get("y", y))
+    res = add.apply_async((x, y))
+    context = {"id": res.task_id, "x": x, "y": y}
+    result = "add((x){}, (y){})".format(context['x'], context['y'])
+    goto = "{}".format(context['id'])
+    return jsonify(result= result, goto=goto) 
+@api.route("/test/result/<task_id>")
+def show_result(task_id):
+    retval = add.AsyncResult(task_id).get(timeout=1.0)
+    return repr(retval)
