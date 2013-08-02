@@ -1,6 +1,5 @@
 from flask import Flask, Blueprint, render_template, request, jsonify, json
 from celery import Celery 
-from tasks import add
 
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import Table, Column, Integer, String, Date, Float, TIMESTAMP, desc
