@@ -55,6 +55,7 @@
                     $('.modal-title').html("Could you help me?");
                     $('.modal-body').html(data['data'][0]['problem_desc']);
                     $('#myModal').modal('show');
+                    setInterval(blink, 1000);
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                 }
@@ -69,17 +70,17 @@
             var context2 = canvas2.getContext('2d');
 
             var i = 0;
-            var x = 250;
-            var y = 300;
+            var problem_x = 250;
+            var problem_y = 300;
             var radius = 10;
             function blink() {
                 if(i % 2 == 0) {
                     context.beginPath();
-                    context.clearRect(x - radius - 1, y - radius - 1, radius * 2 + 2, radius * 2 + 2);
+                    context.clearRect(problem_x - radius - 1, problem_y - radius - 1, radius * 2 + 2, radius * 2 + 2);
                     context.closePath();
                 } else {
                     context.beginPath();
-                    context.arc(x, y, radius, 0, 2 * Math.PI, false);
+                    context.arc(problem_x, problem_y, radius, 0, 2 * Math.PI, false);
                     context.closePath();
                     context.fillStyle = 'red';
                     context.fill();
@@ -88,7 +89,7 @@
                 i += 1;
             }
 
-            setInterval(blink, 1000);
+            
 
             var machine1 = {'loaded_img': 0, 'x': 520, 'y': 500};
             var draw_order = ['mrc', 'cold', 'sunglass', 'headphone', 'sweat', 'transportation'];
