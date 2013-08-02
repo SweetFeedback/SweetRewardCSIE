@@ -39,22 +39,34 @@
     <script src="/static/js/jquery-ui.min.js"></script>
     <script>
       $(function() {
-        //check_problem();
-        //var counter = setInterval(check_problem, 1000);
+        check_problem();
+        var counter = 3000;
+        setInterval(check_problem, 1000);
         function check_problem() {
-          $.ajax({
-            type: "GET",
-            url: "./get_problem?device_id=1",
-            dataType: 'json',
-            success: function(data) {
-              window.location = "./problem_map"
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {}
-          });
+          counter -= 1000;
+          if(counter <= 0) {
+            counter = 3000;
+            $.ajax({
+              type: "GET",
+              url: "./get_problem?device_id=1",
+              dataType: 'json',
+              success: function(data) {
+                if(data['data'].length > 0) {
+                  window.location = "./problem_map"
+                }
+              },
+              error: function(XMLHttpRequest, textStatus, errorThrown) {}
+            });
+          }
 
         }
 
       });
+
+      onmousemove=function() {
+        counter = 3000;
+        
+      };
     </script>
   </head>
 
