@@ -1,34 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>SweetFeedback in NASA 23 building</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
-        <meta name="author" content="">
+<head>
+    <meta charset="utf-8">
+    <title>SweetFeedback in NASA 23 building</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-        <!-- Le styles -->
-        <link href="/static/css/bootstrap.css" rel="stylesheet">
-        <link href="/static/css/style2.css" rel="stylesheet">
+    <!-- Le styles -->
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/style2.css" rel="stylesheet">
 
-        <!--<link href="assets/css/docs.css" rel="stylesheet">-->
-        <link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
+    <!--<link href="assets/css/docs.css" rel="stylesheet">-->
+    <link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
 
-        <!-- Le fav and touch icons -->
-        <link rel="shortcut icon" href="/static/ico/favicon.png">
-        <style type="text/css">
-          #footer {
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="/static/ico/favicon.png">
+    <style type="text/css">
+        #footer {
             height: 20px;
-          }
-          body {
+        }
+        body {
             height:100%;
             background-color: #f1f1f1;
             background-image: url('/static/img/others/retina_dust.png');
             background-repeat:repeat repeat;
             font-size: 16px;     
             padding-top: 20px; /* 60px to make the container go all the way to the bottom of the topbar */
-          }
-          #wrap {
+        }
+        #wrap {
             min-height: 100%;
             height: auto !important;
             height: 100%;
@@ -36,43 +36,43 @@
             margin: 0 auto -20px;
             /* Pad bottom by footer height */
             padding: 0 0 20px;
-          }
-        </style>
+        }
+    </style>
 
 
-        <script src="/static/js/jquery.js"></script>
-        <script src="/static/js/jquery-ui.min.js"></script>
-        <script>
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/jquery-ui.min.js"></script>
+    <script>
 
-            var room_coordinates = {
-                'B23.116': {x: 250, y: 300}
-            };
+        var room_coordinates = {
+            'B23.116': {x: 250, y: 300}
+        };
 
-            function get_room_coordinate(location) {
+        function get_room_coordinate(location) {
 
-            }
+        }
 
-          $(function() {
+        $(function() {
             check_problem();
-            //var counter = setInterval(check_problem, 1000);
-            function check_problem() {
-              $.ajax({
-                type: "GET",
-                url: "./get_problem?device_id=1",
-                dataType: 'json',
-                success: function(data) {
-                    $('.modal-title').html("Could you help me?");
-                    $('.modal-body').html(data['data'][0]['problem_desc']);
-                    $('#myModal').modal('show');
+                //var counter = setInterval(check_problem, 1000);
+                function check_problem() {
+                  $.ajax({
+                    type: "GET",
+                    url: "./get_problem?device_id=1",
+                    dataType: 'json',
+                    success: function(data) {
+                        $('.modal-title').html("Could you help me?");
+                        $('.modal-body').html(data['data'][0]['problem_desc']);
+                        $('#myModal').modal('show');
 
-                    var location = data['data'][0]['location'];
-                    problem_coordinate = room_coordinates[location];
+                        var location = data['data'][0]['location'];
+                        problem_coordinate = room_coordinates[location];
 
-                    setInterval(blink, 1000);
-                },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                }
-              });
+                        setInterval(blink, 1000);
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    }
+                });
 
             }
 
@@ -121,15 +121,15 @@
                         machine1['loaded_img']++;
                         if(machine1['loaded_img'] == draw_order.length) {
                             context.drawImage(machine1.mrc, machine1.x, machine1.y, machine1.mrc.width * 0.15, machine1.mrc.height * 0.15);
-                            /*context.drawImage(machine1.cold, 0, 0, 50, 50);
-                            context.drawImage(machine1.sunglass, 0, 0, 50, 50);
-                            context.drawImage(machine1.headphone, 0, 0, 50, 50);
-                            context.drawImage(machine1.sweat, 0, 0, 50, 50);
-                            context.drawImage(machine1.transportation, 0, 0, 50, 50);
-                            */
+                                /*context.drawImage(machine1.cold, 0, 0, 50, 50);
+                                context.drawImage(machine1.sunglass, 0, 0, 50, 50);
+                                context.drawImage(machine1.headphone, 0, 0, 50, 50);
+                                context.drawImage(machine1.sweat, 0, 0, 50, 50);
+                                context.drawImage(machine1.transportation, 0, 0, 50, 50);
+                                */
                         }
                     };
-                    machine1[src].src = sources[src];                    
+                    machine1[src].src = sources[src];
                 }
 
             }
@@ -148,83 +148,83 @@
                 context2.drawImage(imageObj2, 0, 0, 1007, 646);
             };
             imageObj2.src = '/static/img/floor2.png';
-            
-          });
-        </script>
-    </head>
-    <body>
-        <div id="wrap" style="margin-left:100px;margin-right:100px;">
+
+        });
+    </script>
+</head>
+<body>
+    <div id="wrap" style="margin-left:100px;margin-right:100px;">
         <div class="navbar">
           <div class="container">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">SweetFeedback</a>
-            <div class="nav-collapse collapse">
-              <ul class="nav navbar-nav">
+        </button>
+        <a class="navbar-brand" href="/">SweetFeedback</a>
+        <div class="nav-collapse collapse">
+            <ul class="nav navbar-nav">
                 <li class="active"><a href="/">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
-              </ul>
-              <ul class="nav navbar-nav pull-right">
+            </ul>
+            <ul class="nav navbar-nav pull-right">
                 <li><img src="/static/img/cmu-sv-logo.png"></li>
-              </ul>
-            </div><!--/.nav-collapse -->
-          </div>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+<div class="container">
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div id="carousel-example-generic" class="carousel slide" data-interval="false">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+        <div class="item active">
+            <canvas id="canvas1" width="1007" height="646"></canvas>
         </div>
-        <div class="container">
+        <div class="item">
+            <canvas id="canvas2" width="1007" height="646"></canvas>
+        </div>
+    </div>
 
-            <!-- Modal -->
-            <div class="modal fade" id="myModal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title"></h4>
-                        </div>
-                        <div class="modal-body">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
-
-            <div id="carousel-example-generic" class="carousel slide" data-interval="false">
-              <!-- Indicators -->
-              <ol class="carousel-indicators">
-                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-              </ol>
-
-              <!-- Wrapper for slides -->
-              <div class="carousel-inner">
-                <div class="item active">
-                    <canvas id="canvas1" width="1007" height="646"></canvas>
-                </div>
-                <div class="item">
-                    <canvas id="canvas2" width="1007" height="646"></canvas>
-                </div>
-              </div>
-
-              <!-- Controls -->
-              <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                <span class="icon-prev"></span>
-              </a>
-              <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                <span class="icon-next"></span>
-              </a>
-            </div>
+    <!-- Controls -->
+    <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+        <span class="icon-prev"></span>
+    </a>
+    <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+        <span class="icon-next"></span>
+    </a>
+</div>
 
 
-            <div class="tabable">
-                <div class="tab-content">
-                    <div class="tab-pane active" id="apps-1">                                                         
-                        <!-- map -->
-                        
+<div class="tabable">
+    <div class="tab-content">
+        <div class="tab-pane active" id="apps-1">                                                         
+            <!-- map -->
+            
                         <!--div id="map">
                             <canvas id="canvas1" width="1007" height="646">
                             </canvas>
@@ -272,42 +272,42 @@
                             <img class="sweat" src="/static/img/others/char-sweat.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
                             <img class="transportation" src="/static/img/transportation/empty.png" width="30px" style="margin-top: -120px; margin-left: -10px;"/>
                         </div>
-                        -->
+                    -->
 
-                        <br/>
-                    </div>
+                    <br/>
                 </div>
             </div>
-        </div> <!-- /container -->
-        <div id="footer">
-        <div class="container" style="max-width:600px;">
-          <p class="text-muted credit" >Sweet Building Greeter is made by Louis Yu, Ken Liang, and Ted Selker</p>
         </div>
-      </div>
+    </div> <!-- /container -->
+    <div id="footer">
+        <div class="container" style="max-width:600px;">
+            <p class="text-muted credit" >Sweet Building Greeter is made by Louis Yu, Ken Liang, and Ted Selker</p>
+        </div>
+    </div>
 
-        <!-- Le javascript
-        ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        <script src="/static/js/jquery.js"></script>
-        <script src="/static/js/bootstrap-transition.js"></script>
-        <script src="/static/js/bootstrap-alert.js"></script>
-        <script src="/static/js/bootstrap-modal.js"></script>
-        <script src="/static/js/bootstrap-dropdown.js"></script>
-        <script src="/static/js/bootstrap-scrollspy.js"></script>
-        <script src="/static/js/bootstrap-tab.js"></script>
-        <script src="/static/js/bootstrap-tooltip.js"></script>
-        <script src="/static/js/bootstrap-popover.js"></script>
-        <script src="/static/js/bootstrap-button.js"></script>
-        <script src="/static/js/bootstrap-collapse.js"></script>
-        <script src="/static/js/bootstrap-carousel.js"></script>
-        <script src="/static/js/bootstrap-typeahead.js"></script>
-        <!--<script src="assets/js/jquery.cookie.js"></script>-->
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/bootstrap-transition.js"></script>
+    <script src="/static/js/bootstrap-alert.js"></script>
+    <script src="/static/js/bootstrap-modal.js"></script>
+    <script src="/static/js/bootstrap-dropdown.js"></script>
+    <script src="/static/js/bootstrap-scrollspy.js"></script>
+    <script src="/static/js/bootstrap-tab.js"></script>
+    <script src="/static/js/bootstrap-tooltip.js"></script>
+    <script src="/static/js/bootstrap-popover.js"></script>
+    <script src="/static/js/bootstrap-button.js"></script>
+    <script src="/static/js/bootstrap-collapse.js"></script>
+    <script src="/static/js/bootstrap-carousel.js"></script>
+    <script src="/static/js/bootstrap-typeahead.js"></script>
+    <!--<script src="assets/js/jquery.cookie.js"></script>-->
 
-        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA3ieESIwbYV6OZC14fivVKoOSYvApTlh0&sensor=true&libraries=geometry"></script>
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA3ieESIwbYV6OZC14fivVKoOSYvApTlh0&sensor=true&libraries=geometry"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
 
 
 
-        <script src="/static/js/sweetfeedback.js" language="javascript"></script>
-    </body>
+    <script src="/static/js/sweetfeedback.js" language="javascript"></script>
+</body>
 </html>
