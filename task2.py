@@ -34,14 +34,14 @@ def loop_check_problem():
 			for row in data:
 				if row['device_id'] == str(p.serialize['device_check']):
 					print row['value']
-					if row['value'] < 300: 
+					if row['value'] < 1024: 
 						## did close the window! 
 						print datetime.fromtimestamp(row['timestamp']/1000)
 						print p.serialize['created_at']
 						p.valid = False
 						db.session.commit()
 						#delay_insert_feedback("", p.serialize['device_feedback'])
-						insert_feedback(p.serialize['device_feedback'], "10", -1, "positive", "you did close the light", can_get_time=None)
+						insert_feedback(p.serialize['device_feedback'], "10", -1, "positive", "you did close the light", can_get_time=15)
 						print "give feedback to " + str(p.serialize['device_feedback'])
 		#if problem_repos
 		from model import *
