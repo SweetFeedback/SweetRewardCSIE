@@ -69,15 +69,17 @@
             var context2 = canvas2.getContext('2d');
 
             var i = 0;
+            var x = 250;
+            var y = 300;
             var radius = 10;
             function blink() {
                 if(i % 2 == 0) {
                     context.beginPath();
-                    context.clearRect(250 - radius - 1, 300 - radius - 1, radius * 2 + 2, radius * 2 + 2);
+                    context.clearRect(x - radius - 1, y - radius - 1, radius * 2 + 2, radius * 2 + 2);
                     context.closePath();
                 } else {
                     context.beginPath();
-                    context.arc(250, 300, radius, 0, 2 * Math.PI, false);
+                    context.arc(x, y, radius, 0, 2 * Math.PI, false);
                     context.closePath();
                     context.fillStyle = 'red';
                     context.fill();
@@ -86,36 +88,51 @@
                 i += 1;
             }
 
-            function blink2() {
-                if(i % 2 == 0) {
-                    context2.beginPath();
-                    context2.clearRect(250 - radius - 1, 300 - radius - 1, radius * 2 + 2, radius * 2 + 2);
-                    context2.closePath();
-                } else {
-                    context2.beginPath();
-                    context2.arc(250, 300, radius, 0, 2 * Math.PI, false);
-                    context2.closePath();
-                    context2.fillStyle = 'red';
-                    context2.fill();
-                    context2.closePath();
+            setInterval(blink, 1000);
+
+            var machine1 = {'loaded_img': 0, 'x': 520, 'y': 500};
+            var draw_order = ['mrc', 'cold', 'sunglass', 'headphone', 'sweat', 'transportation'];
+            var sources = {
+                mrc: '/static/img/mrc/mrc.png',
+                cold: '/static/img/others/char-cold.png',
+                sunglass: '/static/img/others/char-sunglass.png',
+                headphone: '/static/img/others/char-headphone.png',
+                sweat: '/static/img/others/char-sweat.png',
+                transportation: '/static/img/transportation/empty.png'
+            };
+
+            function draw_machine1() {
+                for(var src in sources) {
+                    machine1[src] = new Image();
+                    machine1[src].onload = function() {
+                        machine1['loaded_img']++;
+                        if(machine1['loaded_img'] == draw_order.length) {
+                            context.drawImage(machine1.mrc, machine1.x, machine1.y, machine1.mrc.width * 0.15, machine1.mrc.height * 0.15);
+                            /*context.drawImage(machine1.cold, 0, 0, 50, 50);
+                            context.drawImage(machine1.sunglass, 0, 0, 50, 50);
+                            context.drawImage(machine1.headphone, 0, 0, 50, 50);
+                            context.drawImage(machine1.sweat, 0, 0, 50, 50);
+                            context.drawImage(machine1.transportation, 0, 0, 50, 50);
+                            */
+                        }
+                    };
+                    machine1[src].src = sources[src];                    
                 }
-                i += 1;
+
             }
 
             var imageObj = new Image();
             imageObj.onload = function() {
                 context.drawImage(imageObj, 0, 0, 1007, 646);
-                setInterval(blink, 1000);
+
+                draw_machine1();
             };
             imageObj.src = '/static/img/floor1.png';
 
 
-            
-
             var imageObj2 = new Image();
             imageObj2.onload = function() {
                 context2.drawImage(imageObj2, 0, 0, 1007, 646);
-                setInterval(blink2, 1000);
             };
             imageObj2.src = '/static/img/floor2.png';
             
@@ -195,29 +212,29 @@
                     <div class="tab-pane active" id="apps-1">                                                         
                         <!-- map -->
                         
-                        <div id="map">
+                        <!--div id="map">
                             <canvas id="canvas1" width="1007" height="646">
                             </canvas>
 
-                            <!--img id="map_2f" src="/static/img/floor1.png"/-->
+                            <img id="map_2f" src="/static/img/floor1.png"/>
                             
-                        </div>
+                        </div-->
                         
-                        <div id="info">
+                        <!--div id="info">
                             <li><img src="/static/img/others/char-cold.png"/> : Cold </li>
                             <li><img class="sweat" src="/static/img/others/char-sweat.png"/> : Hot </li>
                             <li><img src="/static/img/others/char-headphone.png"/> : Noisy </li>
                             <li><img src="/static/img/others/char-sunglass.png"/> : Bright </li>
-                        </div>
+                        </div-->
+                        <!--
                         <div class="machine" id="mrc_1">
                             <img class="mrc" src="/static/img/mrc/mrc.png" width="40px"/>
                             <img class="cold" src="/static/img/others/char-cold.png" width="50px" style="margin-top: -155px; margin-left: -3px;"/>
                             <img class="sunglass" src="/static/img/others/char-sunglass.png" width="50px" style="margin-top: -132px; margin-left: -6px;"/>
                             <img class="headphone" src="/static/img/others/char-headphone.png" width="50px" style="margin-top: -200px; margin-left: -6px;"/>
                             <img class="sweat" src="/static/img/others/char-sweat.png" width="50px" style="margin-top: -200px; margin-left: -6px;"/>
-                            <img class="transportation" src="/static/img/transportation/empty.png" width="30px" style="margin-top: -120px; margin-left: -10px;"/>   
+                            <img class="transportation" src="/static/img/transportation/empty.png" width="30px" style="margin-top: -120px; margin-left: -10px;"/>
                         </div>
-                        <!--
                         <div class="machine" id="mrc_2">
                             <img class="mrc" src="/static/img/mrc/mrc.png" width="40px"/>
                             <img class="cold" src="/static/img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
