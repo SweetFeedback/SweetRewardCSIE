@@ -329,17 +329,18 @@ def people_around():
 		problem_repo_instance = None
 		if problem_choosed != None:
 			index = db.session.query(ProblemRepository).filter_by(valid=True).filter_by(device_feedback=device_id).first()
+			print index
 			if index != None:
-				#index.problem_cat = "light"
-				#index.problem_desc = "light is not closing now, could you help me to close it? I will give you candies if you do"
-				#index.device_check = problem_choosed['device_id']
-				#index.device_feedback = device_id
-				#index.created_at = None 
-				#index.location = mapping_table[problem_choosed['device_id']][2]
-				#index.valid = True
-				#problem_repo_instance = index
-				#db.session.commit()
-				return jsonify(problem=None)
+				index.problem_cat = "light"
+				index.problem_desc = "light is not closing now, could you help me to close it? I will give you candies if you do"
+				index.device_check = problem_choosed['device_id']
+				index.device_feedback = device_id
+				index.created_at = None 
+				index.location = mapping_table[problem_choosed['device_id']][2]
+				index.valid = True
+				problem_repo_instance = index
+				db.session.commit()
+			#	return jsonify(problem=None)
 			else:
 				problem_repo_instance = ProblemRepository("light", "light is not closing now, could you help me to close it? I will give you candies if you do", mapping_table[problem_choosed['device_id']][2], problem_choosed['device_id'], device_id)
 				db.session.add(problem_repo_instance)

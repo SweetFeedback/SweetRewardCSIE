@@ -34,7 +34,7 @@ def loop_check_problem():
 			for row in data:
 				if row['device_id'] == str(p.serialize['device_check']):
 					print row['value']
-					if row['value'] < 1023: 
+					if row['value'] < 300: 
 						## did close the window! 
 						print datetime.fromtimestamp(row['timestamp']/1000)
 						print p.serialize['created_at']
