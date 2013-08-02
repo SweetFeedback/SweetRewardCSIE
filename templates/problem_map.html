@@ -43,14 +43,9 @@
     <script src="/static/js/jquery.js"></script>
     <script src="/static/js/jquery-ui.min.js"></script>
     <script>
-
         var room_coordinates = {
             'B23.116': {x: 250, y: 300}
         };
-
-        function get_room_coordinate(location) {
-
-        }
 
         $(function() {
             check_problem();
@@ -83,16 +78,16 @@
             var context2 = canvas2.getContext('2d');
 
             var i = 0;
-            var problem_coordinate;
+            var problemCoordinate;
             var radius = 10;
             function blink() {
                 if(i % 2 == 0) {
                     context.beginPath();
-                    context.clearRect(problem_coordinate.x - radius - 1, problem_coordinate.y - radius - 1, radius * 2 + 2, radius * 2 + 2);
+                    context.clearRect(problemCoordinate.x - radius - 1, problemCoordinate.y - radius - 1, radius * 2 + 2, radius * 2 + 2);
                     context.closePath();
                 } else {
                     context.beginPath();
-                    context.arc(problem_coordinate.x, problem_coordinate.y, radius, 0, 2 * Math.PI, false);
+                    context.arc(problemCoordinate.x, problemCoordinate.y, radius, 0, 2 * Math.PI, false);
                     context.closePath();
                     context.fillStyle = 'red';
                     context.fill();
@@ -104,8 +99,8 @@
             
 
             var machine1 = {'loaded_img': 0, 'x': 520, 'y': 500};
-            var draw_order = ['mrc', 'cold', 'sunglass', 'headphone', 'sweat', 'transportation'];
             var sources = {
+                length: 6,
                 mrc: '/static/img/mrc/mrc.png',
                 cold: '/static/img/others/char-cold.png',
                 sunglass: '/static/img/others/char-sunglass.png',
@@ -115,11 +110,11 @@
             };
 
             function draw_machine1() {
-                for(var src in sources) {
-                    machine1[src] = new Image();
-                    machine1[src].onload = function() {
+                for(var source in sources) {
+                    machine1[source] = new Image();
+                    machine1[source].onload = function() {
                         machine1['loaded_img']++;
-                        if(machine1['loaded_img'] == draw_order.length) {
+                        if(machine1['loaded_img'] == sources.length) {
                             context.drawImage(machine1.mrc, machine1.x, machine1.y, machine1.mrc.width * 0.15, machine1.mrc.height * 0.15);
                                 /*context.drawImage(machine1.cold, 0, 0, 50, 50);
                                 context.drawImage(machine1.sunglass, 0, 0, 50, 50);
@@ -129,25 +124,24 @@
                                 */
                         }
                     };
-                    machine1[src].src = sources[src];
+                    machine1[source].src = sources[source];
                 }
 
             }
 
-            var imageObj = new Image();
-            imageObj.onload = function() {
-                context.drawImage(imageObj, 0, 0, 1007, 646);
-
+            var floor1Img = new Image();
+            floor1Img.onload = function() {
+                context.drawImage(floor1Img, 0, 0, 1007, 646);
                 draw_machine1();
             };
-            imageObj.src = '/static/img/floor1.png';
+            floor1Img.src = '/static/img/floor1.png';
 
 
-            var imageObj2 = new Image();
-            imageObj2.onload = function() {
-                context2.drawImage(imageObj2, 0, 0, 1007, 646);
+            var floor2Img = new Image();
+            floor2Img.onload = function() {
+                context2.drawImage(floor2Img, 0, 0, 1007, 646);
             };
-            imageObj2.src = '/static/img/floor2.png';
+            floor2Img.src = '/static/img/floor2.png';
 
         });
     </script>
