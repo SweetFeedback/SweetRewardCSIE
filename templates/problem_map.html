@@ -48,6 +48,8 @@
             'B23.115': {x: 200, y: 300, floor: 1}, 
             'B23.116': {x: 250, y: 300, floor: 1},
             'B23.129': {x: 540, y: 340, floor: 1},
+            'B23.110': {x: 180, y: 450, floor: 1},
+            'B23.107': {x: 250, y: 570, floor: 1},
             'B23.109': {x: 180, y: 530, floor: 1},
             'B23.211': {x: 150, y: 400, floor: 2},
             'B23.212': {x: 150, y: 550, floor: 2},
@@ -55,6 +57,18 @@
         };
 
         $(function() {
+
+            var canvas1 = document.getElementById('canvas1');
+            var context1 = canvas1.getContext('2d');
+
+            var canvas2 = document.getElementById('canvas2');
+            var context2 = canvas2.getContext('2d');
+
+
+            var cnt = 0;
+            var problemCoordinates = new Array();
+            var radius = 10;
+
             checkProblem();
                 //var counter = setInterval(checkProblem, 1000);
                 function checkProblem() {
@@ -63,16 +77,17 @@
                     url: "./get_problem?device_id=1",
                     dataType: 'json',
                     success: function(data) {
-                        $('.modal-title').html("Could you help me?");
-                        $('.modal-body').html(data['data'][0]['problem_desc']);
-                        $('#myModal').modal('show');
-
-                        var location = data['data'][0]['location'];
-                        if(location in roomCoordinates) {
-                            problemCoordinate = roomCoordinates[location];
-
-                            setInterval(blink, 1000);
+                        for(var i = 0; i < data['data'].length; i++) {
+                            var location = data['data'][i]['location'];
+                            if(location in roomCoordinates) {
+                                problemCoordinates[i] = roomCoordinates[location];
+                            }
                         }
+                        setInterval(blink, 1000);
+
+                        $('.modal-title').html("Could you help me?");
+                        $('.modal-body').html(data['data'][0]['description']);
+                        $('#myModal').modal('show');
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) {
                     }
@@ -80,17 +95,24 @@
 
             }
 
-            var canvas1 = document.getElementById('canvas1');
-            var context1 = canvas1.getContext('2d');
 
-            var canvas2 = document.getElementById('canvas2');
-            var context2 = canvas2.getContext('2d');
 
-            var i = 1;
-            var problemCoordinate;
-            var radius = 10;
+            function drawRedSpot(problem) {
+                if(problem.floor == 1) {
+                    context = context1;
+                } else {
+                    context = context2;
+                }
+
+                context1.beginPath();
+                context1.arc(problem.x, problem.y, radius, 0, 2 * Math.PI, false);
+                context1.fillStyle = 'red';
+                context1.fill();
+                context1.closePath();
+            }
+
             function blink() {
-
+                var problemCoordinate = problemCoordinates[0];
                 var context;
                 if(problemCoordinate.floor == 1) {
                     context = context1;
@@ -98,19 +120,26 @@
                     context = context2;
                 }
 
-                if(i % 2 == 0) {
+                if(cnt % 2) {
                     context.beginPath();
                     context.clearRect(problemCoordinate.x - radius - 1, problemCoordinate.y - radius - 1, radius * 2 + 2, radius * 2 + 2);
                     context.closePath();
+
+                    cnt = 0;    
                 } else {
                     context.beginPath();
                     context.arc(problemCoordinate.x, problemCoordinate.y, radius, 0, 2 * Math.PI, false);
-                    context.closePath();
                     context.fillStyle = 'red';
                     context.fill();
                     context.closePath();
+
+                    cnt = 1;
                 }
-                i += 1;
+
+                for(var i = 1; i < problemCoordinates.length; i++) {
+                    drawRedSpot(problemCoordinates[i]);
+                }
+                
             }
 
             
@@ -150,6 +179,8 @@
             floor1Img.onload = function() {
                 context1.drawImage(floor1Img, 0, 0, 1007, 646);
                 drawMachine1();
+                //problemCoordinate = {x: 250, y: 570, floor:1};
+                //setInterval(blink, 1000);
             };
             floor1Img.src = '/static/img/floor1.png';
 
