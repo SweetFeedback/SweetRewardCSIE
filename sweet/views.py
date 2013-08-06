@@ -40,6 +40,9 @@ def visualize_feedback():
 	return render_template("panel.html", usage=condition_usage)
 @views.route("/")
 def home():
+	return render_template("problem_map.html")
+@views.route("/about")
+def about():
 	return render_template("sweet_building_greeter.html")
 @views.route("/questionaire")
 def question():
@@ -47,3 +50,7 @@ def question():
 @views.route("/short_questionnaire")
 def short_question():
 	return render_template("short_quiz.html")
+
+@views.route("/transportation")
+def transportation():
+	return render_template("transportation.html")
