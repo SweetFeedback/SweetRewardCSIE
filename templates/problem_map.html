@@ -77,17 +77,19 @@
                     url: "./get_problem?device_id=1",
                     dataType: 'json',
                     success: function(data) {
-                        for(var i = 0; i < data['data'].length; i++) {
-                            var location = data['data'][i]['location'];
-                            if(location in roomCoordinates) {
-                                problemCoordinates[i] = roomCoordinates[location];
+                        if(data['data'].length > 0) {
+                            for(var i = 0; i < data['data'].length; i++) {
+                                var location = data['data'][i]['location'];
+                                if(location in roomCoordinates) {
+                                    problemCoordinates[i] = roomCoordinates[location];
+                                }
                             }
-                        }
-                        setInterval(blink, 1000);
+                            setInterval(blink, 1000);
 
-                        $('.modal-title').html("Could you help me?");
-                        $('.modal-body').html(data['data'][0]['description']);
-                        $('#myModal').modal('show');
+                            $('.modal-title').html("Could you help me?");
+                            $('.modal-body').html(data['data'][0]['description']);
+                            $('#myModal').modal('show');
+                        }
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) {
                     }
