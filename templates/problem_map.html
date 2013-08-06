@@ -195,96 +195,103 @@
     </script>
 </head>
 <body>
-    <div id="wrap" style="margin-left:100px;margin-right:100px;">
-        <div class="navbar">
-          <div class="container">
+<div id="wrap" style="margin-left:100px;margin-right:100px;">
+    <div class="navbar">
+        <div class="container">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="/">SweetFeedback</a>
-        <div class="nav-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="/">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <ul class="nav navbar-nav pull-right">
-                <li><img src="/static/img/cmu-sv-logo.png"></li>
-            </ul>
-        </div><!--/.nav-collapse -->
-    </div>
-</div>
-<div class="container">
-
-    <!-- Modal -->
-    <div class="modal fade" id="myModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title"></h4>
-                </div>
-                <div class="modal-body">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-
-    <div id="carousel-example-generic" class="carousel slide" data-interval="false">
-      <!-- Indicators -->
-        <ol class="carousel-indicators">
-            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-        </ol>
-
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner">
-            <div class="item active">
-                <canvas id="canvas1" width="1007" height="646"></canvas>
-            </div>
-            <div class="item">
-                <canvas id="canvas2" width="1007" height="646"></canvas>
-            </div>
-        </div>
-
-        <!-- Controls -->
-        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-            <span class="icon-prev"></span>
-        </a>
-        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-            <span class="icon-next"></span>
-        </a>
-    </div>
-
-
-    <div class="tabable">
-        <div class="tab-content">
-            <div class="tab-pane active" id="apps-1">            
-                <br/>
-            </div>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">SweetFeedback</a>
+            <div class="nav-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/">Save Energy</a></li>
+                    <li><a href="/short_questionnaire">Questionnaire</a></li>
+                    <li><a href="/transportation">Transportation</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+                <ul class="nav navbar-nav pull-right">
+                    <li><img src="/static/img/cmu-sv-logo.png"></li>
+                </ul>
+            </div><!--/.nav-collapse -->
         </div>
     </div>
-</div> <!-- /container -->
+
+    <div class="container">
+
+    <!-- Main component for a primary marketing message or call to action -->
+    
+        <!-- Modal -->
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        <div id="carousel-example-generic" class="carousel slide" data-interval="false">
+          <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <canvas id="canvas1" width="1007" height="646"></canvas>
+                </div>
+                <div class="item">
+                    <canvas id="canvas2" width="1007" height="646"></canvas>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                <span class="icon-prev"></span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                <span class="icon-next"></span>
+            </a>
+        </div>
+
+
+        <div class="tabable">
+            <div class="tab-content">
+                <div class="tab-pane active" id="apps-1">            
+                    <br/>
+                </div>
+            </div>
+        </div>
+    </div> <!-- /container -->
+
     <div id="footer">
         <div class="container" style="max-width:600px;">
             <p class="text-muted credit" >Sweet Building Greeter is made by Louis Yu, Ken Liang, and Ted Selker</p>
         </div>
-    </div>
+    </div> <!-- /footer -->
 
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/static/js/bootstrap.min.js"></script>
-    
-    <!--<script src="assets/js/jquery.cookie.js"></script>-->
+</div> <!-- /wrap -->
 
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA3ieESIwbYV6OZC14fivVKoOSYvApTlh0&sensor=true&libraries=geometry"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/static/js/bootstrap.min.js"></script>
+
+<!--<script src="assets/js/jquery.cookie.js"></script>-->
+
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA3ieESIwbYV6OZC14fivVKoOSYvApTlh0&sensor=true&libraries=geometry"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
 
 </body>
 </html>
