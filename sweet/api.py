@@ -434,11 +434,10 @@ def show_result(task_id):
 @api.route("/questionnaire")
 def show_question():
 	questions = db.session.query(QuestionRepository).all()
+	return render_template("quiz.html", q=get_random_questions(questions))
+def get_random_questions(questions):
 	random_questions = [] 
 	indexs = range(len(questions))
-	index = choice(indexs)
-	random_questions.append(questions[index])
-	indexs.pop(indexs.index(index))
 
 	index = choice(indexs)
 	random_questions.append(questions[index])
@@ -447,6 +446,9 @@ def show_question():
 	index = choice(indexs)
 	random_questions.append(questions[index])
 	indexs.pop(indexs.index(index))
-	#return jsonify(data=[i.serialize for i in random_questions])
 
-	return render_template("quiz_1.html", q=random_questions)
+	index = choice(indexs)
+	random_questions.append(questions[index])
+	indexs.pop(indexs.index(index))
+	return random_questions
+
