@@ -59,14 +59,18 @@ def feedback_insert():
 	return jsonify(data=insert_feedback(device_id, application_id, user_id, feedback_type, feedback_description, time).serialize)
 	
 def insert_feedback(device_id, app_id, user_id, feedback_type, feedback_desc, can_get_time=None):
+	start_time = time.time()
 	feedback = Feedback(device_id, app_id, user_id, feedback_type, feedback_desc, can_get_time)
 	db.session.add(feedback)
 	db.session.commit()
+	elapsed_time = time.time() - start_time
+	print elapsed_time 
 	return feedback
 
 @feedbacks.route("/get_feedback", methods=['GET'])
 def feedback():
 	device_id = request.args.get("device_id", -1)
+	print datetime.now()
 	feedbacks = Feedback.query.filter_by(device_id=device_id).filter_by(if_get=False).filter(Feedback.can_get_time <= datetime.now()).all()
 	return jsonify(data=[i.serialize for i in feedbacks])
 
