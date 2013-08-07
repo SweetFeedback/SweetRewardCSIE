@@ -1,197 +1,151 @@
 <html>
-    <haed>
-        <link href="/static/css/style_quiz.css" rel="stylesheet">
-    </head>
-    <body>
-        <h2>CMUSV Questionaire</h2>
-        <p>Do the quesionnaire and you will get candies(if score higher than <span id="threshold"></span>).</p>
-        <table class="question">
-            <tr id="q1">
-                <td class="quiz" colspan="4">
-                    <h4>1. In 2012, what anniversary did Carnegie Mellon Silicon Valley celebrate?</h4>
-                    <div style="color:green" id="cap_1" class="caption">CMUSV is 10 years old!</div>
-                </td>
-                <tr>
-                    <td class="tf" question="0" val="a">5th anniversary</td>
-                    <td class="tf" question="0" val="b">10th anniversary</td>
-                    <td class="tf" question="0" val="c">15th anniversary</td>
-                    <td class="tf" question="0" val="d">20th anniversary</td>
-                </tr>
-            </tr>
-            
-
-            <tr id="q2">
-                <td class="quiz" colspan="4">
-                    <h4>2. Who is the Director of the Silicon Valley campus?</h4>
-                    <div style="color:green" id="cap_2" class="caption">Our director is Martin Griss. You get to meet him!</div>
-                </td>
-                <tr>
-                    <td class="tf" question="1" val="a">Jared Cohon</td>
-                    <td class="tf" question="1" val="b">Mark Kamlet</td>
-                    <td class="tf" question="1" val="c">Martin Griss</td>
-                    <td class="tf" question="1" val="d">Jim Morris</td>
-                </tr>
-            </tr>
-
-            <tr id="q3">
-                <td class="quiz" colspan="4">
-                    <h4>3. What is the unique Carnegie Mellon Silicon Valley teaching style?</h4>
-                    <div style="color:green" id="cap_3" class="caption">Learning by doing makes you perfect!</div>
-                </td>
-                <tr>
-                    <td class="tf" question="2" val="a">Lecture-based </td>
-                    <td class="tf" question="2" val="b">Learn-by-doing </td>
-                    <td class="tf" question="2" val="c">Remote classes </td>
-                    <td class="tf" question="2" val="d">Textbook-based </td>
-                </tr>
-            </tr>
-
-            <tr id="q4">
-                <td class="quiz" colspan="4">
-                    <h4>4. What is the Carnegie Mellon University motto?</h4>
-                    <div style="color:green" id="cap_4" class="caption">"My heart is in the work."</div>
-                </td>
-                <tr>
-                    <td class="tf" question="3"val="a">"Knowledge is liberty." </td>
-                    <td class="tf" question="3"val="b">"Reach within, shape the future." </td>
-                    <td class="tf" question="3"val="c">"My heart is in the work." </td>
-                    <td class="tf" question="3"val="d">"Think. Grow. Change." </td>
-                </tr>
-            </tr>
-
-            <tr id="q5">
-                <td class="quiz" colspan="4">
-                    <h4>5. The CyLab Mobility Research Center was established to explore developments in </h4>
-                    <div style="color:green" id="cap_5" class="caption">Mobile computing and networks</div>
-                </td>
-                <tr> 
-                    <td class="tf" question="4" val="a">Mobile computing and networks</td>
-                    <td class="tf" question="4" val="b">Space travel</td>
-                    <td class="tf" question="4" val="c">Startups</td>
-                    <td class="tf" question="4" val="d">Public Transportation</td>
-                </tr>
-            </tr>
-
-            <tr id="q6">
-                <td class="quiz" colspan="4">
-                    <h4>6. Carnegie Mellon Silicon Valley shares its campus with</h4>
-                    <div style="color:green" id="cap_6" class="caption">National Aeronautics and Space Administration</div>
-                </td>
-                <tr>
-                    <td class="tf" question="5" val="a">Google</td>
-                    <td class="tf" question="5" val="b">Microsoft</td>
-                    <td class="tf" question="5" val="c">U.S. Army</td>
-                    <td class="tf" question="5" val="d">NASA</td>
-                </tr>
-            </tr>
-
-            <tr id="q7">
-                <td class="quiz" colspan="4">
-                    <h4>7. What is the Carnegie Mellon University mascot?</h4>
-                    <div style="color:green" id="cap_7" class="caption">He is cute,isn't he?</div>
-                </td>
-                <tr>
-                    <td class="tf" question="6" val="a">Avalanche the Golden Bear</td>
-                    <td class="tf" question="6" val="b">Scotty the Scottie Dog</td>
-                    <td class="tf" question="6" val="c">Swoop the Red Hawk</td>
-                    <td class="tf" question="6" val="d">Thunder the Wolf</td>
-                </tr>
-            </tr>
-
-            <tr id="q8">
-                <td class="quiz" colspan="4">
-                    <h4>8. How many students are currently enrolled at Carnegie Mellon Silicon Valley?</h4>
-                    <div style="color:green" id="cap_8" class="caption">Roughly 180</div>
-                </td>
-                <tr>
-                    <td class="tf" question="7" val="a">~180</td>
-                    <td class="tf" question="7" val="b">~250</td>
-                    <td class="tf" question="7" val="c">~320</td>
-                    <td class="tf" question="7" val="d">~380</td>
-                </tr>
-            </tr>
-
-            <tr id="q9">
-                <td class="quiz" colspan="4">
-                    <h4>9. Which degree programs at CMUSV can also be taken part-time?</h4>
-                    <div style="color:green" id="cap_9" class="caption">MS Software Enginnering and MS software Management</div>
-                </td>
-                <tr>
-                    <td class="tf" question="8" val="a">MS Software Engineering</td>
-                    <td class="tf" question="8" val="b">MS Software Management</td>
-                    <td class="tf" question="8" val="c">Ph.D. in Electrical and Computer Engineering</td>
-                    <td class="tf" question="8" val="d">a & b</td>
-                </tr>
-            </tr>
-            </table>
-        <div id="result">
-            <div id="score">Your score is...<div id="score_num"></div><div id="comment"></div></div>
+<haed>
+    <link href="/static/css/style_quiz.css" rel="stylesheet">
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/style2.css" rel="stylesheet">
+    <link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
+    <style type="text/css">
+      #footer {
+        height: 20px;
+      }
+      body {
+        height:100%;
+        background-color: #f1f1f1;
+        background-image: url('/static/img/others/retina_dust.png');
+        background-repeat:repeat repeat;
+        font-size: 16px;     
+        padding-top: 20px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+      #wrap {
+        min-height: 100%;
+        height: auto !important;
+        height: 100%;
+        /* Negative indent footer by its height */
+        margin: 0 auto -20px;
+        /* Pad bottom by footer height */
+        padding: 0 0 20px;
+      }
+    </style>
+</head>
+<body>
+<div id="wrap" style="margin-left:100px;margin-right:100px;">
+    <div class="navbar">
+        <div class="container">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">SweetFeedback</a>
+            <div class="nav-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/">Save Energy</a></li>
+                    <li><a href="/questionnaire">Questionnaire</a></li>
+                    <li><a href="/transportation">Transportation</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+                <ul class="nav navbar-nav pull-right">
+                    <li><img src="/static/img/cmu-sv-logo.png"></li>
+                </ul>
+            </div><!--/.nav-collapse -->
         </div>
+    </div>
 
-        <script src="/static/js/jquery.js"></script>
-        <script src="/static/js/jquery-ui.min.js"></script>
-        <script>
-            $(function(){
-                var correct_answers = ["b","c","b","c","a","d","b","a","d"];
-                var answered = ["0","0","0","0","0","0","0","0","0"];
-                var correct = 0;
-                var count = 0;
-                var standard = 80;
-                var comment = new Array("", "", "OK...","Good!","Great!", "Excellent!!");
-                var question_done = 0;
-                
-                var count_down = 300;
-                var counter = setInterval(timer, 1000);
-                function timer(){
-                    count_down = count_down - 1;
-                    if (count_down <= 0){
-                        clearInterval(counter);
-                        location.reload();
-                        return;
-                    }
+    <div class="container">
+        <h2>CMUSV Questionaire
+            <a class="btn btn-large btn-primary" href="/short_questionnaire">Try Again! &raquo;</a></h2>
+        <p>Do the quesionnaire and get candies(if score higher than <span id="threshold"></span>).</p>
+        <table class="question">
+            {% for i in q: %}
+                <tr id="q{{q.index(i)}}">
+                    <td class="quiz" colspan="4">
+                        <h4>{{i.problem_desc}}</h4>
+                        <div style="color:green" id="cap_{{q.index(i)}}" class="caption">{{i.error_message}}</div>
+                    </td>
+                    <tr>
+                        <td class="tf" question="{{q.index(i)}}" val="1">{{i.option_1}}</td>
+                        <td class="tf" question="{{q.index(i)}}" val="2">{{i.option_2}}</td>
+                        <td class="tf" question="{{q.index(i)}}" val="3">{{i.option_3}}</td>
+                        <td class="tf" question="{{q.index(i)}}" val="4">{{i.option_4}}</td>
+                        <input id="a{{q.index(i)}}"type="hidden" value="{{i.answer}}"/>
+                    </tr>
+
+                </tr>
+            {% endfor %}
+        </table>
+        <div id="result">
+            <div id="score">Your score is...
+                <div id="score_num"></div>
+                <div id="comment"></div>
+            </div>
+        </div>
+    </div> <!-- /container -->
+
+    <div id="footer">
+        <div class="container" style="max-width:600px;">
+            <p class="text-muted credit" >Sweet Building Greeter is made by Louis Yu, Ken Liang, and Ted Selker</p>
+        </div>
+    </div> <!-- /footer -->
+</div> <!-- /wrap -->
+
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/jquery-ui.min.js"></script>
+    <script>
+        $(function(){
+            var answered = ["0","0","0"];
+            var correct = 0;
+            var count = 0;
+            var standard = 80;
+            var comment = new Array("", "", "OK...","Good!","Great!", "Excellent!!");
+            var question_done = 0;
+            
+            var count_down = 300;
+            var counter = setInterval(timer, 1000);
+            function timer(){
+                count_down = count_down - 1;
+                if (count_down <= 0){
+                    clearInterval(counter);
+                    location.reload();
+                    return;
                 }
-                $("#threshold").text(standard);
-                $(".caption").hide(); 
-                $(".tf").click(function() {
-                    count_down = 300;
-                    // get question number, 0 ~ 4
-                    //q_num = ($("tr").index($(this).parent().parent()));
-                    q_num = parseInt($(this).attr("question"));
-                    // if not answered yet
-                    if (answered[q_num] == 0) {
+            }
+            function resetTimer(){ 
+                count_down = 300; 
+            }
 
-                        // get answer
-                        ans = $(this).attr("val");
-
-                        if (ans == correct_answers[q_num]) {
-                            // if correct, red
-                            $.get("./feedback_insert?application_id=9&feedback_type=saying&feedback_description=right answer");
-                            $(this).animate({backgroundColor:"#CCFFCC"}, 1000);
-                            correct++;
-                            count++;
-                        } 
-                        else {
-                            //not correct, blue
-                            $.get("./feedback_insert?application_id=10&feedback_type=saying&feedback_description=wrong answer");
-                            $(this).animate({backgroundColor:"#FF8F8F"}, 1000);
-                            count++;
-                        }
-
-                        // show the caption for the question
-                        $("#cap_"+ (q_num+1)).fadeIn();
-
-                        answered[q_num] = 1;
-                        score = (100*correct/correct_answers.length);
-                        if(score >= standard && question_done == correct_answers.length-1){
-                            $.get("./feedback_insert?application_id=9&feedback_type=positive&feedback_description=well done in questionaire");
-                        }
-                        $('#score_num').html(score.toFixed(1) + "%");
-                        $('#comment').html(comment[Math.floor(correct/correct_answers.length*5)]);
-                        question_done++;
+            $("#threshold").text(standard);
+            $(".caption").hide(); 
+            $(".tf").click(function() {
+                resetTimer();
+                q_num = parseInt($(this).attr("question"));
+                // if not answered yet
+                if (answered[q_num] == 0) {
+                    question_done++;
+                    ans = $(this).attr("val");
+                    correct_answer = $("#a" + q_num).val();
+                    if (ans == correct_answer) {
+                        $.get("./feedback_insert?application_id=9&feedback_type=saying&feedback_description=right answer");
+                        $(this).animate({backgroundColor:"#CCFFCC"}, 1000);
+                        correct++;
+                    } 
+                    else {
+                        //not correct, blue
+                        $.get("./feedback_insert?application_id=10&feedback_type=saying&feedback_description=wrong answer");
+                        $(this).animate({backgroundColor:"#FF8F8F"}, 1000);
                     }
-                });
+                    answered[q_num] = 1;
+                    score = (100*correct/3);
+                    if(score >= standard && question_done == 3){
+                        $.get("./feedback_insert?application_id=9&feedback_type=positive&feedback_description=well done in questionaire");
+                    }
+                    // show the caption for the question
+                    $("#cap_"+ q_num).fadeIn();
+                    $('#score_num').html(score.toFixed(1) + "%");
+                    $('#comment').html(comment[Math.floor(correct/3*5)]);
+                }
             });
+        });
 
-        </script>
-    </body>
+    </script>
+</body>
 </html>
