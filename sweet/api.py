@@ -108,6 +108,7 @@ def device_login_or_update(device_id, address):
 	if device_status is not None:
 		print device_status.serialize
 		device_status.time = datetime.now()
+		device_status.ipaddress = address
 		db.session.commit()
 	else:
 		timestamp = datetime.now()
@@ -429,3 +430,23 @@ def hello_world(x=16, y=16):
 def show_result(task_id):
     retval = add.AsyncResult(task_id).get(timeout=1.0)
     return repr(retval)
+
+@api.route("/questionnaire")
+def show_question():
+	questions = db.session.query(QuestionRepository).all()
+	random_questions = [] 
+	indexs = range(len(questions))
+	index = choice(indexs)
+	random_questions.append(questions[index])
+	indexs.pop(indexs.index(index))
+
+	index = choice(indexs)
+	random_questions.append(questions[index])
+	indexs.pop(indexs.index(index))
+
+	index = choice(indexs)
+	random_questions.append(questions[index])
+	indexs.pop(indexs.index(index))
+	#return jsonify(data=[i.serialize for i in random_questions])
+
+	return render_template("quiz_1.html", q=random_questions)
