@@ -44,17 +44,50 @@
     <script src="/static/js/jquery-ui.min.js"></script>
     <script>
         var roomCoordinates = {
+            'B23.104': {x: 380, y: 560, floor: 1},
+            'B23.105B': {x: 350, y: 560, floor: 1},
+            'B23.107': {x: 250, y: 570, floor: 1},
+            'B23.109': {x: 180, y: 530, floor: 1},
+            'B23.110': {x: 180, y: 450, floor: 1},
             'B23.114': {x: 160, y: 300, floor: 1}, 
             'B23.115': {x: 200, y: 300, floor: 1}, 
             'B23.116': {x: 250, y: 300, floor: 1},
-            'B23.129': {x: 540, y: 340, floor: 1},
-            'B23.109': {x: 180, y: 530, floor: 1},
+            'B23.120': {x: 730, y: 560, floor: 1},
+            'B23.122': {x: 690, y: 560, floor: 1},
+            'B23.123': {x: 380, y: 470, floor: 1},
+            'B23.124': {x: 650, y: 560, floor: 1},
+            'B23.126': {x: 600, y: 560, floor: 1},
+            'B23.129A': {x: 540, y: 340, floor: 1},
+            'B23.210': {x: 220, y: 570, floor: 2},
             'B23.211': {x: 150, y: 400, floor: 2},
             'B23.212': {x: 150, y: 550, floor: 2},
+            'B23.213': {x: 880, y: 550, floor: 2},
+            'B23.214': {x: 890, y: 500, floor: 2},
+            'B23.214B': {x: 885, y: 475, floor: 2},
+            'B23.215': {x: 890, y: 390, floor: 2},
+            'B23.215B': {x: 890, y: 410, floor: 2},
+            'B23.216': {x: 770, y: 540, floor: 2},
+            'B23.217A': {x: 770, y: 370, floor: 2},
+            'B23.217B': {x: 770, y: 410, floor: 2},
+            'B23.228': {x: 550, y: 180, floor: 2},
+            'B23.229': {},
+            'B23.230': {x: 450, y: 180, floor: 2},
             'B23.kitchen': {x: 770, y: 450, floor: 1}
         };
 
         $(function() {
+
+            var canvas1 = document.getElementById('canvas1');
+            var context1 = canvas1.getContext('2d');
+
+            var canvas2 = document.getElementById('canvas2');
+            var context2 = canvas2.getContext('2d');
+
+
+            var cnt = 0;
+            var problemCoordinates = new Array();
+            var radius = 9;
+
             checkProblem();
                 //var counter = setInterval(checkProblem, 1000);
                 function checkProblem() {
@@ -63,15 +96,18 @@
                     url: "./get_problem?device_id=1",
                     dataType: 'json',
                     success: function(data) {
-                        $('.modal-title').html("Could you help me?");
-                        $('.modal-body').html(data['data'][0]['problem_desc']);
-                        $('#myModal').modal('show');
-
-                        var location = data['data'][0]['location'];
-                        if(location in roomCoordinates) {
-                            problemCoordinate = roomCoordinates[location];
-
+                        if(data['data'].length > 0) {
+                            for(var i = 0; i < data['data'].length; i++) {
+                                var location = data['data'][i]['location'];
+                                if(location in roomCoordinates) {
+                                    problemCoordinates[i] = roomCoordinates[location];
+                                }
+                            }
                             setInterval(blink, 1000);
+
+                            $('.modal-title').html("Could you help me?");
+                            $('.modal-body').html(data['data'][0]['description']);
+                            $('#myModal').modal('show');
                         }
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -80,17 +116,25 @@
 
             }
 
-            var canvas1 = document.getElementById('canvas1');
-            var context1 = canvas1.getContext('2d');
 
-            var canvas2 = document.getElementById('canvas2');
-            var context2 = canvas2.getContext('2d');
 
-            var i = 1;
-            var problemCoordinate;
-            var radius = 10;
+            function drawRedSpot(problem) {
+                var context;
+                if(problem.floor == 1) {
+                    context = context1;
+                } else {
+                    context = context2;
+                }
+
+                context.beginPath();
+                context.arc(problem.x, problem.y, radius, 0, 2 * Math.PI, false);
+                context.fillStyle = 'red';
+                context.fill();
+                context.closePath();
+            }
+
             function blink() {
-
+                var problemCoordinate = problemCoordinates[0];
                 var context;
                 if(problemCoordinate.floor == 1) {
                     context = context1;
@@ -98,19 +142,26 @@
                     context = context2;
                 }
 
-                if(i % 2 == 0) {
+                if(cnt % 2) {
                     context.beginPath();
                     context.clearRect(problemCoordinate.x - radius - 1, problemCoordinate.y - radius - 1, radius * 2 + 2, radius * 2 + 2);
                     context.closePath();
+
+                    cnt = 0;    
                 } else {
                     context.beginPath();
                     context.arc(problemCoordinate.x, problemCoordinate.y, radius, 0, 2 * Math.PI, false);
-                    context.closePath();
                     context.fillStyle = 'red';
                     context.fill();
                     context.closePath();
+
+                    cnt = 1;
                 }
-                i += 1;
+
+                for(var i = 1; i < problemCoordinates.length; i++) {
+                    drawRedSpot(problemCoordinates[i]);
+                }
+                
             }
 
             
@@ -150,6 +201,8 @@
             floor1Img.onload = function() {
                 context1.drawImage(floor1Img, 0, 0, 1007, 646);
                 drawMachine1();
+                //problemCoordinate = {x: 250, y: 570, floor:1};
+                //setInterval(blink, 1000);
             };
             floor1Img.src = '/static/img/floor1.png';
 
@@ -164,161 +217,103 @@
     </script>
 </head>
 <body>
-    <div id="wrap" style="margin-left:100px;margin-right:100px;">
-        <div class="navbar">
-          <div class="container">
+<div id="wrap" style="margin-left:100px;margin-right:100px;">
+    <div class="navbar">
+        <div class="container">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="/">SweetFeedback</a>
-        <div class="nav-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="/">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <ul class="nav navbar-nav pull-right">
-                <li><img src="/static/img/cmu-sv-logo.png"></li>
-            </ul>
-        </div><!--/.nav-collapse -->
-    </div>
-</div>
-<div class="container">
-
-    <!-- Modal -->
-    <div class="modal fade" id="myModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title"></h4>
-                </div>
-                <div class="modal-body">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-
-    <div id="carousel-example-generic" class="carousel slide" data-interval="false">
-      <!-- Indicators -->
-      <ol class="carousel-indicators">
-        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-    </ol>
-
-    <!-- Wrapper for slides -->
-    <div class="carousel-inner">
-        <div class="item active">
-            <canvas id="canvas1" width="1007" height="646"></canvas>
-        </div>
-        <div class="item">
-            <canvas id="canvas2" width="1007" height="646"></canvas>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">SweetFeedback</a>
+            <div class="nav-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/">Save Energy</a></li>
+                    <li><a href="/short_questionnaire">Questionnaire</a></li>
+                    <li><a href="/transportation">Transportation</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+                <ul class="nav navbar-nav pull-right">
+                    <li><img src="/static/img/cmu-sv-logo.png"></li>
+                </ul>
+            </div><!--/.nav-collapse -->
         </div>
     </div>
 
-    <!-- Controls -->
-    <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-        <span class="icon-prev"></span>
-    </a>
-    <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-        <span class="icon-next"></span>
-    </a>
-</div>
+    <div class="container">
+
+    <!-- Main component for a primary marketing message or call to action -->
+    
+        <!-- Modal -->
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        <div id="carousel-example-generic" class="carousel slide" data-interval="false">
+          <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <canvas id="canvas1" width="1007" height="646"></canvas>
+                </div>
+                <div class="item">
+                    <canvas id="canvas2" width="1007" height="646"></canvas>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                <span class="icon-prev"></span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                <span class="icon-next"></span>
+            </a>
+        </div>
 
 
-<div class="tabable">
-    <div class="tab-content">
-        <div class="tab-pane active" id="apps-1">                                                         
-            <!-- map -->
-            
-                        <!--div id="map">
-                            <canvas id="canvas1" width="1007" height="646">
-                            </canvas>
-
-                            <img id="map_2f" src="/static/img/floor1.png"/>
-                            
-                        </div-->
-                        
-                        <!--div id="info">
-                            <li><img src="/static/img/others/char-cold.png"/> : Cold </li>
-                            <li><img class="sweat" src="/static/img/others/char-sweat.png"/> : Hot </li>
-                            <li><img src="/static/img/others/char-headphone.png"/> : Noisy </li>
-                            <li><img src="/static/img/others/char-sunglass.png"/> : Bright </li>
-                        </div-->
-                        <!--
-                        <div class="machine" id="mrc_1">
-                            <img class="mrc" src="/static/img/mrc/mrc.png" width="40px"/>
-                            <img class="cold" src="/static/img/others/char-cold.png" width="50px" style="margin-top: -155px; margin-left: -3px;"/>
-                            <img class="sunglass" src="/static/img/others/char-sunglass.png" width="50px" style="margin-top: -132px; margin-left: -6px;"/>
-                            <img class="headphone" src="/static/img/others/char-headphone.png" width="50px" style="margin-top: -200px; margin-left: -6px;"/>
-                            <img class="sweat" src="/static/img/others/char-sweat.png" width="50px" style="margin-top: -200px; margin-left: -6px;"/>
-                            <img class="transportation" src="/static/img/transportation/empty.png" width="30px" style="margin-top: -120px; margin-left: -10px;"/>
-                        </div>
-                        <div class="machine" id="mrc_2">
-                            <img class="mrc" src="/static/img/mrc/mrc.png" width="40px"/>
-                            <img class="cold" src="/static/img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
-                            <img class="sunglass" src="/static/img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
-                            <img class="headphone" src="/static/img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
-                            <img class="sweat" src="/static/img/others/char-sweat.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
-                            <img class="transportation" src="/static/img/transportation/empty.png" width="30px" style="margin-top: -120px; margin-left: -10px;"/>
-                        </div>
-                        <div class="machine" id="mrc_3">
-                            <img class="mrc" src="/static/img/mrc/mrc.png" width="40px"/>
-                            <img class="cold" src="/static/img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
-                            <img class="sunglass" src="/static/img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
-                            <img class="headphone" src="/static/img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
-                            <img class="sweat" src="/static/img/others/char-sweat.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
-                            <img class="transportation" src="/static/img/transportation/empty.png" width="30px" style="margin-top: -120px; margin-left: -10px;"/>
-                        </div>
-                        <div class="machine" id="mrc_4">
-                            <img class="mrc" src="/static/img/mrc/mrc.png" width="40px"/>
-                            <img class="cold" src="/static/img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
-                            <img class="sunglass" src="/static/img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
-                            <img class="headphone" src="/static/img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
-                            <img class="sweat" src="/static/img/others/char-sweat.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
-                            <img class="transportation" src="/static/img/transportation/empty.png" width="30px" style="margin-top: -120px; margin-left: -10px;"/>
-                        </div>
-                    -->
-
+        <div class="tabable">
+            <div class="tab-content">
+                <div class="tab-pane active" id="apps-1">            
                     <br/>
                 </div>
             </div>
         </div>
     </div> <!-- /container -->
+
     <div id="footer">
         <div class="container" style="max-width:600px;">
             <p class="text-muted credit" >Sweet Building Greeter is made by Louis Yu, Ken Liang, and Ted Selker</p>
         </div>
-    </div>
+    </div> <!-- /footer -->
 
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/static/js/jquery.js"></script>
-    <script src="/static/js/bootstrap-transition.js"></script>
-    <script src="/static/js/bootstrap-alert.js"></script>
-    <script src="/static/js/bootstrap-modal.js"></script>
-    <script src="/static/js/bootstrap-dropdown.js"></script>
-    <script src="/static/js/bootstrap-scrollspy.js"></script>
-    <script src="/static/js/bootstrap-tab.js"></script>
-    <script src="/static/js/bootstrap-tooltip.js"></script>
-    <script src="/static/js/bootstrap-popover.js"></script>
-    <script src="/static/js/bootstrap-button.js"></script>
-    <script src="/static/js/bootstrap-collapse.js"></script>
-    <script src="/static/js/bootstrap-carousel.js"></script>
-    <script src="/static/js/bootstrap-typeahead.js"></script>
-    <!--<script src="assets/js/jquery.cookie.js"></script>-->
+</div> <!-- /wrap -->
 
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA3ieESIwbYV6OZC14fivVKoOSYvApTlh0&sensor=true&libraries=geometry"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/static/js/bootstrap.min.js"></script>
 
+<!--<script src="assets/js/jquery.cookie.js"></script>-->
 
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA3ieESIwbYV6OZC14fivVKoOSYvApTlh0&sensor=true&libraries=geometry"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
 
-    <script src="/static/js/sweetfeedback.js" language="javascript"></script>
 </body>
 </html>
