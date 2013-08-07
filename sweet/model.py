@@ -459,3 +459,43 @@ class Application(db.Model):
 
 	def __repr__(self):
 		return "Application"
+
+class QuestionRepository(db.Model):
+	__tablename__ = "question_repository"
+
+	problem_id = db.Column("problem_id", Integer, primary_key=True)
+	problem_desc = db.Column("problem_desc", String(200))
+	problem_category = db.Column("category", String(50))
+	option_1 = db.Column("option_1", String(50))
+	option_2 = db.Column("option_2", String(50))
+	option_3 = db.Column("option_3", String(50))
+	option_4 = db.Column("option_4", String(50))
+	error_message = db.Column("error_message", String(200))
+	answer = db.Column("answer", Integer)
+	updated_at = db.Column("updated_at", TIMESTAMP)
+
+	def __init__(self, desc, cat, o_1, o_2, o_3, o_4, error_message, ans):
+		self.problem_desc = desc
+		self.problem_category = cat
+		self.option_1 = o_1
+		self.option_2 = o_2
+		self.option_3 = o_3
+		self.option_4 = o_4
+		self.error_message = error_message
+		self.answer = ans
+
+	@property
+	def serialize(self):
+		return { 
+			'problem_id' : self.problem_id,
+			'problem_desc' : self.problem_desc,
+			'problem_category' : self.problem_category,
+			'option_1' : self.option_1,
+			'option_2' : self.option_2,
+			'option_3' : self.option_3, 
+			'option_4' : self.option_4,
+			'error_message' : self.error_message,
+			'updated_at' : self.updated_at
+		}
+	def __repr__(self):
+		return "question_repository" + str(self.problem_id) + ", " + str(self.problem_desc) + ", "  + str(self.problem_category)
