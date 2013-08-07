@@ -44,15 +44,34 @@
     <script src="/static/js/jquery-ui.min.js"></script>
     <script>
         var roomCoordinates = {
+            'B23.104': {x: 380, y: 560, floor: 1},
+            'B23.105B': {x: 350, y: 560, floor: 1},
+            'B23.107': {x: 250, y: 570, floor: 1},
+            'B23.109': {x: 180, y: 530, floor: 1},
+            'B23.110': {x: 180, y: 450, floor: 1},
             'B23.114': {x: 160, y: 300, floor: 1}, 
             'B23.115': {x: 200, y: 300, floor: 1}, 
             'B23.116': {x: 250, y: 300, floor: 1},
-            'B23.129': {x: 540, y: 340, floor: 1},
-            'B23.110': {x: 180, y: 450, floor: 1},
-            'B23.107': {x: 250, y: 570, floor: 1},
-            'B23.109': {x: 180, y: 530, floor: 1},
+            'B23.120': {x: 730, y: 560, floor: 1},
+            'B23.122': {x: 690, y: 560, floor: 1},
+            'B23.123': {x: 380, y: 470, floor: 1},
+            'B23.124': {x: 650, y: 560, floor: 1},
+            'B23.126': {x: 600, y: 560, floor: 1},
+            'B23.129A': {x: 540, y: 340, floor: 1},
+            'B23.210': {x: 220, y: 570, floor: 2},
             'B23.211': {x: 150, y: 400, floor: 2},
             'B23.212': {x: 150, y: 550, floor: 2},
+            'B23.213': {x: 880, y: 550, floor: 2},
+            'B23.214': {x: 890, y: 500, floor: 2},
+            'B23.214B': {x: 885, y: 475, floor: 2},
+            'B23.215': {x: 890, y: 390, floor: 2},
+            'B23.215B': {x: 890, y: 410, floor: 2},
+            'B23.216': {x: 770, y: 540, floor: 2},
+            'B23.217A': {x: 770, y: 370, floor: 2},
+            'B23.217B': {x: 770, y: 410, floor: 2},
+            'B23.228': {x: 550, y: 180, floor: 2},
+            'B23.229': {},
+            'B23.230': {x: 450, y: 180, floor: 2},
             'B23.kitchen': {x: 770, y: 450, floor: 1}
         };
 
@@ -67,7 +86,7 @@
 
             var cnt = 0;
             var problemCoordinates = new Array();
-            var radius = 10;
+            var radius = 9;
 
             checkProblem();
                 //var counter = setInterval(checkProblem, 1000);
@@ -100,17 +119,18 @@
 
 
             function drawRedSpot(problem) {
+                var context;
                 if(problem.floor == 1) {
                     context = context1;
                 } else {
                     context = context2;
                 }
 
-                context1.beginPath();
-                context1.arc(problem.x, problem.y, radius, 0, 2 * Math.PI, false);
-                context1.fillStyle = 'red';
-                context1.fill();
-                context1.closePath();
+                context.beginPath();
+                context.arc(problem.x, problem.y, radius, 0, 2 * Math.PI, false);
+                context.fillStyle = 'red';
+                context.fill();
+                context.closePath();
             }
 
             function blink() {
