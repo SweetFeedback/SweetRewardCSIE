@@ -1,6 +1,5 @@
 from flask import Flask, Blueprint, render_template, request, jsonify, json
 from celery import Celery 
-from tasks import add
 
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import Table, Column, Integer, String, Date, Float, TIMESTAMP, desc
@@ -452,3 +451,212 @@ def get_random_questions(questions):
 	indexs.pop(indexs.index(index))
 	return random_questions
 
+@api.route("/feedbacks/<application_id>/<years>/<months>/<days>")
+def get_feedbacks(years, months, days, application_id):
+	feedbacks = get_list_feedbacks(int(years), int(months), int(days), int(application_id))
+	return jsonify(data=[i.serialize for i in feedbacks])
+def get_list_feedbacks(y, m, d, a):
+	day_datetime = datetime.fromordinal(date(y, m, d).toordinal())
+	next_day_datetime = datetime.fromordinal(date(y, m, d+1).toordinal())
+	feedbacks = Feedback.query.filter_by(application_id=a).filter(Feedback.created_time < next_day_datetime).filter(Feedback.created_time > day_datetime).all()
+	return feedbacks
+
+@api.route("/feedbacks/leaderboard/device")
+def get_feedbacks_leaderboard_device():
+	feedbacks = db.session.query(Feedback.device_id, func.count(Feedback.device_id)).group_by(Feedback.device_id).order_by(desc(func.count(Feedback.device_id))).all()
+	return jsonify(data=[{"device_id": i[0], "count": i[1]} for i in feedbacks]) 
+@api.route("/feedbacks/leaderboard/user")
+def get_feedbacks_leaderboard_user():
+	feedbacks = db.session.query(Feedback.user_id, func.count(Feedback.user_id)).filter(Feedback.user_id != -1).group_by(Feedback.user_id).order_by(desc(func.count(Feedback.user_id))).all()
+	return jsonify(data=[{"user_id": i[0], "count": i[1]} for i in feedbacks])
+@api.route("/feedbacks/leaderboard/application_id")
+def get_feedbacks_leaderboard_application():
+	feedbacks = db.session.query(Feedback.application_id, func.count(Feedback.application_id)).filter(Feedback.application_id != -1).group_by(Feedback.application_id).order_by(desc(func.count(Feedback.application_id))).all()
+	return jsonify(data=[{"application_id": i[0], "count": i[1]} for i in feedbacks])
+
+@api.route("/feedback_insert", methods=['GET'])
+def feedback_insert():
+	device_id = request.args.get("device_id", -1)
+	application_id = request.args.get("application_id", -1)
+	user_id = request.args.get("user_id", -1)
+	feedback_type = request.args.get("feedback_type", -1)
+	feedback_description = request.args.get("feedback_description", "")	
+	can_get_time = request.args.get("can_get_time", 0)
+
+	time = None 
+	if device_id == -1:
+		device_id = get_device_id_from_ip(request.remote_addr)
+
+	if can_get_time != 0:
+		time = datetime.now() + timedelta(seconds=int(can_get_time))
+	return jsonify(data=insert_feedback(device_id, application_id, user_id, feedback_type, feedback_description, time).serialize)
+	
+def insert_feedback(device_id, app_id, user_id, feedback_type, feedback_desc, can_get_time=None):
+	start_time = time.time()
+	feedback = Feedback(device_id, app_id, user_id, feedback_type, feedback_desc, can_get_time)
+	db.session.add(feedback)
+	db.session.commit()
+	elapsed_time = time.time() - start_time
+	print elapsed_time 
+	return feedback
+
+@api.route("/get_feedback", methods=['GET'])
+def feedback():
+	device_id = request.args.get("device_id", -1)
+	print datetime.now()
+	feedbacks = Feedback.query.filter_by(device_id=device_id).filter_by(if_get=False).filter(Feedback.can_get_time <= datetime.now()).all()
+	return jsonify(data=[i.serialize for i in feedbacks])
+
+@api.route("/retrieve_feedback", methods=['GET'])
+def retrieve_feedback():
+	device_id = request.args.get("device_id", -1)
+	feedback_id = request.args.get("feedback_id", -1)
+	user_id = request.args.get("user_id", -1)
+	feedback = Feedback.query.filter_by(feedback_id=feedback_id).first()
+	if feedback is not None: 
+		feedback.device_id = device_id
+		db.session.commit()
+	return jsonify(data=[feedback.serialize])
+@api.route("/get_feedback_by_user", methods=['GET'])
+def get_feedback_by_user():
+	token = request.args.get("token", -1)
+	user = get_user_from_token(token)
+	feedbacks = Feedback.query.filter_by(user_id=user.user_id).filter_by(if_get=False).filter(Feedback.can_get_time < datetime.now())
+	return jsonify(data=[i.serialize for i in feedbacks])
+@api.route("/update_feedback", methods=['GET'])
+def update_feedback():
+	feedback_id = request.args.get("feedback_id", -1)
+	feedback = db.session.query(Feedback).filter_by(feedback_id=feedback_id).first()
+	if feedback is not None:
+		feedback.if_get = True
+		feedback.retrieve_time = datetime.now()
+		db.session.commit()
+	return jsonify(data=[feedback.serialize])
+def get_device_id_from_ip(address):
+	device_id = -1
+	device_status = db.session.query(DeviceOnline).filter_by(ipaddress=address).first()
+	if device_status is not None: 
+		device_id = device_status.device_id
+	return device_id
+
+@api.route("/bluetooth_around", methods=['GET'])
+def bluetooth_around(): 
+	nearby_device = request.args.get("device_id", -1)
+	bluetooth_id = request.args.get("bluetooth_id", "")
+	device_name = request.args.get("device_name", "")
+	#user = get_user_from_bluetooth_id(bluetooth_id)
+	bluetooth_around_event = None
+	#if user is not None: 
+	if bluetooth_id != "" and device_name != "" and nearby_device != -1:
+		bluetooth_around_event = DeviceAround(nearby_device, bluetooth_id, device_name)
+		db.session.add(bluetooth_around_event)
+		db.session.commit()
+	else:
+		return jsonify(suck=True)
+	return jsonify(data=bluetooth_around_event.serialize)
+
+@api.route("/reports")
+def show_reports():
+	problems = Problem.query.all()
+	return jsonify(data=[i.serialize for i in problems])
+
+@api.route("/reports/solved")
+def show_reports_solved():
+	## give solved problem 
+	problems = Problem.query.filter(Problem.status == 1).all()
+	return jsonify(data=[i.serialize for i in problems])
+
+@api.route("/reports/unsolved")
+def show_reports_unsolved():
+	## give unsolved problem 
+	problems = Problem.query.filter(Problem.status == 0).all()
+	return jsonify(data=[i.serialize for i in problems])
+
+@api.route("/reports/locations/<room_id>")
+def show_reports_room(room_id):
+	## filter by room_id 
+	problems = Problem.query.filter(Problem.room_id == room_id).all()
+	return jsonify(data=[i.serialize for i in problems])
+
+@api.route("/reports/insert", methods=['GET', 'POST'])
+def insert_report():
+	title = request.args.get("title", "")
+	content = request.args.get("content", "")
+	coor_x = request.args.get("coor_x", 0)
+	coor_y = request.args.get("coor_y", 0)
+	user_id = request.args.get("user_id", 0)
+	category = request.args.get("category", 0)
+	room_id = request.args.get("room_id", 0)
+	report = Problem(category, room_id, title, content, coor_x, coor_y, user_id)
+	db.session.add(report)
+	db.session.commit()
+
+	return jsonify(data=[report.serialize], success=1)
+
+@api.route("/reports/update/<report_id>", methods=['GET', 'POST'])
+def update_report(report_id):	
+	user_id = request.args.get("user_id", 0)
+	target_problem = Problem.query.filter_by(problem_id = report_id).first()
+	if target_problem is not None:
+		target_problem.status = 1
+		target_problem.updated_by = user_id
+		db.session.commit()
+		return_result = jsonify(data=[target_problem.serialize])
+	else:
+		return_result = jsonify(error=["can't find this problem from database"])
+	return return_result
+
+@api.route("/members")
+def list_members():
+	members = Member.query.all()
+	return jsonify(data=[i.serialize for i in members])
+@api.route("/members/user_id")
+def get_user(): 
+	user = None 
+	token = request.args.get("token", "")
+	facebook_id = request.args.get("facebook_id", "")
+	account = request.args.get("account", "")
+	gcm_id = request.args.get("gcm_id", "")
+	bluetooth_id = request.args.get("bluetooth_id", "")
+	if token is not "": 
+		user = get_user_from_token(token)
+	elif facebook_id is not "":
+		user = get_user_from_fb(facebook_id)
+	elif account is not "": 
+		user = get_user_from_account(account)
+	elif gcm_id is not "":
+		user = get_user_from_gcm_id(gcm_id)
+	elif bluetooth_id is not "":
+		user = get_user_from_bluetooth_id(bluetooth_id)
+	return jsonify(user=user.serialize)
+
+def get_user_from_token(token):
+	if token is not None and token != "":
+		user = db.session.query(Member).filter_by(token=token).first()
+		if user is not None:
+			return user
+	return None
+def get_user_from_fb(facebook_id):
+	if facebook_id is not None and facebook_id != "":
+		user = db.session.query(Member).filter_by(facebook_id=facebook_id).first()
+		if user is not None:
+			return user
+	return None
+def get_user_from_account(account):
+	if account is not None and account != "":
+		user = db.session.query(Member).filter_by(account=account).first()
+		if user is not None:
+			return user
+	return None
+def get_user_from_gcm_id(gcm_id):
+	if gcm_id is not None and gcm_id != "": 
+		user = db.session.query(Member).filter_by(gcm_id=gcm_id).first() 
+		if user is not None: 
+			return user
+	return None
+def get_user_from_bluetooth_id(bluetooth_id):
+	if bluetooth_id is not None and bluetooth_id != "": 
+		user = db.session.query(Member).filter_by(bluetooth_id=bluetooth_id).first() 
+		if user is not None: 
+			return user
+	return None
