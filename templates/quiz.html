@@ -53,8 +53,10 @@
 
     <div class="container">
         <h2>CMUSV Questionaire
-            <a class="btn btn-large btn-primary" href="/questionnaire">Try Again! &raquo;</a></h2>
-        <p>Do the quesionnaire and get candies(if score higher than <span id="threshold"></span>).</p>
+            <a class="btn btn-large btn-primary" href="/questionnaire">Try Again! &raquo;</a>
+        </h2>
+        <p>Answer All Three Questions and Gey Candy!</p>
+        <p>If you answer correctly more than twice, you get candies!</p>
         <table class="question">
             {% for i in q: %}
                 <tr id="q{{q.index(i)}}">
