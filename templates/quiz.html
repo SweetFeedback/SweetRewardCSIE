@@ -52,11 +52,13 @@
     </div>
 
     <div class="container">
-        <h2>CMUSV Questionaire
+        <h2>CMUSV Questionnaire
             <a class="btn btn-large btn-primary" href="/questionnaire">Try Again! &raquo;</a>
         </h2>
-        <p>Answer All Three Questions and Gey Candy!</p>
-        <p>If you answer correctly more than twice, you get candies!</p>
+        <p>
+            <span style="color:red">Answer All Three Questions</span> and Get Candy!<br>
+            (If you answer correctly more than <span style="color:red">twice</span>, you get candies!)
+        </p>
         <table class="question">
             {% for i in q: %}
                 <tr id="q{{q.index(i)}}">
