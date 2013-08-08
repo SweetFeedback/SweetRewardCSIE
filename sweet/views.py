@@ -2,8 +2,9 @@ from flask import Flask, Blueprint, render_template, request, jsonify, json
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import Table, Column, Integer, String, Date, Float, TIMESTAMP, desc
 from model import app, db
-import config
+import config, json, urllib2
 from datetime import datetime, date, timedelta
+from policyManager import *
 #blueprint
 views = Blueprint('views', __name__)
 
@@ -17,8 +18,6 @@ def nasa_23():
 @views.route("/mobile")
 def mobile_webpage():
 	return render_template("mobile.html")
-
-
 @views.route("/panel")
 def visualize_feedback():
 	condition_usage = []
@@ -34,6 +33,44 @@ def visualize_feedback():
 		
 	return render_template("panel.html", usage=condition_usage)
 
+@views.route("/check_sensor_repository")
+def check_sensor_repository(): 
+	url = 'http://cmu-sensor-network.herokuapp.com/lastest_readings_from_all_devices/motion/json'
+	data = json.load(urllib2.urlopen(url))
+	#problems = []
+	cleaned_data = []
+	for row in data:
+		firefly_time = datetime.fromtimestamp(row['timestamp']/1000).date()
+		today_time = datetime.today().date()
+		if today_time == firefly_time and row['device_id'] != "test" and row['device_id'] != "test-device" and row['device_id'] != "0":
+			if mapping_table.has_key(row['device_id']):
+				row['timestamp'] = datetime.fromtimestamp(row['timestamp']/1000)
+				row['location'] = mapping_table[row['device_id']][2]
+				cleaned_data.append(row)
+	#print cleaned_data
+	cleanend_data = sorted(cleaned_data, key=lambda tup: tup["device_id"]) 
+	print len(cleaned_data)
+
+
+	url = 'http://cmu-sensor-network.herokuapp.com/lastest_readings_from_all_devices/light/json'
+	data = json.load(urllib2.urlopen(url))
+	#problems = []
+	cleaned_data2 = []
+	for row in data:
+		firefly_time = datetime.fromtimestamp(row['timestamp']/1000).date()
+		today_time = datetime.today().date()
+		if today_time == firefly_time and row['device_id'] != "test" and row['device_id'] != "test-device" and row['device_id'] != "0":
+			if mapping_table.has_key(row['device_id']):
+				row['timestamp'] = datetime.fromtimestamp(row['timestamp']/1000)
+				row['location'] = mapping_table[row['device_id']][2]
+				cleaned_data2.append(row)
+	#print cleaned_data
+	cleanend_data = sorted(cleaned_data2, key=lambda tup: tup["device_id"]) 
+	print len(cleaned_data2)
+	#return render_template("/sensor.html")
+	#return render_template("/panel_sensor.html", data=cleaned_data)
+
+	return jsonify(data={'motion':cleaned_data, 'light':cleaned_data2})
 @views.route("/")
 def home():
 	return render_template("problem_map.html")
