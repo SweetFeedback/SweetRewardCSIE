@@ -11,7 +11,6 @@ views = Blueprint('views', __name__)
 @views.route("/hello")
 def hello():
         return "Hello World!"
-
 @views.route("/beauty")
 def beauty():
 	return render_template("index.html")

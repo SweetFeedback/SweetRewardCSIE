@@ -1,4 +1,3 @@
-
 class PolicyManager():
 	def __init__():
 		self.yes = 1 

@@ -13,18 +13,12 @@ sys.path.append(path)
 from model import app, db
 from api import api
 from views import views
-from reports import reports
-from members import members 
-from bluetooths import bluetooths
-from feedbacks import feedbacks
+
 
 app = Flask(__name__)
-app.register_blueprint(reports)
 app.register_blueprint(api)
 app.register_blueprint(views)
-app.register_blueprint(members)
-app.register_blueprint(bluetooths)
-app.register_blueprint(feedbacks)
+
 
 if __name__ == "__main__":
     #app.run(debug=True)
