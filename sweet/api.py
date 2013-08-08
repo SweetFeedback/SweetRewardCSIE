@@ -321,9 +321,9 @@ def people_around():
 	for row in cleaned_data: 
 		row_hour = datetime.fromtimestamp(row['timestamp']/1000).hour
 		print datetime.fromtimestamp(row['timestamp']/1000).date(), row['device_id'], row['value']
-		#if row['value'] > 1024 and mapping_table.has_key(row['device_id']) and (row_hour >= 21 or row_hour <= 7):
-		#	problems.append(row)
-		problems.append(row)
+		if row['value'] > 500 and mapping_table.has_key(row['device_id']) and (row_hour >= 21 or row_hour <= 7):
+			problems.append(row)
+		#problems.append(row)
 	if len(problems) > 0:
 		problem_choosed = choice(problems)
 		problem_repo_instance = None
