@@ -33,8 +33,28 @@ def visualize_feedback():
 		
 	return render_template("panel.html", usage=condition_usage)
 
-@views.route("/check_sensor_repository")
-def check_sensor_repository(): 
+@views.route("/check_sensor_repository/<method>")
+def check_sensor_repository(method): 
+
+	light = light_data() 
+	motion = motion_data() 
+	#return render_template("/sensor.html")
+	if method == 'light':
+		return render_template("/panel_sensor.html", title="light", data=light)
+	elif method == 'motion':
+		return render_template("/panel_sensor.html", title="motion", data=motion)
+	return "@@"
+	
+@views.route("/sensor_data")
+def get_sensor_repository_data():
+
+	light = light_data() 
+	motion = motion_data() 
+	#return render_template("/sensor.html")
+	#return render_template("/panel_sensor.html", data=cleaned_data)
+	return jsonify(data={'motion':motion, 'light':light})
+
+def motion_data(): 
 	url = 'http://cmu-sensor-network.herokuapp.com/lastest_readings_from_all_devices/motion/json'
 	data = json.load(urllib2.urlopen(url))
 	#problems = []
@@ -49,13 +69,13 @@ def check_sensor_repository():
 				cleaned_data.append(row)
 	#print cleaned_data
 	cleanend_data = sorted(cleaned_data, key=lambda tup: tup["device_id"]) 
-	print len(cleaned_data)
+	return cleaned_data
 
-
+def light_data(): 
 	url = 'http://cmu-sensor-network.herokuapp.com/lastest_readings_from_all_devices/light/json'
 	data = json.load(urllib2.urlopen(url))
 	#problems = []
-	cleaned_data2 = []
+	cleaned_data = []
 	for row in data:
 		firefly_time = datetime.fromtimestamp(row['timestamp']/1000).date()
 		today_time = datetime.today().date()
@@ -63,14 +83,11 @@ def check_sensor_repository():
 			if mapping_table.has_key(row['device_id']):
 				row['timestamp'] = datetime.fromtimestamp(row['timestamp']/1000)
 				row['location'] = mapping_table[row['device_id']][2]
-				cleaned_data2.append(row)
+				cleaned_data.append(row)
 	#print cleaned_data
-	cleanend_data = sorted(cleaned_data2, key=lambda tup: tup["device_id"]) 
-	print len(cleaned_data2)
-	#return render_template("/sensor.html")
-	#return render_template("/panel_sensor.html", data=cleaned_data)
+	cleanend_data = sorted(cleaned_data, key=lambda tup: tup["device_id"]) 
+	return cleaned_data
 
-	return jsonify(data={'motion':cleaned_data, 'light':cleaned_data2})
 @views.route("/")
 def home():
 	return render_template("problem_map.html")

@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <link href="/static/css/style_quiz.css" rel="stylesheet">
+    </head>
+    <body>
+        <h2>Sensor data from cmu sensor repository {{title}}</h2>
+        <table class="question">
+            {% for d in data: %}
+            <tr>
+            	<td>{{d['timestamp']}}</td>
+            	<td>{{d['device_id']}}</td>
+                <td>{{d['location']}}</td>
+                <td>{{d['value']}}</td>
+        	</tr>
+            {% endfor %}
+        </table>
+
+        <script src="/static/js/jquery.js"></script>
+        <script src="/static/js/jquery-ui.min.js"></script>
+        <script>
+            $(function(){
+                
+            });
+
+        </script>
+    </body>
+</html>
