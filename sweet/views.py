@@ -3,14 +3,11 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import Table, Column, Integer, String, Date, Float, TIMESTAMP, desc
 from model import app, db
 import config
-from feedbacks import *
 from datetime import datetime, date, timedelta
 #blueprint
 views = Blueprint('views', __name__)
 
-@views.route("/hello")
-def hello():
-        return "Hello World!"
+### testing ### 
 @views.route("/beauty")
 def beauty():
 	return render_template("index.html")
@@ -20,10 +17,9 @@ def nasa_23():
 @views.route("/mobile")
 def mobile_webpage():
 	return render_template("mobile.html")
-@views.route("/problem_map")
-def problem_map():
-	return render_template("problem_map.html")
-@views.route("/visualize_feedback")
+
+
+@views.route("/panel")
 def visualize_feedback():
 	condition_usage = []
 	start_date = datetime.fromordinal(date(2013, 7, 1).toordinal())
@@ -37,18 +33,14 @@ def visualize_feedback():
 		start_date = start_date + timedelta(days=1)
 		
 	return render_template("panel.html", usage=condition_usage)
+
 @views.route("/")
 def home():
 	return render_template("problem_map.html")
+
 @views.route("/about")
 def about():
 	return render_template("sweet_building_greeter.html")
-@views.route("/questionaire")
-def question():
-	return render_template("quiz.html")
-@views.route("/short_questionnaire")
-def short_question():
-	return render_template("short_quiz.html")
 
 @views.route("/transportation")
 def transportation():
