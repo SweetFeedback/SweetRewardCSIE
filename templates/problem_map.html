@@ -243,11 +243,8 @@
                 }
 
                 for(var i = 0; i < lightData.length; i++) {
-                    alert(lightData[i]['value']);
                     if(parseInt(lightData[i]['value']) > 700) {
-                        alert(lightData[i]['value']);
                         if(lightData[i]['location'] in roomCoordinates) {
-                            alert(lightData[i]['location']);
                             var coordinate = roomCoordinates[lightData[i]['location']];
                             drawLight(coordinate.x, coordinate.y, coordinate.floor);
                         }
