@@ -75,132 +75,237 @@
             'B23.kitchen': {x: 770, y: 450, floor: 1}
         };
 
+        var canvas1;
+        var context1;
+
+        var canvas2;
+        var context2;
+
+        var humanImg;
+
+        var machine1 = {'loadedImgNum': 0, 'x': 520, 'y': 500};
+        var machine2 = {'loadedImgNum': 0, 'x': 480, 'y': 270};
+        var machine3 = {'loadedImgNum': 0, 'x': 740, 'y': 380};
+
+        var machines = new Array(machine1, machine2, machine3);
+        
+        var sources = {
+            mrc: '/static/img/mrc/mrc.png',
+            cold: '/static/img/others/char-cold.png',
+            sunglass: '/static/img/others/char-sunglass.png',
+            headphone: '/static/img/others/char-headphone.png',
+            sweat: '/static/img/others/char-sweat.png',
+            transportation: '/static/img/transportation/empty.png'
+        };
+        var sourcesLength = 6;
+
+
+        function checkProblem() {
+            $.ajax({
+                type: "GET",
+                url: "./get_problem?device_id=1",
+                dataType: 'json',
+                success: function(data) {
+                    if(data['data'].length > 0) {
+                        for(var i = 0; i < data['data'].length; i++) {
+                            var location = data['data'][i]['location'];
+                            if(location in roomCoordinates) {
+                                problemCoordinates[i] = roomCoordinates[location];
+                            }
+                        }
+                        setInterval(blink, 1000);
+
+                        $('.modal-title').html("Could you help me?");
+                        $('.modal-body').html(data['data'][0]['description']);
+                        $('#myModal').modal('show');
+                    }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+
+        function getSensorData() {
+            $.ajax({
+                type: "GET",
+                url: "./sensor_data",
+                dataType: 'json',
+                success: function(data) {
+                    var lightData = data['data']['light'];
+                    var motionData = data['data']['motion'];
+
+                    for(var i = 0; i < motionData.length; i++) {
+                        if(parseInt(motionData[i]['value']) > 800) {
+                            if(motionData[i]['location'] in roomCoordinates) {
+                                alert(motionData[i]['location']);
+                                var coordinate = roomCoordinates[motionData[i]['location']];
+                                drawHuman(coordinate.x, coordinate.y, coordinate.floor);
+                            }
+                        }
+                        //alert(motionData[i].location);
+                    }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+
+
+        function drawRedSpot(problem) {
+            var context;
+            if(problem.floor == 1) {
+                context = context1;
+            } else {
+                context = context2;
+            }
+
+            context.beginPath();
+            context.arc(problem.x, problem.y, radius, 0, 2 * Math.PI, false);
+            context.fillStyle = 'red';
+            context.fill();
+            context.closePath();
+        }
+
+        function blink() {
+            var problemCoordinate = problemCoordinates[0];
+            var context;
+            if(problemCoordinate.floor == 1) {
+                context = context1;
+            } else {
+                context = context2;
+            }
+
+            if(cnt % 2) {
+                context.beginPath();
+                context.clearRect(problemCoordinate.x - radius - 1, problemCoordinate.y - radius - 1, radius * 2 + 2, radius * 2 + 2);
+                context.closePath();
+
+                cnt = 0;    
+            } else {
+                context.beginPath();
+                context.arc(problemCoordinate.x, problemCoordinate.y, radius, 0, 2 * Math.PI, false);
+                context.fillStyle = 'red';
+                context.fill();
+                context.closePath();
+
+                cnt = 1;
+            }
+
+            for(var i = 1; i < problemCoordinates.length; i++) {
+                drawRedSpot(problemCoordinates[i]);
+            }
+            
+        }
+
+        function drawHuman(x, y, floor) {
+            if(floor == 1) {
+                context1.drawImage(humanImg, x, y, humanImg.width * 0.5, humanImg.height * 0.5);
+            } else {
+                context2.drawImage(humanImg, x, y, humanImg.width * 0.5, humanImg.height * 0.5);
+            }
+        }
+
+
+        function drawMachine1() {
+            for(var source in sources) {
+                machine1[source] = new Image();
+                machine1[source].onload = function() {
+                    machine1['loadedImgNum']++;
+                    if(machine1['loadedImgNum'] == sourcesLength) {
+                        context1.drawImage(machine1.mrc, machine1.x, machine1.y, machine1.mrc.width * 0.15, machine1.mrc.height * 0.15);
+                            /*context1.drawImage(machine1.cold, 0, 0, 50, 50);
+                            context1.drawImage(machine1.sunglass, 0, 0, 50, 50);
+                            context1.drawImage(machine1.headphone, 0, 0, 50, 50);
+                            context1.drawImage(machine1.sweat, 0, 0, 50, 50);
+                            context1.drawImage(machine1.transportation, 0, 0, 50, 50);
+                            */
+                    }
+                };
+                machine1[source].src = sources[source];
+            }
+        
+        }
+
+        function drawMachine2() {
+            for(var source in sources) {
+                machine2[source] = new Image();
+                machine2[source].onload = function() {
+                    machine2['loadedImgNum']++;
+                    if(machine2['loadedImgNum'] == sourcesLength) {
+                        context1.drawImage(machine2.mrc, machine2.x, machine2.y, machine2.mrc.width * 0.15, machine2.mrc.height * 0.15);
+                            /*context1.drawImage(machine2.cold, 0, 0, 50, 50);
+                            context1.drawImage(machine2.sunglass, 0, 0, 50, 50);
+                            context1.drawImage(machine2.headphone, 0, 0, 50, 50);
+                            context1.drawImage(machine2.sweat, 0, 0, 50, 50);
+                            context1.drawImage(machine2.transportation, 0, 0, 50, 50);
+                            */
+                    }
+                };
+                machine2[source].src = sources[source];
+            }
+        }
+
+        function drawMachine3() {
+            for(var source in sources) {
+                machine3[source] = new Image();
+                machine3[source].onload = function() {
+                    machine3['loadedImgNum']++;
+                    if(machine3['loadedImgNum'] == sourcesLength) {
+                        context1.drawImage(machine3.mrc, machine3.x, machine3.y, machine3.mrc.width * 0.15, machine3.mrc.height * 0.15);
+                            /*context1.drawImage(machine3.cold, 0, 0, 50, 50);
+                            context1.drawImage(machine3.sunglass, 0, 0, 50, 50);
+                            context1.drawImage(machine3.headphone, 0, 0, 50, 50);
+                            context1.drawImage(machine3.sweat, 0, 0, 50, 50);
+                            context1.drawImage(machine3.transportation, 0, 0, 50, 50);
+                            */
+                    }
+                };
+                machine3[source].src = sources[source];
+            }
+        }
+
         $(function() {
 
-            var canvas1 = document.getElementById('canvas1');
-            var context1 = canvas1.getContext('2d');
+            canvas1 = document.getElementById('canvas1');
+            context1 = canvas1.getContext('2d');
 
-            var canvas2 = document.getElementById('canvas2');
-            var context2 = canvas2.getContext('2d');
+            canvas2 = document.getElementById('canvas2');
+            context2 = canvas2.getContext('2d');
+
+            humanImg = new Image();
+            humanImg.src = '/static/img/human.png';
 
 
             var cnt = 0;
             var problemCoordinates = new Array();
             var radius = 9;
 
-            checkProblem();
-                //var counter = setInterval(checkProblem, 1000);
-                function checkProblem() {
-                  $.ajax({
-                    type: "GET",
-                    url: "./get_problem?device_id=1",
-                    dataType: 'json',
-                    success: function(data) {
-                        if(data['data'].length > 0) {
-                            for(var i = 0; i < data['data'].length; i++) {
-                                var location = data['data'][i]['location'];
-                                if(location in roomCoordinates) {
-                                    problemCoordinates[i] = roomCoordinates[location];
-                                }
-                            }
-                            setInterval(blink, 1000);
-
-                            $('.modal-title').html("Could you help me?");
-                            $('.modal-body').html(data['data'][0]['description']);
-                            $('#myModal').modal('show');
-                        }
-                    },
-                    error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    }
-                });
-
-            }
-
-
-
-            function drawRedSpot(problem) {
-                var context;
-                if(problem.floor == 1) {
-                    context = context1;
-                } else {
-                    context = context2;
-                }
-
-                context.beginPath();
-                context.arc(problem.x, problem.y, radius, 0, 2 * Math.PI, false);
-                context.fillStyle = 'red';
-                context.fill();
-                context.closePath();
-            }
-
-            function blink() {
-                var problemCoordinate = problemCoordinates[0];
-                var context;
-                if(problemCoordinate.floor == 1) {
-                    context = context1;
-                } else {
-                    context = context2;
-                }
-
-                if(cnt % 2) {
-                    context.beginPath();
-                    context.clearRect(problemCoordinate.x - radius - 1, problemCoordinate.y - radius - 1, radius * 2 + 2, radius * 2 + 2);
-                    context.closePath();
-
-                    cnt = 0;    
-                } else {
-                    context.beginPath();
-                    context.arc(problemCoordinate.x, problemCoordinate.y, radius, 0, 2 * Math.PI, false);
-                    context.fillStyle = 'red';
-                    context.fill();
-                    context.closePath();
-
-                    cnt = 1;
-                }
-
-                for(var i = 1; i < problemCoordinates.length; i++) {
-                    drawRedSpot(problemCoordinates[i]);
-                }
-                
-            }
-
+            
+            //var counter = setInterval(checkProblem, 1000);
+            
             
 
-            var machine1 = {'loadedImgNum': 0, 'x': 520, 'y': 500};
-            var sources = {
-                mrc: '/static/img/mrc/mrc.png',
-                cold: '/static/img/others/char-cold.png',
-                sunglass: '/static/img/others/char-sunglass.png',
-                headphone: '/static/img/others/char-headphone.png',
-                sweat: '/static/img/others/char-sweat.png',
-                transportation: '/static/img/transportation/empty.png'
-            };
-            var sourcesLength = 6;
 
-            function drawMachine1() {
-                for(var source in sources) {
-                    machine1[source] = new Image();
-                    machine1[source].onload = function() {
-                        machine1['loadedImgNum']++;
-                        if(machine1['loadedImgNum'] == sourcesLength) {
-                            context1.drawImage(machine1.mrc, machine1.x, machine1.y, machine1.mrc.width * 0.15, machine1.mrc.height * 0.15);
-                                /*context1.drawImage(machine1.cold, 0, 0, 50, 50);
-                                context1.drawImage(machine1.sunglass, 0, 0, 50, 50);
-                                context1.drawImage(machine1.headphone, 0, 0, 50, 50);
-                                context1.drawImage(machine1.sweat, 0, 0, 50, 50);
-                                context1.drawImage(machine1.transportation, 0, 0, 50, 50);
-                                */
-                        }
-                    };
-                    machine1[source].src = sources[source];
-                }
 
-            }
+
+            
+            /*var machines = new Array({'loadedImgNum': 0, 'x': 520, 'y': 500},
+                    {'loadedImgNum': 0, 'x': 480, 'y': 270}, 
+                    {'loadedImgNum': 0, 'x': 740, 'y': 380});*/
+            
+            
+
+
+            
 
             var floor1Img = new Image();
             floor1Img.onload = function() {
                 context1.drawImage(floor1Img, 0, 0, 1007, 646);
                 drawMachine1();
+                drawMachine2();
+                drawMachine3();
+                checkProblem();
+                getSensorData();
                 //problemCoordinate = {x: 250, y: 570, floor:1};
                 //setInterval(blink, 1000);
             };
