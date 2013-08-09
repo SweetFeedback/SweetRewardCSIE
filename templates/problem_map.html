@@ -180,13 +180,12 @@
     var context2;
 
     var humanImg;
-    var machineImg;
+    var machineImgs = {};
+    var lightImg;
 
-    var machine1 = {'loadedImgNum': 0, 'x': 520, 'y': 500};
-    var machine2 = {'loadedImgNum': 0, 'x': 480, 'y': 270};
-    var machine3 = {'loadedImgNum': 0, 'x': 740, 'y': 380};
-
-    var machines = new Array(machine1, machine2, machine3);
+    var machine1 = {'x': 520, 'y': 500};
+    var machine2 = {'x': 480, 'y': 270};
+    var machine3 = {'x': 740, 'y': 380};
     
     var sources = {
         mrc: '/static/img/mrc/mrc.png',
@@ -230,18 +229,30 @@
             url: "./sensor_data",
             dataType: 'json',
             success: function(data) {
-                var lightData = data['data']['light'];
+                
                 var motionData = data['data']['motion'];
+                var lightData = data['data']['light'];
 
                 for(var i = 0; i < motionData.length; i++) {
                     if(parseInt(motionData[i]['value']) > 800) {
                         if(motionData[i]['location'] in roomCoordinates) {
-                            alert(motionData[i]['location']);
                             var coordinate = roomCoordinates[motionData[i]['location']];
                             drawHuman(coordinate.x, coordinate.y, coordinate.floor);
                         }
                     }
-                    //alert(motionData[i].location);
+                }
+
+                for(var i = 0; i < lightData.length; i++) {
+                    alert(lightData[i]['value']);
+                    if(parseInt(lightData[i]['value']) > 700) {
+                        alert(lightData[i]['value']);
+                        if(lightData[i]['location'] in roomCoordinates) {
+                            alert(lightData[i]['location']);
+                            var coordinate = roomCoordinates[lightData[i]['location']];
+                            drawLight(coordinate.x, coordinate.y, coordinate.floor);
+                        }
+                    }
+
                 }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -304,14 +315,25 @@
         }
     }
 
+    function drawLight(x, y, floor) {
+        if(floor == 1) {
+            context1.drawImage(lightImg, x, y, lightImg.width * 0.5, lightImg.height * 0.5);
+        } else {
+            context2.drawImage(lightImg, x, y, lightImg.width * 0.5, lightImg.height * 0.5);
+        }
+    }
 
-    function drawMachine1() {
+
+    function drawMachines() {
+        machineImgs['loadedImgNum'] = 0;
         for(var source in sources) {
-            machine1[source] = new Image();
-            machine1[source].onload = function() {
-                machine1['loadedImgNum']++;
-                if(machine1['loadedImgNum'] == sourcesLength) {
-                    context1.drawImage(machine1.mrc, machine1.x, machine1.y, machine1.mrc.width * 0.15, machine1.mrc.height * 0.15);
+            machineImgs[source] = new Image();
+            machineImgs[source].onload = function() {
+                machineImgs['loadedImgNum']++;
+                if(machineImgs['loadedImgNum'] == sourcesLength) {
+                    context1.drawImage(machineImgs.mrc, machine1.x, machine1.y, machineImgs.mrc.width * 0.15, machineImgs.mrc.height * 0.15);
+                    context1.drawImage(machineImgs.mrc, machine2.x, machine2.y, machineImgs.mrc.width * 0.15, machineImgs.mrc.height * 0.15);
+                    context1.drawImage(machineImgs.mrc, machine3.x, machine3.y, machineImgs.mrc.width * 0.15, machineImgs.mrc.height * 0.15);
                         /*context1.drawImage(machine1.cold, 0, 0, 50, 50);
                         context1.drawImage(machine1.sunglass, 0, 0, 50, 50);
                         context1.drawImage(machine1.headphone, 0, 0, 50, 50);
@@ -320,47 +342,9 @@
                         */
                 }
             };
-            machine1[source].src = sources[source];
+            machineImgs[source].src = sources[source];
         }
     
-    }
-
-    function drawMachine2() {
-        for(var source in sources) {
-            machine2[source] = new Image();
-            machine2[source].onload = function() {
-                machine2['loadedImgNum']++;
-                if(machine2['loadedImgNum'] == sourcesLength) {
-                    context1.drawImage(machine2.mrc, machine2.x, machine2.y, machine2.mrc.width * 0.15, machine2.mrc.height * 0.15);
-                        /*context1.drawImage(machine2.cold, 0, 0, 50, 50);
-                        context1.drawImage(machine2.sunglass, 0, 0, 50, 50);
-                        context1.drawImage(machine2.headphone, 0, 0, 50, 50);
-                        context1.drawImage(machine2.sweat, 0, 0, 50, 50);
-                        context1.drawImage(machine2.transportation, 0, 0, 50, 50);
-                        */
-                }
-            };
-            machine2[source].src = sources[source];
-        }
-    }
-
-    function drawMachine3() {
-        for(var source in sources) {
-            machine3[source] = new Image();
-            machine3[source].onload = function() {
-                machine3['loadedImgNum']++;
-                if(machine3['loadedImgNum'] == sourcesLength) {
-                    context1.drawImage(machine3.mrc, machine3.x, machine3.y, machine3.mrc.width * 0.15, machine3.mrc.height * 0.15);
-                        /*context1.drawImage(machine3.cold, 0, 0, 50, 50);
-                        context1.drawImage(machine3.sunglass, 0, 0, 50, 50);
-                        context1.drawImage(machine3.headphone, 0, 0, 50, 50);
-                        context1.drawImage(machine3.sweat, 0, 0, 50, 50);
-                        context1.drawImage(machine3.transportation, 0, 0, 50, 50);
-                        */
-                }
-            };
-            machine3[source].src = sources[source];
-        }
     }
 
     $(function() {
@@ -373,6 +357,9 @@
 
         humanImg = new Image();
         humanImg.src = '/static/img/human.png';
+
+        lightImg = new Image();
+        lightImg.src = '/static/img/light.png';
 
 
         var cnt = 0;
@@ -396,9 +383,7 @@
         var floor1Img = new Image();
         floor1Img.onload = function() {
             context1.drawImage(floor1Img, 0, 0, 1007, 646);
-            drawMachine1();
-            drawMachine2();
-            drawMachine3();
+            drawMachines();
             checkProblem();
             getSensorData();
             //problemCoordinate = {x: 250, y: 570, floor:1};
