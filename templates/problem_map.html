@@ -173,6 +173,10 @@
         'B23.kitchen': {x: 770, y: 450, floor: 1}
     };
 
+    var problemCoordinates = new Array();
+    var cnt = 0;
+    var radius = 9;
+
     var canvas1;
     var context1;
 
@@ -182,6 +186,7 @@
     var humanImg;
     var machineImgs = {};
     var lightImg;
+    var bulbImg;
 
     var machine1 = {'x': 520, 'y': 500};
     var machine2 = {'x': 480, 'y': 270};
@@ -219,6 +224,21 @@
                 }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
+                var data = {};
+                data['data'] = [{location: 'B23.104', description: 'Could you turn off the light in Room 104?'},
+                    {location: 'B23.214'},
+                    {location: 'B23.109'}];
+                for(var i = 0; i < data['data'].length; i++) {
+                    var location = data['data'][i]['location'];
+                    if(location in roomCoordinates) {
+                        problemCoordinates[i] = roomCoordinates[location];
+                    }
+                }
+                setInterval(blink, 1000);
+
+                $('.modal-title').html("Save Energy, Get Rewards !");
+                $('.modal-body').html(data['data'][0]['description']);
+                $('#myModal').modal('show');
             }
         });
     }
@@ -237,16 +257,18 @@
                     if(parseInt(motionData[i]['value']) > 800) {
                         if(motionData[i]['location'] in roomCoordinates) {
                             var coordinate = roomCoordinates[motionData[i]['location']];
-                            drawHuman(coordinate.x, coordinate.y, coordinate.floor);
+                            drawHuman(coordinate.x-20, coordinate.y-20, coordinate.floor);
                         }
                     }
                 }
 
                 for(var i = 0; i < lightData.length; i++) {
-                    if(parseInt(lightData[i]['value']) > 700) {
-                        if(lightData[i]['location'] in roomCoordinates) {
-                            var coordinate = roomCoordinates[lightData[i]['location']];
+                    if(lightData[i]['location'] in roomCoordinates) {
+                        var coordinate = roomCoordinates[lightData[i]['location']];
+                        if(parseInt(lightData[i]['value']) > 900) {    
                             drawLight(coordinate.x, coordinate.y, coordinate.floor);
+                        } else {
+                            drawBulb(coordinate.x, coordinate.y, coordinate.floor);
                         }
                     }
 
@@ -287,7 +309,7 @@
             context.clearRect(problemCoordinate.x - radius - 1, problemCoordinate.y - radius - 1, radius * 2 + 2, radius * 2 + 2);
             context.closePath();
 
-            cnt = 0;    
+            cnt = 0;
         } else {
             context.beginPath();
             context.arc(problemCoordinate.x, problemCoordinate.y, radius, 0, 2 * Math.PI, false);
@@ -306,17 +328,25 @@
 
     function drawHuman(x, y, floor) {
         if(floor == 1) {
-            context1.drawImage(humanImg, x, y, humanImg.width * 0.5, humanImg.height * 0.5);
+            context1.drawImage(humanImg, x, y, humanImg.width * 0.8, humanImg.height * 0.8);
         } else {
-            context2.drawImage(humanImg, x, y, humanImg.width * 0.5, humanImg.height * 0.5);
+            context2.drawImage(humanImg, x, y, humanImg.width * 0.8, humanImg.height * 0.8);
         }
     }
 
     function drawLight(x, y, floor) {
         if(floor == 1) {
-            context1.drawImage(lightImg, x, y, lightImg.width * 0.5, lightImg.height * 0.5);
+            context1.drawImage(lightImg, x-5, y-5, lightImg.width * 1, lightImg.height * 1);
         } else {
-            context2.drawImage(lightImg, x, y, lightImg.width * 0.5, lightImg.height * 0.5);
+            context2.drawImage(lightImg, x-5, y-5, lightImg.width * 1, lightImg.height * 1);
+        }
+    }
+
+    function drawBulb(x, y, floor) {
+        if(floor == 1) {
+            context1.drawImage(bulbImg, x, y, bulbImg.width * 0.3, bulbImg.height * 0.3);
+        } else {
+            context2.drawImage(bulbImg, x, y, bulbImg.width * 0.3, bulbImg.height * 0.3);
         }
     }
 
@@ -358,10 +388,13 @@
         lightImg = new Image();
         lightImg.src = '/static/img/light.png';
 
+        bulbImg = new Image();
+        bulbImg.src = '/static/img/bulb.png';
 
-        var cnt = 0;
-        var problemCoordinates = new Array();
-        var radius = 9;
+
+        
+        
+        
 
         
         //var counter = setInterval(checkProblem, 1000);
