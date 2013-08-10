@@ -78,7 +78,7 @@
                     <div class="modal-body">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button id="doit" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -392,7 +392,9 @@
         bulbImg.src = '/static/img/bulb.png';
 
 
-        
+        $("#doit").click(function() {
+            $.get("./feedback_insert?application_id=7&feedback_type=positive&feedback_description=Thank you");
+        });
         
         
 
