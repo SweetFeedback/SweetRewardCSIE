@@ -84,40 +84,17 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
-        <div id="carousel-example-generic" class="carousel slide" data-interval="false">
-          <!-- Indicators -->
-            <ol class="carousel-indicators">
-                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-            </ol>
-
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner">
-                <div class="item active">
-                    <canvas id="canvas1" width="1007" height="646"></canvas>
-                </div>
-                <div class="item">
-                    <canvas id="canvas2" width="1007" height="646"></canvas>
-                </div>
-            </div>
-
-            <!-- Controls -->
-            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                <span class="icon-prev"></span>
-            </a>
-            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                <span class="icon-next"></span>
-            </a>
+        <div>
+            <button id="test" type="button" class="btn btn-primary">OK</button>
         </div>
 
 
-        <div class="tabable">
-            <div class="tab-content">
-                <div class="tab-pane active" id="apps-1">            
-                    <br/>
-                </div>
-            </div>
+        <div id="map1">
+            <img src="/static/img/floor1.png" width="1007" height="646" style="position: absolute; z-index: 100;">
+            <img id="mrctest" src="/static/img/mrc/mrc.png" width="43" height="56" style="position: absolute; z-index: 200; margin-top: 500px; margin-left: 530px;">
         </div>
+
+
     </div> <!-- /container -->
 
     <div id="footer">
@@ -142,7 +119,7 @@
 
 <script>
     var roomCoordinates = {
-        'B23.104': {x: 380, y: 560, floor: 1},
+        'B23.104': {x: 380, y: 540, floor: 1},
         'B23.105B': {x: 350, y: 560, floor: 1},
         'B23.107': {x: 250, y: 570, floor: 1},
         'B23.109': {x: 180, y: 530, floor: 1},
@@ -196,6 +173,7 @@
         transportation: '/static/img/transportation/empty.png'
     };
     var sourcesLength = 6;
+    var problemCoordinates = [];
 
 
     function checkProblem() {
@@ -205,6 +183,20 @@
             dataType: 'json',
             success: function(data) {
                 if(data['data'].length > 0) {
+
+                    for(var i = 0; i < data['data'].length; i++) {
+                        var location = data['data'][i]['location'];
+                        if(location in roomCoordinates) {
+                            problemCoordinates[i] = roomCoordinates[location];
+                        }
+                    }
+                    
+                    /*
+                    var data = {};
+                    data['data'] = [{location: 'B23.104', description: 'Could you turn off the light in Room 104? I will give you candy!'},
+                        {location: 'B23.214'},
+                        {location: 'B23.109'}];
+
                     for(var i = 0; i < data['data'].length; i++) {
                         var location = data['data'][i]['location'];
                         if(location in roomCoordinates) {
@@ -216,11 +208,124 @@
                     $('.modal-title').html("Could you help me?");
                     $('.modal-body').html(data['data'][0]['description']);
                     $('#myModal').modal('show');
+                    */
                 }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
+                var data = {};
+                data['data'] = [{location: 'B23.104', description: 'Could you turn off the light in Room 104?'},
+                    {location: 'B23.214'},
+                    {location: 'B23.109'},
+                    {location: 'B23.129A'}];
+                for(var i = 0; i < data['data'].length; i++) {
+                    var location = data['data'][i]['location'];
+                    if(location in roomCoordinates) {
+                        problemCoordinates[i] = roomCoordinates[location];
+                        plotProblem(i, problemCoordinates[i].x, problemCoordinates[i].y, problemCoordinates[i].floor);
+                    }
+                }
+
+                setInterval(blink, 1000);
+
+                $("#mrctest").popover({
+                    html: true,
+                    placement: 'top',
+                    title: 'Save Energy, Get Rewards !',
+                    trigger: 'manual',
+                    content: data['data'][0]['description'] + '<br><button id="close-me" type="button" class="btn btn-primary">OK</button> <button id="close-you" type="button" class="btn btn-danger">Close</button>'
+                });
+                
+                $("#mrctest").parent().delegate('button#close-me', 'click', function() {
+                    $("#mrctest").popover('hide');
+                    console.log('World!');
+                    $.ajax({
+                        type: "GET",
+                        url: "./reply",
+                        dataType: 'json',
+                        success: function(data) {
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        }
+                    });
+                });
+                $("#mrctest").parent().delegate('button#close-you', 'click', function() {
+                    $("#mrctest").popover('hide');
+                    console.log('YO');
+                });
+                $("#mrctest").popover('show');
+
+                
+
+                /*
+                setInterval(blink, 1000);
+
+                $('.modal-title').html("Save Energy, Get Rewards !");
+                $('.modal-body').html(data['data'][0]['description']);
+                */
+                
+                //$('#myModal').modal('show');
             }
         });
+    }
+
+    function plotProblem(id, x, y, floor) {
+        console.log("plot problem");
+        var str = ' <img id="problem' + id + '" src="/static/img/red-bullet.png" width="40" height="40"' +
+            'style="position: absolute; z-index: 700; '+
+            'margin-left: ' + x + 'px; ' +
+            'margin-top: ' + y + 'px;'+
+            '">';
+
+        if(floor == 1) {
+            $('#map1').append(str);
+        } else if(floor == 2) {
+            $('#map2').append(str);
+        }
+    }
+
+    function plotHuman(id, x, y, floor) {
+        console.log("plot human");
+        var str = ' <img id="human' + id + '" src="/static/img/human.png" width="40" height="40"' +
+            'style="position: absolute; z-index: 500; '+
+            'margin-left: ' + x + 'px; ' +
+            'margin-top: ' + y + 'px;'+
+            '">';
+
+        if(floor == 1) {
+            $('#map1').append(str);
+        } else if(floor == 2) {
+            $('#map2').append(str);
+        }
+    }
+
+    function plotLight(id, x, y, floor) {
+        console.log("plot light");
+        var str = ' <img id="light' + id + '" src="/static/img/light.png" width="40" height="40"' +
+            'style="position: absolute; z-index: 500; '+
+            'margin-left: ' + x + 'px; ' +
+            'margin-top: ' + y + 'px;'+
+            '">';
+
+        if(floor == 1) {
+            $('#map1').append(str);
+        } else if(floor == 2) {
+            $('#map2').append(str);
+        }
+    }
+
+    function plotBulb(id, x, y, floor) {
+        console.log("plot bulb");
+        var str = ' <img id="bulb' + id + '" src="/static/img/bulb.png" width="40" height="40"' +
+            'style="position: absolute; z-index: 500; '+
+            'margin-left: ' + x + 'px; ' +
+            'margin-top: ' + y + 'px;'+
+            '">';
+
+        if(floor == 1) {
+            $('#map1').append(str);
+        } else if(floor == 2) {
+            $('#map2').append(str);
+        }
     }
 
     function getSensorData() {
@@ -237,19 +342,20 @@
                     if(parseInt(motionData[i]['value']) > 800) {
                         if(motionData[i]['location'] in roomCoordinates) {
                             var coordinate = roomCoordinates[motionData[i]['location']];
-                            drawHuman(coordinate.x, coordinate.y, coordinate.floor);
+                            plotHuman(i, coordinate.x-20, coordinate.y-20, coordinate.floor);
                         }
                     }
                 }
 
                 for(var i = 0; i < lightData.length; i++) {
-                    if(parseInt(lightData[i]['value']) > 700) {
-                        if(lightData[i]['location'] in roomCoordinates) {
-                            var coordinate = roomCoordinates[lightData[i]['location']];
-                            drawLight(coordinate.x, coordinate.y, coordinate.floor);
+                    if(lightData[i]['location'] in roomCoordinates) {
+                        var coordinate = roomCoordinates[lightData[i]['location']];
+                        if(parseInt(lightData[i]['value']) > 900) {    
+                            plotLight(i, coordinate.x, coordinate.y, coordinate.floor);
+                        } else {
+                            plotBulb(i, coordinate.x, coordinate.y, coordinate.floor);
                         }
                     }
-
                 }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -258,93 +364,43 @@
     }
 
 
-    function drawRedSpot(problem) {
-        var context;
-        if(problem.floor == 1) {
-            context = context1;
-        } else {
-            context = context2;
-        }
-
-        context.beginPath();
-        context.arc(problem.x, problem.y, radius, 0, 2 * Math.PI, false);
-        context.fillStyle = 'red';
-        context.fill();
-        context.closePath();
-    }
+    var cnt = 0;
 
     function blink() {
-        var problemCoordinate = problemCoordinates[0];
-        var context;
-        if(problemCoordinate.floor == 1) {
-            context = context1;
-        } else {
-            context = context2;
-        }
-
-        if(cnt % 2) {
-            context.beginPath();
-            context.clearRect(problemCoordinate.x - radius - 1, problemCoordinate.y - radius - 1, radius * 2 + 2, radius * 2 + 2);
-            context.closePath();
-
-            cnt = 0;    
-        } else {
-            context.beginPath();
-            context.arc(problemCoordinate.x, problemCoordinate.y, radius, 0, 2 * Math.PI, false);
-            context.fillStyle = 'red';
-            context.fill();
-            context.closePath();
-
+        if(cnt == 0) {
+            $("#problem0").show();
             cnt = 1;
-        }
-
-        for(var i = 1; i < problemCoordinates.length; i++) {
-            drawRedSpot(problemCoordinates[i]);
-        }
-        
-    }
-
-    function drawHuman(x, y, floor) {
-        if(floor == 1) {
-            context1.drawImage(humanImg, x, y, humanImg.width * 0.5, humanImg.height * 0.5);
         } else {
-            context2.drawImage(humanImg, x, y, humanImg.width * 0.5, humanImg.height * 0.5);
+            $("#problem0").hide();
+            cnt = 0;
         }
     }
 
-    function drawLight(x, y, floor) {
-        if(floor == 1) {
-            context1.drawImage(lightImg, x, y, lightImg.width * 0.5, lightImg.height * 0.5);
+    var ccc = 0;
+    $("#test").click(function(){
+        console.log('wowo');
+        if(ccc == 0) {
+            ccc = 1;
+            $("#mrctest").popover({
+                html: true,
+                placement: 'top',
+                title: 'hi',
+                trigger: 'manual',
+                content: '<button id="close-me" type="button" class="btn btn-primary">Close Me!</button>'
+            }).parent().delegate('button#close-me', 'click', function() {
+                $("#mrctest").popover('hide');
+                console.log('World!');
+            });;
+            $("#mrctest").popover('show');
         } else {
-            context2.drawImage(lightImg, x, y, lightImg.width * 0.5, lightImg.height * 0.5);
+            $("#mrctest").popover('show');
         }
-    }
-
-
-    function drawMachines() {
-        machineImgs['loadedImgNum'] = 0;
-        for(var source in sources) {
-            machineImgs[source] = new Image();
-            machineImgs[source].onload = function() {
-                machineImgs['loadedImgNum']++;
-                if(machineImgs['loadedImgNum'] == sourcesLength) {
-                    context1.drawImage(machineImgs.mrc, machine1.x, machine1.y, machineImgs.mrc.width * 0.15, machineImgs.mrc.height * 0.15);
-                    context1.drawImage(machineImgs.mrc, machine2.x, machine2.y, machineImgs.mrc.width * 0.15, machineImgs.mrc.height * 0.15);
-                    context1.drawImage(machineImgs.mrc, machine3.x, machine3.y, machineImgs.mrc.width * 0.15, machineImgs.mrc.height * 0.15);
-                        /*context1.drawImage(machine1.cold, 0, 0, 50, 50);
-                        context1.drawImage(machine1.sunglass, 0, 0, 50, 50);
-                        context1.drawImage(machine1.headphone, 0, 0, 50, 50);
-                        context1.drawImage(machine1.sweat, 0, 0, 50, 50);
-                        context1.drawImage(machine1.transportation, 0, 0, 50, 50);
-                        */
-                }
-            };
-            machineImgs[source].src = sources[source];
-        }
-    
-    }
+    });
 
     $(function() {
+        checkProblem();
+        getSensorData();
+        /*
 
         canvas1 = document.getElementById('canvas1');
         context1 = canvas1.getContext('2d');
@@ -359,10 +415,9 @@
         lightImg.src = '/static/img/light.png';
 
 
-        var cnt = 0;
-        var problemCoordinates = new Array();
-        var radius = 9;
-
+        
+        
+        */
         
         //var counter = setInterval(checkProblem, 1000);
 
@@ -376,7 +431,7 @@
 
 
         
-
+        /*
         var floor1Img = new Image();
         floor1Img.onload = function() {
             context1.drawImage(floor1Img, 0, 0, 1007, 646);
@@ -394,7 +449,7 @@
             context2.drawImage(floor2Img, 0, 0, 1007, 646);
         };
         floor2Img.src = '/static/img/floor2.png';
-
+        */
     });
 </script>
 
