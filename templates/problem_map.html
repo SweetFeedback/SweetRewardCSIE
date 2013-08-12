@@ -210,15 +210,16 @@
             url: "./get_problem?device_id=1",
             dataType: 'json',
             success: function(data) {
-                //if(data['data'].length > 0) {
-                    /*
+                if(data['data'].length > 0) {
+                    
                     for(var i = 0; i < data['data'].length; i++) {
                         var location = data['data'][i]['location'];
                         if(location in roomCoordinates) {
                             problemCoordinates[i] = roomCoordinates[location];
                         }
                     }
-                    */
+                    
+                    /*
                     var data = {};
                     data['data'] = [{location: 'B23.104', description: 'Could you turn off the light in Room 104? I will give you candy!'},
                         {location: 'B23.214'},
@@ -229,12 +230,13 @@
                             problemCoordinates[i] = roomCoordinates[location];
                         }
                     }
+                    */
                     setInterval(blink, 1000);
 
                     $('.modal-title').html("Save Energy, Get Rewards !");
                     $('.modal-body').html(data['data'][0]['description']);
                     $('#myModal').modal('show');
-                //}
+                }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 var data = {};
@@ -405,9 +407,7 @@
         bulbImg.src = '/static/img/bulb.png';
 
 
-        $("#doit").click(function() {
-            $.get("./feedback_insert?application_id=7&feedback_type=positive&feedback_description=Thank you");
-        });
+
         
         
 
