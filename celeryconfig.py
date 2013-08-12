@@ -7,4 +7,9 @@ CELERYBEAT_SCHEDULE = {
         'schedule': timedelta(seconds=15),
         'args': (),
     },
+    'every-30seconds-for-noise': {
+    	'task' : 'task2.noise_check',
+    	'schedule' : timedelta(seconds=30),
+    	'args': ()
+    }
 }
