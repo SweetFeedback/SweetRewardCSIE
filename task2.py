@@ -59,7 +59,7 @@ def noise_check():
 		print "checking device " + machine.device_id
 		machine_sensor_index = db.session.query(GumballSensorIndex).filter_by(device_id=machine.device_id).first()
 		print machine_sensor_index.time
-		noises = db.session.query(GumballSensor).filter(GumballSensor.time <= machine_sensor_index.time).filter(GumballSensor.time >= machine_sensor_index.time - timedelta(seconds=20))
+		noises = db.session.query(GumballSensor).filter_by(device_id=machine.device_id).filter(GumballSensor.time <= machine_sensor_index.time).filter(GumballSensor.time >= machine_sensor_index.time - timedelta(seconds=20))
 		avr_noise_level = 0 
 		#print "Get " + str(noises.count()) + " data to average"
 		for n in noises:
