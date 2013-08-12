@@ -67,22 +67,7 @@
 
     <!-- Main component for a primary marketing message or call to action -->
     
-        <!-- Modal -->
-        <div class="modal fade" id="myModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title"></h4>
-                    </div>
-                    <div class="modal-body">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+
 
         <div>
             <button id="test" type="button" class="btn btn-primary">OK</button>
@@ -205,9 +190,6 @@
                     }
                     setInterval(blink, 1000);
 
-                    $('.modal-title').html("Could you help me?");
-                    $('.modal-body').html(data['data'][0]['description']);
-                    $('#myModal').modal('show');
                     */
                 }
             },
@@ -234,7 +216,7 @@
                     trigger: 'manual',
                     content: data['data'][0]['description'] + '<br><button id="close-me" type="button" class="btn btn-primary">OK</button> <button id="close-you" type="button" class="btn btn-danger">Close</button>'
                 });
-                
+
                 $("#mrctest").parent().delegate('button#close-me', 'click', function() {
                     $("#mrctest").popover('hide');
                     console.log('World!');
@@ -253,17 +235,6 @@
                     console.log('YO');
                 });
                 $("#mrctest").popover('show');
-
-                
-
-                /*
-                setInterval(blink, 1000);
-
-                $('.modal-title').html("Save Energy, Get Rewards !");
-                $('.modal-body').html(data['data'][0]['description']);
-                */
-                
-                //$('#myModal').modal('show');
             }
         });
     }
