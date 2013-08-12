@@ -66,7 +66,7 @@ def noise_check():
 			#print n.sound
 			avr_noise_level = avr_noise_level + n.sound
 		avr_noise_level = avr_noise_level / noises.count()
-		#print avr_noise_level
+		print "average noise level is " + str(avr_noise_level)
 		if machine_sensor_index != None and avr_noise_level >= 12:
 			print "it's noisy here"
 	db.session.commit()
