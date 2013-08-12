@@ -2,10 +2,14 @@ class PolicyManager():
 	def __init__():
 		self.yes = 1 
 
-	def isLightNormal(motion, light, time):
+def isLightNormal(motion, light, time):
+	return True
 
-		return True
-		
+def isNoisy(avr_noise_level):
+	return_value = False
+	if avr_noise_level >= 15:
+		return_value = True
+	return return_value
 mapping_table = {
 	"10170004": ["Firefly_v3","SensorAndrew0","B23.110"],
 	"10170202": ["Firefly_v3","SensorAndrew2","B23.216"],
