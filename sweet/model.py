@@ -378,7 +378,7 @@ class GumballSensor(db.Model):
 			'created_at' : str(self.time)
 		}
 	def __repr__(self):
-		return "Sensor log " + str(self.log_id) + " "  + str(self.device_id) + "(" + str(light) + "," + str(temperature) + "," + str(sound) + ")"
+		return "Sensor log " + str(self.log_id) + " "  + str(self.device_id) + "(" + str(self.light) + "," + str(self.temperature) + "," + str(self.sound) + ")"
 class GumballSensorIndex(db.Model):
 	__tablename__ = "basic_sensor_log_index"
 	log_id = db.Column("log_id", Integer, primary_key=True)
