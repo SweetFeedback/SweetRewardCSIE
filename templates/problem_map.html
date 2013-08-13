@@ -66,19 +66,28 @@
     <div class="container">
 
     <!-- Main component for a primary marketing message or call to action -->
-    
+        
+        <ul class="nav nav-tabs" id="myTab">
+            <li class="active"><a href="#1F">1F</a></li>
+            <li><a href="#2F">2F</a></li>
+        </ul>
+         
+        <div class="tab-content">
+            <div class="tab-pane active" id="1F">
+                <div id="map1">
+                    <img src="/static/img/floor1.png" width="1007" height="646" style="position: absolute; z-index: 100;">
+                    <img id="mrc1" src="/static/img/mrc/mrc.png" width="43" height="56" style="position: absolute; z-index: 200; margin-top: 500px; margin-left: 530px;">
+                </div>
 
+                
+            </div>
 
-        <div>
-            <button id="test" type="button" class="btn btn-primary">OK</button>
+            <div class="tab-pane" id="2F">
+                <div id="map2">
+                    <img src="/static/img/floor2.png" width="1007" height="646" style="position: absolute; z-index: 100;">
+                </div>
+            </div>
         </div>
-
-
-        <div id="map1">
-            <img src="/static/img/floor1.png" width="1007" height="646" style="position: absolute; z-index: 100;">
-            <img id="mrctest" src="/static/img/mrc/mrc.png" width="43" height="56" style="position: absolute; z-index: 200; margin-top: 500px; margin-left: 530px;">
-        </div>
-
 
     </div> <!-- /container -->
 
@@ -87,6 +96,7 @@
             <p class="text-muted credit" >Sweet Building Greeter is made by Louis Yu, Ken Liang, and Ted Selker</p>
         </div>
     </div> <!-- /footer -->
+
 
 </div> <!-- /wrap -->
 
@@ -123,8 +133,8 @@
         'B23.212': {x: 150, y: 550, floor: 2},
         'B23.213': {x: 880, y: 550, floor: 2},
         'B23.214': {x: 890, y: 500, floor: 2},
-        'B23.214B': {x: 885, y: 475, floor: 2},
-        'B23.215': {x: 890, y: 390, floor: 2},
+        'B23.214B': {x: 880, y: 460, floor: 2},
+        'B23.215': {x: 885, y: 370, floor: 2},
         'B23.215B': {x: 890, y: 410, floor: 2},
         'B23.216': {x: 770, y: 540, floor: 2},
         'B23.217A': {x: 770, y: 370, floor: 2},
@@ -135,15 +145,7 @@
         'B23.kitchen': {x: 770, y: 450, floor: 1}
     };
 
-    var canvas1;
-    var context1;
 
-    var canvas2;
-    var context2;
-
-    var humanImg;
-    var machineImgs = {};
-    var lightImg;
 
     var machine1 = {'x': 520, 'y': 500};
     var machine2 = {'x': 480, 'y': 270};
@@ -191,25 +193,52 @@
                     setInterval(blink, 1000);
 
                     */
+                    setInterval(blink, 1000);
+
+                    $("#mrc1").popover({
+                        html: true,
+                        placement: 'top',
+                        title: 'Save Energy, Get Rewards !',
+                        trigger: 'manual',
+                        content: data['data'][0]['description'] + '<br><button id="close-me" type="button" class="btn btn-primary">OK</button> <button id="close-you" type="button" class="btn btn-danger">Close</button>'
+                    });
+
+                    $("#mrc1").parent().delegate('button#close-me', 'click', function() {
+                        $("#mrc1").popover('hide');
+                        $.ajax({
+                            type: "GET",
+                            url: "./reply",
+                            dataType: 'json',
+                            success: function(data) {
+                            },
+                            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            }
+                        });
+                    });
+                    $("#mrc1").parent().delegate('button#close-you', 'click', function() {
+                        $("#mrc1").popover('hide');
+                    });
+                    $("#mrc1").popover('show');
                 }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 var data = {};
                 data['data'] = [{location: 'B23.104', description: 'Could you turn off the light in Room 104?'},
-                    {location: 'B23.214'},
-                    {location: 'B23.109'},
-                    {location: 'B23.129A'}];
+                    {location: 'B23.214', description: "Turn off the light!"},
+                    {location: 'B23.109', description: "Light is not closing"},
+                    {location: 'B23.129A', description: "Help us to turn off the light"}];
                 for(var i = 0; i < data['data'].length; i++) {
                     var location = data['data'][i]['location'];
+                    var description = data['data'][i]['description'];
                     if(location in roomCoordinates) {
                         problemCoordinates[i] = roomCoordinates[location];
-                        plotProblem(i, problemCoordinates[i].x, problemCoordinates[i].y, problemCoordinates[i].floor);
+                        plotProblem(i, problemCoordinates[i].x, problemCoordinates[i].y, problemCoordinates[i].floor, description);
                     }
                 }
 
                 setInterval(blink, 1000);
 
-                $("#mrctest").popover({
+                $("#mrc1").popover({
                     html: true,
                     placement: 'top',
                     title: 'Save Energy, Get Rewards !',
@@ -217,9 +246,8 @@
                     content: data['data'][0]['description'] + '<br><button id="close-me" type="button" class="btn btn-primary">OK</button> <button id="close-you" type="button" class="btn btn-danger">Close</button>'
                 });
 
-                $("#mrctest").parent().delegate('button#close-me', 'click', function() {
-                    $("#mrctest").popover('hide');
-                    console.log('World!');
+                $("#mrc1").parent().delegate('button#close-me', 'click', function() {
+                    $("#mrc1").popover('hide');
                     $.ajax({
                         type: "GET",
                         url: "./reply",
@@ -230,16 +258,15 @@
                         }
                     });
                 });
-                $("#mrctest").parent().delegate('button#close-you', 'click', function() {
-                    $("#mrctest").popover('hide');
-                    console.log('YO');
+                $("#mrc1").parent().delegate('button#close-you', 'click', function() {
+                    $("#mrc1").popover('hide');
                 });
-                $("#mrctest").popover('show');
+                $("#mrc1").popover('show');
             }
         });
     }
 
-    function plotProblem(id, x, y, floor) {
+    function plotProblem(id, x, y, floor, description) {
         console.log("plot problem");
         var str = ' <img id="problem' + id + '" src="/static/img/red-bullet.png" width="40" height="40"' +
             'style="position: absolute; z-index: 700; '+
@@ -252,6 +279,11 @@
         } else if(floor == 2) {
             $('#map2').append(str);
         }
+
+        // set up tooltip
+        $('#problem' + id).tooltip({
+            title: description
+        });
     }
 
     function plotHuman(id, x, y, floor) {
@@ -273,8 +305,8 @@
         console.log("plot light");
         var str = ' <img id="light' + id + '" src="/static/img/light.png" width="40" height="40"' +
             'style="position: absolute; z-index: 500; '+
-            'margin-left: ' + x + 'px; ' +
-            'margin-top: ' + y + 'px;'+
+            'margin-left: ' + (x-10) + 'px; ' +
+            'margin-top: ' + (y-10) + 'px;'+
             '">';
 
         if(floor == 1) {
@@ -288,8 +320,8 @@
         console.log("plot bulb");
         var str = ' <img id="bulb' + id + '" src="/static/img/bulb.png" width="40" height="40"' +
             'style="position: absolute; z-index: 500; '+
-            'margin-left: ' + x + 'px; ' +
-            'margin-top: ' + y + 'px;'+
+            'margin-left: ' + (x-10) + 'px; ' +
+            'margin-top: ' + (y-10) + 'px;'+
             '">';
 
         if(floor == 1) {
@@ -347,80 +379,17 @@
         }
     }
 
-    var ccc = 0;
-    $("#test").click(function(){
-        console.log('wowo');
-        if(ccc == 0) {
-            ccc = 1;
-            $("#mrctest").popover({
-                html: true,
-                placement: 'top',
-                title: 'hi',
-                trigger: 'manual',
-                content: '<button id="close-me" type="button" class="btn btn-primary">Close Me!</button>'
-            }).parent().delegate('button#close-me', 'click', function() {
-                $("#mrctest").popover('hide');
-                console.log('World!');
-            });;
-            $("#mrctest").popover('show');
-        } else {
-            $("#mrctest").popover('show');
-        }
-    });
+
+
 
     $(function() {
         checkProblem();
         getSensorData();
-        /*
 
-        canvas1 = document.getElementById('canvas1');
-        context1 = canvas1.getContext('2d');
-
-        canvas2 = document.getElementById('canvas2');
-        context2 = canvas2.getContext('2d');
-
-        humanImg = new Image();
-        humanImg.src = '/static/img/human.png';
-
-        lightImg = new Image();
-        lightImg.src = '/static/img/light.png';
-
-
-        
-        
-        */
-        
-        //var counter = setInterval(checkProblem, 1000);
-
-
-        
-        /*var machines = new Array({'loadedImgNum': 0, 'x': 520, 'y': 500},
-                {'loadedImgNum': 0, 'x': 480, 'y': 270}, 
-                {'loadedImgNum': 0, 'x': 740, 'y': 380});*/
-        
-        
-
-
-        
-        /*
-        var floor1Img = new Image();
-        floor1Img.onload = function() {
-            context1.drawImage(floor1Img, 0, 0, 1007, 646);
-            drawMachines();
-            checkProblem();
-            getSensorData();
-            //problemCoordinate = {x: 250, y: 570, floor:1};
-            //setInterval(blink, 1000);
-        };
-        floor1Img.src = '/static/img/floor1.png';
-
-
-        var floor2Img = new Image();
-        floor2Img.onload = function() {
-            context2.drawImage(floor2Img, 0, 0, 1007, 646);
-        };
-        floor2Img.src = '/static/img/floor2.png';
-        */
+        $('#myTab a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
     });
 </script>
 
