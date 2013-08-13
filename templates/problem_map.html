@@ -284,6 +284,19 @@
         $('#problem' + id).tooltip({
             title: description
         });
+
+        $('#problem' + id).click(function() {
+            $("#mrc1").popover('destroy');
+            $("#mrc1").popover({
+                html: true,
+                placement: 'top',
+                title: 'Save Energy, Get Rewards !',
+                trigger: 'manual',
+                content: description + '<br><button id="close-me" type="button" class="btn btn-primary">OK</button> <button id="close-you" type="button" class="btn btn-danger">Close</button>'
+            });
+
+            $("#mrc1").popover('show');
+        });
     }
 
     function plotHuman(id, x, y, floor) {
