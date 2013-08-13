@@ -145,8 +145,6 @@
         'B23.kitchen': {x: 770, y: 450, floor: 1}
     };
 
-
-
     var machine1 = {'x': 520, 'y': 500};
     var machine2 = {'x': 480, 'y': 270};
     var machine3 = {'x': 740, 'y': 380};
@@ -177,6 +175,7 @@
                             problemCoordinates[i] = roomCoordinates[location];
                         }
                     }
+
                     
                     /*
                     var data = {};
@@ -219,11 +218,13 @@
                         $("#mrc1").popover('hide');
                     });
                     $("#mrc1").popover('show');
+
                 }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 var data = {};
                 data['data'] = [{location: 'B23.104', description: 'Could you turn off the light in Room 104?'},
+
                     {location: 'B23.214', description: "Turn off the light!"},
                     {location: 'B23.109', description: "Light is not closing"},
                     {location: 'B23.129A', description: "Help us to turn off the light"}];
@@ -262,6 +263,7 @@
                     $("#mrc1").popover('hide');
                 });
                 $("#mrc1").popover('show');
+
             }
         });
     }
@@ -391,8 +393,6 @@
             cnt = 0;
         }
     }
-
-
 
 
     $(function() {

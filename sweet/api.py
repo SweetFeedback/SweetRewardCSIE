@@ -7,7 +7,7 @@ from sqlalchemy.sql import func
 from model import *
 import config
 from members import *
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 import time
 import pytz
 import json 
@@ -360,7 +360,9 @@ def find_problem():
 		return jsonify(error=1)
 	else: 
 		index = db.session.query(ProblemRepository).filter_by(valid=True).filter_by(device_feedback=device_id).all()
-		return jsonify(data=[i.serialize for i in index])
+		if len(index) == 0:
+			return jsonify(data={"question":get_one_random_question().serialize})
+		return jsonify(data={"problem":[i.serialize for i in index]})
 
 def loop_check_problem(): 
 	#this function will loop in thread 
@@ -423,6 +425,16 @@ def get_random_questions(questions):
 	random_questions.append(questions[index])
 	indexs.pop(indexs.index(index))
 	return random_questions
+def get_one_random_question():
+	questions = db.session.query(QuestionRepository).all()
+	random_one = None
+
+	indexs = range(len(questions))
+	index = choice(indexs)
+	random_one = questions[index]
+	#indexs.pop(indexs.index(index))
+	return random_one
+
 
 @api.route("/feedbacks/<application_id>/<years>/<months>/<days>")
 def get_feedbacks(years, months, days, application_id):
@@ -430,7 +442,7 @@ def get_feedbacks(years, months, days, application_id):
 	return jsonify(data=[i.serialize for i in feedbacks])
 def get_list_feedbacks(y, m, d, a):
 	day_datetime = datetime.fromordinal(date(y, m, d).toordinal())
-	next_day_datetime = datetime.fromordinal(date(y, m, d+1).toordinal())
+	next_day_datetime = datetime.fromordinal((date(y, m, d)+ timedelta(days=1)).toordinal())
 	feedbacks = Feedback.query.filter_by(application_id=a).filter(Feedback.created_time < next_day_datetime).filter(Feedback.created_time > day_datetime).all()
 	return feedbacks
 
