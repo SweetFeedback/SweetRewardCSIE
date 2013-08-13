@@ -6,8 +6,10 @@ from sqlalchemy import Table, Column, Text, Integer, String, Date, Float, TIMEST
 
 import md5
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder = "../templates", static_folder= "../static")
+
 app.config.from_pyfile('config.py')
+
 #app.config['SQLALCHEMY_DATABASE_URI'] = config.DB_URI
 db = SQLAlchemy(app)
 
