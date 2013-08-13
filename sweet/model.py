@@ -3,11 +3,12 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from datetime import datetime
 import os, sys
 from sqlalchemy import Table, Column, Text, Integer, String, Date, Float, TIMESTAMP, BOOLEAN
-import config
+
 import md5
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = config.DB_URI
+app.config.from_pyfile('config.py')
+#app.config['SQLALCHEMY_DATABASE_URI'] = config.DB_URI
 db = SQLAlchemy(app)
 
 
