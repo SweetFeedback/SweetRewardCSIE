@@ -77,6 +77,8 @@
                 <div id="map1">
                     <img src="/static/img/floor1.png" width="1007" height="646" style="position: absolute; z-index: 100;">
                     <img id="mrc1" src="/static/img/mrc/mrc.png" width="43" height="56" style="position: absolute; z-index: 200; margin-top: 500px; margin-left: 530px;">
+                    <img id="mrc2" src="/static/img/mrc/mrc.png" width="43" height="56" style="position: absolute; z-index: 200; margin-top: 270px; margin-left: 480px;">
+                    <img id="mrc3" src="/static/img/mrc/mrc.png" width="43" height="56" style="position: absolute; z-index: 200; margin-top: 380px; margin-left: 740px;">
                 </div>
 
                 
@@ -394,6 +396,20 @@
         }
     }
 
+    var refreshFlag = 1;
+
+    function reload() {
+        if(refreshFlag == 1) {
+            location.reload();
+        } else {
+            refreshFlag = 1;
+        }
+    }
+
+    $(document).mousemove(function(event){
+        refreshFlag = 0;
+    });
+
 
     $(function() {
         checkProblem();
@@ -403,6 +419,8 @@
             e.preventDefault();
             $(this).tab('show');
         })
+
+        setInterval(reload, 30000);
     });
 </script>
 
