@@ -160,7 +160,8 @@
         transportation: '/static/img/transportation/empty.png'
     };
     var sourcesLength = 6;
-    var problemCoordinates = [];
+
+    var problemId = -1;
 
 
     function checkProblem() {
@@ -169,46 +170,110 @@
             url: "./get_problem?device_id=1",
             dataType: 'json',
             success: function(data) {
-                if(data['data'].length > 0) {
+                if('problem' in data['data']) {
+                    if(data['data']['problem'].length <= 0) {
+                        return;
+                    }
 
-                    for(var i = 0; i < data['data'].length; i++) {
-                        var location = data['data'][i]['location'];
+                    var problems = data['data']['problem'];
+
+                    for(var i = 0; i < problems.length; i++) {
+                        var problem = problems[i];
+                        var id = problem['problem_id'];
+                        var location = problem['location'];
+                        var description = problem['description'];
+
                         if(location in roomCoordinates) {
-                            problemCoordinates[i] = roomCoordinates[location];
+                            var coordinate = roomCoordinates[location];
+                            
+                            plotProblem(id, coordinate.x, coordinate.y, coordinate.floor, description);
+                        }
+
+                        // init problem id
+                        if(problemId == -1) {
+                            problemId = id;
                         }
                     }
 
-                    
-                    /*
-                    var data = {};
-                    data['data'] = [{location: 'B23.104', description: 'Could you turn off the light in Room 104? I will give you candy!'},
-                        {location: 'B23.214'},
-                        {location: 'B23.109'}];
-
-                    for(var i = 0; i < data['data'].length; i++) {
-                        var location = data['data'][i]['location'];
-                        if(location in roomCoordinates) {
-                            problemCoordinates[i] = roomCoordinates[location];
-                        }
-                    }
-                    setInterval(blink, 1000);
-
-                    */
                     setInterval(blink, 1000);
 
                     $("#mrc1").popover({
                         html: true,
                         placement: 'top',
-                        title: 'Save Energy, Get Rewards !',
                         trigger: 'manual',
-                        content: data['data'][0]['description'] + '<br><button id="close-me" type="button" class="btn btn-primary">OK</button> <button id="close-you" type="button" class="btn btn-danger">Close</button>'
+                        content: data['data']['problem'][0]['description'] + '<br><button id="close-me" type="button" class="btn btn-primary">OK</button> <button id="close-you" type="button" class="btn btn-danger">Close</button>'
                     });
 
                     $("#mrc1").parent().delegate('button#close-me', 'click', function() {
                         $("#mrc1").popover('hide');
                         $.ajax({
                             type: "GET",
-                            url: "./reply",
+                            url: "./confirm_to_solve_problem?problem_id=" + problemId,
+                            dataType: 'json',
+                            success: function(data) {
+                            },
+                            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            }
+                        });
+                    });
+                    $("#mrc1").parent().delegate('button#close-you', 'click', function() {
+                        $("#mrc1").popover('hide');
+                    });
+                    $("#mrc1").popover('show');
+                }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+
+                    var data = {
+                        data: {
+                            problem: [
+                                {problem_id: 5, location: 'B23.123', description: '5'},
+                                {problem_id: 10, location: 'B23.107', description: '10'},
+                                {problem_id: 3, location: 'B23.109', description: '3'},
+                                {problem_id: 2, location: 'B23.110', description: '2'},
+                                {problem_id: 99, location: 'B23.115', description: '99'}
+                            ]
+                        }
+                    };
+
+                    if(data['data']['problem'].length <= 0) {
+                        return;
+                    }
+
+                    var problems = data['data']['problem'];
+
+                    for(var i = 0; i < problems.length; i++) {
+                        var problem = problems[i];
+                        var id = problem['problem_id'];
+                        var location = problem['location'];
+                        var description = problem['description'];
+
+                        if(location in roomCoordinates) {
+                            var coordinate = roomCoordinates[location];
+                            
+                            plotProblem(id, coordinate.x, coordinate.y, coordinate.floor, description);
+                        }
+
+                        // init problem id
+                        if(problemId == -1) {
+                            problemId = id;
+                        }
+                    }
+
+                    setInterval(blink, 1000);
+
+                    $("#mrc1").popover({
+                        html: true,
+                        placement: 'top',
+                        trigger: 'manual',
+                        content: data['data']['problem'][0]['description'] + '<br><button id="close-me" type="button" class="btn btn-primary">OK</button> <button id="close-you" type="button" class="btn btn-danger">Close</button>'
+                    });
+
+                    $("#mrc1").parent().delegate('button#close-me', 'click', function() {
+                        $("#mrc1").popover('hide');
+                        $.ajax({
+                            type: "GET",
+                            url: "./confirm_to_solve_problem?problem_id=" + problemId,
                             dataType: 'json',
                             success: function(data) {
                             },
@@ -221,50 +286,7 @@
                     });
                     $("#mrc1").popover('show');
 
-                }
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                var data = {};
-                data['data'] = [{location: 'B23.104', description: 'Could you turn off the light in Room 104?'},
 
-                    {location: 'B23.214', description: "Turn off the light!"},
-                    {location: 'B23.109', description: "Light is not closing"},
-                    {location: 'B23.129A', description: "Help us to turn off the light"}];
-                for(var i = 0; i < data['data'].length; i++) {
-                    var location = data['data'][i]['location'];
-                    var description = data['data'][i]['description'];
-                    if(location in roomCoordinates) {
-                        problemCoordinates[i] = roomCoordinates[location];
-                        plotProblem(i, problemCoordinates[i].x, problemCoordinates[i].y, problemCoordinates[i].floor, description);
-                    }
-                }
-
-                setInterval(blink, 1000);
-
-                $("#mrc1").popover({
-                    html: true,
-                    placement: 'top',
-                    title: 'Save Energy, Get Rewards !',
-                    trigger: 'manual',
-                    content: data['data'][0]['description'] + '<br><button id="close-me" type="button" class="btn btn-primary">OK</button> <button id="close-you" type="button" class="btn btn-danger">Close</button>'
-                });
-
-                $("#mrc1").parent().delegate('button#close-me', 'click', function() {
-                    $("#mrc1").popover('hide');
-                    $.ajax({
-                        type: "GET",
-                        url: "./reply",
-                        dataType: 'json',
-                        success: function(data) {
-                        },
-                        error: function(XMLHttpRequest, textStatus, errorThrown) {
-                        }
-                    });
-                });
-                $("#mrc1").parent().delegate('button#close-you', 'click', function() {
-                    $("#mrc1").popover('hide');
-                });
-                $("#mrc1").popover('show');
 
             }
         });
@@ -300,6 +322,10 @@
             });
 
             $("#mrc1").popover('show');
+
+            // update problem id for submitting to server
+            $("#problem" + problemId).show();
+            problemId = id;
         });
     }
 
@@ -388,10 +414,10 @@
 
     function blink() {
         if(cnt == 0) {
-            $("#problem0").show();
+            $("#problem" + problemId).show();
             cnt = 1;
         } else {
-            $("#problem0").hide();
+            $("#problem" + problemId).hide();
             cnt = 0;
         }
     }
