@@ -66,59 +66,31 @@
     <div class="container">
 
     <!-- Main component for a primary marketing message or call to action -->
-    
-        <!-- Modal -->
-        <div class="modal fade" id="myModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title"></h4>
-                    </div>
-                    <div class="modal-body">
-                    </div>
-                    <div class="modal-footer">
-                        <button id="doit" type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-
-        <div id="carousel-example-generic" class="carousel slide" data-interval="false">
-          <!-- Indicators -->
-            <ol class="carousel-indicators">
-                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-            </ol>
-
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner">
-                <div class="item active">
-                    <canvas id="canvas1" width="1007" height="646"></canvas>
+        
+        <ul class="nav nav-tabs" id="myTab">
+            <li class="active"><a href="#1F">1F</a></li>
+            <li><a href="#2F">2F</a></li>
+        </ul>
+         
+        <div class="tab-content">
+            <div class="tab-pane active" id="1F">
+                <div id="map1">
+                    <img src="/static/img/floor1.png" width="1007" height="646" style="position: absolute; z-index: 100;">
+                    <img id="mrc1" src="/static/img/mrc/mrc.png" width="43" height="56" style="position: absolute; z-index: 200; margin-top: 500px; margin-left: 530px;">
+                    <img id="mrc2" src="/static/img/mrc/mrc.png" width="43" height="56" style="position: absolute; z-index: 200; margin-top: 270px; margin-left: 480px;">
+                    <img id="mrc3" src="/static/img/mrc/mrc.png" width="43" height="56" style="position: absolute; z-index: 200; margin-top: 380px; margin-left: 740px;">
                 </div>
-                <div class="item">
-                    <canvas id="canvas2" width="1007" height="646"></canvas>
-                </div>
+
+                
             </div>
 
-            <!-- Controls -->
-            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                <span class="icon-prev"></span>
-            </a>
-            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                <span class="icon-next"></span>
-            </a>
-        </div>
-
-
-        <div class="tabable">
-            <div class="tab-content">
-                <div class="tab-pane active" id="apps-1">            
-                    <br/>
+            <div class="tab-pane" id="2F">
+                <div id="map2">
+                    <img src="/static/img/floor2.png" width="1007" height="646" style="position: absolute; z-index: 100;">
                 </div>
             </div>
         </div>
+
     </div> <!-- /container -->
 
     <div id="footer">
@@ -126,6 +98,7 @@
             <p class="text-muted credit" >Sweet Building Greeter is made by Louis Yu, Ken Liang, and Ted Selker</p>
         </div>
     </div> <!-- /footer -->
+
 
 </div> <!-- /wrap -->
 
@@ -143,7 +116,7 @@
 
 <script>
     var roomCoordinates = {
-        'B23.104': {x: 380, y: 560, floor: 1},
+        'B23.104': {x: 380, y: 540, floor: 1},
         'B23.105B': {x: 350, y: 560, floor: 1},
         'B23.107': {x: 250, y: 570, floor: 1},
         'B23.109': {x: 180, y: 530, floor: 1},
@@ -162,8 +135,8 @@
         'B23.212': {x: 150, y: 550, floor: 2},
         'B23.213': {x: 880, y: 550, floor: 2},
         'B23.214': {x: 890, y: 500, floor: 2},
-        'B23.214B': {x: 885, y: 475, floor: 2},
-        'B23.215': {x: 890, y: 390, floor: 2},
+        'B23.214B': {x: 880, y: 460, floor: 2},
+        'B23.215': {x: 885, y: 370, floor: 2},
         'B23.215B': {x: 890, y: 410, floor: 2},
         'B23.216': {x: 770, y: 540, floor: 2},
         'B23.217A': {x: 770, y: 370, floor: 2},
@@ -173,21 +146,6 @@
         'B23.230': {x: 450, y: 180, floor: 2},
         'B23.kitchen': {x: 770, y: 450, floor: 1}
     };
-
-    var problemCoordinates = new Array();
-    var cnt = 0;
-    var radius = 9;
-
-    var canvas1;
-    var context1;
-
-    var canvas2;
-    var context2;
-
-    var humanImg;
-    var machineImgs = {};
-    var lightImg;
-    var bulbImg;
 
     var machine1 = {'x': 520, 'y': 500};
     var machine2 = {'x': 480, 'y': 270};
@@ -202,6 +160,7 @@
         transportation: '/static/img/transportation/empty.png'
     };
     var sourcesLength = 6;
+    var problemCoordinates = [];
 
 
     function checkProblem() {
@@ -211,51 +170,182 @@
             dataType: 'json',
             success: function(data) {
                 if(data['data'].length > 0) {
-                    
+
                     for(var i = 0; i < data['data'].length; i++) {
                         var location = data['data'][i]['location'];
                         if(location in roomCoordinates) {
                             problemCoordinates[i] = roomCoordinates[location];
                         }
                     }
+
                     
                     /*
                     var data = {};
                     data['data'] = [{location: 'B23.104', description: 'Could you turn off the light in Room 104? I will give you candy!'},
                         {location: 'B23.214'},
                         {location: 'B23.109'}];
+
                     for(var i = 0; i < data['data'].length; i++) {
                         var location = data['data'][i]['location'];
                         if(location in roomCoordinates) {
                             problemCoordinates[i] = roomCoordinates[location];
                         }
                     }
+                    setInterval(blink, 1000);
+
                     */
                     setInterval(blink, 1000);
 
-                    $('.modal-title').html("Save Energy, Get Rewards !");
-                    $('.modal-body').html(data['data'][0]['description']);
-                    $('#myModal').modal('show');
+                    $("#mrc1").popover({
+                        html: true,
+                        placement: 'top',
+                        title: 'Save Energy, Get Rewards !',
+                        trigger: 'manual',
+                        content: data['data'][0]['description'] + '<br><button id="close-me" type="button" class="btn btn-primary">OK</button> <button id="close-you" type="button" class="btn btn-danger">Close</button>'
+                    });
+
+                    $("#mrc1").parent().delegate('button#close-me', 'click', function() {
+                        $("#mrc1").popover('hide');
+                        $.ajax({
+                            type: "GET",
+                            url: "./reply",
+                            dataType: 'json',
+                            success: function(data) {
+                            },
+                            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            }
+                        });
+                    });
+                    $("#mrc1").parent().delegate('button#close-you', 'click', function() {
+                        $("#mrc1").popover('hide');
+                    });
+                    $("#mrc1").popover('show');
+
                 }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 var data = {};
                 data['data'] = [{location: 'B23.104', description: 'Could you turn off the light in Room 104?'},
-                    {location: 'B23.214'},
-                    {location: 'B23.109'}];
+
+                    {location: 'B23.214', description: "Turn off the light!"},
+                    {location: 'B23.109', description: "Light is not closing"},
+                    {location: 'B23.129A', description: "Help us to turn off the light"}];
                 for(var i = 0; i < data['data'].length; i++) {
                     var location = data['data'][i]['location'];
+                    var description = data['data'][i]['description'];
                     if(location in roomCoordinates) {
                         problemCoordinates[i] = roomCoordinates[location];
+                        plotProblem(i, problemCoordinates[i].x, problemCoordinates[i].y, problemCoordinates[i].floor, description);
                     }
                 }
+
                 setInterval(blink, 1000);
 
-                $('.modal-title').html("Save Energy, Get Rewards !");
-                $('.modal-body').html(data['data'][0]['description']);
-                $('#myModal').modal('show');
+                $("#mrc1").popover({
+                    html: true,
+                    placement: 'top',
+                    title: 'Save Energy, Get Rewards !',
+                    trigger: 'manual',
+                    content: data['data'][0]['description'] + '<br><button id="close-me" type="button" class="btn btn-primary">OK</button> <button id="close-you" type="button" class="btn btn-danger">Close</button>'
+                });
+
+                $("#mrc1").parent().delegate('button#close-me', 'click', function() {
+                    $("#mrc1").popover('hide');
+                    $.ajax({
+                        type: "GET",
+                        url: "./reply",
+                        dataType: 'json',
+                        success: function(data) {
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        }
+                    });
+                });
+                $("#mrc1").parent().delegate('button#close-you', 'click', function() {
+                    $("#mrc1").popover('hide');
+                });
+                $("#mrc1").popover('show');
+
             }
         });
+    }
+
+    function plotProblem(id, x, y, floor, description) {
+        console.log("plot problem");
+        var str = ' <img id="problem' + id + '" src="/static/img/red-bullet.png" width="40" height="40"' +
+            'style="position: absolute; z-index: 700; '+
+            'margin-left: ' + x + 'px; ' +
+            'margin-top: ' + y + 'px;'+
+            '">';
+
+        if(floor == 1) {
+            $('#map1').append(str);
+        } else if(floor == 2) {
+            $('#map2').append(str);
+        }
+
+        // set up tooltip
+        $('#problem' + id).tooltip({
+            title: description
+        });
+
+        $('#problem' + id).click(function() {
+            $("#mrc1").popover('destroy');
+            $("#mrc1").popover({
+                html: true,
+                placement: 'top',
+                title: 'Save Energy, Get Rewards !',
+                trigger: 'manual',
+                content: description + '<br><button id="close-me" type="button" class="btn btn-primary">OK</button> <button id="close-you" type="button" class="btn btn-danger">Close</button>'
+            });
+
+            $("#mrc1").popover('show');
+        });
+    }
+
+    function plotHuman(id, x, y, floor) {
+        console.log("plot human");
+        var str = ' <img id="human' + id + '" src="/static/img/human.png" width="40" height="40"' +
+            'style="position: absolute; z-index: 500; '+
+            'margin-left: ' + x + 'px; ' +
+            'margin-top: ' + y + 'px;'+
+            '">';
+
+        if(floor == 1) {
+            $('#map1').append(str);
+        } else if(floor == 2) {
+            $('#map2').append(str);
+        }
+    }
+
+    function plotLight(id, x, y, floor) {
+        console.log("plot light");
+        var str = ' <img id="light' + id + '" src="/static/img/light.png" width="40" height="40"' +
+            'style="position: absolute; z-index: 500; '+
+            'margin-left: ' + (x-10) + 'px; ' +
+            'margin-top: ' + (y-10) + 'px;'+
+            '">';
+
+        if(floor == 1) {
+            $('#map1').append(str);
+        } else if(floor == 2) {
+            $('#map2').append(str);
+        }
+    }
+
+    function plotBulb(id, x, y, floor) {
+        console.log("plot bulb");
+        var str = ' <img id="bulb' + id + '" src="/static/img/bulb.png" width="40" height="40"' +
+            'style="position: absolute; z-index: 500; '+
+            'margin-left: ' + (x-10) + 'px; ' +
+            'margin-top: ' + (y-10) + 'px;'+
+            '">';
+
+        if(floor == 1) {
+            $('#map1').append(str);
+        } else if(floor == 2) {
+            $('#map2').append(str);
+        }
     }
 
     function getSensorData() {
@@ -272,7 +362,7 @@
                     if(parseInt(motionData[i]['value']) > 800) {
                         if(motionData[i]['location'] in roomCoordinates) {
                             var coordinate = roomCoordinates[motionData[i]['location']];
-                            drawHuman(coordinate.x-20, coordinate.y-20, coordinate.floor);
+                            plotHuman(i, coordinate.x-20, coordinate.y-20, coordinate.floor);
                         }
                     }
                 }
@@ -281,12 +371,11 @@
                     if(lightData[i]['location'] in roomCoordinates) {
                         var coordinate = roomCoordinates[lightData[i]['location']];
                         if(parseInt(lightData[i]['value']) > 900) {    
-                            drawLight(coordinate.x, coordinate.y, coordinate.floor);
+                            plotLight(i, coordinate.x, coordinate.y, coordinate.floor);
                         } else {
-                            drawBulb(coordinate.x, coordinate.y, coordinate.floor);
+                            plotBulb(i, coordinate.x, coordinate.y, coordinate.floor);
                         }
                     }
-
                 }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -295,154 +384,43 @@
     }
 
 
-    function drawRedSpot(problem) {
-        var context;
-        if(problem.floor == 1) {
-            context = context1;
-        } else {
-            context = context2;
-        }
-
-        context.beginPath();
-        context.arc(problem.x, problem.y, radius, 0, 2 * Math.PI, false);
-        context.fillStyle = 'red';
-        context.fill();
-        context.closePath();
-    }
+    var cnt = 0;
 
     function blink() {
-        var problemCoordinate = problemCoordinates[0];
-        var context;
-        if(problemCoordinate.floor == 1) {
-            context = context1;
-        } else {
-            context = context2;
-        }
-
-        if(cnt % 2) {
-            context.beginPath();
-            context.clearRect(problemCoordinate.x - radius - 1, problemCoordinate.y - radius - 1, radius * 2 + 2, radius * 2 + 2);
-            context.closePath();
-
-            cnt = 0;
-        } else {
-            context.beginPath();
-            context.arc(problemCoordinate.x, problemCoordinate.y, radius, 0, 2 * Math.PI, false);
-            context.fillStyle = 'red';
-            context.fill();
-            context.closePath();
-
+        if(cnt == 0) {
+            $("#problem0").show();
             cnt = 1;
-        }
-
-        for(var i = 1; i < problemCoordinates.length; i++) {
-            drawRedSpot(problemCoordinates[i]);
-        }
-        
-    }
-
-    function drawHuman(x, y, floor) {
-        if(floor == 1) {
-            context1.drawImage(humanImg, x, y, humanImg.width * 0.8, humanImg.height * 0.8);
         } else {
-            context2.drawImage(humanImg, x, y, humanImg.width * 0.8, humanImg.height * 0.8);
+            $("#problem0").hide();
+            cnt = 0;
         }
     }
 
-    function drawLight(x, y, floor) {
-        if(floor == 1) {
-            context1.drawImage(lightImg, x-5, y-5, lightImg.width * 1, lightImg.height * 1);
+    var refreshFlag = 1;
+
+    function reload() {
+        if(refreshFlag == 1) {
+            location.reload();
         } else {
-            context2.drawImage(lightImg, x-5, y-5, lightImg.width * 1, lightImg.height * 1);
+            refreshFlag = 1;
         }
     }
 
-    function drawBulb(x, y, floor) {
-        if(floor == 1) {
-            context1.drawImage(bulbImg, x, y, bulbImg.width * 0.3, bulbImg.height * 0.3);
-        } else {
-            context2.drawImage(bulbImg, x, y, bulbImg.width * 0.3, bulbImg.height * 0.3);
-        }
-    }
+    $(document).mousemove(function(event){
+        refreshFlag = 0;
+    });
 
-
-    function drawMachines() {
-        machineImgs['loadedImgNum'] = 0;
-        for(var source in sources) {
-            machineImgs[source] = new Image();
-            machineImgs[source].onload = function() {
-                machineImgs['loadedImgNum']++;
-                if(machineImgs['loadedImgNum'] == sourcesLength) {
-                    context1.drawImage(machineImgs.mrc, machine1.x, machine1.y, machineImgs.mrc.width * 0.15, machineImgs.mrc.height * 0.15);
-                    context1.drawImage(machineImgs.mrc, machine2.x, machine2.y, machineImgs.mrc.width * 0.15, machineImgs.mrc.height * 0.15);
-                    context1.drawImage(machineImgs.mrc, machine3.x, machine3.y, machineImgs.mrc.width * 0.15, machineImgs.mrc.height * 0.15);
-                        /*context1.drawImage(machine1.cold, 0, 0, 50, 50);
-                        context1.drawImage(machine1.sunglass, 0, 0, 50, 50);
-                        context1.drawImage(machine1.headphone, 0, 0, 50, 50);
-                        context1.drawImage(machine1.sweat, 0, 0, 50, 50);
-                        context1.drawImage(machine1.transportation, 0, 0, 50, 50);
-                        */
-                }
-            };
-            machineImgs[source].src = sources[source];
-        }
-    
-    }
 
     $(function() {
+        checkProblem();
+        getSensorData();
 
-        canvas1 = document.getElementById('canvas1');
-        context1 = canvas1.getContext('2d');
+        $('#myTab a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
 
-        canvas2 = document.getElementById('canvas2');
-        context2 = canvas2.getContext('2d');
-
-        humanImg = new Image();
-        humanImg.src = '/static/img/human.png';
-
-        lightImg = new Image();
-        lightImg.src = '/static/img/light.png';
-
-        bulbImg = new Image();
-        bulbImg.src = '/static/img/bulb.png';
-
-
-
-        
-        
-
-        
-        //var counter = setInterval(checkProblem, 1000);
-
-
-        
-        /*var machines = new Array({'loadedImgNum': 0, 'x': 520, 'y': 500},
-                {'loadedImgNum': 0, 'x': 480, 'y': 270}, 
-                {'loadedImgNum': 0, 'x': 740, 'y': 380});*/
-        
-        
-
-
-        
-
-        var floor1Img = new Image();
-        floor1Img.onload = function() {
-            context1.drawImage(floor1Img, 0, 0, 1007, 646);
-            drawMachines();
-            checkProblem();
-            getSensorData();
-            //problemCoordinate = {x: 250, y: 570, floor:1};
-            //setInterval(blink, 1000);
-        };
-        floor1Img.src = '/static/img/floor1.png';
-
-
-        var floor2Img = new Image();
-        floor2Img.onload = function() {
-            context2.drawImage(floor2Img, 0, 0, 1007, 646);
-        };
-        floor2Img.src = '/static/img/floor2.png';
-
+        setInterval(reload, 30000);
     });
 </script>
 

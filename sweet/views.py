@@ -67,7 +67,397 @@ def get_sensor_repository_data():
 	motion = motion_data() 
 	#return render_template("/sensor.html")
 	#return render_template("/panel_sensor.html", data=cleaned_data)
-	return jsonify(data={'motion':motion, 'light':light})
+	return '''
+	
+{
+  "data": {
+    "light": [
+      {
+        "device_id": "10170008",
+        "location": "B23.212",
+        "sensor_type": "light",
+        "timestamp": "Thu, 08 Aug 2013 17:20:23 GMT",
+        "value": 923
+      },
+      {
+        "device_id": "10170302",
+        "location": "B23.105B",
+        "sensor_type": "light",
+        "timestamp": "Thu, 08 Aug 2013 17:20:47 GMT",
+        "value": 1023
+      },
+      {
+        "device_id": "10170308",
+        "location": "B23.120",
+        "sensor_type": "light",
+        "timestamp": "Thu, 08 Aug 2013 17:20:07 GMT",
+        "value": 961
+      },
+      {
+        "device_id": "10170104",
+        "location": "B23.230",
+        "sensor_type": "light",
+        "timestamp": "Thu, 08 Aug 2013 17:20:49 GMT",
+        "value": 944
+      },
+      {
+        "device_id": "10170206",
+        "location": "B23.215B",
+        "sensor_type": "light",
+        "timestamp": "Thu, 08 Aug 2013 17:20:30 GMT",
+        "value": 1001
+      },
+      {
+        "device_id": "10170004",
+        "location": "B23.110",
+        "sensor_type": "light",
+        "timestamp": "Thu, 08 Aug 2013 17:20:51 GMT",
+        "value": 1014
+      },
+      {
+        "device_id": "10170304",
+        "location": "B23.123",
+        "sensor_type": "light",
+        "timestamp": "Thu, 08 Aug 2013 17:20:48 GMT",
+        "value": 1021
+      },
+      {
+        "device_id": "10170209",
+        "location": "B23.217B",
+        "sensor_type": "light",
+        "timestamp": "Thu, 08 Aug 2013 17:19:40 GMT",
+        "value": 953
+      },
+      {
+        "device_id": "10170202",
+        "location": "B23.216",
+        "sensor_type": "light",
+        "timestamp": "Thu, 08 Aug 2013 17:20:47 GMT",
+        "value": 950
+      },
+      {
+        "device_id": "10170002",
+        "location": "B23.115",
+        "sensor_type": "light",
+        "timestamp": "Thu, 08 Aug 2013 17:08:04 GMT",
+        "value": 943
+      },
+      {
+        "device_id": "10170208",
+        "location": "B23.217A",
+        "sensor_type": "light",
+        "timestamp": "Thu, 08 Aug 2013 17:20:51 GMT",
+        "value": 835
+      },
+      {
+        "device_id": "10170203",
+        "location": "B23.213",
+        "sensor_type": "light",
+        "timestamp": "Thu, 08 Aug 2013 17:20:49 GMT",
+        "value": 1015
+      },
+      {
+        "device_id": "10170003",
+        "location": "B23.116",
+        "sensor_type": "light",
+        "timestamp": "Thu, 08 Aug 2013 16:24:14 GMT",
+        "value": 915
+      },
+      {
+        "device_id": "10170102",
+        "location": "B23.129A",
+        "sensor_type": "light",
+        "timestamp": "Thu, 08 Aug 2013 17:20:46 GMT",
+        "value": 754
+      },
+      {
+        "device_id": "10170205",
+        "location": "B23.214B",
+        "sensor_type": "light",
+        "timestamp": "Thu, 08 Aug 2013 17:20:23 GMT",
+        "value": 854
+      },
+      {
+        "device_id": "10170105",
+        "location": "B23.228",
+        "sensor_type": "light",
+        "timestamp": "Thu, 08 Aug 2013 17:20:51 GMT",
+        "value": 801
+      },
+      {
+        "device_id": "10170106",
+        "location": "B23.229",
+        "sensor_type": "light",
+        "timestamp": "Thu, 08 Aug 2013 17:20:22 GMT",
+        "value": 1005
+      },
+      {
+        "device_id": "10170303",
+        "location": "B23.104",
+        "sensor_type": "light",
+        "timestamp": "Thu, 08 Aug 2013 17:19:23 GMT",
+        "value": 907
+      },
+      {
+        "device_id": "10170009",
+        "location": "B23.210",
+        "sensor_type": "light",
+        "timestamp": "Thu, 08 Aug 2013 17:20:25 GMT",
+        "value": 936
+      },
+      {
+        "device_id": "10170007",
+        "location": "B23.211",
+        "sensor_type": "light",
+        "timestamp": "Thu, 08 Aug 2013 17:20:21 GMT",
+        "value": 1005
+      },
+      {
+        "device_id": "10170305",
+        "location": "B23.126",
+        "sensor_type": "light",
+        "timestamp": "Thu, 08 Aug 2013 17:20:49 GMT",
+        "value": 1023
+      },
+      {
+        "device_id": "10170207",
+        "location": "B23.215",
+        "sensor_type": "light",
+        "timestamp": "Thu, 08 Aug 2013 17:19:21 GMT",
+        "value": 707
+      },
+      {
+        "device_id": "10170005",
+        "location": "B23.109",
+        "sensor_type": "light",
+        "timestamp": "Thu, 08 Aug 2013 17:20:47 GMT",
+        "value": 934
+      },
+      {
+        "device_id": "10170103",
+        "location": "B23.129",
+        "sensor_type": "light",
+        "timestamp": "Thu, 08 Aug 2013 17:20:48 GMT",
+        "value": 684
+      },
+      {
+        "device_id": "10170204",
+        "location": "B23.214",
+        "sensor_type": "light",
+        "timestamp": "Thu, 08 Aug 2013 17:20:01 GMT",
+        "value": 1023
+      },
+      {
+        "device_id": "10170307",
+        "location": "B23.122",
+        "sensor_type": "light",
+        "timestamp": "Thu, 08 Aug 2013 17:20:39 GMT",
+        "value": 930
+      },
+      {
+        "device_id": "10170006",
+        "location": "B23.107",
+        "sensor_type": "light",
+        "timestamp": "Thu, 08 Aug 2013 17:20:48 GMT",
+        "value": 946
+      }
+    ],
+    "motion": [
+      {
+        "device_id": "10170008",
+        "location": "B23.212",
+        "sensor_type": "motion",
+        "timestamp": "Thu, 08 Aug 2013 17:20:23 GMT",
+        "value": 737
+      },
+      {
+        "device_id": "10170302",
+        "location": "B23.105B",
+        "sensor_type": "motion",
+        "timestamp": "Thu, 08 Aug 2013 17:20:47 GMT",
+        "value": 735
+      },
+      {
+        "device_id": "10170005",
+        "location": "B23.109",
+        "sensor_type": "motion",
+        "timestamp": "Thu, 08 Aug 2013 17:20:52 GMT",
+        "value": 750
+      },
+      {
+        "device_id": "10170308",
+        "location": "B23.120",
+        "sensor_type": "motion",
+        "timestamp": "Thu, 08 Aug 2013 17:20:07 GMT",
+        "value": 753
+      },
+      {
+        "device_id": "10170104",
+        "location": "B23.230",
+        "sensor_type": "motion",
+        "timestamp": "Thu, 08 Aug 2013 17:20:49 GMT",
+        "value": 744
+      },
+      {
+        "device_id": "10170202",
+        "location": "B23.216",
+        "sensor_type": "motion",
+        "timestamp": "Thu, 08 Aug 2013 17:20:53 GMT",
+        "value": 760
+      },
+      {
+        "device_id": "10170206",
+        "location": "B23.215B",
+        "sensor_type": "motion",
+        "timestamp": "Thu, 08 Aug 2013 17:20:30 GMT",
+        "value": 740
+      },
+      {
+        "device_id": "10170004",
+        "location": "B23.110",
+        "sensor_type": "motion",
+        "timestamp": "Thu, 08 Aug 2013 17:20:51 GMT",
+        "value": 739
+      },
+      {
+        "device_id": "10170304",
+        "location": "B23.123",
+        "sensor_type": "motion",
+        "timestamp": "Thu, 08 Aug 2013 17:20:48 GMT",
+        "value": 740
+      },
+      {
+        "device_id": "10170209",
+        "location": "B23.217B",
+        "sensor_type": "motion",
+        "timestamp": "Thu, 08 Aug 2013 17:19:40 GMT",
+        "value": 747
+      },
+      {
+        "device_id": "10170002",
+        "location": "B23.115",
+        "sensor_type": "motion",
+        "timestamp": "Thu, 08 Aug 2013 17:08:04 GMT",
+        "value": 1015
+      },
+      {
+        "device_id": "10170208",
+        "location": "B23.217A",
+        "sensor_type": "motion",
+        "timestamp": "Thu, 08 Aug 2013 17:20:51 GMT",
+        "value": 731
+      },
+      {
+        "device_id": "10170203",
+        "location": "B23.213",
+        "sensor_type": "motion",
+        "timestamp": "Thu, 08 Aug 2013 17:20:49 GMT",
+        "value": 735
+      },
+      {
+        "device_id": "10170003",
+        "location": "B23.116",
+        "sensor_type": "motion",
+        "timestamp": "Thu, 08 Aug 2013 16:24:14 GMT",
+        "value": 732
+      },
+      {
+        "device_id": "10170102",
+        "location": "B23.129A",
+        "sensor_type": "motion",
+        "timestamp": "Thu, 08 Aug 2013 17:20:53 GMT",
+        "value": 732
+      },
+      {
+        "device_id": "10170205",
+        "location": "B23.214B",
+        "sensor_type": "motion",
+        "timestamp": "Thu, 08 Aug 2013 17:20:23 GMT",
+        "value": 1023
+      },
+      {
+        "device_id": "10170105",
+        "location": "B23.228",
+        "sensor_type": "motion",
+        "timestamp": "Thu, 08 Aug 2013 17:20:51 GMT",
+        "value": 749
+      },
+      {
+        "device_id": "10170106",
+        "location": "B23.229",
+        "sensor_type": "motion",
+        "timestamp": "Thu, 08 Aug 2013 17:20:22 GMT",
+        "value": 744
+      },
+      {
+        "device_id": "10170303",
+        "location": "B23.104",
+        "sensor_type": "motion",
+        "timestamp": "Thu, 08 Aug 2013 17:19:23 GMT",
+        "value": 752
+      },
+      {
+        "device_id": "10170009",
+        "location": "B23.210",
+        "sensor_type": "motion",
+        "timestamp": "Thu, 08 Aug 2013 17:20:25 GMT",
+        "value": 738
+      },
+      {
+        "device_id": "10170007",
+        "location": "B23.211",
+        "sensor_type": "motion",
+        "timestamp": "Thu, 08 Aug 2013 17:20:21 GMT",
+        "value": 747
+      },
+      {
+        "device_id": "10170307",
+        "location": "B23.122",
+        "sensor_type": "motion",
+        "timestamp": "Thu, 08 Aug 2013 17:20:39 GMT",
+        "value": 742
+      },
+      {
+        "device_id": "10170305",
+        "location": "B23.126",
+        "sensor_type": "motion",
+        "timestamp": "Thu, 08 Aug 2013 17:20:49 GMT",
+        "value": 750
+      },
+      {
+        "device_id": "10170207",
+        "location": "B23.215",
+        "sensor_type": "motion",
+        "timestamp": "Thu, 08 Aug 2013 17:19:21 GMT",
+        "value": 743
+      },
+      {
+        "device_id": "10170103",
+        "location": "B23.129",
+        "sensor_type": "motion",
+        "timestamp": "Thu, 08 Aug 2013 17:20:48 GMT",
+        "value": 752
+      },
+      {
+        "device_id": "10170204",
+        "location": "B23.214",
+        "sensor_type": "motion",
+        "timestamp": "Thu, 08 Aug 2013 17:20:01 GMT",
+        "value": 742
+      },
+      {
+        "device_id": "10170006",
+        "location": "B23.107",
+        "sensor_type": "motion",
+        "timestamp": "Thu, 08 Aug 2013 17:20:48 GMT",
+        "value": 743
+      }
+    ]
+  }
+}
+	'''
+
+	#return jsonify(data={'motion':motion, 'light':light})
 
 def get_data(url):
 	data = json.load(urllib2.urlopen(url))
