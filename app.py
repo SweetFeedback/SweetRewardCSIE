@@ -15,12 +15,18 @@ from api import api
 from views import views
 
 
-app = Flask(__name__)
 app.register_blueprint(api)
 app.register_blueprint(views)
 
+port = 1234
 
 if __name__ == "__main__":
     #app.run(debug=True)
-    port = int(os.environ.get('PORT', 5566))
+    if len(sys.argv) > 1 and sys.argv[1] == "experiment": 
+    	port = 9527
+    if len(sys.argv) > 1 and sys.argv[1] == "production":
+	port = 5566
+    if len(sys.argv) > 1 and sys.argv[1] == "development":
+        port = 1234
+    port = int(os.environ.get('PORT', port))
     app.run(host='0.0.0.0', port=port, debug=True)

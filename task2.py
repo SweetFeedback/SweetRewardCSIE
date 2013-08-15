@@ -1,10 +1,16 @@
 from celery import Celery
 import time
+from datetime import datetime, timedelta
 import json 
 import urllib2
 import config, os, sys	
+
 path = os.path.join(os.path.dirname(os.path.abspath(__file__)),'sweet/')
 sys.path.append(path)
+
+from model import * 
+from policyManager import *
+
 celery = Celery("task2", 
 				broker = 'redis://localhost:6379/0', 
 				backend='redis')
@@ -24,8 +30,6 @@ def loop_check_problem():
 		print "check sensor repository..."
 		path = os.path.join(os.path.dirname(os.path.abspath(__file__)),'sweet/')
 		sys.path.append(path)
-		from model import *
-		from feedbacks import *
 		problem_repos = db.session.query(ProblemRepository).filter_by(valid=True)
 		data = json.load(urllib2.urlopen('http://cmu-sensor-network.herokuapp.com/lastest_readings_from_all_devices/light/json'))
 		print problem_repos
@@ -44,11 +48,48 @@ def loop_check_problem():
 						insert_feedback(p.serialize['device_feedback'], "10", -1, "positive", "you did close the light", can_get_time=15)
 						print "give feedback to " + str(p.serialize['device_feedback'])
 		#if problem_repos
-		from model import *
 		db.session.commit()
 		break;
 	elapsed_time = time.time() - start_time
 	return elapsed_time 
+@celery.task(name = "task2.noise_check")
+def noise_check(): 
+	start_time = time.time()
 
+	online_machines = db.session.query(DeviceOnline).all()
+	for machine in online_machines: 
+		print "checking device " + machine.device_id
+		machine_sensor_index = db.session.query(GumballSensorIndex).filter_by(device_id=machine.device_id).first()
+		print machine_sensor_index.time
+		noises = db.session.query(GumballSensor).filter_by(device_id=machine.device_id).filter(GumballSensor.time <= machine_sensor_index.time).filter(GumballSensor.time >= machine_sensor_index.time - timedelta(seconds=15))
+		avr_noise_level = 0 
+		#print "Get " + str(noises.count()) + " data to average"
+		for n in noises:
+			#print n.sound
+			avr_noise_level = avr_noise_level + n.sound
+		avr_noise_level = avr_noise_level / noises.count()
+		print "average noise level is " + str(avr_noise_level)
+		if machine_sensor_index != None and isNoisy(avr_noise_level) is True:
+			insert_noise_problem_to_problem_repository(machine_sensor_index.device_id)
+			print "it's noisy here"
+	#db.session.commit()
+	elapsed_time = time.time() - start_time
+	return "used time for checking noise " + str(elapsed_time)
+
+def insert_noise_problem_to_problem_repository(device_id):
+	problem_repo_instance = ProblemRepository("Noise", "Is is noisy here?", "Device " + str(device_id), device_id, device_id)
+	db.session.add(problem_repo_instance)
+	db.session.commit()
+def insert_light_problem_to_problem_repository(firefly_id, device_id):
+	problem_repo_instance = ProblemRepository("light", "light is not closing now, could you help me to close it? I will give you candies if you do", mapping_table[firefly_id][2], firefly_id, device_id)
+	db.session.add(problem_repo_instance)
+	db.session.commit()
+
+@celery.task(name = "task2.light_check")
+def light_check():
+	start_time = time.time()
+	elapsed_time = time.time() - start_time
+	## left for implementation 
+	return "used time for checking light" + str(elapsed_time)
 if __name__ == "__main__" : 
 	celery.worker_main()
