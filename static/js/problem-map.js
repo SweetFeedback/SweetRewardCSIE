@@ -79,6 +79,42 @@ var sourcesLength = 6;
 
 var problemId = -1;
 
+function parseProblemJsonString(data) {
+    if(!('data' in data)) {
+        return;
+    }
+
+    if('problem' in data['data']) {
+        if(data['data']['problem'].length <= 0) {
+            return;
+        }
+
+        var problems = data['data']['problem'];
+
+        for(var i = 0; i < problems.length; i++) {
+            var problem = problems[i];
+            var id = problem['problem_id'];
+            var location = problem['location'];
+            var description = problem['description'];
+
+            if(location in roomCoordinates) {
+                var coordinate = roomCoordinates[location];
+
+                plotProblem(id, coordinate.x, coordinate.y, coordinate.floor, description);
+            }
+
+                // init problem id and dialog description
+                if(problemId == -1) {
+                    problemId = id;
+                    $("#dialog_desc").html(description);
+                }
+            }
+            setInterval(blink, 1000);
+
+            $("#dialog").show();
+    }
+
+}
 
 function checkProblem() {
     $.ajax({
@@ -86,115 +122,35 @@ function checkProblem() {
         url: "./get_problem?",
         dataType: 'json',
         success: function(data) {
-            if(!('data' in data)) {
-                return;
-            }
-
-            if('problem' in data['data']) {
-                if(data['data']['problem'].length <= 0) {
-                    return;
+            parseProblemJsonString(data);
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            var data = {
+                data: {
+                    question: {
+                        error_message: "Mobile computing and networks",
+                        option_1: "Mobile computing and networks",
+                        option_2: "Space travel",
+                        option_3: "Startups",
+                        option_4: "Public Transportation",
+                        problem_category: "introduction",
+                        problem_desc: "The CyLab Mobility Research Center was established to explore developments in",
+                        problem_id: 1,
+                        updated_at: "Tue, 06 Aug 2013 12:34:03 GMT"
+                    },
+                    problem: [
+                    {problem_id: 5, location: 'B23.123', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 123 and turn it off?<br>I'll give you candy if you do!"},
+                    {problem_id: 10, location: 'B23.107', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 107 and turn it off?<br>I'll give you candy if you do!"},
+                    {problem_id: 3, location: 'B23.109', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 109 and turn it off?<br>I'll give you candy if you do!"},
+                    {problem_id: 2, location: 'B23.110', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 110 and turn it off?<br>I'll give you candy if you do!"},
+                    {problem_id: 99, location: 'B23.115', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 115 and turn it off?<br>I'll give you candy if you do!"}
+                    ]
                 }
+            };
 
-                var problems = data['data']['problem'];
-
-                for(var i = 0; i < problems.length; i++) {
-                    var problem = problems[i];
-                    var id = problem['problem_id'];
-                    var location = problem['location'];
-                    var description = problem['description'];
-
-                    if(location in roomCoordinates) {
-                        var coordinate = roomCoordinates[location];                            
-                        plotProblem(id, coordinate.x, coordinate.y, coordinate.floor, description);
-                    }
-
-                        // init problem id
-                        if(problemId == -1) {
-                            problemId = id;
-                        }
-                    }
-
-                    setInterval(blink, 1000);
-
-                    $("#dialog").popover({
-                        html: true,
-                        placement: 'top',
-                        trigger: 'manual',
-                        content: data['data']['problem'][0]['description'] + '<br><button id="close-me" type="button" class="btn btn-primary">OK, I take it</button>'
-                    });
-
-                    $("#dialog").parent().delegate('button#close-me', 'click', function() {
-                        $("#dialog").popover('hide');
-                        $.ajax({
-                            type: "GET",
-                            url: "./confirm_to_solve_problem?problem_id=" + problemId,
-                            dataType: 'json',
-                            success: function(data) {
-                            },
-                            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                            }
-                        });
-                    });
-                    $("#dialog").popover('show');
-                }
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                var data = {
-                    data: {
-                        question: {
-                            error_message: "Mobile computing and networks",
-                            option_1: "Mobile computing and networks",
-                            option_2: "Space travel",
-                            option_3: "Startups",
-                            option_4: "Public Transportation",
-                            problem_category: "introduction",
-                            problem_desc: "The CyLab Mobility Research Center was established to explore developments in",
-                            problem_id: 1,
-                            updated_at: "Tue, 06 Aug 2013 12:34:03 GMT"
-                        },
-                        problem: [
-                        {problem_id: 5, location: 'B23.123', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 123 and turn it off?<br>I'll give you candy if you do!"},
-                        {problem_id: 10, location: 'B23.107', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 107 and turn it off?<br>I'll give you candy if you do!"},
-                        {problem_id: 3, location: 'B23.109', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 109 and turn it off?<br>I'll give you candy if you do!"},
-                        {problem_id: 2, location: 'B23.110', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 110 and turn it off?<br>I'll give you candy if you do!"},
-                        {problem_id: 99, location: 'B23.115', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 115 and turn it off?<br>I'll give you candy if you do!"}
-                        ]
-                    }
-                };
-
-
-
-                if(data['data']['problem'].length <= 0) {
-                    return;
-                }
-
-                var problems = data['data']['problem'];
-
-                for(var i = 0; i < problems.length; i++) {
-                    var problem = problems[i];
-                    var id = problem['problem_id'];
-                    var location = problem['location'];
-                    var description = problem['description'];
-
-                    if(location in roomCoordinates) {
-                        var coordinate = roomCoordinates[location];
-
-                        plotProblem(id, coordinate.x, coordinate.y, coordinate.floor, description);
-                    }
-
-                        // init problem id and dialog description
-                        if(problemId == -1) {
-                            problemId = id;
-                            $("#dialog_desc").html(description);
-                        }
-                    }
-
-                    setInterval(blink, 1000);
-
-                    $("#dialog").show();
-
-                }
-            });
+            parseProblemJsonString(data);
+        }
+    });
 }
 
 $("#close-me").click(function() {
@@ -227,144 +183,131 @@ function plotProblem(id, x, y, floor, description) {
         $('#map2').append(str);
     }
 
-        // set up tooltip
-        $('#problem' + id).tooltip({
-            title: "Help This Room"
-        });
+    // set up tooltip
+    $('#problem' + id).tooltip({
+        title: "Help This Room"
+    });
 
-        $('#problem' + id).click(function() {
-            /*
-            $("#dialog").popover('destroy');
-            $("#dialog").popover({
-                html: true,
-                placement: 'top',
-                trigger: 'manual',
-                content: description + '<br><button id="close-me" type="button" class="btn btn-primary">OK, I take it</button>'
-            });
+    $('#problem' + id).click(function() {
+        $("#problem" + problemId).show();
+        $("#dialog_desc").html(description);
+        //$("#dialog").popover('show');
 
-            // show previous problem red dot
-            
-            */
-            $("#problem" + problemId).show();
-            $("#dialog_desc").html(description);
-            //$("#dialog").popover('show');
+        // update problem id for submitting to server
+        problemId = id;
+    });
+}
 
-            // update problem id for submitting to server
-            problemId = id;
-            
-        });
+function plotHuman(id, x, y, floor) {
+    console.log("plot human");
+    var str = ' <img id="human' + id + '" src="/static/img/human.png" width="40" height="40"' +
+    'style="position: absolute; z-index: 500; '+
+    'margin-left: ' + x + 'px; ' +
+    'margin-top: ' + y + 'px;'+
+    '">';
+
+    if(floor == 1) {
+        $('#map1').append(str);
+    } else if(floor == 2) {
+        $('#map2').append(str);
     }
+}
 
-    function plotHuman(id, x, y, floor) {
-        console.log("plot human");
-        var str = ' <img id="human' + id + '" src="/static/img/human.png" width="40" height="40"' +
-        'style="position: absolute; z-index: 500; '+
-        'margin-left: ' + x + 'px; ' +
-        'margin-top: ' + y + 'px;'+
-        '">';
+function plotLight(id, x, y, floor) {
+    console.log("plot light");
+    return;
+    var str = ' <img id="light' + id + '" src="/static/img/light.png" width="40" height="40"' +
+    'style="position: absolute; z-index: 500; '+
+    'margin-left: ' + (x-10) + 'px; ' +
+    'margin-top: ' + (y-10) + 'px;'+
+    '">';
 
-        if(floor == 1) {
-            $('#map1').append(str);
-        } else if(floor == 2) {
-            $('#map2').append(str);
-        }
+    if(floor == 1) {
+        $('#map1').append(str);
+    } else if(floor == 2) {
+        $('#map2').append(str);
     }
+}
 
-    function plotLight(id, x, y, floor) {
-        console.log("plot light");
-        return;
-        var str = ' <img id="light' + id + '" src="/static/img/light.png" width="40" height="40"' +
-        'style="position: absolute; z-index: 500; '+
-        'margin-left: ' + (x-10) + 'px; ' +
-        'margin-top: ' + (y-10) + 'px;'+
-        '">';
+function plotBulb(id, x, y, floor) {
+    console.log("plot bulb");
+    return;
+    var str = ' <img id="bulb' + id + '" src="/static/img/bulb.png" width="40" height="40"' +
+    'style="position: absolute; z-index: 500; '+
+    'margin-left: ' + (x-10) + 'px; ' +
+    'margin-top: ' + (y-10) + 'px;'+
+    '">';
 
-        if(floor == 1) {
-            $('#map1').append(str);
-        } else if(floor == 2) {
-            $('#map2').append(str);
-        }
+    if(floor == 1) {
+        $('#map1').append(str);
+    } else if(floor == 2) {
+        $('#map2').append(str);
     }
+}
 
-    function plotBulb(id, x, y, floor) {
-        console.log("plot bulb");
-        return;
-        var str = ' <img id="bulb' + id + '" src="/static/img/bulb.png" width="40" height="40"' +
-        'style="position: absolute; z-index: 500; '+
-        'margin-left: ' + (x-10) + 'px; ' +
-        'margin-top: ' + (y-10) + 'px;'+
-        '">';
+function getSensorData() {
+    $.ajax({
+        type: "GET",
+        url: "./sensor_data",
+        dataType: 'json',
+        success: function(data) {
 
-        if(floor == 1) {
-            $('#map1').append(str);
-        } else if(floor == 2) {
-            $('#map2').append(str);
-        }
-    }
+            var motionData = data['data']['motion'];
+            var lightDatas = data['data']['light'];
 
-    function getSensorData() {
-        $.ajax({
-            type: "GET",
-            url: "./sensor_data",
-            dataType: 'json',
-            success: function(data) {
-
-                var motionData = data['data']['motion'];
-                var lightDatas = data['data']['light'];
-
-                for(var i = 0; i < motionData.length; i++) {
-                    if(parseInt(motionData[i]['value']) > 800) {
-                        if(motionData[i]['location'] in roomCoordinates) {
-                            var coordinate = roomCoordinates[motionData[i]['location']];
-                            plotHuman(i, coordinate.x-20, coordinate.y-20, coordinate.floor);
-                        }
+            for(var i = 0; i < motionData.length; i++) {
+                if(parseInt(motionData[i]['value']) > 800) {
+                    if(motionData[i]['location'] in roomCoordinates) {
+                        var coordinate = roomCoordinates[motionData[i]['location']];
+                        plotHuman(i, coordinate.x-20, coordinate.y-20, coordinate.floor);
                     }
                 }
-
-                for(var i = 0; i < lightDatas.length; i++) {
-                    var lightData = lightDatas[i];
-                    var location = lightData['location'];
-                    var value = parseInt(lightData['value'])
-
-                    if(location in roomCoordinates) {
-                        var coordinate = roomCoordinates[location];
-                        var cover = roomCovers[location];
-
-                        if(value > 900) {
-                            var str = ' <img id="cover' + i + '" src="/static/img/yellow-cover.png" width="' + cover.width + '" height="' + cover.height + '"' +
-                            'style="position: absolute; z-index: 50; '+
-                            'margin-left: ' + (cover.x) + 'px; ' +
-                            'margin-top: ' + (cover.y) + 'px;'+
-                            '">';
-
-                            if(cover.floor == 1) {
-                                $('#map1').append(str);
-                            } else if(cover.floor == 2) {
-                                $('#map2').append(str);
-                            }
-                            
-                            plotLight(i, coordinate.x, coordinate.y, coordinate.floor);
-                        } else {
-                            var str = ' <img id="cover' + i + '" src="/static/img/gray-cover.png" width="' + cover.width + '" height="' + cover.height + '"' +
-                            'style="position: absolute; z-index: 50; '+
-                            'margin-left: ' + (cover.x) + 'px; ' +
-                            'margin-top: ' + (cover.y) + 'px;'+
-                            '">';
-
-                            if(cover.floor == 1) {
-                                $('#map1').append(str);
-                            } else if(cover.floor == 2) {
-                                $('#map2').append(str);
-                            }
-                            
-                            plotBulb(i, coordinate.x, coordinate.y, coordinate.floor);
-                        }
-                    }
-                }
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
             }
-        });
+
+            for(var i = 0; i < lightDatas.length; i++) {
+                var lightData = lightDatas[i];
+                var location = lightData['location'];
+                var value = parseInt(lightData['value'])
+
+                if(location in roomCoordinates) {
+                    var coordinate = roomCoordinates[location];
+                    var cover = roomCovers[location];
+
+                    if(value > 900) {
+                        var str = ' <img id="cover' + i + '" src="/static/img/yellow-cover.png" width="' + cover.width + '" height="' + cover.height + '"' +
+                        'style="position: absolute; z-index: 50; '+
+                        'margin-left: ' + (cover.x) + 'px; ' +
+                        'margin-top: ' + (cover.y) + 'px;'+
+                        '">';
+
+                        if(cover.floor == 1) {
+                            $('#map1').append(str);
+                        } else if(cover.floor == 2) {
+                            $('#map2').append(str);
+                        }
+                        
+                        plotLight(i, coordinate.x, coordinate.y, coordinate.floor);
+                    } else {
+                        var str = ' <img id="cover' + i + '" src="/static/img/gray-cover.png" width="' + cover.width + '" height="' + cover.height + '"' +
+                        'style="position: absolute; z-index: 50; '+
+                        'margin-left: ' + (cover.x) + 'px; ' +
+                        'margin-top: ' + (cover.y) + 'px;'+
+                        '">';
+
+                        if(cover.floor == 1) {
+                            $('#map1').append(str);
+                        } else if(cover.floor == 2) {
+                            $('#map2').append(str);
+                        }
+                        
+                        plotBulb(i, coordinate.x, coordinate.y, coordinate.floor);
+                    }
+                }
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+        }
+    });
 }
 
 
