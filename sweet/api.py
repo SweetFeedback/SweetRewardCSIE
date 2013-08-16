@@ -70,33 +70,22 @@ def sensor_insert():
 	light_sensor = request.args.get("light_level", -1)
 	sound_sensor = request.args.get("sound_level", -1)
 	temp_sensor = request.args.get("temperature", -1)
+	window_sensor = request.args.get("window_state", -1)
 	device_id = request.args.get("device_id", -1)
 	
 	if device_id != -1:
 		device_login_or_update(device_id, request.remote_addr)
 	else: 
 		return jsonify(error="it's needed to provide device id.")
-	if light_sensor != -1 and sound_sensor != -1 and temp_sensor != -1:
-		sensor_log = GumballSensor(device_id, light_sensor, temp_sensor, sound_sensor)
-		db.session.add(sensor_log)
-		db.session.commit()
-		indexs = db.session.query(GumballSensorIndex).filter_by(device_id=device_id).first()
-		print indexs
-		if indexs is None:
-			sensor_log_index = GumballSensorIndex(sensor_log.log_id, sensor_log.device_id, sensor_log.light, sensor_log.temperature, sensor_log.sound)
-			db.session.add(sensor_log_index)
-			db.session.commit()
-		else:
-			indexs.log_id = sensor_log.log_id
-			indexs.device_id = sensor_log.device_id
-			indexs.sound = sensor_log.sound
-			indexs.temperature = sensor_log.temperature
-			indexs.light = sensor_log.light
-			indexs.time = sensor_log.time
-			db.session.commit()
-	else:
-		return jsonify(error="data not completed.")
-	return jsonify(data=[sensor_log.serialize], index=[indexs.serialize])
+	if light_sensor != -1:
+		db_helper.insert_light(device_id, light_sensor, "gumball machine")
+	if sound_sensor != -1:
+		db_helper.insert_sound(device_id, sound_sensor, "gumball machine")
+	if temp_sensor != -1:
+		db_helper.insert_temperature(device_id, temp_sensor, "gumball machine")	
+	if window_sensor != -1:
+		db_helper.insert_window(device_id, window_sensor, "gumball machine")
+	return jsonify(success=1)
 
 @api.route("/check")
 def check():
@@ -470,6 +459,7 @@ def get_feedbacks_leaderboard_application():
 	feedbacks = db.session.query(Feedback.application_id, func.count(Feedback.application_id)).filter(Feedback.application_id != -1).group_by(Feedback.application_id).order_by(desc(func.count(Feedback.application_id))).all()
 	return jsonify(data=[{"application_id": i[0], "count": i[1]} for i in feedbacks])
 
+### communicate with celery 
 @api.route("/feedback_insert", methods=['GET'])
 def feedback_insert():
 	device_id = request.args.get("device_id", -1)

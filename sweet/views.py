@@ -24,6 +24,7 @@ def visualize_feedback():
 	condition_usage = []
 	start_date = datetime.fromordinal(date(2013, 7, 1).toordinal())
 	end_date = datetime.fromordinal(date.today().toordinal())
+	
 	while start_date != end_date:
 		feedbacks = get_list_feedbacks(2013, start_date.month, start_date.day, 9)
 		row = {} 
@@ -31,8 +32,6 @@ def visualize_feedback():
 		row['time'] = start_date.strftime("%Y-%m-%d %H:%M:%S");
 		condition_usage.append(row)
 		start_date = start_date + timedelta(days=1)
-
-
 
 	return render_template("panel.html", usage=condition_usage)
 
