@@ -8,8 +8,6 @@ import md5
 
 app = Flask(__name__, template_folder = "../templates", static_folder= "../static")
 app.config.from_pyfile('config.py')
-
-#app.config['SQLALCHEMY_DATABASE_URI'] = config.DB_URI
 db = SQLAlchemy(app)
 
 
@@ -27,6 +25,7 @@ class Member(db.Model):
 	facebook_id = db.Column("facebook_id", Text)
 	gcm_id = db.Column("gcm_id", Text)
 	bluetooth_id = db.Column("bluetooth_id", Text)
+	
 	def __init__(self, account=None, password=None, nickname=None, token=None, temp=0, light=0, micro=0, facebook_id=None, gcm_id=None, bluetooth_id=None):
 		self.account = account
 		self.password = password
@@ -109,6 +108,7 @@ class Problem(db.Model):
 		}
 	def __repr__(self):
 		return "problem"
+
 class ProblemRepository(db.Model):
 	__tablename__ = "problem_repository"
 
@@ -146,72 +146,6 @@ class ProblemRepository(db.Model):
 		}
 	def __repr__(self):
 		return "problem_repository"
-
-
-class Online(db.Model):
-	__tablename__ = "user_online"
-
-	user_id = db.Column("user_id", Integer, primary_key=True)
-	time = db.Column("time", Integer)
-	ipaddr = db.Column("ipaddr", String(50))
-
-	def __repr__(self):
-		return 'online'
-
-class Window(db.Model):
-	__tablename__ = "extended_window_log"
-
-	log_id = db.Column("ext_win_log_id", Integer, primary_key=True)
-	location_id = db.Column("location_id", Integer)
-	window_id = db.Column("window_id", Integer)
-	state = db.Column("state", Integer)
-	timestamp = db.Column("timestamp", TIMESTAMP)
-	
-	def __init__(self, location_id=None, window_id=None, state=None):
-		self.location_id = location_id
-		self.window_id = window_id
-		self.state = state
-	
-	@property 
-	def serialize(self):
-		return {
-			'log_id' : self.log_id,
-			'location_id' : self.location_id,
-			'window_id' : self.window_id,
-			'state' : self.state,
-			'timestamp' : str(self.timestamp)
-		}
-	def __repr__(self):
-		return '<extended window sensor data location:%d window:%d state:%d>' % (self.location_id, self.window_id, self.state)
-class WindowIndex(db.Model):
-	__tablename__ = "extended_window_log_index"
-
-	index_id = db.Column("log_id", Integer, primary_key=True)
-	log_id = db.Column("ext_win_log_id", Integer)
-	location_id = db.Column("location_id", Integer)
-	window_id = db.Column("window_id", Integer)
-	state = db.Column("state", Integer)
-	timestamp = db.Column("timestamp", TIMESTAMP)
-
-	def __init__ (self, log_id, location_id, window_id, state, timestamp):
-		self.log_id = log_id
-		self.location_id = location_id
-		self.window_id = window_id
-		self.state = state	
-		self.timestamp = timestamp	
-
-	@property 
-	def serialize(self):
-		return {
-			'index_id' : self.index_id,
-			'log_id' : self.log_id,
-			'location_id' : self.location_id,
-			'window_id' : self.window_id,
-			'state' : self.state,
-			'timestamp' : str(self.timestamp)
-		}
-	def __repr__(self):
-		return 'window index'
 
 class Feedback(db.Model):
 	__tablename__ = "feedback_repository"
@@ -255,61 +189,6 @@ class Feedback(db.Model):
 		}
 	def __repr__(self):
 		return "feedback record"
-
-class Notification(db.Model):
-	__tablename__ = "notification"
-
-	id = db.Column("id", Integer, primary_key=True)
-	problem_id = db.Column("problem_id", Integer)
-	gcm_id = db.Column("gcm_id", Text)
-	action = db.Column("action", Integer)
-	annoy_level = db.Column("annoy_level", Integer)
-	open_timestamp = db.Column("open_timestamp", Integer)
-	response_timestamp = db.Column("response_timestamp", Integer)
-	generate_timestamp = db.Column("generate_timestamp", TIMESTAMP)
-
-	def __init__ (self, problem_id, gcm_id):
-		self.problem_id = problem_id
-		self.gcm_id = gcm_id
-
-
-	@property
-	def serialize(self):
-		return {
-			'id': self.id,
-			'problem_id': self.problem_id,
-			'gcm_id': self.gcm_id,
-			'action': self.action,
-			'annoy_level': self.annoy_level,
-			'open_timestamp': self.open_timestamp,
-			'response_timestamp': self.response_timestamp,
-			'generate_timestamp': self.generate_timestamp
-		}
-	def __repr__(self):
-		return "Notification"
-
-class WifiSignal(db.Model):
-	__tablename__ = "wifi_signal"
-
-	id = db.Column("id", Integer, primary_key=True)
-	location = db.Column("location", Integer)
-	signal_level = db.Column("signal_level", Text)
-	timestamp = db.Column("timestamp", TIMESTAMP)
-
-	def __init__(self, location, signal_level):
-		self.location = location
-		self.signal_level = signal_level
-
-	@property
-	def serialize(self):
-		return {
-			'id': self.id,
-			'location': self.location,
-			'signal_level': self.signal_level,
-			'timestamp': str(self.timestamp)
-		}
-	def __repr__(self):
-		return "WifiSignal"
 
 class Location(db.Model):
 	__tablename__ = "Locations"
@@ -358,86 +237,6 @@ class DeviceOnline(db.Model):
 		}
 	def __repr__(self):
 		return "Online machine " + str(self.device_id) + " from " + str(self.time)
-class GumballSensor(db.Model):
-	__tablename__ = "basic_sensor_log"
-	log_id = db.Column("log_id", Integer, primary_key=True)
-	device_id = db.Column("device_id", Integer)
-	light = db.Column("light_level", Float) 
-	temperature = db.Column("temperature", Float)
-	sound = db.Column("sound_level", Float)
-	time = db.Column("created_time", TIMESTAMP)
-
-	def __init__(self, device_id, light, temp, sound):
-		self.device_id = device_id
-		self.light = light
-		self.temperature = temp
-		self.sound = sound
-	@property
-	def serialize(self):
-		return { 
-			'log_id' : self.log_id,
-			'device_id' : self.device_id,
-			'light_level' : self.light,
-			'temperature' : self.temperature,
-			'sound_level' : self.sound,
-			'created_at' : str(self.time)
-		}
-	def __repr__(self):
-		return "Sensor log " + str(self.log_id) + " "  + str(self.device_id) + "(" + str(self.light) + "," + str(self.temperature) + "," + str(self.sound) + ")"
-class GumballSensorIndex(db.Model):
-	__tablename__ = "basic_sensor_log_index"
-	log_id = db.Column("log_id", Integer, primary_key=True)
-	sensor_log_id = db.Column("sensor_log_id", Integer)
-	device_id = db.Column("device_id", Integer)
-	light = db.Column("light_level", Float) 
-	temperature = db.Column("temperature", Float)
-	sound = db.Column("sound_level", Float)
-	time = db.Column("created_time", TIMESTAMP)
-
-	def __init__(self, sensor_log_id, device_id, light, temp, sound):
-		self.sensor_log_id = sensor_log_id
-		self.device_id = device_id
-		self.light = light
-		self.temperature = temp
-		self.sound = sound
-	@property
-	def serialize(self):
-		return { 
-			'log_id' : self.log_id,
-			'sensor_log_id' : self.sensor_log_id,
-			'device_id' : self.device_id,
-			'light_level' : self.light,
-			'temperature' : self.temperature,
-			'sound_level' : self.sound,
-			'created_at' : str(self.time)
-		}
-	def __repr__(self):
-		return "Sensor log index" + str(self.log_id) + " " + str(self.sensor_log_id) + " " + str(self.device_id) + "(" + str(self.light) + "," + str(self.temperature) + "," + str(self.sound) + ")"
-
-class DeviceAround(db.Model):
-	__tablename__ = "device_around"
-
-	log_id = db.Column("log_id", Integer, primary_key=True)
-	nearby_device = db.Column("nearby_device", Integer)
-	bluetooth_id = db.Column("bluetooth_id", String(50))
-	device_name = db.Column("device_name", String(50))
-	timestamp = db.Column("timestamp", TIMESTAMP)
-
-	def __init__(self, nearby_device, bluetooth_id, device_name):
-		self.nearby_device = nearby_device
-		self.bluetooth_id = bluetooth_id
-		self.device_name = device_name
-	@property
-	def serialize(self):
-		return {
-			'log_id' : self.log_id,
-			'nearby_device' : self.nearby_device,
-			'bluetooth_id' : self.bluetooth_id,
-			'device_name' : self.device_name,
-			'timestamp' : self.timestamp
-		}
-	def __repr__(self):
-		return "Device Around log " + str(self.log_id) + " :" + self.nearby_device + ", (" + str(self.bluetooth_id) + ", " + str(self.device_name) + ") at" + str(self.timestamp)
 class Application(db.Model):
 	__tablename__ = "applications"
 
@@ -512,10 +311,10 @@ class Sensor(db.Model):
 	module_type = db.Column("module_type", String(50))
 	sensor_index = db.Column("sensor_index", Integer)
 	sensor_value = db.Column("sensor_value", Integer)
-	created_time = db.Column("created_at", TIMESTAMP)
+	created_at = db.Column("created_at", TIMESTAMP)
 	device_id = db.Column("device_id", Integer)
 
-	def __init__(self, sensor_type, module_type, sensor_value, device_id, sensor_index):
+	def __init__(self, sensor_type, module_type, sensor_value, device_id, sensor_index=1):
 		self.sensor_type = sensor_type
 		self.module_type = module_type
 		self.sensor_index = sensor_index
@@ -544,10 +343,10 @@ class SensorIndex(db.Model):
 	module_type = db.Column("module_type", String(50))
 	sensor_index = db.Column("sensor_index", Integer)
 	sensor_value = db.Column("sensor_value", Integer)
-	created_time = db.Column("created_at", TIMESTAMP)
+	created_at = db.Column("created_at", TIMESTAMP)
 	device_id = db.Column("device_id", Integer)
 
-	def __init__(self, sensor_type, module_type, sensor_value, device_id, sensor_index):
+	def __init__(self, sensor_type, module_type, sensor_value, device_id, sensor_index=1):
 		self.sensor_type = sensor_type
 		self.module_type = module_type
 		self.sensor_index = sensor_index
