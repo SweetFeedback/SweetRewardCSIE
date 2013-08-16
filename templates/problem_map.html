@@ -201,7 +201,7 @@
     function checkProblem() {
         $.ajax({
             type: "GET",
-            url: "./get_problem?device_id=1",
+            url: "./get_problem?",
             dataType: 'json',
             success: function(data) {
                 if('problem' in data['data']) {
