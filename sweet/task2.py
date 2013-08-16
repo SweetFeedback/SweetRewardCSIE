@@ -40,6 +40,7 @@ def insert_sensor_repository(device_id, sensor_type, module_type, sensor_value, 
 	sensor_log = Sensor(sensor_type, module_type, sensor_value, device_id, sensor_index)
 	db.session.add(sensor_log)
 	db.session.commit()
+	return sensor_log.serialize
 def insert_sensor_index(device_id, sensor_type, module_type, sensor_value, sensor_index=1):
 	sensor_index_record = db.session.query(SensorIndex).filter_by(device_id=device_id).filter_by(sensor_type=sensor_type).filter_by(module_type=module_type).filter_by(sensor_index=sensor_index).first()
 	if sensor_index_record != None:
@@ -49,6 +50,7 @@ def insert_sensor_index(device_id, sensor_type, module_type, sensor_value, senso
 		sensor_index_record = SensorIndex(sensor_type, module_type, sensor_value, device_id, sensor_index)
 		db.session.add(sensor_index_record)
 		db.session.commit()
+	return sensor_index_record.serialize
 
 @celery.task(name = "task2.check")
 def check(): 
