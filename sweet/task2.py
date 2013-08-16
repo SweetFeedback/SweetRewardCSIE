@@ -41,13 +41,13 @@ def insert_sensor_repository(device_id, sensor_type, module_type, sensor_value, 
 	db.session.add(sensor_log)
 	db.session.commit()
 def insert_sensor_index(device_id, sensor_type, module_type, sensor_value, sensor_index=1):
-	sensor_index = db.session.query(SensorIndex).filter_by(device_id=device_id).filter_by(sensor_type=sensor_type).filter_by(module_type=module_type).filter_by(sensor_index=sensor_index).first()
-	if sensor_index != None:
-		sensor_index.sensor_value = sensor_value
+	sensor_index_record = db.session.query(SensorIndex).filter_by(device_id=device_id).filter_by(sensor_type=sensor_type).filter_by(module_type=module_type).filter_by(sensor_index=sensor_index).first()
+	if sensor_index_record != None:
+		sensor_index_record.sensor_value = sensor_value
 		db.session.commit()
 	else:
-		sensor_index = SensorIndex(sensor_type, module_type, sensor_value, device_id, sensor_index)
-		db.session.add(sensor_index)
+		sensor_index_record = SensorIndex(sensor_type, module_type, sensor_value, device_id, sensor_index)
+		db.session.add(sensor_index_record)
 		db.session.commit()
 
 @celery.task(name = "task2.check")
