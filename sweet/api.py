@@ -14,10 +14,11 @@ import json
 import urllib2
 from random import choice
 from policyManager import *
-
+from DBHelper import DBHelper
 
 #blueprint
 api = Blueprint('api', __name__)
+db_helper = DBHelper()
 
 @api.route("/application")
 def get_applications(): 
@@ -69,33 +70,22 @@ def sensor_insert():
 	light_sensor = request.args.get("light_level", -1)
 	sound_sensor = request.args.get("sound_level", -1)
 	temp_sensor = request.args.get("temperature", -1)
+	window_sensor = request.args.get("window_state", -1)
 	device_id = request.args.get("device_id", -1)
 	
 	if device_id != -1:
 		device_login_or_update(device_id, request.remote_addr)
 	else: 
 		return jsonify(error="it's needed to provide device id.")
-	if light_sensor != -1 and sound_sensor != -1 and temp_sensor != -1:
-		sensor_log = GumballSensor(device_id, light_sensor, temp_sensor, sound_sensor)
-		db.session.add(sensor_log)
-		db.session.commit()
-		indexs = db.session.query(GumballSensorIndex).filter_by(device_id=device_id).first()
-		print indexs
-		if indexs is None:
-			sensor_log_index = GumballSensorIndex(sensor_log.log_id, sensor_log.device_id, sensor_log.light, sensor_log.temperature, sensor_log.sound)
-			db.session.add(sensor_log_index)
-			db.session.commit()
-		else:
-			indexs.log_id = sensor_log.log_id
-			indexs.device_id = sensor_log.device_id
-			indexs.sound = sensor_log.sound
-			indexs.temperature = sensor_log.temperature
-			indexs.light = sensor_log.light
-			indexs.time = sensor_log.time
-			db.session.commit()
-	else:
-		return jsonify(error="data not completed.")
-	return jsonify(data=[sensor_log.serialize], index=[indexs.serialize])
+	if light_sensor != -1:
+		db_helper.insert_light(device_id, light_sensor, "gumball machine")
+	if sound_sensor != -1:
+		db_helper.insert_sound(device_id, sound_sensor, "gumball machine")
+	if temp_sensor != -1:
+		db_helper.insert_temperature(device_id, temp_sensor, "gumball machine")	
+	if window_sensor != -1:
+		db_helper.insert_window(device_id, window_sensor, "gumball machine")
+	return jsonify(success=1)
 
 @api.route("/check")
 def check():
@@ -130,8 +120,8 @@ def check_online_device():
 	return device_delete	
 @api.route("/online_device")
 def get_online_device():
-	devices = DeviceOnline.query.all()
-	return jsonify(device=[i.serialize for i in devices])
+	online_device = db_helper.get_online_device()
+	return jsonify(device=[i for i in online_device])
 
 def get_device_id_from_ip(address):
 	device_id = -1
@@ -351,6 +341,16 @@ def people_around():
 		return jsonify(problem=None)
 	#return jsonify(data={"problem": problem.serialize})
 	return jsonify(problem=problem_repo_instance.serialize)
+
+@api.route("/confirm_to_solve_problem", methods=['GET'])
+def confirm_to_solve_problem():
+	problem_id = request.args.get("problem_id", -1)
+	if problem_id != -1: 
+		problem_in_repository = db.session.query(ProblemRepository).filter_by(problem_id=problem_id).first()
+		if problem_in_repository != None: 
+			problem_in_repository.valid = True
+			return jsonify(update=problem_in_repository.serialize)
+	return jsonify(error="Non-existed problem.")
 @api.route("/get_problem", methods=['GET'])
 def find_problem():
 	device_id = request.args.get("device_id", -1)
@@ -359,10 +359,10 @@ def find_problem():
 	if device_id == -1:
 		return jsonify(error=1)
 	else: 
-		index = db.session.query(ProblemRepository).filter_by(valid=True).filter_by(device_feedback=device_id).all()
+		index = db.session.query(ProblemRepository).filter_by(valid=True).filter_by(solved=False).filter_by(device_feedback=device_id).all()
 		if len(index) == 0:
-			return jsonify(data={"question":get_one_random_question().serialize})
-		return jsonify(data={"problem":[i.serialize for i in index]})
+			return jsonify(data={"problem":[], "question":get_one_random_question().serialize})
+		return jsonify(data={"problem":[i.serialize for i in index], "question":[]})
 
 def loop_check_problem(): 
 	#this function will loop in thread 
@@ -459,6 +459,7 @@ def get_feedbacks_leaderboard_application():
 	feedbacks = db.session.query(Feedback.application_id, func.count(Feedback.application_id)).filter(Feedback.application_id != -1).group_by(Feedback.application_id).order_by(desc(func.count(Feedback.application_id))).all()
 	return jsonify(data=[{"application_id": i[0], "count": i[1]} for i in feedbacks])
 
+### communicate with celery 
 @api.route("/feedback_insert", methods=['GET'])
 def feedback_insert():
 	device_id = request.args.get("device_id", -1)
@@ -468,22 +469,15 @@ def feedback_insert():
 	feedback_description = request.args.get("feedback_description", "")	
 	can_get_time = request.args.get("can_get_time", 0)
 
-	time = None 
-	if device_id == -1:
-		device_id = get_device_id_from_ip(request.remote_addr)
-
+	time = datetime.now()
 	if can_get_time != 0:
 		time = datetime.now() + timedelta(seconds=int(can_get_time))
-	return jsonify(data=insert_feedback(device_id, application_id, user_id, feedback_type, feedback_description, time).serialize)
 	
-def insert_feedback(device_id, app_id, user_id, feedback_type, feedback_desc, can_get_time=None):
-	start_time = time.time()
-	feedback = Feedback(device_id, app_id, user_id, feedback_type, feedback_desc, can_get_time)
-	db.session.add(feedback)
-	db.session.commit()
-	elapsed_time = time.time() - start_time
-	print elapsed_time 
-	return feedback
+	if device_id == -1:
+		device_id = get_device_id_from_ip(request.remote_addr)
+	if db_helper.insert_feedback(device_id, application_id, user_id, feedback_type, feedback_description) is True:
+		return jsonify(success="1")
+	return jsonify(error="1")
 
 @api.route("/get_feedback", methods=['GET'])
 def feedback():

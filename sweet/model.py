@@ -7,7 +7,6 @@ from sqlalchemy import Table, Column, Text, Integer, String, Date, Float, TIMEST
 import md5
 
 app = Flask(__name__, template_folder = "../templates", static_folder= "../static")
-
 app.config.from_pyfile('config.py')
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = config.DB_URI
@@ -121,6 +120,7 @@ class ProblemRepository(db.Model):
 	device_feedback = db.Column("device_feedback", Integer)
 	created_at = db.Column("created_at", TIMESTAMP)
 	valid = db.Column("valid", BOOLEAN)
+	solved = db.Column("solved", BOOLEAN)
 
 	def __init__(self, problem_cat, problem_desc, location, device_check, device_feedback):
 		self.problem_desc = problem_desc
@@ -140,7 +140,9 @@ class ProblemRepository(db.Model):
 			'device_check' : self.device_check,
 			'device_feedback' : self.device_feedback,
 			'created_at' : self.created_at,
-			'valid' : self.valid
+			'valid' : self.valid,
+			'solved' : self.solved
+
 		}
 	def __repr__(self):
 		return "problem_repository"
@@ -502,3 +504,67 @@ class QuestionRepository(db.Model):
 		}
 	def __repr__(self):
 		return "question_repository" + str(self.problem_id) + ", " + str(self.problem_desc) + ", "  + str(self.problem_category)
+class Sensor(db.Model):
+	__tablename__ = "sensors"
+
+	log_id = db.Column("log_id", Integer, primary_key=True)
+	sensor_type = db.Column("sensor_type", String(20))
+	module_type = db.Column("module_type", String(50))
+	sensor_index = db.Column("sensor_index", Integer)
+	sensor_value = db.Column("sensor_value", Integer)
+	created_time = db.Column("created_at", TIMESTAMP)
+	device_id = db.Column("device_id", Integer)
+
+	def __init__(self, sensor_type, module_type, sensor_value, device_id, sensor_index):
+		self.sensor_type = sensor_type
+		self.module_type = module_type
+		self.sensor_index = sensor_index
+		self.sensor_value = sensor_value
+		self.device_id = device_id
+
+	@property
+	def serialize(self):
+		return {
+			'log_id' : self.log_id,
+			'sensor_type' : self.sensor_type,
+			'module_type' : self.module_type,
+			'sensor_index' : self.sensor_index,
+			'device_id' : self.device_id,
+			'sensor_value' : self.sensor_value,
+			'created_at' : self.created_at
+		}
+	def __repr__(self):
+		return "sensor " + str(self.log_id) + " type " + self.sensor_type + " from " + self.module_type + " value:" + str(self.sensor_value)
+
+class SensorIndex(db.Model):
+	__tablename__ = "sensors_index"
+
+	log_id = db.Column("log_id", Integer, primary_key=True)
+	sensor_type = db.Column("sensor_type", String(20))
+	module_type = db.Column("module_type", String(50))
+	sensor_index = db.Column("sensor_index", Integer)
+	sensor_value = db.Column("sensor_value", Integer)
+	created_time = db.Column("created_at", TIMESTAMP)
+	device_id = db.Column("device_id", Integer)
+
+	def __init__(self, sensor_type, module_type, sensor_value, device_id, sensor_index):
+		self.sensor_type = sensor_type
+		self.module_type = module_type
+		self.sensor_index = sensor_index
+		self.sensor_value = sensor_value
+		self.device_id = device_id
+
+	@property
+	def serialize(self):
+		return { 
+			'log_id' : self.log_id,
+			'sensor_type' : self.sensor_type,
+			'module_type' : self.module_type,
+			'sensor_index' : self.sensor_index,
+			'device_id' : self.device_id,
+			'sensor_value' : self.sensor_value,
+			'created_at' : self.created_at
+		}
+	def __repr__(self):
+		return "Sensor Index" + str(self.log_id) + " type " + self.sensor_type + " from " + self.module_type + " value:" + str(self.sensor_value)
+
