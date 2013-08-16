@@ -109,9 +109,10 @@ function parseProblemJsonString (data) {
                     $("#dialog_desc").html(description);
                 }
             }
-            setInterval(blink, 1000);
+        setInterval(blink, 1000);
 
-            $("#dialog").show();
+        $("#close-me").show();
+        $("#dialog").show();
     }
 
 }
@@ -125,6 +126,30 @@ function checkProblem() {
             parseProblemJsonString(data);
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
+            var data = {
+                data: {
+                    question: {
+                        error_message: "Mobile computing and networks",
+                        option_1: "Mobile computing and networks",
+                        option_2: "Space travel",
+                        option_3: "Startups",
+                        option_4: "Public Transportation",
+                        problem_category: "introduction",
+                        problem_desc: "The CyLab Mobility Research Center was established to explore developments in",
+                        problem_id: 1,
+                        updated_at: "Tue, 06 Aug 2013 12:34:03 GMT"
+                    },
+                    problem: [
+                    {problem_id: 5, location: 'B23.123', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 123 and turn it off?<br>I'll give you candy if you do!"},
+                    {problem_id: 10, location: 'B23.107', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 107 and turn it off?<br>I'll give you candy if you do!"},
+                    {problem_id: 3, location: 'B23.109', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 109 and turn it off?<br>I'll give you candy if you do!"},
+                    {problem_id: 2, location: 'B23.110', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 110 and turn it off?<br>I'll give you candy if you do!"},
+                    {problem_id: 99, location: 'B23.115', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 115 and turn it off?<br>I'll give you candy if you do!"}
+                    ]
+                }
+            };
+
+            parseProblemJsonString(data);
         }
     });
 }
@@ -318,6 +343,7 @@ $(function() {
         e.preventDefault();
         $(this).tab('show');
     })
+    $("#close-me").hide();
     $('html, body').animate({scrollTop: '100px'}, 800);
 
     setInterval(reload, 30000);
