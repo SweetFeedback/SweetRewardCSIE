@@ -111,8 +111,7 @@ function parseProblemJsonString (data) {
             }
         setInterval(blink, 1000);
 
-        $("#close-me").show();
-        $("#dialog").show();
+        $("#dialog-wrap").show();
     }
 
 }
@@ -343,7 +342,7 @@ $(function() {
         e.preventDefault();
         $(this).tab('show');
     })
-    $("#close-me").hide();
+    $("#dialog-wrap").hide();
     $('html, body').animate({scrollTop: '100px'}, 800);
 
     setInterval(reload, 30000);
