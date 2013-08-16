@@ -403,6 +403,7 @@ $(function() {
         e.preventDefault();
         $(this).tab('show');
     })
+    $('html, body').animate({scrollTop: '100px'}, 800);
 
     setInterval(reload, 30000);
 });
