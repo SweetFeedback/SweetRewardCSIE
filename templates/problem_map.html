@@ -204,6 +204,10 @@
             url: "./get_problem?",
             dataType: 'json',
             success: function(data) {
+                if(!('data' in data)) {
+                    return;
+                }
+                
                 if('problem' in data['data']) {
                     if(data['data']['problem'].length <= 0) {
                         return;
@@ -253,6 +257,79 @@
                 }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
+
+                    var data = {
+                        data: {
+                            question: {
+                                error_message: "Mobile computing and networks",
+                                option_1: "Mobile computing and networks",
+                                option_2: "Space travel",
+                                option_3: "Startups",
+                                option_4: "Public Transportation",
+                                problem_category: "introduction",
+                                problem_desc: "The CyLab Mobility Research Center was established to explore developments in",
+                                problem_id: 1,
+                                updated_at: "Tue, 06 Aug 2013 12:34:03 GMT"
+                            },
+                            problem: [
+                                {problem_id: 5, location: 'B23.123', description: '5'},
+                                {problem_id: 10, location: 'B23.107', description: '10'},
+                                {problem_id: 3, location: 'B23.109', description: '3'},
+                                {problem_id: 2, location: 'B23.110', description: '2'},
+                                {problem_id: 99, location: 'B23.115', description: '99'}
+                            ]
+                        }
+                    };
+
+
+                    
+                    if(data['data']['problem'].length <= 0) {
+                        return;
+                    }
+
+                    var problems = data['data']['problem'];
+
+                    for(var i = 0; i < problems.length; i++) {
+                        var problem = problems[i];
+                        var id = problem['problem_id'];
+                        var location = problem['location'];
+                        var description = problem['description'];
+
+                        if(location in roomCoordinates) {
+                            var coordinate = roomCoordinates[location];
+                            
+                            plotProblem(id, coordinate.x, coordinate.y, coordinate.floor, description);
+                        }
+
+                        // init problem id
+                        if(problemId == -1) {
+                            problemId = id;
+                        }
+                    }
+
+                    setInterval(blink, 1000);
+
+                    $("#mrc1").popover({
+                        html: true,
+                        placement: 'top',
+                        trigger: 'manual',
+                        content: data['data']['problem'][0]['description'] + '<br><button id="close-me" type="button" class="btn btn-primary">OK</button>'
+                    });
+
+                    $("#mrc1").parent().delegate('button#close-me', 'click', function() {
+                        $("#mrc1").popover('hide');
+                        $.ajax({
+                            type: "GET",
+                            url: "./confirm_to_solve_problem?problem_id=" + problemId,
+                            dataType: 'json',
+                            success: function(data) {
+                            },
+                            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            }
+                        });
+                    });
+                    $("#mrc1").popover('show');
+
             }
         });
     }
