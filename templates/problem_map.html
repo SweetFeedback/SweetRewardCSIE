@@ -27,6 +27,7 @@
             background-repeat:repeat repeat;
             font-size: 16px;     
             padding-top: 20px; /* 60px to make the container go all the way to the bottom of the topbar */
+            padding-bottom: 40px;
         }
         #wrap {
             min-height: 100%;
@@ -66,66 +67,39 @@
     <div class="container">
 
     <!-- Main component for a primary marketing message or call to action -->
-    
-        <!-- Modal -->
-        <div class="modal fade" id="myModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title"></h4>
-                    </div>
-                    <div class="modal-body">
-                    </div>
-                    <div class="modal-footer">
-                        <button id="doit" type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-
-        <div id="carousel-example-generic" class="carousel slide" data-interval="false">
-          <!-- Indicators -->
-            <ol class="carousel-indicators">
-                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-            </ol>
-
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner">
-                <div class="item active">
-                    <canvas id="canvas1" width="1007" height="646"></canvas>
+        
+        <ul class="nav nav-tabs" id="myTab">
+            <li class="active"><a href="#1F">1F</a></li>
+            <li><a href="#2F">2F</a></li>
+        </ul>
+         
+        <div class="tab-content">
+            <div class="tab-pane active" id="1F">
+                <div id="map1">
+                    <img src="/static/img/floor1_2.png" width="1007" height="646" style="position: absolute; z-index: 100;">
+                    <img id="mrc1" src="/static/img/mrc/mrc.png" width="43" height="56" style="position: absolute; z-index: 200; margin-top: 500px; margin-left: 530px;">
+                    <img id="mrc2" src="/static/img/mrc/mrc.png" width="43" height="56" style="position: absolute; z-index: 200; margin-top: 270px; margin-left: 480px;">
+                    <img id="mrc3" src="/static/img/mrc/mrc.png" width="43" height="56" style="position: absolute; z-index: 200; margin-top: 380px; margin-left: 740px;">
                 </div>
-                <div class="item">
-                    <canvas id="canvas2" width="1007" height="646"></canvas>
-                </div>
+
+                
             </div>
 
-            <!-- Controls -->
-            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                <span class="icon-prev"></span>
-            </a>
-            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                <span class="icon-next"></span>
-            </a>
-        </div>
-
-
-        <div class="tabable">
-            <div class="tab-content">
-                <div class="tab-pane active" id="apps-1">            
-                    <br/>
+            <div class="tab-pane" id="2F">
+                <div id="map2">
+                    <img src="/static/img/floor2_2.png" width="1007" height="646" style="position: absolute; z-index: 100;">
                 </div>
             </div>
         </div>
+
     </div> <!-- /container -->
 
-    <div id="footer">
+    <!--div id="footer">
         <div class="container" style="max-width:600px;">
             <p class="text-muted credit" >Sweet Building Greeter is made by Louis Yu, Ken Liang, and Ted Selker</p>
         </div>
-    </div> <!-- /footer -->
+    </div--> <!-- /footer -->
+
 
 </div> <!-- /wrap -->
 
@@ -142,8 +116,41 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
 
 <script>
+    var roomCovers = {
+        'B23.104': {x: 360, y: 517, width: 52, height: 56, floor: 1},
+        'B23.105B': {x: 320, y: 517, width: 47, height: 56, floor: 1},
+        'B23.107': {x: 225, y: 520, width: 60, height: 80, floor: 1},
+        'B23.109': {x: 135, y: 480, width: 90, height: 120, floor: 1},
+        'B23.110': {x: 135, y: 370, width: 90, height: 120, floor: 1},
+        'B23.114': {x: 135, y: 260, width: 50, height: 65, floor: 1}, 
+        'B23.115': {x: 180, y: 260, width: 50, height: 65, floor: 1}, 
+        'B23.116': {x: 230, y: 260, width: 50, height: 65, floor: 1},
+        'B23.120': {x: 702, y: 517, width: 45, height: 56, floor: 1},
+        'B23.122': {x: 662, y: 517, width: 47, height: 56, floor: 1},
+        'B23.123': {x: 360, y: 425, width: 47, height: 62, floor: 1},
+        'B23.124': {x: 630, y: 517, width: 40, height: 56, floor: 1},
+        'B23.126': {x: 575, y: 517, width: 52, height: 56, floor: 1},
+        'B23.129A': {x: 440, y: 285, width: 150, height: 150, floor: 1},
+        'B23.210': {x: 190, y: 520, width: 60, height: 75, floor: 2},
+        'B23.211': {x: 90, y: 350, width: 100, height: 125, floor: 2},
+        'B23.212': {x: 90, y: 470, width: 100, height: 117, floor: 2},
+        'B23.213': {x: 810, y: 530, width: 85, height: 60, floor: 2},
+        'B23.214': {x: 845, y: 485, width: 52, height: 40, floor: 2},
+        'B23.214B': {x: 845, y: 440, width: 52, height: 48, floor: 2},
+        'B23.215': {x: 845, y: 350, width: 52, height: 52, floor: 2},
+        'B23.215B': {x: 845, y: 400, width: 52, height: 40, floor: 2},
+        'B23.216': {x: 740, y: 530, width: 70, height: 55, floor: 2},
+        'B23.217A': {x: 750, y: 360, width: 50, height: 42, floor: 2},
+        'B23.217B': {x: 750, y: 405, width: 50, height: 38, floor: 2},
+        'B23.228': {x: 510, y: 130, width: 62, height: 65, floor: 2},
+        'B23.229': {},
+        'B23.230': {x: 420, y: 130, width: 60, height: 65, floor: 2},
+        'B23.kitchen': {x: 740, y: 410, width: 57, height: 77, floor: 1}
+    }
+
+
     var roomCoordinates = {
-        'B23.104': {x: 380, y: 560, floor: 1},
+        'B23.104': {x: 380, y: 540, floor: 1},
         'B23.105B': {x: 350, y: 560, floor: 1},
         'B23.107': {x: 250, y: 570, floor: 1},
         'B23.109': {x: 180, y: 530, floor: 1},
@@ -162,8 +169,8 @@
         'B23.212': {x: 150, y: 550, floor: 2},
         'B23.213': {x: 880, y: 550, floor: 2},
         'B23.214': {x: 890, y: 500, floor: 2},
-        'B23.214B': {x: 885, y: 475, floor: 2},
-        'B23.215': {x: 890, y: 390, floor: 2},
+        'B23.214B': {x: 880, y: 460, floor: 2},
+        'B23.215': {x: 885, y: 370, floor: 2},
         'B23.215B': {x: 890, y: 410, floor: 2},
         'B23.216': {x: 770, y: 540, floor: 2},
         'B23.217A': {x: 770, y: 370, floor: 2},
@@ -173,21 +180,6 @@
         'B23.230': {x: 450, y: 180, floor: 2},
         'B23.kitchen': {x: 770, y: 450, floor: 1}
     };
-
-    var problemCoordinates = new Array();
-    var cnt = 0;
-    var radius = 9;
-
-    var canvas1;
-    var context1;
-
-    var canvas2;
-    var context2;
-
-    var humanImg;
-    var machineImgs = {};
-    var lightImg;
-    var bulbImg;
 
     var machine1 = {'x': 520, 'y': 500};
     var machine2 = {'x': 480, 'y': 270};
@@ -203,59 +195,147 @@
     };
     var sourcesLength = 6;
 
+    var problemId = -1;
+
 
     function checkProblem() {
         $.ajax({
             type: "GET",
-            url: "./get_problem?device_id=1",
+            url: "./get_problem?",
             dataType: 'json',
             success: function(data) {
-                if(data['data'].length > 0) {
-                    
-                    for(var i = 0; i < data['data'].length; i++) {
-                        var location = data['data'][i]['location'];
+                if('problem' in data['data']) {
+                    if(data['data']['problem'].length <= 0) {
+                        return;
+                    }
+
+                    var problems = data['data']['problem'];
+
+                    for(var i = 0; i < problems.length; i++) {
+                        var problem = problems[i];
+                        var id = problem['problem_id'];
+                        var location = problem['location'];
+                        var description = problem['description'];
+
                         if(location in roomCoordinates) {
-                            problemCoordinates[i] = roomCoordinates[location];
+                            var coordinate = roomCoordinates[location];                            
+                            plotProblem(id, coordinate.x, coordinate.y, coordinate.floor, description);
+                        }
+
+                        // init problem id
+                        if(problemId == -1) {
+                            problemId = id;
                         }
                     }
-                    
-                    /*
-                    var data = {};
-                    data['data'] = [{location: 'B23.104', description: 'Could you turn off the light in Room 104? I will give you candy!'},
-                        {location: 'B23.214'},
-                        {location: 'B23.109'}];
-                    for(var i = 0; i < data['data'].length; i++) {
-                        var location = data['data'][i]['location'];
-                        if(location in roomCoordinates) {
-                            problemCoordinates[i] = roomCoordinates[location];
-                        }
-                    }
-                    */
+
                     setInterval(blink, 1000);
 
-                    $('.modal-title').html("Save Energy, Get Rewards !");
-                    $('.modal-body').html(data['data'][0]['description']);
-                    $('#myModal').modal('show');
+                    $("#mrc1").popover({
+                        html: true,
+                        placement: 'top',
+                        trigger: 'manual',
+                        content: data['data']['problem'][0]['description'] + '<br><button id="close-me" type="button" class="btn btn-primary">OK</button>'
+                    });
+
+                    $("#mrc1").parent().delegate('button#close-me', 'click', function() {
+                        $("#mrc1").popover('hide');
+                        $.ajax({
+                            type: "GET",
+                            url: "./confirm_to_solve_problem?problem_id=" + problemId,
+                            dataType: 'json',
+                            success: function(data) {
+                            },
+                            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            }
+                        });
+                    });
+                    $("#mrc1").popover('show');
                 }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-                var data = {};
-                data['data'] = [{location: 'B23.104', description: 'Could you turn off the light in Room 104?'},
-                    {location: 'B23.214'},
-                    {location: 'B23.109'}];
-                for(var i = 0; i < data['data'].length; i++) {
-                    var location = data['data'][i]['location'];
-                    if(location in roomCoordinates) {
-                        problemCoordinates[i] = roomCoordinates[location];
-                    }
-                }
-                setInterval(blink, 1000);
-
-                $('.modal-title').html("Save Energy, Get Rewards !");
-                $('.modal-body').html(data['data'][0]['description']);
-                $('#myModal').modal('show');
             }
         });
+    }
+
+    function plotProblem(id, x, y, floor, description) {
+        console.log("plot problem");
+        var str = ' <img id="problem' + id + '" src="/static/img/red-bullet.png" width="40" height="40"' +
+            'style="position: absolute; z-index: 700; '+
+            'margin-left: ' + x + 'px; ' +
+            'margin-top: ' + y + 'px;'+
+            '">';
+
+        if(floor == 1) {
+            $('#map1').append(str);
+        } else if(floor == 2) {
+            $('#map2').append(str);
+        }
+
+        // set up tooltip
+        $('#problem' + id).tooltip({
+            title: description
+        });
+
+        $('#problem' + id).click(function() {
+            $("#mrc1").popover('destroy');
+            $("#mrc1").popover({
+                html: true,
+                placement: 'top',
+                trigger: 'manual',
+                content: description + '<br><button id="close-me" type="button" class="btn btn-primary">OK</button>'
+            });
+
+            $("#mrc1").popover('show');
+
+            // update problem id for submitting to server
+            $("#problem" + problemId).show();
+            problemId = id;
+        });
+    }
+
+    function plotHuman(id, x, y, floor) {
+        console.log("plot human");
+        var str = ' <img id="human' + id + '" src="/static/img/human.png" width="40" height="40"' +
+            'style="position: absolute; z-index: 500; '+
+            'margin-left: ' + x + 'px; ' +
+            'margin-top: ' + y + 'px;'+
+            '">';
+
+        if(floor == 1) {
+            $('#map1').append(str);
+        } else if(floor == 2) {
+            $('#map2').append(str);
+        }
+    }
+
+    function plotLight(id, x, y, floor) {
+        console.log("plot light");
+        var str = ' <img id="light' + id + '" src="/static/img/light.png" width="40" height="40"' +
+            'style="position: absolute; z-index: 500; '+
+            'margin-left: ' + (x-10) + 'px; ' +
+            'margin-top: ' + (y-10) + 'px;'+
+            '">';
+
+        if(floor == 1) {
+            $('#map1').append(str);
+        } else if(floor == 2) {
+            $('#map2').append(str);
+        }
+    }
+
+    function plotBulb(id, x, y, floor) {
+        console.log("plot bulb");
+        var str = ' <img id="bulb' + id + '" src="/static/img/bulb.png" width="40" height="40"' +
+            'style="position: absolute; z-index: 500; '+
+            'margin-left: ' + (x-10) + 'px; ' +
+            'margin-top: ' + (y-10) + 'px;'+
+            '">';
+
+        if(floor == 1) {
+            $('#map1').append(str);
+        } else if(floor == 2) {
+            $('#map2').append(str);
+        }
     }
 
     function getSensorData() {
@@ -266,27 +346,56 @@
             success: function(data) {
                 
                 var motionData = data['data']['motion'];
-                var lightData = data['data']['light'];
+                var lightDatas = data['data']['light'];
 
                 for(var i = 0; i < motionData.length; i++) {
                     if(parseInt(motionData[i]['value']) > 800) {
                         if(motionData[i]['location'] in roomCoordinates) {
                             var coordinate = roomCoordinates[motionData[i]['location']];
-                            drawHuman(coordinate.x-20, coordinate.y-20, coordinate.floor);
+                            plotHuman(i, coordinate.x-20, coordinate.y-20, coordinate.floor);
                         }
                     }
                 }
 
-                for(var i = 0; i < lightData.length; i++) {
-                    if(lightData[i]['location'] in roomCoordinates) {
-                        var coordinate = roomCoordinates[lightData[i]['location']];
-                        if(parseInt(lightData[i]['value']) > 900) {    
-                            drawLight(coordinate.x, coordinate.y, coordinate.floor);
+                for(var i = 0; i < lightDatas.length; i++) {
+                    var lightData = lightDatas[i];
+                    var location = lightData['location'];
+                    var value = parseInt(lightData['value'])
+
+                    if(location in roomCoordinates) {
+                        var coordinate = roomCoordinates[location];
+                        var cover = roomCovers[location];
+
+                        if(value > 900) {
+                            var str = ' <img id="cover' + i + '" src="/static/img/yellow-cover.png" width="' + cover.width + '" height="' + cover.height + '"' +
+                                'style="position: absolute; z-index: 50; '+
+                                'margin-left: ' + (cover.x) + 'px; ' +
+                                'margin-top: ' + (cover.y) + 'px;'+
+                                '">';
+
+                            if(cover.floor == 1) {
+                                $('#map1').append(str);
+                            } else if(cover.floor == 2) {
+                                $('#map2').append(str);
+                            }
+                            
+                            plotLight(i, coordinate.x, coordinate.y, coordinate.floor);
                         } else {
-                            drawBulb(coordinate.x, coordinate.y, coordinate.floor);
+                            var str = ' <img id="cover' + i + '" src="/static/img/gray-cover.png" width="' + cover.width + '" height="' + cover.height + '"' +
+                                'style="position: absolute; z-index: 50; '+
+                                'margin-left: ' + (cover.x) + 'px; ' +
+                                'margin-top: ' + (cover.y) + 'px;'+
+                                '">';
+
+                            if(cover.floor == 1) {
+                                $('#map1').append(str);
+                            } else if(cover.floor == 2) {
+                                $('#map2').append(str);
+                            }
+                            
+                            plotBulb(i, coordinate.x, coordinate.y, coordinate.floor);
                         }
                     }
-
                 }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -295,154 +404,43 @@
     }
 
 
-    function drawRedSpot(problem) {
-        var context;
-        if(problem.floor == 1) {
-            context = context1;
-        } else {
-            context = context2;
-        }
-
-        context.beginPath();
-        context.arc(problem.x, problem.y, radius, 0, 2 * Math.PI, false);
-        context.fillStyle = 'red';
-        context.fill();
-        context.closePath();
-    }
+    var cnt = 0;
 
     function blink() {
-        var problemCoordinate = problemCoordinates[0];
-        var context;
-        if(problemCoordinate.floor == 1) {
-            context = context1;
-        } else {
-            context = context2;
-        }
-
-        if(cnt % 2) {
-            context.beginPath();
-            context.clearRect(problemCoordinate.x - radius - 1, problemCoordinate.y - radius - 1, radius * 2 + 2, radius * 2 + 2);
-            context.closePath();
-
-            cnt = 0;
-        } else {
-            context.beginPath();
-            context.arc(problemCoordinate.x, problemCoordinate.y, radius, 0, 2 * Math.PI, false);
-            context.fillStyle = 'red';
-            context.fill();
-            context.closePath();
-
+        if(cnt == 0) {
+            $("#problem" + problemId).show();
             cnt = 1;
-        }
-
-        for(var i = 1; i < problemCoordinates.length; i++) {
-            drawRedSpot(problemCoordinates[i]);
-        }
-        
-    }
-
-    function drawHuman(x, y, floor) {
-        if(floor == 1) {
-            context1.drawImage(humanImg, x, y, humanImg.width * 0.8, humanImg.height * 0.8);
         } else {
-            context2.drawImage(humanImg, x, y, humanImg.width * 0.8, humanImg.height * 0.8);
+            $("#problem" + problemId).hide();
+            cnt = 0;
         }
     }
 
-    function drawLight(x, y, floor) {
-        if(floor == 1) {
-            context1.drawImage(lightImg, x-5, y-5, lightImg.width * 1, lightImg.height * 1);
+    var refreshFlag = 1;
+
+    function reload() {
+        if(refreshFlag == 1) {
+            location.reload();
         } else {
-            context2.drawImage(lightImg, x-5, y-5, lightImg.width * 1, lightImg.height * 1);
+            refreshFlag = 1;
         }
     }
 
-    function drawBulb(x, y, floor) {
-        if(floor == 1) {
-            context1.drawImage(bulbImg, x, y, bulbImg.width * 0.3, bulbImg.height * 0.3);
-        } else {
-            context2.drawImage(bulbImg, x, y, bulbImg.width * 0.3, bulbImg.height * 0.3);
-        }
-    }
+    $(document).mousemove(function(event){
+        refreshFlag = 0;
+    });
 
-
-    function drawMachines() {
-        machineImgs['loadedImgNum'] = 0;
-        for(var source in sources) {
-            machineImgs[source] = new Image();
-            machineImgs[source].onload = function() {
-                machineImgs['loadedImgNum']++;
-                if(machineImgs['loadedImgNum'] == sourcesLength) {
-                    context1.drawImage(machineImgs.mrc, machine1.x, machine1.y, machineImgs.mrc.width * 0.15, machineImgs.mrc.height * 0.15);
-                    context1.drawImage(machineImgs.mrc, machine2.x, machine2.y, machineImgs.mrc.width * 0.15, machineImgs.mrc.height * 0.15);
-                    context1.drawImage(machineImgs.mrc, machine3.x, machine3.y, machineImgs.mrc.width * 0.15, machineImgs.mrc.height * 0.15);
-                        /*context1.drawImage(machine1.cold, 0, 0, 50, 50);
-                        context1.drawImage(machine1.sunglass, 0, 0, 50, 50);
-                        context1.drawImage(machine1.headphone, 0, 0, 50, 50);
-                        context1.drawImage(machine1.sweat, 0, 0, 50, 50);
-                        context1.drawImage(machine1.transportation, 0, 0, 50, 50);
-                        */
-                }
-            };
-            machineImgs[source].src = sources[source];
-        }
-    
-    }
 
     $(function() {
+        checkProblem();
+        getSensorData();
 
-        canvas1 = document.getElementById('canvas1');
-        context1 = canvas1.getContext('2d');
+        $('#myTab a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
 
-        canvas2 = document.getElementById('canvas2');
-        context2 = canvas2.getContext('2d');
-
-        humanImg = new Image();
-        humanImg.src = '/static/img/human.png';
-
-        lightImg = new Image();
-        lightImg.src = '/static/img/light.png';
-
-        bulbImg = new Image();
-        bulbImg.src = '/static/img/bulb.png';
-
-
-
-        
-        
-
-        
-        //var counter = setInterval(checkProblem, 1000);
-
-
-        
-        /*var machines = new Array({'loadedImgNum': 0, 'x': 520, 'y': 500},
-                {'loadedImgNum': 0, 'x': 480, 'y': 270}, 
-                {'loadedImgNum': 0, 'x': 740, 'y': 380});*/
-        
-        
-
-
-        
-
-        var floor1Img = new Image();
-        floor1Img.onload = function() {
-            context1.drawImage(floor1Img, 0, 0, 1007, 646);
-            drawMachines();
-            checkProblem();
-            getSensorData();
-            //problemCoordinate = {x: 250, y: 570, floor:1};
-            //setInterval(blink, 1000);
-        };
-        floor1Img.src = '/static/img/floor1.png';
-
-
-        var floor2Img = new Image();
-        floor2Img.onload = function() {
-            context2.drawImage(floor2Img, 0, 0, 1007, 646);
-        };
-        floor2Img.src = '/static/img/floor2.png';
-
+        setInterval(reload, 30000);
     });
 </script>
 
