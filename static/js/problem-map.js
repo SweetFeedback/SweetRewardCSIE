@@ -323,7 +323,7 @@ var refreshFlag = 1;
 
 function reload() {
     if(refreshFlag == 1) {
-        //location.reload();
+        location.reload();
     } else {
         refreshFlag = 1;
     }
