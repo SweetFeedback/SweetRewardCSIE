@@ -32,35 +32,35 @@ var roomCovers = {
 
 
 var roomCoordinates = {
-    'B23.104': {x: 380, y: 540, floor: 1},
-    'B23.105B': {x: 350, y: 560, floor: 1},
-    'B23.107': {x: 250, y: 570, floor: 1},
-    'B23.109': {x: 180, y: 530, floor: 1},
-    'B23.110': {x: 180, y: 450, floor: 1},
-    'B23.114': {x: 160, y: 300, floor: 1}, 
-    'B23.115': {x: 200, y: 300, floor: 1}, 
-    'B23.116': {x: 250, y: 300, floor: 1},
-    'B23.120': {x: 730, y: 560, floor: 1},
-    'B23.122': {x: 690, y: 560, floor: 1},
-    'B23.123': {x: 380, y: 470, floor: 1},
-    'B23.124': {x: 650, y: 560, floor: 1},
-    'B23.126': {x: 600, y: 560, floor: 1},
-    'B23.129A': {x: 540, y: 340, floor: 1},
-    'B23.210': {x: 220, y: 570, floor: 2},
-    'B23.211': {x: 150, y: 400, floor: 2},
-    'B23.212': {x: 150, y: 550, floor: 2},
-    'B23.213': {x: 880, y: 550, floor: 2},
-    'B23.214': {x: 890, y: 500, floor: 2},
-    'B23.214B': {x: 880, y: 460, floor: 2},
-    'B23.215': {x: 885, y: 370, floor: 2},
-    'B23.215B': {x: 890, y: 410, floor: 2},
-    'B23.216': {x: 770, y: 540, floor: 2},
-    'B23.217A': {x: 770, y: 370, floor: 2},
-    'B23.217B': {x: 770, y: 410, floor: 2},
-    'B23.228': {x: 550, y: 180, floor: 2},
+    'B23.104': {x: 370, y: 535, floor: 1},
+    'B23.105B': {x: 325, y: 530, floor: 1},
+    'B23.107': {x: 235, y: 540, floor: 1},
+    'B23.109': {x: 165, y: 530, floor: 1},
+    'B23.110': {x: 160, y: 415, floor: 1},
+    'B23.114': {x: 140, y: 280, floor: 1}, 
+    'B23.115': {x: 190, y: 280, floor: 1}, 
+    'B23.116': {x: 235, y: 280, floor: 1},
+    'B23.120': {x: 700, y: 530, floor: 1},
+    'B23.122': {x: 670, y: 530, floor: 1},
+    'B23.123': {x: 365, y: 440, floor: 1},
+    'B23.124': {x: 625, y: 530, floor: 1},
+    'B23.126': {x: 580, y: 530, floor: 1},
+    'B23.129A': {x: 500, y: 340, floor: 1},
+    'B23.210': {x: 190, y: 530, floor: 2},
+    'B23.211': {x: 120, y: 400, floor: 2},
+    'B23.212': {x: 120, y: 500, floor: 2},
+    'B23.213': {x: 830, y: 540, floor: 2},
+    'B23.214': {x: 855, y: 490, floor: 2},
+    'B23.214B': {x: 855, y: 445, floor: 2},
+    'B23.215': {x: 855, y: 360, floor: 2},
+    'B23.215B': {x: 855, y: 400, floor: 2},
+    'B23.216': {x: 760, y: 540, floor: 2},
+    'B23.217A': {x: 750, y: 365, floor: 2},
+    'B23.217B': {x: 750, y: 405, floor: 2},
+    'B23.228': {x: 530, y: 145, floor: 2},
     'B23.229': {},
-    'B23.230': {x: 450, y: 180, floor: 2},
-    'B23.kitchen': {x: 770, y: 450, floor: 1}
+    'B23.230': {x: 430, y: 145, floor: 2},
+    'B23.kitchen': {x: 750, y: 430, floor: 1}
 };
 
 var machine1 = {'x': 520, 'y': 500};
@@ -139,7 +139,6 @@ function checkProblem() {
                 }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-
                 var data = {
                     data: {
                         question: {
@@ -154,17 +153,17 @@ function checkProblem() {
                             updated_at: "Tue, 06 Aug 2013 12:34:03 GMT"
                         },
                         problem: [
-                        {problem_id: 5, location: 'B23.123', description: '5'},
-                        {problem_id: 10, location: 'B23.107', description: '10'},
-                        {problem_id: 3, location: 'B23.109', description: '3'},
-                        {problem_id: 2, location: 'B23.110', description: '2'},
-                        {problem_id: 99, location: 'B23.115', description: '99'}
+                        {problem_id: 5, location: 'B23.123', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 123 and turn it off?<br>I'll give you candy if you do!"},
+                        {problem_id: 10, location: 'B23.107', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 107 and turn it off?<br>I'll give you candy if you do!"},
+                        {problem_id: 3, location: 'B23.109', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 109 and turn it off?<br>I'll give you candy if you do!"},
+                        {problem_id: 2, location: 'B23.110', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 110 and turn it off?<br>I'll give you candy if you do!"},
+                        {problem_id: 99, location: 'B23.115', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 115 and turn it off?<br>I'll give you candy if you do!"}
                         ]
                     }
                 };
 
 
-                
+
                 if(data['data']['problem'].length <= 0) {
                     return;
                 }
@@ -179,7 +178,7 @@ function checkProblem() {
 
                     if(location in roomCoordinates) {
                         var coordinate = roomCoordinates[location];
-                        
+
                         plotProblem(id, coordinate.x, coordinate.y, coordinate.floor, description);
                     }
 
@@ -191,7 +190,7 @@ function checkProblem() {
                     }
 
                     setInterval(blink, 1000);
-                    
+
                     $("#dialog").show();
 
                 }
@@ -204,8 +203,11 @@ $("#close-me").click(function() {
         url: "./confirm_to_solve_problem?problem_id=" + problemId,
         dataType: 'json',
         success: function(data) {
+            $("#dialog_desc").html("Thank You!");
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
+            $("#dialog_desc").html("Thank You!<br>Remember to come back to get candy!");
+            $("#close-me").hide();
         }
     });
 
@@ -227,7 +229,7 @@ function plotProblem(id, x, y, floor, description) {
 
         // set up tooltip
         $('#problem' + id).tooltip({
-            title: description
+            title: "Help This Room"
         });
 
         $('#problem' + id).click(function() {
@@ -270,6 +272,7 @@ function plotProblem(id, x, y, floor, description) {
 
     function plotLight(id, x, y, floor) {
         console.log("plot light");
+        return;
         var str = ' <img id="light' + id + '" src="/static/img/light.png" width="40" height="40"' +
         'style="position: absolute; z-index: 500; '+
         'margin-left: ' + (x-10) + 'px; ' +
@@ -285,6 +288,7 @@ function plotProblem(id, x, y, floor, description) {
 
     function plotBulb(id, x, y, floor) {
         console.log("plot bulb");
+        return;
         var str = ' <img id="bulb' + id + '" src="/static/img/bulb.png" width="40" height="40"' +
         'style="position: absolute; z-index: 500; '+
         'margin-left: ' + (x-10) + 'px; ' +
@@ -304,7 +308,7 @@ function plotProblem(id, x, y, floor, description) {
             url: "./sensor_data",
             dataType: 'json',
             success: function(data) {
-                
+
                 var motionData = data['data']['motion'];
                 var lightDatas = data['data']['light'];
 
@@ -380,7 +384,7 @@ var refreshFlag = 1;
 
 function reload() {
     if(refreshFlag == 1) {
-        location.reload();
+        //location.reload();
     } else {
         refreshFlag = 1;
     }
