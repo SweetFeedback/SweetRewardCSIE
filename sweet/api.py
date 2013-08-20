@@ -104,7 +104,7 @@ def find_problem():
 	if device_id == -1:
 		return jsonify(error=1)
 	else: 
-		index = db.session.query(ProblemRepository).filter_by(valid=True).filter_by(solved=False).filter_by(device_feedback=device_id).all()
+		index = db.session.query(ProblemRepository).filter_by(valid=False).filter_by(solved=False).filter_by(device_feedback=device_id).all()
 		if len(index) == 0:
 			return jsonify(data={"problem":[], "question":get_one_random_question().serialize})
 		return jsonify(data={"problem":[i.serialize for i in index], "question":[]})
