@@ -70,67 +70,21 @@ def sensor_insert():
 		db_helper.insert_window(device_id, window_sensor, "gumball machine")
 	return jsonify(success=1)
 
-
-
-
-
-
 @api.route("/locations", methods=['GET'])
 def get_locations():
 	locations = Location.query.all()
 	return jsonify(data=[i.serialize for i in locations])
-
-
 
 @api.route("/people_around", methods=['GET'])
 def people_around(): 
 	#problem = Problem.query.filter(Problem.status == 0).first()
 	device_id = request.args.get("device_id", -1)
 	people_count = request.args.get("people_count", -1)
-	if people_count == -1:
-		return "suck"
 	if device_id == -1:
 		device_id = db_helper.get_device_id_from_ip(request.remote_addr)
-	if device_id == -1: 
-		return "suck"
-
-	data = json.load(urllib2.urlopen('http://cmu-sensor-network.herokuapp.com/lastest_readings_from_all_devices/light/json'))
-	problems = []
-	cleaned_data = []
-	for row in data:
-		firefly_time = datetime.fromtimestamp(row['timestamp']/1000).date()
-		today_time = datetime.today().date()
-		if today_time == firefly_time and row['device_id'] != "test" and row['device_id'] != "test-device" and row['device_id'] != "0":
-			cleaned_data.append(row)
-	for row in cleaned_data: 
-		row_hour = datetime.fromtimestamp(row['timestamp']/1000).hour
-		print datetime.fromtimestamp(row['timestamp']/1000).date(), row['device_id'], row['value']
-		if row['value'] > 500 and mapping_table.has_key(row['device_id']) and (row_hour >= 21 or row_hour <= 7):
-			problems.append(row)
-		#problems.append(row)
-	if len(problems) > 0:
-		problem_choosed = choice(problems)
-		problem_repo_instance = None
-		if problem_choosed != None:
-			index = db.session.query(ProblemRepository).filter_by(valid=True).filter_by(device_feedback=device_id).first()
-			if index != None:
-				index.problem_cat = "light"
-				index.problem_desc = "light is not closing now, could you help me to close it? I will give you candies if you do"
-				index.device_check = problem_choosed['device_id']
-				index.device_feedback = device_id
-				index.created_at = None 
-				index.location = mapping_table[problem_choosed['device_id']][2]
-				index.valid = True
-				problem_repo_instance = index
-				db.session.commit()
-			#	return jsonify(problem=None)
-			else:
-				problem_repo_instance = ProblemRepository("light", "light is not closing now, could you help me to close it? I will give you candies if you do", mapping_table[problem_choosed['device_id']][2], problem_choosed['device_id'], device_id)
-				db.session.add(problem_repo_instance)
-				db.session.commit()
-	else:
-		return jsonify(problem=None)
-	#return jsonify(data={"problem": problem.serialize})
+	
+	if people_count != -1 and device_id != -1:
+		db_helper.insert_people(device_id, people_count, "macintosh")
 	return jsonify(problem=problem_repo_instance.serialize)
 
 @api.route("/confirm_to_solve_problem", methods=['GET'])
@@ -259,3 +213,27 @@ def update_feedback():
 		feedback.retrieve_time = datetime.now()
 		db.session.commit()
 	return jsonify(data=[feedback.serialize])
+
+@api.route("/question_log", methods=['GET'])
+def question_log () : 
+	problem_id = request.args.get("problem_id", -1)
+	option = request.args.get("option", -1 )
+	correct = request.args.get("correct", 0)
+	device_id = request.args.get("device_id", -1)
+	question_record = None
+	
+	if device_id == -1:
+		device_id = db_helper.get_device_id_from_ip(request.remote_addr)
+	if int(correct) == 1 and problem_id != -1 and option != -1: 
+		db_helper.insert_feedback(device_id, 9, -1, "saying", "right_answer")
+		db_helper.insert_question_log(problem_id, option, 1)
+
+	elif int(correct) == 0 and problem_id != -1 and option != -1:
+		db_helper.insert_feedback(device_id, 9, -1, "saying", "wrong_answer")
+		db_helper.insert_question_log(problem_id, option, 0)
+
+	return jsonify(data=question_record.serialize)
+
+
+
+

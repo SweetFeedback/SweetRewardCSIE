@@ -1,6 +1,6 @@
 from model import *
-from task2 import add 
 from task2 import insert_sensor
+from task2 import insert_feedback_task
 class DBHelper:
 	def __init__(self):
 		self.fuck = 1 
@@ -12,13 +12,15 @@ class DBHelper:
 			for obj in database_object:
 				online_devices.append(obj.serialize)
 		return online_devices
-
-	def insert_data(self, device_id, app_id, user_id, feedback_type, feedback_desc, can_get_time=None):
-		add.apply_async((device_id, app_id, user_id, feedback_type, feedback_desc, can_get_time))
-		return True
 	
+
+	def insert_question_log(self, problem_id, option, correct): 
+		question_record = QuestionLog(problem_id, option, correct)
+		db.session.add(question_record)
+		db.session.commit()
+		return True
 	def insert_feedback(self, device_id, app_id, user_id, feedback_type, feedback_desc, can_get_time=None):
-		add.apply_async((device_id, app_id, user_id, feedback_type, feedback_desc, can_get_time))
+		insert_feedback_task.apply_async((device_id, app_id, user_id, feedback_type, feedback_desc, can_get_time))
 		return True
 	
 	### sensors related ### 
@@ -36,6 +38,9 @@ class DBHelper:
 	
 	def insert_window(self, device_id, sensor_value, module_type, sensor_index=1):
 		insert_sensor.apply_async((device_id, "window", module_type, sensor_value, sensor_index))
+
+	def insert_people(self, device_id, sensor_value, module_type, sensor_index=1):
+		insert_sensor.apply_async((device_id, "people", module_type, sensor_value, sensor_index))
 	
 	def get_sensor_index(self, device_id):
 		sensor_log_indexs = db.session.query(SensorIndex).filter_by(device_id=device_id).all()
