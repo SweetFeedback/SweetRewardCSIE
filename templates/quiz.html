@@ -71,7 +71,9 @@
                         <td class="tf" question="{{q.index(i)}}" val="2">{{i.option_2}}</td>
                         <td class="tf" question="{{q.index(i)}}" val="3">{{i.option_3}}</td>
                         <td class="tf" question="{{q.index(i)}}" val="4">{{i.option_4}}</td>
+
                         <input id="a{{q.index(i)}}"type="hidden" value="{{i.answer}}"/>
+                        <input id="id{{q.index(i)}}" type="hidden" value="{{i.problem_id}}"/>
                     </tr>
 
                 </tr>
@@ -126,15 +128,16 @@
                 if (answered[q_num] == 0) {
                     question_done++;
                     ans = $(this).attr("val");
+                    problem_id = $("#id" + q_num).val()
                     correct_answer = $("#a" + q_num).val();
                     if (ans == correct_answer) {
-                        $.get("./feedback_insert?application_id=9&feedback_type=saying&feedback_description=right answer");
+                        $.get("./question_log?problem_id="+problem_id+"&option="+ans+"&correct=1");
                         $(this).animate({backgroundColor:"#CCFFCC"}, 1000);
                         correct++;
                     } 
                     else {
                         //not correct, blue
-                        $.get("./feedback_insert?application_id=10&feedback_type=saying&feedback_description=wrong answer");
+                        $.get("./question_log?problem_id="+problem_id+"&option="+ans+"&correct=0");
                         $(this).animate({backgroundColor:"#FF8F8F"}, 1000);
                     }
                     answered[q_num] = 1;

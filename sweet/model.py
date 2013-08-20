@@ -25,7 +25,7 @@ class Member(db.Model):
 	facebook_id = db.Column("facebook_id", Text)
 	gcm_id = db.Column("gcm_id", Text)
 	bluetooth_id = db.Column("bluetooth_id", Text)
-	
+
 	def __init__(self, account=None, password=None, nickname=None, token=None, temp=0, light=0, micro=0, facebook_id=None, gcm_id=None, bluetooth_id=None):
 		self.account = account
 		self.password = password
@@ -122,11 +122,11 @@ class ProblemRepository(db.Model):
 	valid = db.Column("valid", BOOLEAN)
 	solved = db.Column("solved", BOOLEAN)
 
-	def __init__(self, problem_cat, problem_desc, location, device_check, device_feedback):
+	def __init__(self, problem_cat, problem_desc, location, device_check, device_feedback, valid=0):
 		self.problem_desc = problem_desc
 		self.problem_cat = problem_cat
 		self.location = location 
-		self.valid = 1
+		self.valid = valid
 		self.device_check = device_check
 		self.device_feedback = device_feedback
 
@@ -366,4 +366,29 @@ class SensorIndex(db.Model):
 		}
 	def __repr__(self):
 		return "Sensor Index" + str(self.log_id) + " type " + self.sensor_type + " from " + self.module_type + " value:" + str(self.sensor_value)
+class QuestionLog(db.Model):
+	__tablename__ = "question_log"
+
+	log_id = db.Column("log_id", Integer, primary_key=True)
+	problem_id = db.Column("problem_id", Integer)
+	answer = db.Column("answer", Integer)
+	correct = db.Column("correct", BOOLEAN)
+	created_at = db.Column("created_at", TIMESTAMP)
+
+	def __init__ (self, problem_id, answer, correct):
+		self.problem_id = problem_id
+		self.answer = answer
+		self.correct = correct
+
+	@property
+	def serialize(self):
+		return { 
+			'log_id' : self.log_id,
+			'problem_id' : self.problem_id,
+			'answer' : self.answer,
+			'correct' : self.correct,
+			'created_at' : self.created_at
+		}
+	def __repr__(self):
+		return "question log " + self.problem_id + ", " + self.answer + ", " + self.correct+ " " + self.created_at
 
