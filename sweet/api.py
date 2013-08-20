@@ -85,7 +85,7 @@ def people_around():
 	
 	if people_count != -1 and device_id != -1:
 		db_helper.insert_people(device_id, people_count, "macintosh")
-	return None
+	return ""
 
 @api.route("/confirm_to_solve_problem", methods=['GET'])
 def confirm_to_solve_problem():
