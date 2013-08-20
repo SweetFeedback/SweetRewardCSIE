@@ -122,11 +122,11 @@ class ProblemRepository(db.Model):
 	valid = db.Column("valid", BOOLEAN)
 	solved = db.Column("solved", BOOLEAN)
 
-	def __init__(self, problem_cat, problem_desc, location, device_check, device_feedback):
+	def __init__(self, problem_cat, problem_desc, location, device_check, device_feedback, valid=0):
 		self.problem_desc = problem_desc
 		self.problem_cat = problem_cat
 		self.location = location 
-		self.valid = 1
+		self.valid = valid
 		self.device_check = device_check
 		self.device_feedback = device_feedback
 
