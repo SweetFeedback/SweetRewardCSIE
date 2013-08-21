@@ -170,7 +170,6 @@ $("#close-me").click(function() {
 });
 
 function plotProblem(id, x, y, floor, description) {
-    console.log("plot problem");
     var str = ' <img id="problem' + id + '" src="/static/img/red-bullet.png" width="40" height="40"' +
     'style="position: absolute; z-index: 700; '+
     'margin-left: ' + x + 'px; ' +
@@ -199,7 +198,6 @@ function plotProblem(id, x, y, floor, description) {
 }
 
 function plotHuman(id, x, y, floor) {
-    console.log("plot human");
     var str = ' <img id="human' + id + '" src="/static/img/human.png" width="40" height="40"' +
     'style="position: absolute; z-index: 500; '+
     'margin-left: ' + x + 'px; ' +
@@ -269,7 +267,6 @@ function getSensorData() {
                     var coordinate = roomCoordinates[location];
                     var cover = roomCovers[location];
 
-                    console.log(location + " " + value);
                     if(value < 700) {
                         var str = ' <img id="cover' + i + '" src="/static/img/yellow-cover.png" width="' + cover.width + '" height="' + cover.height + '"' +
                         'style="position: absolute; z-index: 50; '+
