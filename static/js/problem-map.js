@@ -139,11 +139,9 @@ function checkProblem() {
                         updated_at: "Tue, 06 Aug 2013 12:34:03 GMT"
                     },
                     problem: [
-                    {problem_id: 5, location: 'B23.123', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 123 and turn it off?<br>I'll give you candy if you do!"},
                     {problem_id: 10, location: 'B23.107', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 107 and turn it off?<br>I'll give you candy if you do!"},
                     {problem_id: 3, location: 'B23.109', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 109 and turn it off?<br>I'll give you candy if you do!"},
                     {problem_id: 2, location: 'B23.110', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 110 and turn it off?<br>I'll give you candy if you do!"},
-                    {problem_id: 99, location: 'B23.115', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 115 and turn it off?<br>I'll give you candy if you do!"}
                     ]
                 }
             };
@@ -269,7 +267,7 @@ function getSensorData() {
                     var coordinate = roomCoordinates[location];
                     var cover = roomCovers[location];
 
-                    if(value > 900) {
+                    if(value < 700) {
                         var str = ' <img id="cover' + i + '" src="/static/img/yellow-cover.png" width="' + cover.width + '" height="' + cover.height + '"' +
                         'style="position: absolute; z-index: 50; '+
                         'margin-left: ' + (cover.x) + 'px; ' +
