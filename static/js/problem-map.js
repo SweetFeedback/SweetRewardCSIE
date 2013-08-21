@@ -267,6 +267,7 @@ function getSensorData() {
                     var coordinate = roomCoordinates[location];
                     var cover = roomCovers[location];
 
+                    console.log(location + " " + value);
                     if(value < 700) {
                         var str = ' <img id="cover' + i + '" src="/static/img/yellow-cover.png" width="' + cover.width + '" height="' + cover.height + '"' +
                         'style="position: absolute; z-index: 50; '+
