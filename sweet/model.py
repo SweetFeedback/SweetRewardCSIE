@@ -298,6 +298,7 @@ class QuestionRepository(db.Model):
 			'option_2' : self.option_2,
 			'option_3' : self.option_3, 
 			'option_4' : self.option_4,
+			'answer' : self.answer,
 			'error_message' : self.error_message,
 			'updated_at' : self.updated_at
 		}
