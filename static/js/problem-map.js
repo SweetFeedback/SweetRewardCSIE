@@ -150,7 +150,7 @@ function judgeAnswer(option) {
         $("#question-message").show();
 
         $("#question-option" + option).css("background-color", "rgb(255, 143, 143)");
-        $.get("./question_log?problem_id="+questionId+"&option=A&correct=0");
+        $.get("./question_log?problem_id="+questionId+"&option="+option+"&correct=0");
     } else {
         $("#survey-dialog").show();
 
@@ -158,7 +158,7 @@ function judgeAnswer(option) {
         $("#question-message").show();
 
         $("#question-option" + option).css("background-color", "rgb(204, 255, 204)");
-        $.get("./question_log?problem_id="+questionId+"&option=A&correct=1");
+        $.get("./question_log?problem_id="+questionId+"&option="+option+"&correct=1");
 
         optionFlatA = true;
         optionFlatB = true;
@@ -174,7 +174,7 @@ $("#question-optionA").click(function() {
     }
     optionFlatA = true;
 
-    judgeAnswer('A');
+    judgeAnswer('1');
 });
 
 $("#question-optionB").click(function() {
@@ -182,7 +182,7 @@ $("#question-optionB").click(function() {
         return;
     }
     optionFlatB = true;
-    judgeAnswer('B');
+    judgeAnswer('2');
 });
 
 $("#question-optionC").click(function() {
@@ -190,7 +190,7 @@ $("#question-optionC").click(function() {
         return;
     }
     optionFlatC = true;
-    judgeAnswer('C');
+    judgeAnswer('3');
 });
 
 $("#question-optionD").click(function() {
@@ -198,7 +198,7 @@ $("#question-optionD").click(function() {
         return;
     }
     optionFlatD = true;
-    judgeAnswer('D');
+    judgeAnswer('4');
 });
 
 function checkProblem() {
