@@ -80,17 +80,22 @@ var sources = {
 var sourcesLength = 6;
 
 var problemId = -1;
+var questionAns;
+var questionId;
+var optionFlatA = false;
+var optionFlatB = false;
+var optionFlatC = false;
+var optionFlatD = false;
 
 function parseProblemJsonString (data) {
     if(!('data' in data)) {
         return;
     }
+    $("#question-dialog").hide();
+    $("#problem-dialog").hide();
+    $("#question-message").hide();
 
-    if('problem' in data['data']) {
-        if(data['data']['problem'].length <= 0) {
-            return;
-        }
-
+    if('problem' in data['data'] && data['data']['problem'].length > 0) {
         var problems = data['data']['problem'];
 
         for(var i = 0; i < problems.length; i++) {
@@ -105,18 +110,139 @@ function parseProblemJsonString (data) {
                 plotProblem(id, coordinate.x, coordinate.y, coordinate.floor, description);
             }
 
-                // init problem id and dialog description
-                if(problemId == -1) {
-                    problemId = id;
-                    $("#dialog_desc").html(description);
-                }
+            // init problem id and dialog description
+            if(problemId == -1) {
+                problemId = id;
+                $("#problem-desc").html(description);
             }
+        }
         setInterval(blink, 1000);
+        $("#problem-dialog").show();
+        $("#dialog-wrap").show();
+    }
 
+    if('question' in data['data']) {
+        var question = data['data']['question'];
+        var description = question['problem_desc'];
+        var optionA = question['option_1'];
+        var optionB = question['option_2'];
+        var optionC = question['option_3'];
+        var optionD = question['option_4'];
+        questionId = question['problem_id'];
+        questionAns = question['answer'];
+
+        $("#question-desc").html("Q: " + description);
+
+        $("#question-optionA").html('<div style="display: table-cell; width:110px; height: 80px; text-align: center; vertical-align:middle;">'+optionA+"</div>");
+        $("#question-optionB").html('<div style="display: table-cell; width:110px; height: 80px; text-align: center; vertical-align:middle;">'+optionB+"</div>");
+        $("#question-optionC").html('<div style="display: table-cell; width:110px; height: 80px; text-align: center; vertical-align:middle;">'+optionC+"</div>");
+        $("#question-optionD").html('<div style="display: table-cell; width:110px; height: 80px; text-align: center; vertical-align:middle;">'+optionD+"</div>");
+
+        $("#question-dialog").show();
         $("#dialog-wrap").show();
     }
 
 }
+
+$("#question-optionA").click(function() {
+    if(optionFlatA) {
+        return;
+    }
+    optionFlatA = true;
+
+    if(questionAns != 'A') {
+        $("#question-message").html("Wrong Answer!");
+        $("#question-message").show();
+
+        $("#question-optionA").css("background-color", "gray");
+        $.get("./question_log?problem_id="+questionId+"&option=A&correct=0");
+    } else {
+        $("#question-message").html("Correct! Enjoy the candies!");
+        $("#question-message").show();
+
+        $("#question-optionA").css("background-color", "red");
+        $.get("./question_log?problem_id="+questionId+"&option=A&correct=1");
+
+        optionFlatB = true;
+        optionFlatC = true;
+        optionFlatD = true;
+
+        setTimeout(function(){window.location.href = "./survey";}, 3000);
+        
+    }
+});
+$("#question-optionB").click(function() {
+    if(optionFlatB) {
+        return;
+    }
+    optionFlatB = true;
+    
+    if(questionAns != 'B') {
+        $("#question-message").html("Come on!");
+        $("#question-message").show();
+
+        $("#question-optionB").css("background-color", "gray");
+        $.get("./question_log?problem_id="+questionId+"&option=B&correct=0");
+    } else {
+        $("#question-message").html("Correct! Enjoy the candies!");
+        $("#question-message").show();
+
+        $("#question-optionB").css("background-color", "red");
+        $.get("./question_log?problem_id="+questionId+"&option=B&correct=1");
+
+        optionFlatA = true;
+        optionFlatC = true;
+        optionFlatD = true;
+    }
+});
+$("#question-optionC").click(function() {
+    if(optionFlatC) {
+        return;
+    }
+    optionFlatC = true;
+    
+    if(questionAns != 'C') {
+        $("#question-message").html("No!");
+        $("#question-message").show();
+
+        $("#question-optionC").css("background-color", "gray");
+        $.get("./question_log?problem_id="+questionId+"&option=C&correct=0");
+    } else {
+        $("#question-message").html("Correct! Enjoy the candies!");
+        $("#question-message").show();
+
+        $("#question-optionC").css("background-color", "red");
+        $.get("./question_log?problem_id="+questionId+"&option=C&correct=1");
+
+        optionFlatA = true;
+        optionFlatB = true;
+        optionFlatD = true;
+    }
+});
+$("#question-optionD").click(function() {
+    if(optionFlatD) {
+        return;
+    }
+    optionFlatD = true;
+
+    if(questionAns != 'D') {
+        $("#question-message").html("Try Different Answer!");
+        $("#question-message").show();
+
+        $("#question-optionD").css("background-color", "gray");
+        $.get("./question_log?problem_id="+questionId+"&option=D&correct=0");
+    } else {
+        $("#question-message").html("Correct! Enjoy the candies!");
+        $("#question-message").show();
+
+        $("#question-optionD").css("background-color", "red");
+        $.get("./question_log?problem_id="+questionId+"&option=D&correct=1");
+
+        optionFlatA = true;
+        optionFlatB = true;
+        optionFlatC = true;
+    }
+});
 
 function checkProblem() {
     $.ajax({
@@ -138,13 +264,9 @@ function checkProblem() {
                         problem_category: "introduction",
                         problem_desc: "The CyLab Mobility Research Center was established to explore developments in",
                         problem_id: 1,
+                        answer: 'A',
                         updated_at: "Tue, 06 Aug 2013 12:34:03 GMT"
-                    },
-                    problem: [
-                    {problem_id: 10, location: 'B23.107', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 107 and turn it off?<br>I'll give you candy if you do!"},
-                    {problem_id: 3, location: 'B23.109', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 109 and turn it off?<br>I'll give you candy if you do!"},
-                    {problem_id: 2, location: 'B23.110', description: "Oops! There's no one in the room<br> but the light was left on!<br> Can you visit Room 110 and turn it off?<br>I'll give you candy if you do!"},
-                    ]
+                    }
                 }
             };
 
@@ -321,7 +443,7 @@ var refreshFlag = 1;
 
 function reload() {
     if(refreshFlag == 1) {
-        location.reload();
+        //location.reload();
     } else {
         refreshFlag = 1;
     }
