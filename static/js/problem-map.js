@@ -144,8 +144,19 @@ $("#take-survey").click(function() {
 });
 
 function judgeAnswer(option) {
+    var answer = 0;
+    if(option == 'A') {
+        answer = 1;
+    } else if(option == 'B') {
+        answer = 2;
+    } else if(option == 'C') {
+        answer = 3;
+    } else {
+        answer = 4;
+    }
 
-    if(questionAns != option) {
+
+    if(questionAns != answer) {
         $("#question-message").html("Wrong Answer!");
         $("#question-message").show();
 
@@ -174,7 +185,7 @@ $("#question-optionA").click(function() {
     }
     optionFlatA = true;
 
-    judgeAnswer('1');
+    judgeAnswer('A');
 });
 
 $("#question-optionB").click(function() {
@@ -182,7 +193,7 @@ $("#question-optionB").click(function() {
         return;
     }
     optionFlatB = true;
-    judgeAnswer('2');
+    judgeAnswer('B');
 });
 
 $("#question-optionC").click(function() {
@@ -190,7 +201,7 @@ $("#question-optionC").click(function() {
         return;
     }
     optionFlatC = true;
-    judgeAnswer('3');
+    judgeAnswer('C');
 });
 
 $("#question-optionD").click(function() {
@@ -198,7 +209,7 @@ $("#question-optionD").click(function() {
         return;
     }
     optionFlatD = true;
-    judgeAnswer('4');
+    judgeAnswer('D');
 });
 
 function checkProblem() {
@@ -212,16 +223,7 @@ function checkProblem() {
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             var data = {
                 data: {
-                    problem: [
-                        {
-                            problem_id: 1,
-                            description: "12312",
-                            location: "B23.129"
-                        },
-                            {problem_id: 2,
-                            description: "Turn off the light",
-                            location: "B23.110"}
-                    ],
+                    
                     question: {
                         error_message: "Mobile computing and networks",
                         option_1: "Mobile computing and networks",
@@ -231,7 +233,7 @@ function checkProblem() {
                         problem_category: "introduction",
                         problem_desc: "The CyLab Mobility Research Center was established to explore developments in",
                         problem_id: 1,
-                        answer: 'A',
+                        answer: 1,
                         updated_at: "Tue, 06 Aug 2013 12:34:03 GMT"
                     }
                 }
