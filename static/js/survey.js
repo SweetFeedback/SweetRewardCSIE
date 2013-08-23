@@ -47,8 +47,9 @@ $("#submit").click(function() {
 
 
 function reload() {
+
     if(refreshFlag == 1) {
-        location.reload();
+        window.location.href = "./";
     } else {
         refreshFlag = 1;
     }
@@ -59,5 +60,5 @@ $(document).mousemove(function(event){
 });
 
 $(function() {
-	setInterval(reload, 15000);
+	setInterval(reload, 30000);
 });
