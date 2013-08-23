@@ -170,7 +170,7 @@ function judgeAnswer(option) {
 
         $("#question-option" + option).css("background-color", "rgb(204, 255, 204)");
         $.get("./question_log?problem_id="+questionId+"&option="+option+"&correct=1");
-
+        $.get("./feedback_insert?application_id=14&feedback_type=positive&feedback_description=well done");
         optionFlatA = true;
         optionFlatB = true;
         optionFlatC = true;

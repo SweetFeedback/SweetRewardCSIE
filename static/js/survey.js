@@ -35,7 +35,7 @@ $("#submit").click(function() {
 		'question11': question11
 	};
 
-	
+	$.get("./feedback_insert?application_id=15&feedback_type=positive&feedback_description=Thanks");	
 	//$.get("./feedback_insert?application_id=15&feedback_type=positive&feedback_description=Thanks for taking the survey");
 	$.post('./upload_survey', data).done(function(data) {
 		
