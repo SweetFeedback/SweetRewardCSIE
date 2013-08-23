@@ -38,7 +38,7 @@ $("#submit").click(function() {
 	$.get("./feedback_insert?application_id=15&feedback_type=positive&feedback_description=Thanks");	
 	//$.get("./feedback_insert?application_id=15&feedback_type=positive&feedback_description=Thanks for taking the survey");
 	$.post('./upload_survey', data).done(function(data) {
-		
+		window.location.href = "./";
 	});
 
 	
