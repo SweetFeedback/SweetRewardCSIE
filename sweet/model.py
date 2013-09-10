@@ -372,12 +372,14 @@ class QuestionLog(db.Model):
 
 	log_id = db.Column("log_id", Integer, primary_key=True)
 	problem_id = db.Column("problem_id", Integer)
+	via_device = db.Column("device_id", Integer)
 	answer = db.Column("answer", Integer)
 	correct = db.Column("correct", BOOLEAN)
 	created_at = db.Column("created_at", TIMESTAMP)
 
-	def __init__ (self, problem_id, answer, correct):
+	def __init__ (self, problem_id, device_id, answer, correct):
 		self.problem_id = problem_id
+		self.via_device = device_id 
 		self.answer = answer
 		self.correct = correct
 
@@ -386,12 +388,13 @@ class QuestionLog(db.Model):
 		return { 
 			'log_id' : self.log_id,
 			'problem_id' : self.problem_id,
+			'via_device': self.via_device,
 			'answer' : self.answer,
 			'correct' : self.correct,
 			'created_at' : self.created_at
 		}
 	def __repr__(self):
-		return "question log " + self.problem_id + ", " + self.answer + ", " + self.correct+ " " + self.created_at
+		return "question log " + self.problem_id + ", " +self.via_device + ", " + self.answer + ", " + self.correct+ " " + self.created_at
 
 class SurveyLog(db.Model):
 	__tablename__ = "survey_log"

@@ -108,7 +108,7 @@ def find_problem():
 	else: 
 		current_time = datetime.now() - timedelta(minutes=10)
 		index = db.session.query(ProblemRepository).filter_by(valid=False).filter_by(solved=False).filter_by(device_feedback=device_id).filter(ProblemRepository.created_at > current_time).all()
-		if len(index) == 0:
+		if index.count == 0:
 			return jsonify(data={"problem":[], "question":get_one_random_question().serialize})
 		return jsonify(data={"problem":[i.serialize for i in index], "question":[]})
 
@@ -227,11 +227,11 @@ def question_log () :
 		device_id = db_helper.get_device_id_from_ip(request.remote_addr)
 	if int(correct) == 1 and problem_id != -1 and option != -1: 
 		db_helper.insert_feedback(device_id, 9, -1, "saying", "you got right answer")
-		db_helper.insert_question_log(problem_id, option, 1)
+		db_helper.insert_question_log(problem_id, device_id, option, 1)
 
 	elif int(correct) == 0 and problem_id != -1 and option != -1:
 		db_helper.insert_feedback(device_id, 9, -1, "saying", "you got wrong answer")
-		db_helper.insert_question_log(problem_id, option, 0)
+		db_helper.insert_question_log(problem_id, device_id, option, 0)
 
 	return jsonify(data=question_record.serialize)
 
