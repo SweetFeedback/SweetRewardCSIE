@@ -161,7 +161,7 @@ function judgeAnswer(option) {
         $("#question-message").show();
 
         $("#question-option" + option).css("background-color", "rgb(255, 143, 143)");
-        $.get("./question_log?problem_id="+questionId+"&option="+option+"&correct=0");
+        $.get("./question_log?problem_id="+questionId+"&option="+answer+"&correct=0");
     } else {
         $("#survey-dialog").show();
 
@@ -169,7 +169,7 @@ function judgeAnswer(option) {
         $("#question-message").show();
 
         $("#question-option" + option).css("background-color", "rgb(204, 255, 204)");
-        $.get("./question_log?problem_id="+questionId+"&option="+option+"&correct=1");
+        $.get("./question_log?problem_id="+questionId+"&option="+answer+"&correct=1");
         $.get("./feedback_insert?application_id=14&feedback_type=positive&feedback_description=well done");
         optionFlatA = true;
         optionFlatB = true;
@@ -218,12 +218,30 @@ function checkProblem() {
         url: "./get_problem?",
         dataType: 'json',
         success: function(data) {
+            data = {
+                data: {
+                    question: {
+                        error_message: "Mobile computing and networks",
+                        option_1: "Mobile computing and networks",
+                        option_2: "Space travel",
+                        option_3: "Startups",
+                        option_4: "Public Transportation",
+                        problem_category: "introduction",
+                        problem_desc: "The CyLab Mobility Research Center was established to explore developments in",
+                        problem_id: 1,
+                        answer: 1,
+                        updated_at: "Tue, 06 Aug 2013 12:34:03 GMT"
+                    }
+                }
+            };
             parseProblemJsonString(data);
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             var data = {
                 data: {
-                    
+                    problem: {
+                        
+                    },
                     question: {
                         error_message: "Mobile computing and networks",
                         option_1: "Mobile computing and networks",
