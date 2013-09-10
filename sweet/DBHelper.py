@@ -14,8 +14,8 @@ class DBHelper:
 		return online_devices
 	
 
-	def insert_question_log(self, problem_id, option, correct): 
-		question_record = QuestionLog(problem_id, option, correct)
+	def insert_question_log(self, problem_id, via_device, option, correct): 
+		question_record = QuestionLog(problem_id, via_device, option, correct)
 		db.session.add(question_record)
 		db.session.commit()
 		return True
@@ -28,7 +28,7 @@ class DBHelper:
 			if feedback is not None:
 				feedback.if_get = True
 				feedback.retrieve_time = datetime.now()
-				db.session.commit()
+				db.session.commit()c
 		return True
 	def get_feedback(self, device_id):
 		feedbacks = Feedback.query.filter_by(device_id=device_id).filter_by(if_get=False).filter(Feedback.can_get_time <= datetime.now()).all()
