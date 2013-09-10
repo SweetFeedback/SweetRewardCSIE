@@ -28,7 +28,7 @@ class DBHelper:
 			if feedback is not None:
 				feedback.if_get = True
 				feedback.retrieve_time = datetime.now()
-				db.session.commit()c
+				db.session.commit()
 		return True
 	def get_feedback(self, device_id):
 		feedbacks = Feedback.query.filter_by(device_id=device_id).filter_by(if_get=False).filter(Feedback.can_get_time <= datetime.now()).all()
