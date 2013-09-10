@@ -108,7 +108,7 @@ def find_problem():
 	else: 
 		current_time = datetime.now() - timedelta(minutes=10)
 		index = db.session.query(ProblemRepository).filter_by(valid=False).filter_by(solved=False).filter_by(device_feedback=device_id).filter(ProblemRepository.created_at > current_time).all()
-		if index.count == 0:
+		if len(index) == 0:
 			return jsonify(data={"problem":[], "question":get_one_random_question().serialize})
 		return jsonify(data={"problem":[i.serialize for i in index], "question":[]})
 
