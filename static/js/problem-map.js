@@ -218,22 +218,6 @@ function checkProblem() {
         url: "./get_problem?",
         dataType: 'json',
         success: function(data) {
-            data = {
-                data: {
-                    question: {
-                        error_message: "Mobile computing and networks",
-                        option_1: "Mobile computing and networks",
-                        option_2: "Space travel",
-                        option_3: "Startups",
-                        option_4: "Public Transportation",
-                        problem_category: "introduction",
-                        problem_desc: "The CyLab Mobility Research Center was established to explore developments in",
-                        problem_id: 1,
-                        answer: 1,
-                        updated_at: "Tue, 06 Aug 2013 12:34:03 GMT"
-                    }
-                }
-            };
             parseProblemJsonString(data);
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
