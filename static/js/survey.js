@@ -3,6 +3,7 @@ var refreshFlag = 0;
 $("#submit").click(function() {
 	var question1 = $('input[name="group1"]:checked').val();
 	var question2 = $('input[name="group2"]:checked').val();
+	/*
 	var question3 = new Array();
 	$.each($('input[name="group3"]:checked'), function(){
 		question3.push($(this).val());
@@ -12,6 +13,9 @@ $("#submit").click(function() {
 	$.each($('input[name="group4"]:checked'), function(){
 		question4.push($(this).val());
 	});
+*/
+	var question3 = $('input[name="group3"]:checked').val();
+	var question4 = $('input[name="group4"]:checked').val();
 
 	var question5 = $('input[name="group5"]:checked').val();
 	var question6 = $('input[name="group6"]:checked').val();
@@ -35,20 +39,21 @@ $("#submit").click(function() {
 		'question11': question11
 	};
 
-	
+	$.get("./feedback_insert?application_id=15&feedback_type=positive&feedback_description=Thanks");	
 	//$.get("./feedback_insert?application_id=15&feedback_type=positive&feedback_description=Thanks for taking the survey");
 	$.post('./upload_survey', data).done(function(data) {
 		
 	});
 
-	
+	window.location.href = "./";
 });
 
 
 
 function reload() {
+
     if(refreshFlag == 1) {
-        location.reload();
+        window.location.href = "./";
     } else {
         refreshFlag = 1;
     }
@@ -59,5 +64,5 @@ $(document).mousemove(function(event){
 });
 
 $(function() {
-	setInterval(reload, 15000);
+	setInterval(reload, 30000);
 });

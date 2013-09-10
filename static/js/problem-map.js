@@ -91,10 +91,8 @@ function parseProblemJsonString (data) {
     if(!('data' in data)) {
         return;
     }
-    $("#question-dialog").hide();
-    $("#problem-dialog").hide();
-    $("#question-message").hide();
 
+    // show problem in the enviroment, else show a question if no problem
     if('problem' in data['data'] && data['data']['problem'].length > 0) {
         var problems = data['data']['problem'];
 
@@ -103,7 +101,6 @@ function parseProblemJsonString (data) {
             var id = problem['problem_id'];
             var location = problem['location'];
             var description = problem['description'];
-
             if(location in roomCoordinates) {
                 var coordinate = roomCoordinates[location];
 
@@ -119,9 +116,7 @@ function parseProblemJsonString (data) {
         setInterval(blink, 1000);
         $("#problem-dialog").show();
         $("#dialog-wrap").show();
-    }
-
-    if('question' in data['data']) {
+    } else if('question' in data['data']) {
         var question = data['data']['question'];
         var description = question['problem_desc'];
         var optionA = question['option_1'];
@@ -144,104 +139,77 @@ function parseProblemJsonString (data) {
 
 }
 
+$("#take-survey").click(function() {
+    window.location.href = "./survey";
+});
+
+function judgeAnswer(option) {
+    var answer = 0;
+    if(option == 'A') {
+        answer = 1;
+    } else if(option == 'B') {
+        answer = 2;
+    } else if(option == 'C') {
+        answer = 3;
+    } else {
+        answer = 4;
+    }
+
+
+    if(questionAns != answer) {
+        $("#question-message").html("Wrong Answer!");
+        $("#question-message").show();
+
+        $("#question-option" + option).css("background-color", "rgb(255, 143, 143)");
+        $.get("./question_log?problem_id="+questionId+"&option="+answer+"&correct=0");
+    } else {
+        $("#survey-dialog").show();
+
+        $("#question-message").html('Correct! Enjoy the candies!');
+        $("#question-message").show();
+
+        $("#question-option" + option).css("background-color", "rgb(204, 255, 204)");
+        $.get("./question_log?problem_id="+questionId+"&option="+answer+"&correct=1");
+        $.get("./feedback_insert?application_id=14&feedback_type=positive&feedback_description=well done");
+        optionFlatA = true;
+        optionFlatB = true;
+        optionFlatC = true;
+        optionFlatD = true;
+    }
+
+}
+
 $("#question-optionA").click(function() {
     if(optionFlatA) {
         return;
     }
     optionFlatA = true;
 
-    if(questionAns != 'A') {
-        $("#question-message").html("Wrong Answer!");
-        $("#question-message").show();
-
-        $("#question-optionA").css("background-color", "gray");
-        $.get("./question_log?problem_id="+questionId+"&option=A&correct=0");
-    } else {
-        $("#question-message").html("Correct! Enjoy the candies!");
-        $("#question-message").show();
-
-        $("#question-optionA").css("background-color", "red");
-        $.get("./question_log?problem_id="+questionId+"&option=A&correct=1");
-
-        optionFlatB = true;
-        optionFlatC = true;
-        optionFlatD = true;
-
-        setTimeout(function(){window.location.href = "./survey";}, 3000);
-        
-    }
+    judgeAnswer('A');
 });
+
 $("#question-optionB").click(function() {
     if(optionFlatB) {
         return;
     }
     optionFlatB = true;
-    
-    if(questionAns != 'B') {
-        $("#question-message").html("Come on!");
-        $("#question-message").show();
-
-        $("#question-optionB").css("background-color", "gray");
-        $.get("./question_log?problem_id="+questionId+"&option=B&correct=0");
-    } else {
-        $("#question-message").html("Correct! Enjoy the candies!");
-        $("#question-message").show();
-
-        $("#question-optionB").css("background-color", "red");
-        $.get("./question_log?problem_id="+questionId+"&option=B&correct=1");
-
-        optionFlatA = true;
-        optionFlatC = true;
-        optionFlatD = true;
-    }
+    judgeAnswer('B');
 });
+
 $("#question-optionC").click(function() {
     if(optionFlatC) {
         return;
     }
     optionFlatC = true;
-    
-    if(questionAns != 'C') {
-        $("#question-message").html("No!");
-        $("#question-message").show();
-
-        $("#question-optionC").css("background-color", "gray");
-        $.get("./question_log?problem_id="+questionId+"&option=C&correct=0");
-    } else {
-        $("#question-message").html("Correct! Enjoy the candies!");
-        $("#question-message").show();
-
-        $("#question-optionC").css("background-color", "red");
-        $.get("./question_log?problem_id="+questionId+"&option=C&correct=1");
-
-        optionFlatA = true;
-        optionFlatB = true;
-        optionFlatD = true;
-    }
+    judgeAnswer('C');
 });
+
 $("#question-optionD").click(function() {
     if(optionFlatD) {
         return;
     }
     optionFlatD = true;
-
-    if(questionAns != 'D') {
-        $("#question-message").html("Try Different Answer!");
-        $("#question-message").show();
-
-        $("#question-optionD").css("background-color", "gray");
-        $.get("./question_log?problem_id="+questionId+"&option=D&correct=0");
-    } else {
-        $("#question-message").html("Correct! Enjoy the candies!");
-        $("#question-message").show();
-
-        $("#question-optionD").css("background-color", "red");
-        $.get("./question_log?problem_id="+questionId+"&option=D&correct=1");
-
-        optionFlatA = true;
-        optionFlatB = true;
-        optionFlatC = true;
-    }
+    judgeAnswer('D');
 });
 
 function checkProblem() {
@@ -250,10 +218,7 @@ function checkProblem() {
         url: "./get_problem?",
         dataType: 'json',
         success: function(data) {
-            parseProblemJsonString(data);
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-            var data = {
+            data = {
                 data: {
                     question: {
                         error_message: "Mobile computing and networks",
@@ -264,7 +229,29 @@ function checkProblem() {
                         problem_category: "introduction",
                         problem_desc: "The CyLab Mobility Research Center was established to explore developments in",
                         problem_id: 1,
-                        answer: 'A',
+                        answer: 1,
+                        updated_at: "Tue, 06 Aug 2013 12:34:03 GMT"
+                    }
+                }
+            };
+            parseProblemJsonString(data);
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            var data = {
+                data: {
+                    problem: {
+                        
+                    },
+                    question: {
+                        error_message: "Mobile computing and networks",
+                        option_1: "Mobile computing and networks",
+                        option_2: "Space travel",
+                        option_3: "Startups",
+                        option_4: "Public Transportation",
+                        problem_category: "introduction",
+                        problem_desc: "The CyLab Mobility Research Center was established to explore developments in",
+                        problem_id: 1,
+                        answer: 1,
                         updated_at: "Tue, 06 Aug 2013 12:34:03 GMT"
                     }
                 }
@@ -281,13 +268,15 @@ $("#close-me").click(function() {
         url: "./confirm_to_solve_problem?problem_id=" + problemId,
         dataType: 'json',
         success: function(data) {
-            $("#dialog_desc").html("Thank You!");
+            $("#problem-desc").html("Thank You!");
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
-            $("#dialog_desc").html("Thank You!<br>Remember to come back to get candy!");
+            $("#problem-desc").html("Thank You!<br>Remember to come back to get candy!");
             $("#close-me").hide();
         }
     });
+
+    $("#survey-dialog").show();
 
 });
 
@@ -311,7 +300,7 @@ function plotProblem(id, x, y, floor, description) {
 
     $('#problem' + id).click(function() {
         $("#problem" + problemId).show();
-        $("#dialog_desc").html(description);
+        $("#problem-desc").html(description);
         //$("#dialog").popover('show');
 
         // update problem id for submitting to server
@@ -457,6 +446,11 @@ $(document).mousemove(function(event){
 $(function() {
     checkProblem();
     getSensorData();
+
+    $("#question-dialog").hide();
+    $("#problem-dialog").hide();
+    $("#question-message").hide();
+    $("#survey-dialog").hide();
 
     $('#myTab a').click(function (e) {
         e.preventDefault();

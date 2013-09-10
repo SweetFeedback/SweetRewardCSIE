@@ -399,6 +399,9 @@ class SurveyLog(db.Model):
 	survey_id = db.Column("survey_id", Integer, primary_key=True)
 	question1 = db.Column("question1", Integer)
 	question2 = db.Column("question2", Integer)
+	question3 = db.Column("question3", Integer)
+	question4 = db.Column("question4", Integer)
+	'''
 	question3_1 = db.Column("question3_1", BOOLEAN)
 	question3_2 = db.Column("question3_2", BOOLEAN)
 	question3_3 = db.Column("question3_3", BOOLEAN)
@@ -413,6 +416,7 @@ class SurveyLog(db.Model):
 	question4_5 = db.Column("question4_5", BOOLEAN)
 	question4_6 = db.Column("question4_6", BOOLEAN)
 	question4_7 = db.Column("question4_7", BOOLEAN)
+	'''
 	question5 = db.Column("question5", Integer)
 	question6 = db.Column("question6", Integer)
 	question7 = db.Column("question7", Integer)
@@ -425,6 +429,9 @@ class SurveyLog(db.Model):
 	def __init__(self, data):
 		self.question1 = data['question1']
 		self.question2 = data['question2']
+		self.question3 = data['question3']
+		self.question4 = data['question4']
+		'''
 		self.question3_1 = data['question3_1']
 		self.question3_2 = data['question3_2']
 		self.question3_3 = data['question3_3']
@@ -439,6 +446,7 @@ class SurveyLog(db.Model):
 		self.question4_5 = data['question4_5']
 		self.question4_6 = data['question4_6']
 		self.question4_7 = data['question4_7']
+		'''
 		self.question5 = data['question5']
 		self.question6 = data['question6']
 		self.question7 = data['question7']
@@ -449,20 +457,8 @@ class SurveyLog(db.Model):
 
 		print self.question1
 		print self.question2
-		print self.question3_1
-		print self.question3_2
-		print self.question3_3
-		print self.question3_4
-		print self.question3_5
-		print self.question3_6
-		print self.question3_7
-		print self.question4_1
-		print self.question4_2
-		print self.question4_3
-		print self.question4_4
-		print self.question4_5
-		print self.question4_6
-		print self.question4_7
+		print self.question3
+		print self.question4
 		print self.question5
 		print self.question6
 		print self.question7
