@@ -22,7 +22,18 @@ class DBHelper:
 	def insert_feedback(self, device_id, app_id, user_id, feedback_type, feedback_desc, can_get_time=None):
 		insert_feedback_task.apply_async((device_id, app_id, user_id, feedback_type, feedback_desc, can_get_time))
 		return True
-	
+	def update_feedback(self, feedback_id):
+		if feedback_id != -1:
+			feedback = db.session.query(Feedback).filter_by(feedback_id=feedback_id).first()
+			if feedback is not None:
+				feedback.if_get = True
+				feedback.retrieve_time = datetime.now()
+				db.session.commit()
+		return True
+	def get_feedback(self, device_id):
+		feedbacks = Feedback.query.filter_by(device_id=device_id).filter_by(if_get=False).filter(Feedback.can_get_time <= datetime.now()).all()
+		return feedbacks
+
 	### sensors related ### 
 	def insert_light(self, device_id, sensor_value, module_type):
 		insert_sensor.apply_async((device_id, "light", module_type, sensor_value))
