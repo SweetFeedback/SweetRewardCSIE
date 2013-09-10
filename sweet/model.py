@@ -372,7 +372,7 @@ class QuestionLog(db.Model):
 
 	log_id = db.Column("log_id", Integer, primary_key=True)
 	problem_id = db.Column("problem_id", Integer)
-	via_device = db.Column("device_id", Integer)
+	via_device = db.Column("via_device", Integer)
 	answer = db.Column("answer", Integer)
 	correct = db.Column("correct", BOOLEAN)
 	created_at = db.Column("created_at", TIMESTAMP)
