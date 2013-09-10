@@ -18,7 +18,7 @@ class DBHelper:
 		question_record = QuestionLog(problem_id, via_device, option, correct)
 		db.session.add(question_record)
 		db.session.commit()
-		return True
+		return question_record
 	def insert_feedback(self, device_id, app_id, user_id, feedback_type, feedback_desc, can_get_time=None):
 		insert_feedback_task.apply_async((device_id, app_id, user_id, feedback_type, feedback_desc, can_get_time))
 		return True
