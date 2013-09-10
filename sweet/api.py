@@ -293,7 +293,7 @@ def upload_survey():
 		'question8': -1 if len(question8) == 0 else int(question8[0]),
 		'question9': -1 if len(question9) == 0 else int(question9[0]),
 		'question10': -1 if len(question10) == 0 else int(question10[0]),
-		'question11': -1 if len(question11) == 0 else int(question11[0])
+		'question11': -1 if len(question11) == 0 else question11[0]
 	}
 	db_helper.insert_survey(data)
 
