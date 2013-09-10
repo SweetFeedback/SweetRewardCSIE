@@ -240,8 +240,10 @@ def upload_survey():
 	print request.form
 	question1 = request.form.getlist('question1')
 	question2 = request.form.getlist('question2')
-	question3 = request.form.getlist('question3[]')
-	question4 = request.form.getlist('question4[]')
+	question3 = request.form.getlist('question3')
+	question4 = request.form.getlist('question4')
+	#question3 = request.form.getlist('question3[]')
+	#question4 = request.form.getlist('question4[]')
 	question5 = request.form.getlist('question5')
 	question6 = request.form.getlist('question6')
 	question7 = request.form.getlist('question7')
@@ -250,10 +252,8 @@ def upload_survey():
 	question10 = request.form.getlist('question10')
 	question11 = request.form.getlist('question11')
 
-	data = {
-		'question1': -1 if len(question1) == 0 else question1[0],
-		'question2': -1 if len(question2) == 0 else question2[0],
-		'question3_1': True if '1' in question3 else False,
+	'''
+	'question3_1': True if '1' in question3 else False,
 		'question3_2': True if '2' in question3 else False,
 		'question3_3': True if '3' in question3 else False,
 		'question3_4': True if '4' in question3 else False,
@@ -267,6 +267,13 @@ def upload_survey():
 		'question4_5': True if '5' in question4 else False,
 		'question4_6': True if '6' in question4 else False,
 		'question4_7': True if '7' in question4 else False,
+	'''
+
+	data = {
+		'question1': -1 if len(question1) == 0 else question1[0],
+		'question2': -1 if len(question2) == 0 else question2[0],
+		'question3': -1 if len(question1) == 0 else question1[0],
+		'question4': -1 if len(question1) == 0 else question1[0],
 		'question5': -1 if len(question5) == 0 else question5[0],
 		'question6': -1 if len(question6) == 0 else question6[0],
 		'question7': -1 if len(question7) == 0 else question7[0],
