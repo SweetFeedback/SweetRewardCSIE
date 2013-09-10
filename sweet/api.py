@@ -269,18 +269,31 @@ def upload_survey():
 		'question4_7': True if '7' in question4 else False,
 	'''
 
+	print question1
+	print question2
+	print question3
+	print question4
+	print question5
+	print question6
+	print question7
+	print question8
+	print question9
+	print question10
+	print question11
+
+
 	data = {
-		'question1': -1 if len(question1) == 0 else question1[0],
-		'question2': -1 if len(question2) == 0 else question2[0],
-		'question3': -1 if len(question1) == 0 else question1[0],
-		'question4': -1 if len(question1) == 0 else question1[0],
-		'question5': -1 if len(question5) == 0 else question5[0],
-		'question6': -1 if len(question6) == 0 else question6[0],
-		'question7': -1 if len(question7) == 0 else question7[0],
-		'question8': -1 if len(question8) == 0 else question8[0],
-		'question9': -1 if len(question9) == 0 else question9[0],
-		'question10': -1 if len(question10) == 0 else question10[0],
-		'question11': -1 if len(question11) == 0 else question11[0]
+		'question1': -1 if len(question1) == 0 else int(question1[0]),
+		'question2': -1 if len(question2) == 0 else int(question2[0]),
+		'question3': -1 if len(question3) == 0 else int(question3[0]),
+		'question4': -1 if len(question4) == 0 else int(question4[0]),
+		'question5': -1 if len(question5) == 0 else int(question5[0]),
+		'question6': -1 if len(question6) == 0 else int(question6[0]),
+		'question7': -1 if len(question7) == 0 else int(question7[0]),
+		'question8': -1 if len(question8) == 0 else int(question8[0]),
+		'question9': -1 if len(question9) == 0 else int(question9[0]),
+		'question10': -1 if len(question10) == 0 else int(question10[0]),
+		'question11': -1 if len(question11) == 0 else int(question11[0])
 	}
 	db_helper.insert_survey(data)
 
