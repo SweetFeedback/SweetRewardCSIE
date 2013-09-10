@@ -62,8 +62,8 @@ def check_sensor_repository(method):
 @views.route("/sensor_data")
 def get_sensor_repository_data():
 
-	light = light_data() 
-	motion = motion_data() 
+	#light = light_data() 
+	#motion = motion_data() 
 	#return render_template("/sensor.html")
 	#return render_template("/panel_sensor.html", data=cleaned_data)
 	return '''
