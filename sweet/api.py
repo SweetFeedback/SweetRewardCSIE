@@ -85,7 +85,9 @@ def people_around():
 	
 	if people_count != -1 and device_id != -1:
 		db_helper.insert_people(device_id, people_count, "macintosh")
-	return ""
+	sentences = [{"sentence": "Hey! I saw you.", "tone": "Whisper"}, {"sentence" : "I got you guys", "tone": "Vicki"}, {"sentence": "Hey! guys !", "tone": "Albert"}, {"sentence": "Don't go", "tone": "Albert"}]
+	sentence_choosen = choice(sentences)
+	return jsonify(words=sentence_choosen)
 
 @api.route("/confirm_to_solve_problem", methods=['GET'])
 def confirm_to_solve_problem():
@@ -186,7 +188,9 @@ def feedback_insert():
 @api.route("/get_feedback", methods=['GET'])
 def feedback():
 	device_id = request.args.get("device_id", -1)
-	feedbacks = Feedback.query.filter_by(device_id=device_id).filter_by(if_get=False).filter(Feedback.can_get_time <= datetime.now()).all()
+	if device_id == -1: 
+		device_id = db_helper.get_device_id_from_ip(request.remote_addr)
+	feedbacks = db_helper.get_feedback(device_id)
 	return jsonify(data=[i.serialize for i in feedbacks])
 
 @api.route("/retrieve_feedback", methods=['GET'])
@@ -208,12 +212,8 @@ def get_feedback_by_user():
 @api.route("/update_feedback", methods=['GET'])
 def update_feedback():
 	feedback_id = request.args.get("feedback_id", -1)
-	feedback = db.session.query(Feedback).filter_by(feedback_id=feedback_id).first()
-	if feedback is not None:
-		feedback.if_get = True
-		feedback.retrieve_time = datetime.now()
-		db.session.commit()
-	return jsonify(data=[feedback.serialize])
+	db_helper.update_feedback(feedback_id)
+	return ""
 
 @api.route("/question_log", methods=['GET'])
 def question_log () : 
@@ -226,12 +226,12 @@ def question_log () :
 	if device_id == -1:
 		device_id = db_helper.get_device_id_from_ip(request.remote_addr)
 	if int(correct) == 1 and problem_id != -1 and option != -1: 
-		db_helper.insert_feedback(device_id, 9, -1, "saying", "right_answer")
-		db_helper.insert_question_log(problem_id, option, 1)
+		db_helper.insert_feedback(device_id, 9, -1, "saying", "you got right answer")
+		question_record = db_helper.insert_question_log(problem_id, device_id, option, 1)
 
 	elif int(correct) == 0 and problem_id != -1 and option != -1:
-		db_helper.insert_feedback(device_id, 9, -1, "saying", "wrong_answer")
-		db_helper.insert_question_log(problem_id, option, 0)
+		db_helper.insert_feedback(device_id, 9, -1, "saying", "you got wrong answer")
+		question_record = db_helper.insert_question_log(problem_id, device_id, option, 0)
 
 	return jsonify(data=question_record.serialize)
 

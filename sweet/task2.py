@@ -127,15 +127,6 @@ def check_noise():
 	elapsed_time = time.time() - start_time
 	return "used time for checking noise " + str(elapsed_time)
 
-def insert_noise_problem_to_problem_repository(device_id):
-	problem_repo_instance = ProblemRepository("Noise", "Is is noisy here?", "Device " + str(device_id), device_id, device_id, valid=True)
-	db.session.add(problem_repo_instance)
-	db.session.commit()
-def insert_light_problem_to_problem_repository(firefly_id, device_id):
-	problem_repo_instance = ProblemRepository("light", "light is not closing now, could you help me to close it? I will give you candies if you do", mapping_table[firefly_id][2], firefly_id, device_id)
-	db.session.add(problem_repo_instance)
-	db.session.commit()
-
 @celery.task(name = "task2.find_light")
 def find_light(): 
 	start_time = time.time() 
@@ -152,7 +143,7 @@ def find_light():
 	for row in cleaned_data: 
 		row_hour = datetime.fromtimestamp(row['timestamp']/1000).hour
 		print datetime.fromtimestamp(row['timestamp']/1000).date(), row['device_id'], row['value']
-		if row['value'] > 500 and mapping_table.has_key(row['device_id']) and (row_hour >= 21 or row_hour <= 7):
+		if row['value'] < 700 and mapping_table.has_key(row['device_id']) and (row_hour >= 21 or row_hour <= 7):
 			problems.append(row)
 		#problems.append(row)
 	if len(problems) > 0:
@@ -175,7 +166,6 @@ def find_light():
 				problem_repo_instance = ProblemRepository("light", "light is not closing now, could you help me to close it? I will give you candies if you do", mapping_table[problem_choosed['device_id']][2], problem_choosed['device_id'], device_id)
 				db.session.add(problem_repo_instance)
 				db.session.commit()
-
 	return "used time for finding light " + str(elapsed_time)
 @celery.task(name = "task2.light_check")
 def light_check():
@@ -202,5 +192,14 @@ def light_check():
 	## left for implementation 
 
 	return "used time for checking light " + str(elapsed_time)
+### problem repository 
+def insert_noise_problem_to_problem_repository(device_id):
+	problem_repo_instance = ProblemRepository("Noise", "Is is noisy here?", "Device " + str(device_id), device_id, device_id, valid=True)
+	db.session.add(problem_repo_instance)
+	db.session.commit()
+def insert_light_problem_to_problem_repository(firefly_id, device_id):
+	problem_repo_instance = ProblemRepository("light", "light is not closing now, could you help me to close it? I will give you candies if you do", mapping_table[firefly_id][2], firefly_id, device_id)
+	db.session.add(problem_repo_instance)
+	db.session.commit()
 if __name__ == "__main__" : 
 	celery.worker_main()
