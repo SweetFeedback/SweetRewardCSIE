@@ -157,7 +157,7 @@ function judgeAnswer(option) {
 
 
     if(questionAns != answer) {
-        $("#question-message").html("Wrong Answer!");
+        $("#question-message").html("Try different answer!");
         $("#question-message").show();
 
         $("#question-option" + option).css("background-color", "rgb(255, 143, 143)");
