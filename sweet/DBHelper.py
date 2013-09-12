@@ -65,6 +65,11 @@ class DBHelper:
 		for i in sensor_log_indexs:
 			print i.serialize
 		return sensor_log_indexs
+	def get_sensor_index_by_type(self, sensor_type):
+		sensor_log_indexs = db.session.query(SensorIndex).filter_by(sensor_type=sensor_type).all()
+		#for i in sensor_log_indexs:
+			#print i.serialize
+		return sensor_log_indexs
 	def get_all_sensor_index(self):
 		online_devices = self.get_online_device()
 		all_sensor_index = [] 

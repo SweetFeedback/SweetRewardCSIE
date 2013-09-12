@@ -45,8 +45,22 @@ def get_sensor_log(device_id):
 
 @api.route("/sensor_log_index")
 def get_all_sensor_log():
-	data = db_helper.get_all_sensor_index()
+	device_type = request.args.get("device_type", "")
+	data = None 
+	if device_type != "":
+		data = db_helper.get_sensor_index_by_type(device_type)
+	else:
+		data = db_helper.get_all_sensor_index()
 	return jsonify(data=[d.serialize for d in data])
+@api.route("/sensor_log_index", methods=['GET'])
+def get_sensor_by_type():
+	device_type = request.args.get("device_type", "")
+	data = None 
+	if device_type != "":
+		data = db_helper.get_sensor_index_by_type(device_type)
+	if data != None:
+		return jsonify(data=[d.serialize for d in data])
+	return ""
 
 @api.route("/sensor_log/insert", methods=['GET'])
 def sensor_insert():
