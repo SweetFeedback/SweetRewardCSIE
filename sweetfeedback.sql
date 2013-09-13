@@ -50,57 +50,20 @@ CREATE TABLE `Windows` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `basic_sensor_log`
+-- Table structure for table `applications`
 --
 
-DROP TABLE IF EXISTS `basic_sensor_log`;
+DROP TABLE IF EXISTS `applications`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `basic_sensor_log` (
-  `log_id` int(11) NOT NULL AUTO_INCREMENT,
-  `device_id` int(11) NOT NULL,
-  `light_level` float NOT NULL,
-  `temperature` float NOT NULL,
-  `sound_level` float NOT NULL,
-  `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=381297 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `basic_sensor_log_index`
---
-
-DROP TABLE IF EXISTS `basic_sensor_log_index`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `basic_sensor_log_index` (
-  `log_id` int(11) NOT NULL AUTO_INCREMENT,
-  `sensor_log_id` int(11) NOT NULL,
-  `device_id` int(11) NOT NULL,
-  `light_level` float NOT NULL,
-  `temperature` float NOT NULL,
-  `sound_level` float NOT NULL,
-  `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=381271 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `device_around`
---
-
-DROP TABLE IF EXISTS `device_around`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `device_around` (
-  `log_id` int(11) NOT NULL AUTO_INCREMENT,
-  `bluetooth_id` varchar(50) DEFAULT NULL,
-  `device_name` varchar(50) DEFAULT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `nearby_device` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+CREATE TABLE `applications` (
+  `application_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  `description` varchar(200) DEFAULT NULL,
+  `owner_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`application_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,41 +79,6 @@ CREATE TABLE `device_online` (
   `ipaddress` char(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`session`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `extended_window_log`
---
-
-DROP TABLE IF EXISTS `extended_window_log`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `extended_window_log` (
-  `ext_win_log_id` int(11) NOT NULL AUTO_INCREMENT,
-  `location_id` int(11) NOT NULL,
-  `window_id` int(11) NOT NULL,
-  `state` int(11) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`ext_win_log_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=236425 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `extended_window_log_index`
---
-
-DROP TABLE IF EXISTS `extended_window_log_index`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `extended_window_log_index` (
-  `log_id` int(11) NOT NULL AUTO_INCREMENT,
-  `ext_win_log_id` int(11) NOT NULL,
-  `location_id` int(11) NOT NULL,
-  `window_id` int(11) NOT NULL,
-  `state` int(11) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=917 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -172,7 +100,7 @@ CREATE TABLE `feedback_repository` (
   `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `if_get` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`feedback_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=466 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=560 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -235,21 +163,6 @@ CREATE TABLE `notification` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `people_presence_log_ext`
---
-
-DROP TABLE IF EXISTS `people_presence_log_ext`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `people_presence_log_ext` (
-  `log_id` int(11) NOT NULL,
-  `people_presence` int(11) NOT NULL,
-  PRIMARY KEY (`log_id`),
-  CONSTRAINT `people_presence_log_ext_ibfk_1` FOREIGN KEY (`log_id`) REFERENCES `basic_sensor_log` (`log_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `problem_repository`
 --
 
@@ -265,8 +178,9 @@ CREATE TABLE `problem_repository` (
   `location` varchar(50) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `valid` tinyint(1) NOT NULL,
+  `solved` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`problem_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -291,6 +205,83 @@ CREATE TABLE `problems` (
   `updated_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=79 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `question_log`
+--
+
+DROP TABLE IF EXISTS `question_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `question_log` (
+  `log_id` int(11) NOT NULL AUTO_INCREMENT,
+  `problem_id` int(11) NOT NULL,
+  `answer` int(11) NOT NULL,
+  `correct` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`log_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `question_repository`
+--
+
+DROP TABLE IF EXISTS `question_repository`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `question_repository` (
+  `problem_id` int(11) NOT NULL AUTO_INCREMENT,
+  `problem_desc` varchar(200) NOT NULL,
+  `category` varchar(50) DEFAULT NULL,
+  `option_1` varchar(50) NOT NULL,
+  `option_2` varchar(50) NOT NULL,
+  `option_3` varchar(50) NOT NULL,
+  `option_4` varchar(50) NOT NULL,
+  `error_message` varchar(200) NOT NULL,
+  `answer` int(11) NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`problem_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sensors`
+--
+
+DROP TABLE IF EXISTS `sensors`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sensors` (
+  `log_id` int(11) NOT NULL AUTO_INCREMENT,
+  `sensor_type` varchar(20) DEFAULT NULL,
+  `module_type` varchar(50) NOT NULL,
+  `sensor_index` int(11) NOT NULL DEFAULT '1',
+  `sensor_value` int(11) NOT NULL DEFAULT '-1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `device_id` int(11) NOT NULL DEFAULT '-1',
+  PRIMARY KEY (`log_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5255 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sensors_index`
+--
+
+DROP TABLE IF EXISTS `sensors_index`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sensors_index` (
+  `log_id` int(11) NOT NULL AUTO_INCREMENT,
+  `sensor_type` varchar(20) DEFAULT NULL,
+  `module_type` varchar(50) NOT NULL,
+  `sensor_index` int(11) NOT NULL DEFAULT '1',
+  `device_id` int(11) NOT NULL DEFAULT '-1',
+  `sensor_value` int(11) NOT NULL DEFAULT '-1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`log_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -388,37 +379,6 @@ CREATE TABLE `wifi_signal` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `window_log`
---
-
-DROP TABLE IF EXISTS `window_log`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `window_log` (
-  `log_id` int(11) NOT NULL,
-  `window_id` int(11) NOT NULL,
-  `state` int(11) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `window_state_log_ext`
---
-
-DROP TABLE IF EXISTS `window_state_log_ext`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `window_state_log_ext` (
-  `log_id` int(11) NOT NULL,
-  `window_state` int(11) NOT NULL,
-  PRIMARY KEY (`log_id`),
-  CONSTRAINT `window_state_log_ext_ibfk_2` FOREIGN KEY (`log_id`) REFERENCES `basic_sensor_log` (`log_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -429,4 +389,4 @@ CREATE TABLE `window_state_log_ext` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-07-29 13:07:50
+-- Dump completed on 2013-08-21 19:40:20

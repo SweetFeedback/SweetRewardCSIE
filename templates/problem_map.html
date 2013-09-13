@@ -37,84 +37,59 @@
 <body>
 <!--<div id="wrap" style="margin-left:100px;margin-right:100px;">-->
 <div id="wrap" style="height:100%;">
-    <div class="container">
+    <div id="map1">
+        <img src="/static/img/floor1_2.png" width="1007" height="646" style="position: absolute; z-index: 100;">
+        <img id="mrc1" src="/static/img/mrc/mrc.png" width="43" height="56" style="position: absolute; z-index: 200; margin-top: 500px; margin-left: 530px;">
+        <img id="mrc2" src="/static/img/mrc/mrc.png" width="43" height="56" style="position: absolute; z-index: 200; margin-top: 270px; margin-left: 480px;">
+    </div>
+    
+    <div id="map2">
+        <img src="/static/img/floor2_2.png" width="1007" height="646" style="position: absolute; z-index: 100;">
+        <img id="mrc3" src="/static/img/mrc/mrc.png" width="43" height="56" style="position: absolute; z-index: 200; margin-top: 500px; margin-left: 490px;">
+        <img id="mrc4" src="/static/img/mrc/mrc.png" width="43" height="56" style="position: absolute; z-index: 200; margin-top: 480px; margin-left: 780px;">
+    </div>
 
-    <!-- Main component for a primary marketing message or call to action -->
-        
+    <div id="dialog-wrap" style="padding-left:120px;">
+        <img src="/static/img/mrc/mrc.png" width="143" height="186" style="position: absolute; z-index: 300; margin-top: 450px; margin-left: 1000px;">
 
-     
+        <img src="/static/img/dialog2.png" width="100" height="60" style="position: absolute; z-index: 300; margin-top: 350px; margin-left: 950px;">
 
-        
-            <div id="map1">
-                <img src="/static/img/floor1_2.png" width="1007" height="646" style="position: absolute; z-index: 100;">
-                <img id="mrc1" src="/static/img/mrc/mrc.png" width="43" height="56" style="position: absolute; z-index: 200; margin-top: 500px; margin-left: 530px;">
-                <img id="mrc2" src="/static/img/mrc/mrc.png" width="43" height="56" style="position: absolute; z-index: 200; margin-top: 270px; margin-left: 480px;">
+        <img src="/static/img/dialog3.png" width="50" height="30" style="position: absolute; z-index: 300; margin-top: 420px; margin-left: 1000px;">
+    
+        <img id="dialogImg1" src="/static/img/dialog1.png" width="550" height="350" style="position: absolute; z-index: 100; margin-top: 10px; margin-left: 650px;">
+
+        <div id="problem-dialog" style="width:150px; height:200; position: absolute; z-index: 200; margin-top: 55px; margin-left: 730px;">
+            <h4 id="problem-desc" style="text-align: center;color: #FF0000; width: 350px;"></h4>
+            <div class="span6" style="width: 300px; text-align:center">
+            <button id="close-me" type="button" class="btn btn-primary">OK, I take it</button>
+
             </div>
-        
-
-        
-            <div id="map2">
-                <img src="/static/img/floor2_2.png" width="1007" height="646" style="position: absolute; z-index: 100;">
-                <img id="mrc3" src="/static/img/mrc/mrc.png" width="43" height="56" style="position: absolute; z-index: 200; margin-top: 500px; margin-left: 490px;">
-                <img id="mrc4" src="/static/img/mrc/mrc.png" width="43" height="56" style="position: absolute; z-index: 200; margin-top: 480px; margin-left: 780px;">
-            </div>
-        
-
-        <div id="dialog-wrap">
-            <img src="/static/img/mrc/mrc.png" width="143" height="186" style="position: absolute; z-index: 300; margin-top: 450px; margin-left: 1000px;">
-
-            <img src="/static/img/dialog2.png" width="100" height="60" style="position: absolute; z-index: 300; margin-top: 350px; margin-left: 950px;">
-
-            <img src="/static/img/dialog3.png" width="50" height="30" style="position: absolute; z-index: 300; margin-top: 420px; margin-left: 1000px;">
-        
-            <img id="dialogImg1" src="/static/img/dialog1.png" width="550" height="350" style="position: absolute; z-index: 100; margin-top: 10px; margin-left: 650px;">
-
-            <div id="problem-dialog" style="width:150px; height:200; position: absolute; z-index: 200; margin-top: 55px; margin-left: 730px;">
-                <h4 id="problem-desc" style="text-align: center;color: #FF0000; width: 350px;"></h4>
-                <div class="span6" style="width: 300px; text-align:center">
-                <button id="close-me" type="button" class="btn btn-primary">OK, I take it</button>
-
-                </div>
-            </div>
-            <div id="question-dialog" style="width:500px; height:200px; position: absolute; z-index: 200; margin-top: 55px; margin-left: 680px;">
-                <h4 style="text-align: center;color: #FF0000; width: 350px; margin-left: 50px;">Answer the question and win candies!</h4>
-                <h4 id="question-desc" style="text-align: center;color: #000000; width: 350px; margin-left: 50px;"></h4>
-                
-
-                <div id="question-optionA" style="width:110px; height:80px; position: absolute; z-index: 200; margin-top: 5px; margin-left: 0px; border-width:thin; border-style:dashed;">
-                </div>
-                
-                <div id="question-optionB" style="width:110px; height:80px; position: absolute; z-index: 200; margin-top: 5px; margin-left: 120px; border-width:thin; border-style:dashed;">
-                </div>
-
-                <div id="question-optionC" style="width:110px; height:80px; position: absolute; z-index: 200; margin-top: 5px; margin-left: 240px; border-width:thin; border-style:dashed;">
-                </div>
-
-
-                <div id="question-optionD" style="width:110px; height:80px; position: absolute; z-index: 200; margin-top: 5px; margin-left: 360px; border-width:thin; border-style:dashed;">
-                </div>
-
-                <h4 id="question-message" style="text-align: center;color: #FF0000; width: 450px; margin-top: 100px;">Correct!</h4>
-            </div>
-            <div id="survey-dialog" style="color:#FF0000; position: absolute; z-index: 300; margin-top: 260px; margin-left: 770px;">
-                <h4>Take a survey and win more candies!</h4>
-                <button id="take-survey" class="btn btn-small btn-primary" type="button" style="margin-left: 120px;">Go!</button>
-            </div>
-
         </div>
+        <div id="question-dialog" style="width:500px; height:200px; position: absolute; z-index: 200; margin-top: 55px; margin-left: 680px;">
+            <h4 style="text-align: center;color: #FF0000; width: 350px; margin-left: 50px;">Answer the question and win candies!</h4>
+            <h4 id="question-desc" style="text-align: center;color: #000000; width: 350px; margin-left: 50px;"></h4>
+            
 
-        
+            <div id="question-optionA" style="width:110px; height:80px; position: absolute; z-index: 200; margin-top: 5px; margin-left: 0px; border-width:thin; border-style:dashed;">
+            </div>
+            
+            <div id="question-optionB" style="width:110px; height:80px; position: absolute; z-index: 200; margin-top: 5px; margin-left: 120px; border-width:thin; border-style:dashed;">
+            </div>
 
-    </div> <!-- /container -->
+            <div id="question-optionC" style="width:110px; height:80px; position: absolute; z-index: 200; margin-top: 5px; margin-left: 240px; border-width:thin; border-style:dashed;">
+            </div>
 
-    <!--div id="footer">
-        <div class="container" style="max-width:600px;">
-            <p class="text-muted credit" >Sweet Building Greeter is made by Louis Yu, Ken Liang, and Ted Selker</p>
+            <div id="question-optionD" style="width:110px; height:80px; position: absolute; z-index: 200; margin-top: 5px; margin-left: 360px; border-width:thin; border-style:dashed;">
+            </div>
+
+            <h4 id="question-message" style="text-align: center;color: #FF0000; width: 450px; margin-top: 100px;">Correct!</h4>
         </div>
-    </div--> <!-- /footer -->
-
-
-</div> <!-- /wrap -->
+        <div id="survey-dialog" style="color:#FF0000; position: absolute; z-index: 300; margin-top: 260px; margin-left: 770px;">
+            <h4>Take a survey and win more candies!</h4>
+            <button id="take-survey" class="btn btn-small btn-primary" type="button" style="margin-left: 120px;">Go!</button>
+        </div>
+    </div>
+</div> 
 
 <!-- Le javascript
 ================================================== -->
