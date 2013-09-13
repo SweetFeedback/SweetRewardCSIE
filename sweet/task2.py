@@ -131,8 +131,15 @@ def check_noise():
 def find_light(): 
 	start_time = time.time() 
 	elapsed_time = time.time() - start_time
-
-	data = json.load(urllib2.urlopen('http://cmu-sensor-network.herokuapp.com/lastest_readings_from_all_devices/light/json'))
+	sensor_log_indexs = db.session.query(SensorIndex).filter_by(sensor_type="light").all()
+	#for i in sensor_log_indexs:
+		#print i.serialize
+	for i in sensor_log_indexs:
+		print i.sensor_value
+		date_object = datetime.strptime(i.created_at, '%b %d %Y %I:%M%p')
+		if i.sensor_value > 200 and (date_object.hour >= 21 or date_object.hour <= 7): 
+			problem_repo_instance = ProblemRepository("light", "light is not closing now, could you help me to close it? I will give you candies if you do", "gumball machine" + str(i.device_id), i.device_id, i.device_id)
+	'''data = json.load(urllib2.urlopen('http://cmu-sensor-network.herokuapp.com/lastest_readings_from_all_devices/light/json'))
 	problems = []
 	cleaned_data = []
 	for row in data:
@@ -166,6 +173,7 @@ def find_light():
 				problem_repo_instance = ProblemRepository("light", "light is not closing now, could you help me to close it? I will give you candies if you do", mapping_table[problem_choosed['device_id']][2], problem_choosed['device_id'], device_id)
 				db.session.add(problem_repo_instance)
 				db.session.commit()
+	'''
 	return "used time for finding light " + str(elapsed_time)
 @celery.task(name = "task2.light_check")
 def light_check():
