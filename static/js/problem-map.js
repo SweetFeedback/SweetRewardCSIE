@@ -429,7 +429,7 @@ $(document).mousemove(function(event){
 
 $(function() {
     checkProblem();
-    getSensorData();
+    //getSensorData();
 
     $("#question-dialog").hide();
     $("#problem-dialog").hide();
