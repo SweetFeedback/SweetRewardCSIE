@@ -162,7 +162,6 @@ function judgeAnswer(option) {
     if(questionAns != answer) {
         $("#question-message").html("Try different answer!");
         $("#question-message").show();
-
         $("#question-option" + option).css("background-color", "rgb(255, 143, 143)");
         $.get("./question_log?problem_id="+questionId+"&option="+answer+"&correct=0");
     } else {
@@ -179,7 +178,6 @@ function judgeAnswer(option) {
         optionFlatC = true;
         optionFlatD = true;
     }
-
 }
 
 $("#question-optionA").click(function() {

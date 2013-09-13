@@ -53,9 +53,8 @@ class DBHelper:
 	def insert_people(self, device_id, sensor_value, module_type, sensor_index=1):
 		insert_sensor.apply_async((device_id, "people", module_type, sensor_value, sensor_index))
 
-	def insert_survey(self, data):
-		survey = SurveyLog(data)
-		print survey
+	def insert_survey(self, data, device_id):
+		survey = SurveyLog(data, device_id)
 		db.session.add(survey)
 		db.session.commit()
 		return True
@@ -64,6 +63,11 @@ class DBHelper:
 		sensor_log_indexs = db.session.query(SensorIndex).filter_by(device_id=device_id).all()
 		for i in sensor_log_indexs:
 			print i.serialize
+		return sensor_log_indexs
+	def get_sensor_index_by_type(self, sensor_type):
+		sensor_log_indexs = db.session.query(SensorIndex).filter_by(sensor_type=sensor_type).all()
+		#for i in sensor_log_indexs:
+			#print i.serialize
 		return sensor_log_indexs
 	def get_all_sensor_index(self):
 		online_devices = self.get_online_device()

@@ -400,26 +400,11 @@ class SurveyLog(db.Model):
 	__tablename__ = "survey_log"
 
 	survey_id = db.Column("survey_id", Integer, primary_key=True)
+	device_id = db.Column("device_id", Integer)
 	question1 = db.Column("question1", Integer)
 	question2 = db.Column("question2", Integer)
 	question3 = db.Column("question3", Integer)
 	question4 = db.Column("question4", Integer)
-	'''
-	question3_1 = db.Column("question3_1", BOOLEAN)
-	question3_2 = db.Column("question3_2", BOOLEAN)
-	question3_3 = db.Column("question3_3", BOOLEAN)
-	question3_4 = db.Column("question3_4", BOOLEAN)
-	question3_5 = db.Column("question3_5", BOOLEAN)
-	question3_6 = db.Column("question3_6", BOOLEAN)
-	question3_7 = db.Column("question3_7", BOOLEAN)
-	question4_1 = db.Column("question4_1", BOOLEAN)
-	question4_2 = db.Column("question4_2", BOOLEAN)
-	question4_3 = db.Column("question4_3", BOOLEAN)
-	question4_4 = db.Column("question4_4", BOOLEAN)
-	question4_5 = db.Column("question4_5", BOOLEAN)
-	question4_6 = db.Column("question4_6", BOOLEAN)
-	question4_7 = db.Column("question4_7", BOOLEAN)
-	'''
 	question5 = db.Column("question5", Integer)
 	question6 = db.Column("question6", Integer)
 	question7 = db.Column("question7", Integer)
@@ -428,28 +413,13 @@ class SurveyLog(db.Model):
 	question10 = db.Column("question10", Integer)
 	question11 = db.Column("question11", String(255))
 	created_at = db.Column("created_at", TIMESTAMP)
+	
 
-	def __init__(self, data):
+	def __init__(self, data, device_id):
 		self.question1 = data['question1']
 		self.question2 = data['question2']
 		self.question3 = data['question3']
 		self.question4 = data['question4']
-		'''
-		self.question3_1 = data['question3_1']
-		self.question3_2 = data['question3_2']
-		self.question3_3 = data['question3_3']
-		self.question3_4 = data['question3_4']
-		self.question3_5 = data['question3_5']
-		self.question3_6 = data['question3_6']
-		self.question3_7 = data['question3_7']
-		self.question4_1 = data['question4_1']
-		self.question4_2 = data['question4_2']
-		self.question4_3 = data['question4_3']
-		self.question4_4 = data['question4_4']
-		self.question4_5 = data['question4_5']
-		self.question4_6 = data['question4_6']
-		self.question4_7 = data['question4_7']
-		'''
 		self.question5 = data['question5']
 		self.question6 = data['question6']
 		self.question7 = data['question7']
@@ -457,16 +427,5 @@ class SurveyLog(db.Model):
 		self.question9 = data['question9']
 		self.question10 = data['question10']
 		self.question11 = data['question11']
-
-		print self.question1
-		print self.question2
-		print self.question3
-		print self.question4
-		print self.question5
-		print self.question6
-		print self.question7
-		print self.question8
-		print self.question9
-		print self.question10
-		print self.question11
+		self.device_id = device_id
 

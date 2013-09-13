@@ -17,57 +17,31 @@
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="/static/ico/favicon.png">
     <style type="text/css">
-        #footer {
-            height: 20px;
-        }
         body {
             height:100%;
             background-color: #f1f1f1;
             background-image: url('/static/img/others/retina_dust.png');
             background-repeat:repeat repeat;
             font-size: 16px;     
-            padding-top: 20px; /* 60px to make the container go all the way to the bottom of the topbar */
-            padding-bottom: 40px;
         }
         #wrap {
             min-height: 100%;
             height: auto !important;
             height: 100%;
-            /* Negative indent footer by its height */
-            margin: 0 auto -20px;
-            /* Pad bottom by footer height */
-            padding: 0 0 20px;
+        }
+        .container {
+            padding-top: 20px;
         }
     </style>
 </head>
 <body>
-<div id="wrap" style="margin-left:100px;margin-right:100px;">
-    <div class="navbar">
-        <div class="container">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">SweetFeedback</a>
-            <div class="nav-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="/">Save Energy</a></li>
-                    <li><a href="/questionnaire">Questionnaire</a></li>
-                    <li><a href="/transportation">Transportation</a></li>
-                    <li><a href="/about">About</a></li>
-                </ul>
-                <ul class="nav navbar-nav pull-right">
-                    <li><img src="/static/img/cmu-sv-logo.png"></li>
-                </ul>
-            </div><!--/.nav-collapse -->
-        </div>
-    </div>
-
+<!--<div id="wrap" style="margin-left:100px;margin-right:100px;">-->
+<div id="wrap" style="height:100%;">
     <div class="container">
 
     <!-- Main component for a primary marketing message or call to action -->
         
+
      
 
         
@@ -99,6 +73,7 @@
                 <h4 id="problem-desc" style="text-align: center;color: #FF0000; width: 350px;"></h4>
                 <div class="span6" style="width: 300px; text-align:center">
                 <button id="close-me" type="button" class="btn btn-primary">OK, I take it</button>
+
                 </div>
             </div>
             <div id="question-dialog" style="width:500px; height:200px; position: absolute; z-index: 200; margin-top: 55px; margin-left: 680px;">
@@ -114,6 +89,7 @@
 
                 <div id="question-optionC" style="width:110px; height:80px; position: absolute; z-index: 200; margin-top: 5px; margin-left: 240px; border-width:thin; border-style:dashed;">
                 </div>
+
 
                 <div id="question-optionD" style="width:110px; height:80px; position: absolute; z-index: 200; margin-top: 5px; margin-left: 360px; border-width:thin; border-style:dashed;">
                 </div>

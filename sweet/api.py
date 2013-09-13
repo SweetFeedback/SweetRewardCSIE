@@ -45,8 +45,22 @@ def get_sensor_log(device_id):
 
 @api.route("/sensor_log_index")
 def get_all_sensor_log():
-	data = db_helper.get_all_sensor_index()
+	device_type = request.args.get("device_type", "")
+	data = None 
+	if device_type != "":
+		data = db_helper.get_sensor_index_by_type(device_type)
+	else:
+		data = db_helper.get_all_sensor_index()
 	return jsonify(data=[d.serialize for d in data])
+@api.route("/sensor_log_index", methods=['GET'])
+def get_sensor_by_type():
+	device_type = request.args.get("device_type", "")
+	data = None 
+	if device_type != "":
+		data = db_helper.get_sensor_index_by_type(device_type)
+	if data != None:
+		return jsonify(data=[d.serialize for d in data])
+	return ""
 
 @api.route("/sensor_log/insert", methods=['GET'])
 def sensor_insert():
@@ -238,12 +252,13 @@ def question_log () :
 @api.route("/upload_survey", methods=['POST'])
 def upload_survey():
 	print request.form
+	device_id = -1 
+	if device_id == -1: 
+		device_id = db_helper.get_device_id_from_ip(request.remote_addr)
 	question1 = request.form.getlist('question1')
 	question2 = request.form.getlist('question2')
 	question3 = request.form.getlist('question3')
 	question4 = request.form.getlist('question4')
-	#question3 = request.form.getlist('question3[]')
-	#question4 = request.form.getlist('question4[]')
 	question5 = request.form.getlist('question5')
 	question6 = request.form.getlist('question6')
 	question7 = request.form.getlist('question7')
@@ -251,35 +266,6 @@ def upload_survey():
 	question9 = request.form.getlist('question9')
 	question10 = request.form.getlist('question10')
 	question11 = request.form.getlist('question11')
-
-	'''
-	'question3_1': True if '1' in question3 else False,
-		'question3_2': True if '2' in question3 else False,
-		'question3_3': True if '3' in question3 else False,
-		'question3_4': True if '4' in question3 else False,
-		'question3_5': True if '5' in question3 else False,
-		'question3_6': True if '6' in question3 else False,
-		'question3_7': True if '7' in question3 else False,
-		'question4_1': True if '1' in question4 else False,
-		'question4_2': True if '2' in question4 else False,
-		'question4_3': True if '3' in question4 else False,
-		'question4_4': True if '4' in question4 else False,
-		'question4_5': True if '5' in question4 else False,
-		'question4_6': True if '6' in question4 else False,
-		'question4_7': True if '7' in question4 else False,
-	'''
-
-	print question1
-	print question2
-	print question3
-	print question4
-	print question5
-	print question6
-	print question7
-	print question8
-	print question9
-	print question10
-	print question11
 
 
 	data = {
@@ -295,7 +281,8 @@ def upload_survey():
 		'question10': -1 if len(question10) == 0 else int(question10[0]),
 		'question11': -1 if len(question11) == 0 else question11[0]
 	}
-	db_helper.insert_survey(data)
+
+	db_helper.insert_survey(data, device_id)
 
 	return "";
 
