@@ -17,53 +17,26 @@
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="/static/ico/favicon.png">
     <style type="text/css">
-        #footer {
-            height: 20px;
-        }
         body {
             height:100%;
             background-color: #f1f1f1;
             background-image: url('/static/img/others/retina_dust.png');
             background-repeat:repeat repeat;
             font-size: 16px;     
-            padding-top: 20px; /* 60px to make the container go all the way to the bottom of the topbar */
-            padding-bottom: 40px;
         }
         #wrap {
             min-height: 100%;
             height: auto !important;
             height: 100%;
-            /* Negative indent footer by its height */
-            margin: 0 auto -20px;
-            /* Pad bottom by footer height */
-            padding: 0 0 20px;
+        }
+        .container {
+            padding-top: 20px;
         }
     </style>
 </head>
 <body>
-<div id="wrap" style="margin-left:100px;margin-right:100px;">
-    <div class="navbar">
-        <div class="container">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">SweetFeedback</a>
-            <div class="nav-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="/">Save Energy</a></li>
-                    <li><a href="/questionnaire">Questionnaire</a></li>
-                    <li><a href="/transportation">Transportation</a></li>
-                    <li><a href="/about">About</a></li>
-                </ul>
-                <ul class="nav navbar-nav pull-right">
-                    <li><img src="/static/img/cmu-sv-logo.png"></li>
-                </ul>
-            </div><!--/.nav-collapse -->
-        </div>
-    </div>
-
+<!--<div id="wrap" style="margin-left:100px;margin-right:100px;">-->
+<div id="wrap" style="height:100%;">
     <div class="container">
 
     <!-- Main component for a primary marketing message or call to action -->
@@ -75,14 +48,14 @@
          
         <div class="tab-content">
             <div class="tab-pane active" id="1F">
-                <div id="map1">
+                <div id="map1" style="margin-left:-120px;">
                     <img src="/static/img/floor1_2.png" width="1007" height="646" style="position: absolute; z-index: 100;">
                     <img id="mrc1" src="/static/img/mrc/mrc.png" width="43" height="56" style="position: absolute; z-index: 200; margin-top: 500px; margin-left: 530px;">
                     <img id="mrc2" src="/static/img/mrc/mrc.png" width="43" height="56" style="position: absolute; z-index: 200; margin-top: 270px; margin-left: 480px;">
                     <img id="mrc3" src="/static/img/mrc/mrc.png" width="43" height="56" style="position: absolute; z-index: 200; margin-top: 380px; margin-left: 740px;">
 
                     
-                    <div id="dialog-wrap">
+                    <div id="dialog-wrap" style="margin-left:120px;">
                         <img src="/static/img/mrc/mrc.png" width="143" height="186" style="position: absolute; z-index: 300; margin-top: 450px; margin-left: 1000px;">
 
                         <img src="/static/img/dialog2.png" width="100" height="60" style="position: absolute; z-index: 300; margin-top: 350px; margin-left: 950px;">
@@ -120,15 +93,7 @@
                             <h4>Take a survey and win more candies!</h4>
                             <button id="take-survey" class="btn btn-small btn-primary" type="button" style="margin-left: 120px;">Go!</button>
                         </div>
-
                     </div>
-
-                    <!--div id="instruction-wrap" style="width:150px; height:200; position: absolute; z-index: 200; margin-top: 90px; margin-left: 10px;">
-                        <h4 id="dialog_desc" style="color: #FF0000; width: 380px;">
-                            This map shows the realtime condition in each room by visualizing the realtime sensor data.<br><br>
-                            The system will automatically detect your action and give you candy feedback in return after you take action.
-                        </h4>
-                    </div-->
                 </div>
 
                 
@@ -136,7 +101,7 @@
 
             <div class="tab-pane" id="2F">
                 <div id="map2">
-                    <img src="/static/img/floor2_2.png" width="1007" height="646" style="position: absolute; z-index: 100;">
+                    <img src="/static/img/floor2_2.png" width="1007" height="646" style="margin-left:-120px;position: absolute; z-index: 100;">
                 </div>
             </div>
         </div>
