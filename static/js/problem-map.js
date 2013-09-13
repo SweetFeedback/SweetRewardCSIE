@@ -91,7 +91,6 @@ function parseProblemJsonString (data) {
     if(!('data' in data)) {
         return;
     }
-
     // show problem in the enviroment, else show a question if no problem
     if('problem' in data['data'] && data['data']['problem'].length > 0) {
         var problems = data['data']['problem'];
@@ -100,6 +99,10 @@ function parseProblemJsonString (data) {
             var problem = problems[i];
             var id = problem['problem_id'];
             var location = problem['location'];
+            if(location.substring(0, 5) == "B23.2") {
+                $("#map1").hide();
+                $("#map2").show();
+            }
             var description = problem['description'];
             if(location in roomCoordinates) {
                 var coordinate = roomCoordinates[location];
@@ -218,13 +221,12 @@ function checkProblem() {
         url: "./get_problem?",
         dataType: 'json',
         success: function(data) {
-            parseProblemJsonString(data);
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
             var data = {
                 data: {
                     problem: {
-                        
+                        problem_id: 1,
+                        location: 'B23.210',
+                        description: "HI"
                     },
                     question: {
                         error_message: "Mobile computing and networks",
@@ -240,7 +242,37 @@ function checkProblem() {
                     }
                 }
             };
-
+            parseProblemJsonString(data);
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            var data = {
+                data: {
+                    problem: [
+                        {
+                            problem_id: 1,
+                            location: 'B23.210',
+                            description: "HI"
+                        },
+                        {
+                            problem_id: 2,
+                            location: 'B23.214',
+                            description: "HII"  
+                        }
+                    ],
+                    question: {
+                        error_message: "Mobile computing and networks",
+                        option_1: "Mobile computing and networks",
+                        option_2: "Space travel",
+                        option_3: "Startups",
+                        option_4: "Public Transportation",
+                        problem_category: "introduction",
+                        problem_desc: "The CyLab Mobility Research Center was established to explore developments in",
+                        problem_id: 1,
+                        answer: 1,
+                        updated_at: "Tue, 06 Aug 2013 12:34:03 GMT"
+                    }
+                }
+            };
             parseProblemJsonString(data);
         }
     });
@@ -252,15 +284,16 @@ $("#close-me").click(function() {
         url: "./confirm_to_solve_problem?problem_id=" + problemId,
         dataType: 'json',
         success: function(data) {
-            $("#problem-desc").html("Thank You!");
+            $("#problem-desc").html("Thank You!<br>Remember to come back to get candy!");
+            $("#close-me").hide();
+            $("#survey-dialog").show();
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             $("#problem-desc").html("Thank You!<br>Remember to come back to get candy!");
             $("#close-me").hide();
+            $("#survey-dialog").show();
         }
     });
-
-    $("#survey-dialog").show();
 
 });
 
@@ -285,6 +318,8 @@ function plotProblem(id, x, y, floor, description) {
     $('#problem' + id).click(function() {
         $("#problem" + problemId).show();
         $("#problem-desc").html(description);
+        $("#close-me").show();
+        $("#survey-dialog").hide();
         //$("#dialog").popover('show');
 
         // update problem id for submitting to server
@@ -416,7 +451,7 @@ var refreshFlag = 1;
 
 function reload() {
     if(refreshFlag == 1) {
-        //location.reload();
+        location.reload();
     } else {
         refreshFlag = 1;
     }
@@ -428,20 +463,18 @@ $(document).mousemove(function(event){
 
 
 $(function() {
+    $("#map2").hide();
     checkProblem();
-    getSensorData();
+    //getSensorData();
 
     $("#question-dialog").hide();
     $("#problem-dialog").hide();
     $("#question-message").hide();
     $("#survey-dialog").hide();
 
-    $('#myTab a').click(function (e) {
-        e.preventDefault();
-        $(this).tab('show');
-    })
+
     $("#dialog-wrap").hide();
     $('html, body').animate({scrollTop: '100px'}, 800);
 
-    setInterval(reload, 30000);
+    setInterval(reload, 60000);
 });
