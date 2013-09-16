@@ -48,7 +48,8 @@ def insert_sensor_index(device_id, sensor_type, module_type, sensor_value, senso
 
 @celery.task(name = "task2.check")
 def check(): 
-	return loop_check_problem()
+	#loop_check_problem()
+	return 0
 
 def loop_check_problem(): 
 	#this function will loop in thread 
@@ -178,7 +179,7 @@ def find_light():
 @celery.task(name = "task2.light_check")
 def light_check():
 	start_time = time.time()	
-	print "check sensor repository..."
+	'''print "check sensor repository..."
 	
 	problem_repos = db.session.query(ProblemRepository).filter_by(valid=True).filter_by(solved=False).filter_by(problem_cat="light")
 	
@@ -195,7 +196,7 @@ def light_check():
 					insert_feedback(p.serialize['device_feedback'], "10", -1, "positive", "you did close the light", can_get_time=15)
 					print "give feedback to " + str(p.serialize['device_feedback'])
 	#if problem_repos
-	db.session.commit()
+	db.session.commit()'''
 	elapsed_time = time.time() - start_time
 	## left for implementation 
 
@@ -206,8 +207,16 @@ def insert_noise_problem_to_problem_repository(device_id):
 	db.session.add(problem_repo_instance)
 	db.session.commit()
 def insert_light_problem_to_problem_repository(firefly_id, device_id):
-	problem_repo_instance = ProblemRepository("light", "light is not closing now, could you help me to close it? I will give you candies if you do", mapping_table[firefly_id][2], firefly_id, device_id)
+	problem_repo_instance = ProblemRepository("light", "The light in the conference room 109 is not off right now, could you help me to turn it off? I will give you candies if you do and come back.", mapping_table[firefly_id][2], firefly_id, device_id)
 	db.session.add(problem_repo_instance)
 	db.session.commit()
+def insert_curtain_problem_to_problem_repository(device_id):
+	problem_repo_instance = ProblemRepository("curtain", "The curtain in near the table tennis table is not opened, please help to draw the curtain open! I will give you candies if you do and come back.", "B23.129", 1234, device_id)
+	db.session.add(problem_repo_instance)
+	db.session.commit() 
+def insert_window_problem_to_problem_repository(device_id):
+	problem_repo_instance = ProblemRepository("window", "The window in library(room 107) is not close, please help me to close it !! I will give you candies if you do and come back", "B23.107", 1234, device_id)
+	db.session.add(problem_repo_instance)
+	db.session.commit() 
 if __name__ == "__main__" : 
 	celery.worker_main()
