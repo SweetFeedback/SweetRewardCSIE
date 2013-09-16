@@ -210,6 +210,13 @@ def insert_light_problem_to_problem_repository(firefly_id, device_id):
 	problem_repo_instance = ProblemRepository("light", "The light in the conference room 109 is not off right now, could you help me to turn it off? I will give you candies if you do and come back.", mapping_table[firefly_id][2], firefly_id, device_id)
 	db.session.add(problem_repo_instance)
 	db.session.commit()
-def insert_curtain_problem_to_problem_repository(device_id)
+def insert_curtain_problem_to_problem_repository(device_id):
+	problem_repo_instance = ProblemRepository("curtain", "The curtain in near the table tennis table is not opened, please help to draw the curtain open! I will give you candies if you do and come back.", "B23.129", 1234, device_id)
+	db.session.add(problem_repo_instance)
+	db.session.commit() 
+def insert_window_problem_to_problem_repository(device_id):
+	problem_repo_instance = ProblemRepository("window", "The window in library(room 107) is not close, please help me to close it !! I will give you candies if you do and come back", "B23.107", 1234, device_id)
+	db.session.add(problem_repo_instance)
+	db.session.commit() 
 if __name__ == "__main__" : 
 	celery.worker_main()
