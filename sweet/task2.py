@@ -210,6 +210,5 @@ def insert_light_problem_to_problem_repository(firefly_id, device_id):
 	problem_repo_instance = ProblemRepository("light", "The light in the conference room 109 is not off right now, could you help me to turn it off? I will give you candies if you do and come back.", mapping_table[firefly_id][2], firefly_id, device_id)
 	db.session.add(problem_repo_instance)
 	db.session.commit()
-def insert_curtain_problem_to_problem_repository(device_id)
 if __name__ == "__main__" : 
 	celery.worker_main()
