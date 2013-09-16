@@ -129,6 +129,7 @@ class ProblemRepository(db.Model):
 		self.valid = valid
 		self.device_check = device_check
 		self.device_feedback = device_feedback
+		self.solved = False
 
 	@property
 	def serialize(self): 
