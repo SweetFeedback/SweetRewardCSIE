@@ -103,7 +103,7 @@ function parseProblemJsonString (data) {
                 $("#map1").hide();
                 $("#map2").show();
             }
-            var description = problem['description'];
+            var description = problem['problem_desc'];
             if(location in roomCoordinates) {
                 var coordinate = roomCoordinates[location];
 
