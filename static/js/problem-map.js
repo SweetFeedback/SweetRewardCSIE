@@ -233,7 +233,7 @@ function plotProblem(id, x, y, floor, description) {
 
     // set up tooltip
     $('#problem' + id).tooltip({
-        title: "Help This Room"
+        title: "Help!"
     });
 
     $('#problem' + id).click(function() {
