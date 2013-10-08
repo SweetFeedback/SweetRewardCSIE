@@ -1,68 +1,11 @@
 var roomCovers = {
-    'B23.104': {x: 360, y: 517, width: 52, height: 56, floor: 1},
-    'B23.105B': {x: 320, y: 517, width: 47, height: 56, floor: 1},
-    'B23.107': {x: 225, y: 520, width: 60, height: 80, floor: 1},
-    'B23.109': {x: 135, y: 480, width: 90, height: 120, floor: 1},
-    'B23.110': {x: 135, y: 370, width: 90, height: 120, floor: 1},
-    'B23.114': {x: 135, y: 260, width: 50, height: 65, floor: 1}, 
-    'B23.115': {x: 180, y: 260, width: 50, height: 65, floor: 1}, 
-    'B23.116': {x: 230, y: 260, width: 50, height: 65, floor: 1},
-    'B23.120': {x: 702, y: 517, width: 45, height: 56, floor: 1},
-    'B23.122': {x: 662, y: 517, width: 47, height: 56, floor: 1},
-    'B23.123': {x: 360, y: 425, width: 47, height: 62, floor: 1},
-    'B23.124': {x: 630, y: 517, width: 40, height: 56, floor: 1},
-    'B23.126': {x: 575, y: 517, width: 52, height: 56, floor: 1},
-    'B23.129': {x: 440, y: 285, width: 150, height: 150, floor: 1},
-    'B23.129A': {x: 530, y: 220, width: 55, height: 70, floor: 1},
-    'B23.210': {x: 190, y: 520, width: 60, height: 75, floor: 2},
-    'B23.211': {x: 90, y: 350, width: 100, height: 125, floor: 2},
-    'B23.212': {x: 90, y: 470, width: 100, height: 117, floor: 2},
-    'B23.213': {x: 810, y: 530, width: 85, height: 60, floor: 2},
-    'B23.214': {x: 845, y: 485, width: 52, height: 40, floor: 2},
-    'B23.214B': {x: 845, y: 440, width: 52, height: 48, floor: 2},
-    'B23.215': {x: 845, y: 350, width: 52, height: 52, floor: 2},
-    'B23.215B': {x: 845, y: 400, width: 52, height: 40, floor: 2},
-    'B23.216': {x: 740, y: 530, width: 70, height: 55, floor: 2},
-    'B23.217A': {x: 750, y: 360, width: 50, height: 42, floor: 2},
-    'B23.217B': {x: 750, y: 405, width: 50, height: 38, floor: 2},
-    'B23.228': {x: 510, y: 130, width: 62, height: 65, floor: 2},
-    'B23.229': {},
-    'B23.230': {x: 420, y: 130, width: 60, height: 65, floor: 2},
-    'B23.kitchen': {x: 740, y: 410, width: 57, height: 77, floor: 1}
+    'CSIE.340': {x: 500, y: 17, width: 52, height: 56, floor: 1}
 }
 
 
 var roomCoordinates = {
-    'B23.104': {x: 370, y: 535, floor: 1},
-    'B23.105B': {x: 325, y: 530, floor: 1},
-    'B23.107': {x: 235, y: 540, floor: 1},
-    'B23.109': {x: 165, y: 530, floor: 1},
-    'B23.110': {x: 160, y: 415, floor: 1},
-    'B23.114': {x: 140, y: 280, floor: 1}, 
-    'B23.115': {x: 190, y: 280, floor: 1}, 
-    'B23.116': {x: 235, y: 280, floor: 1},
-    'B23.120': {x: 700, y: 530, floor: 1},
-    'B23.122': {x: 670, y: 530, floor: 1},
-    'B23.123': {x: 365, y: 440, floor: 1},
-    'B23.124': {x: 625, y: 530, floor: 1},
-    'B23.126': {x: 580, y: 530, floor: 1},
-    'B23.129': {x: 500, y: 340, floor: 1},
-    'B23.129A': {x: 535, y: 240, floor: 1},
-    'B23.210': {x: 190, y: 530, floor: 2},
-    'B23.211': {x: 120, y: 400, floor: 2},
-    'B23.212': {x: 120, y: 500, floor: 2},
-    'B23.213': {x: 830, y: 540, floor: 2},
-    'B23.214': {x: 855, y: 490, floor: 2},
-    'B23.214B': {x: 855, y: 445, floor: 2},
-    'B23.215': {x: 855, y: 360, floor: 2},
-    'B23.215B': {x: 855, y: 400, floor: 2},
-    'B23.216': {x: 760, y: 540, floor: 2},
-    'B23.217A': {x: 750, y: 365, floor: 2},
-    'B23.217B': {x: 750, y: 405, floor: 2},
-    'B23.228': {x: 530, y: 145, floor: 2},
-    'B23.229': {},
-    'B23.230': {x: 430, y: 145, floor: 2},
-    'B23.kitchen': {x: 750, y: 430, floor: 1}
+    'CSIE.340': {x: 550, y: 100, floor: 1},
+    'CSIE.324': {x: 675, y: 230, floor: 1}
 };
 
 var machine1 = {'x': 520, 'y': 500};
@@ -99,10 +42,6 @@ function parseProblemJsonString (data) {
             var problem = problems[i];
             var id = problem['problem_id'];
             var location = problem['location'];
-            if(location.substring(0, 5) == "B23.2") {
-                $("#map1").hide();
-                $("#map2").show();
-            }
             var description = problem['problem_desc'];
             if(location in roomCoordinates) {
                 var coordinate = roomCoordinates[location];
@@ -226,28 +165,31 @@ function checkProblem() {
                 data: {
                     problem: [
                         {
-                            problem_id: 1,
-                            location: 'B23.210',
-                            description: "HI"
-                        },
+                        problem_id: 1,
+                        location: 'CSIE.340',
+                        problem_desc: "hi"
+                        }, 
                         {
-                            problem_id: 2,
-                            location: 'B23.214',
-                            description: "HII"  
+                        problem_id: 2,
+                        location: 'CSIE.324',
+                        problem_desc: "hii"
                         }
-                    ],
+
+                    ]
+                    /*
                     question: {
                         error_message: "Mobile computing and networks",
-                        option_1: "Mobile computing and networks",
-                        option_2: "Space travel",
-                        option_3: "Startups",
-                        option_4: "Public Transportation",
+                        option_1: "Knowledge is liberty.",
+                        option_2: "Reach within, shape the future.",
+                        option_3: "My heart is in the work.",
+                        option_4: "Think. Grow. Change.",
                         problem_category: "introduction",
-                        problem_desc: "The CyLab Mobility Research Center was established to explore developments in",
+                        problem_desc: "What is the Carnegie Mellon University motto?",
                         problem_id: 1,
-                        answer: 1,
+                        answer: 3,
                         updated_at: "Tue, 06 Aug 2013 12:34:03 GMT"
                     }
+                    */
                 }
             };
             parseProblemJsonString(data);
@@ -284,7 +226,7 @@ function plotProblem(id, x, y, floor, description) {
     if(floor == 1) {
         $('#map1').append(str);
     } else if(floor == 2) {
-        $('#map2').append(str);
+
     }
 
     // set up tooltip
@@ -314,7 +256,7 @@ function plotHuman(id, x, y, floor) {
     if(floor == 1) {
         $('#map1').append(str);
     } else if(floor == 2) {
-        $('#map2').append(str);
+
     }
 }
 
@@ -328,7 +270,6 @@ function plotLight(id, x, y, floor) {
     if(floor == 1) {
         $('#map1').append(str);
     } else if(floor == 2) {
-        $('#map2').append(str);
     }
 }
 
@@ -342,7 +283,7 @@ function plotBulb(id, x, y, floor) {
     if(floor == 1) {
         $('#map1').append(str);
     } else if(floor == 2) {
-        $('#map2').append(str);
+        
     }
 }
 
@@ -384,7 +325,7 @@ function getSensorData() {
                         if(cover.floor == 1) {
                             $('#map1').append(str);
                         } else if(cover.floor == 2) {
-                            $('#map2').append(str);
+
                         }
                         
                         //plotLight(i, coordinate.x, coordinate.y, coordinate.floor);
@@ -398,7 +339,7 @@ function getSensorData() {
                         if(cover.floor == 1) {
                             $('#map1').append(str);
                         } else if(cover.floor == 2) {
-                            $('#map2').append(str);
+
                         }
                         
                         //plotBulb(i, coordinate.x, coordinate.y, coordinate.floor);
@@ -440,7 +381,6 @@ $(document).mousemove(function(event){
 
 
 $(function() {
-    $("#map2").hide();
     checkProblem();
     //getSensorData();
 
