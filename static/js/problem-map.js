@@ -1,11 +1,13 @@
 var roomCovers = {
     'CSIE.340': {x: 500, y: 17, width: 52, height: 56, floor: 1}
+
 }
 
 
 var roomCoordinates = {
     'CSIE.340': {x: 550, y: 100, floor: 1},
-    'CSIE.324': {x: 675, y: 230, floor: 1}
+    'CSIE.324': {x: 675, y: 230, floor: 1},
+    'CSIE.HALLWAY-1': {x: 460, y: 180, floor: 1}
 };
 
 var machine1 = {'x': 520, 'y': 500};
@@ -166,7 +168,7 @@ function checkProblem() {
                     problem: [
                         {
                         problem_id: 1,
-                        location: 'CSIE.340',
+                        location: 'CSIE.HALLWAY-1',
                         problem_desc: "hi"
                         }, 
                         {
