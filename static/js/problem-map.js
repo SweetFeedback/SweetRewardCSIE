@@ -5,9 +5,12 @@ var roomCovers = {
 
 
 var roomCoordinates = {
-    'CSIE.340': {x: 550, y: 100, floor: 1},
-    'CSIE.324': {x: 675, y: 230, floor: 1},
-    'CSIE.HALLWAY-1': {x: 460, y: 180, floor: 1}
+    'CSIE.340': {x: 550, y: 100, floor: 3},
+    'CSIE.324': {x: 675, y: 230, floor: 3},
+    'CSIE.HALLWAY-1': {x: 460, y: 180, floor: 1},
+    'CSIE.HALLWAY-2': {x: 505, y: 255, floor: 1},
+    'CSIE.102': {x: 610, y: 450, floor: 1},
+    'CSIE.104': {x: 610, y: 355, floor: 1}
 };
 
 var machine1 = {'x': 520, 'y': 500};
@@ -168,13 +171,18 @@ function checkProblem() {
                     problem: [
                         {
                         problem_id: 1,
-                        location: 'CSIE.HALLWAY-1',
+                        location: 'CSIE.HALLWAY-2',
                         problem_desc: "hi"
                         }, 
                         {
                         problem_id: 2,
-                        location: 'CSIE.324',
+                        location: 'CSIE.102',
                         problem_desc: "hii"
+                        },
+                        {
+                        problem_id: 3,
+                        location: 'CSIE.104',
+                        problem_desc: "hleoo"
                         }
 
                     ]
